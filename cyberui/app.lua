@@ -115,7 +115,9 @@ local function scheduleClock()
         clock_timer = nil
         if not host then return end
         local s = App.current()
-        if onTop() and s and s.clock then
+        if onTop() and s and s.onTick then
+            s:onTick()
+        elseif onTop() and s and s.clock then
             StatusBar.tick(s.clock)
             App.repaint(s.clock)
         end

@@ -92,7 +92,7 @@ local function dateRow()
             Label:new({ text = os.date("%A, %B %d"), kind = "title" }),
             Label:new({ text = line, kind = "mono_small", color = "muted" }),
         } }),
-        Button:new({ icon = "stats", variant = "icon", width = th.size.touch, on_tap = function() App.go("history") end }),
+        Button:new({ icon = "stats", variant = "icon", width = th.size.touch, on_tap = function() App.push("diagnostics") end }),
     } })
 end
 

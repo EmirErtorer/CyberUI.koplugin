@@ -27,9 +27,10 @@ function Format.duration(s)
     return string.format("%d:%02d", math.floor(s / 3600), math.floor(s % 3600 / 60))
 end
 
--- "1.2 MB", "640 KB" for a size in bytes.
+-- "3.1 GB", "1.2 MB", "640 KB" for a size in bytes.
 function Format.size(bytes)
     if not bytes then return "?" end
+    if bytes >= 1073741824 then return string.format("%.1f GB", bytes / 1073741824) end
     if bytes >= 1048576 then return string.format("%.1f MB", bytes / 1048576) end
     return string.format("%d KB", math.max(1, math.floor(bytes / 1024)))
 end
