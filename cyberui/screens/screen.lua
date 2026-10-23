@@ -21,6 +21,12 @@ function Screen:new(params)
     return o
 end
 
+-- Back inside the screen (up a folder...); true when it handled it, false
+-- to leave the screen.
+function Screen:onBack()
+    return false
+end
+
 -- Page left and right with swipes when the screen pages; true when used.
 function Screen:onSwipe(dir)
     if not self.pages then return false end

@@ -14,9 +14,13 @@ local index           -- { books = {paths}, built = time } for the whole library
 
 local MAX_DEPTH = 8
 
--- The library's top folder (KOReader's home folder).
+-- The library's top folder (KOReader's home folder), as configured; only a
+-- relative one is made absolute, so paths keep the form history and
+-- collections store them in.
 function Library.home()
-    return filemanagerutil.getHomeFolder()
+    local home = filemanagerutil.getHomeFolder():gsub("(.)/+$", "%1")
+    if home:sub(1, 1) ~= "/" then home = require("ffi/util").realpath(home) or home end
+    return home
 end
 
 -- Books and subfolders directly inside `dir`, names sorted.
@@ -46,9 +50,10 @@ function Library.list(dir)
     return cached
 end
 
--- Every book under the home folder (walked once, then cached until reset).
+-- Every book under the home folder (walked once, then cached until a change
+-- marks it stale).
 function Library.all()
-    if index then return index.books end
+    if index and not index.stale then return index.books end
     local books = {}
     local function walk(dir, depth)
         local l = Library.list(dir)
@@ -62,15 +67,22 @@ function Library.all()
     return books
 end
 
--- Number of books in the library, or nil before the index is built.
+-- Number of books in the library (as last counted), or nil before the
+-- index is first built.
 function Library.count()
     return index and #index.books or nil
 end
 
--- Forget cached listings so the next look reads the disk again.
+-- Is the index missing or out of date?
+function Library.stale()
+    return not index or index.stale == true
+end
+
+-- Forget cached listings so the next look reads the disk again; the index is
+-- kept for its count until it is walked again.
 function Library.reset()
     listings = {}
-    index = nil
+    if index then index.stale = true end
 end
 
 -- Sort keys for each sort order.

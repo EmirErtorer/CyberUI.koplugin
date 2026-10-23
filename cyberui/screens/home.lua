@@ -2,6 +2,7 @@
 -- being read with Resume, recent books and the launcher to every section.
 
 local Actions = require("cyberui/actions")
+local Addons = require("cyberui/apps/addons")
 local App = require("cyberui/app")
 local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
@@ -11,6 +12,7 @@ local Deco = require("cyberui/ui/deco")
 local Format = require("cyberui/format")
 local DeviceInfo = require("cyberui/data/device")
 local History = require("cyberui/data/history")
+local InkAway = require("cyberui/apps/inkaway")
 local Icon = require("cyberui/ui/icon")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
@@ -141,7 +143,7 @@ local function launcher()
         { "collections", _("COLLECTIONS"), string.format(_("%d CACHES"), #Collections.list()), function() App.go("collections") end },
         { "history", _("HISTORY"), _("TELEMETRY.LOG"), function() App.go("history") end },
         { "search", _("SEARCH"), _("GREP THE ARCHIVE"), function() App.push("search") end },
-        { "files", _("FILES"), _("KOREADER BROWSER"), function() App.fileBrowser() end },
+        { InkAway.icon, _("INK AWAY"), Addons.statusLine(InkAway), function() Addons.launch(InkAway) end },
         { "settings", _("SYSTEM"), _("THEME // SETTINGS"), function() App.go("settings") end },
     }
     local kids = {}

@@ -7,14 +7,14 @@ repo="$(cd "$(dirname "$0")/.." && pwd)"
 ko="${KO_DIR:-$HOME/koreader-emulator}"
 emu="$(ls -d "$ko"/koreader-emulator-*/koreader 2>/dev/null | head -1)"
 fail=0
-run() { echo "== $1"; shift; "$@" || fail=$((fail + 1)); }
+run() { local name="$1"; echo "== $name"; shift; "$@" || { fail=$((fail + 1)); echo "FAILED: $name"; }; }
 filter() { grep -v -e '^ffi\.' -e '^lib_' -e 'monolibtic' -e 'DEBUG' -e 'INFO' -e 'Started SDL' -e '^  [hw] =' -e '^}'; }
 run lint bash -c "cd '$repo' && luajit tests/lint.lua"
 if command -v luacheck >/dev/null; then
     run luacheck bash -c "cd '$repo' && luacheck -q cyberui main.lua _meta.lua"
 fi
 if [ -x "$emu/luajit" ]; then
-    for suite in widgets screens; do
+    for suite in widgets screens install; do
         run "$suite" bash -c "cd '$emu' && SDL_VIDEODRIVER=offscreen ./luajit '$repo/tests/$suite.lua' '$repo' 2>&1 | { $(declare -f filter); filter; }; exit \${PIPESTATUS[0]}"
     done
 else
@@ -22,7 +22,7 @@ else
 fi
 if [ "${1:-}" = "--e2e" ]; then
     out="$(mktemp -d)"
-    for scen in walkthrough flows menus exits; do
+    for scen in walkthrough flows menus exits explorer; do
         run "$scen" bash -c "'$repo/tests/e2e/run.sh' '$repo/tests/e2e/$scen.lua' '$out/$scen' | tail -1 | grep -q ' 0 failed'"
     done
     run restart bash -c "E2E_NO_DIR=1 HOME_SETUP='$repo/tests/e2e/setup_restart.sh' '$repo/tests/e2e/run.sh' '$repo/tests/e2e/restart.lua' '$out/restart' | tail -1 | grep -q ' 0 failed'"

@@ -169,20 +169,27 @@ function Text.wrap(kind, s, max_w, max_lines)
     local spec = specOf(kind)
     s = Text.shown(kind, s)
     local lines, line = {}, ""
+    -- words, with each line break kept as a word of its own
     local words = {}
-    for word in s:gmatch("%S+") do words[#words + 1] = word end
+    for word in s:gsub("\n", " \n "):gmatch("[^ \t]+") do words[#words + 1] = word end
     for i, word in ipairs(words) do
-        local try = line == "" and word or (line .. " " .. word)
-        if measure(spec, try) <= max_w then
-            line = try
+        if word == "\n" then
+            lines[#lines + 1] = line
+            line = ""
         else
-            if line ~= "" then lines[#lines + 1] = line end
-            line = word
-            if max_lines and #lines == max_lines then
-                local rest = table.concat(words, " ", i)
-                lines[max_lines] = fit(spec, lines[max_lines] .. " " .. rest, max_w)
-                return lines
+            local try = line == "" and word or (line .. " " .. word)
+            if measure(spec, try) <= max_w then
+                line = try
+            else
+                if line ~= "" then lines[#lines + 1] = line end
+                line = word
             end
+        end
+        if max_lines and #lines >= max_lines and i < #words then
+            local rest = table.concat(words, " ", i + 1):gsub("%s*\n%s*", " ")
+            lines[max_lines] = fit(spec, lines[max_lines] .. " " .. line .. " " .. rest, max_w)
+            for j = #lines, max_lines + 1, -1 do lines[j] = nil end
+            return lines
         end
     end
     if line ~= "" then lines[#lines + 1] = fit(spec, line, max_w) end

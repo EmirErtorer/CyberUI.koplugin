@@ -190,7 +190,7 @@ end
 -- Work done once the screen is up, so it never delays the first paint.
 function App.afterShow()
     UIManager:nextTick(function()
-        if Library.count() == nil then
+        if Library.stale() then
             Library.all()
             local s = App.current()
             if s and s.onIndexed then s:onIndexed() end
@@ -224,15 +224,22 @@ function App.push(id, params)
     App.render()
 end
 
--- Back one screen; at home nothing happens.
-function App.back()
-    if host and host.overlay then return App.closeDialog() end
+-- Leave the current screen for the one under it (whatever it shows inside).
+function App.pop()
     if #stack > 1 then
         stack[#stack] = nil
         local s = App.current()
         if s.onRaise then s:onRaise() end
         App.render()
     end
+end
+
+-- Back one screen; at home nothing happens.
+function App.back()
+    if host and host.overlay then return App.closeDialog() end
+    local cur = App.current()
+    if cur and cur:onBack() then return end
+    App.pop()
 end
 
 -- Swipes: down from the top edge opens KOReader's menu, a paging screen
@@ -266,6 +273,11 @@ end
 -- Ask before doing something (see Dialog.confirm for the fields).
 function App.confirm(o)
     App.dialog(function(close, w) return Dialog.confirm(o, close, w) end)
+end
+
+-- Offer a set of actions as tiles (see Dialog.sheet).
+function App.sheet(o)
+    App.dialog(function(close, w) return Dialog.sheet(o, close, w) end)
 end
 
 -- Let the reader pick from options (see Dialog.choose).

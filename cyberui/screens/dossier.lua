@@ -93,6 +93,8 @@ function Dossier:build()
     } })
 
     local done = st.status == "complete"
+    -- after a rename or move the dossier follows the book to its new path
+    local function moved(to) self.params.path = to; App.update() end
     local actions = Layout.Column:new({ gap = th.space.s, children = {
         Button:new({ label = _("OPEN FILE"), icon = "forward", variant = "primary", corners = "tb", on_tap = function() Actions.open(path) end }),
         Layout.Row:new({ gap = th.space.s, children = {
@@ -102,7 +104,11 @@ function Dossier:build()
         } }),
         Layout.Row:new({ gap = th.space.s, children = {
             Button:new({ label = _("SHOW FOLDER"), grow = true, on_tap = function() Actions.showFolder(path) end }),
-            Button:new({ label = _("/// PURGE FILE ///"), variant = "soft", grow = true,
+        } }),
+        Layout.Row:new({ gap = th.space.s, children = {
+            Button:new({ label = _("RENAME"), icon = "edit", grow = true, on_tap = function() Actions.rename(path, moved) end }),
+            Button:new({ label = _("MOVE TO"), icon = "move", grow = true, on_tap = function() Actions.move(path, moved) end }),
+            Button:new({ label = _("DELETE"), icon = "trash", variant = "danger", grow = true,
                 on_tap = function() Actions.delete(path, function() App.back() end) end }),
         } }),
     } })

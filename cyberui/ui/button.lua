@@ -26,6 +26,7 @@ local VARIANTS = {
     seg       = { text = "ink" },
     seg_on    = { fill = "ink", text = "on_ink" },
     disabled  = { line = "line", text = "muted", stripes = true },
+    danger    = { line = "accent", text = "accent", cut = "cut_small", corners = "r" },
 }
 Button.VARIANTS = VARIANTS
 

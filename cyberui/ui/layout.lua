@@ -119,6 +119,13 @@ function Row:layout(w, h)
             growers[#growers + 1] = c
         end
     end
+    if self.clip_start then
+        -- too wide: drop children from the start, keeping the last one
+        while used > inner_w and #self.children > 1 do
+            local c = table.remove(self.children, 1)
+            used = used - (c.w or 0) - gap
+        end
+    end
     local left = math.max(0, inner_w - used)
     local each = #growers > 0 and math.floor(left / #growers) or 0
     for i, c in ipairs(growers) do

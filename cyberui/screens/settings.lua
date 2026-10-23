@@ -180,7 +180,7 @@ end
 function SettingsScreen:about()
     return {
         row(_("Version"), nil, Label:new({ text = Version, kind = "mono" })),
-        row(_("Fonts"), _("Chakra Petch and Share Tech Mono, SIL Open Font License"), Layout.Spacer:new({ width = 1 })),
+        row(_("Fonts"), _("Oxanium, Chakra Petch, Tomorrow, Rajdhani and Share Tech Mono, SIL Open Font License"), Layout.Spacer:new({ width = 1 })),
         Label:new({ text = _("A fast cyberpunk home screen for KOReader."), kind = "body", color = "muted", lines = 2 }),
     }
 end

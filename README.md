@@ -8,11 +8,11 @@ and colour themes.
 
 <p>
 <img src="docs/screenshots/home.png" width="260" alt="Home screen">
-<img src="docs/screenshots/library.png" width="260" alt="Library">
-<img src="docs/screenshots/dossier.png" width="260" alt="Book dossier">
+<img src="docs/screenshots/library.png" width="260" alt="Library explorer">
+<img src="docs/screenshots/book-sheet.png" width="260" alt="Holding a book: its actions">
 </p>
 <p>
-<img src="docs/screenshots/log.png" width="260" alt="Reading log">
+<img src="docs/screenshots/search.png" width="260" alt="Search with CyberUI's keyboard">
 <img src="docs/screenshots/settings-neon.png" width="260" alt="Settings in the Neon theme, dark">
 <img src="docs/screenshots/landscape.png" width="347" alt="Home in landscape">
 </p>
@@ -20,23 +20,34 @@ and colour themes.
 ## Features
 
 - **Home**: today's date and reading streak, the current book with its progress and a
-  Resume button, recent books, and a launcher for every section.
-- **Library**: a paged grid or list of a folder's books and subfolders, with Reading, Unread
-  and Done filters and four sort orders. Tap a book to read it, hold it for its dossier,
-  swipe left and right to page.
+  Resume button, recent books, and a launcher for every section, Ink Away included.
+- **Library explorer**: your folders and books as a paged grid or list, with Reading, Unread
+  and Done filters and four sort orders. Folders open in place with a breadcrumb bar to go
+  back up. Tap a book to read it; hold a book or folder for its actions (details, mark done,
+  collections, rename, move to another folder, delete). **+ New** makes folders.
+- **Trash**: deleted books and folders wait 30 days with their reading data, and go back
+  where they were, into their collections and history, with one tap.
 - **Dossier**: everything about one book (format, size, pages, collections, synopsis,
   highlight and note counts) and every action on it: open, mark done or reading, add to
   collections, show its folder, delete.
 - **Collections**: Favorites pinned on top, every other collection as a card with its covers,
   and new collections in one tap.
-- **Search**: finds books by title, author, series or file name across the whole library.
+- **Search**: finds books by title, author, series or file name across the whole library,
+  with results that follow your typing.
+- **Keyboard**: CyberUI's own on-screen keyboard for every text it asks for, with number and
+  accented-letter layers.
 - **Reading log**: time and pages this week, the streak, minutes per day against your daily
   goal, twelve weeks of activity and the latest sessions (from KOReader's statistics).
 - **Themes**: Mono, Neon, Terminal, Amber and a Custom scheme with your own accent colours,
   each in Light, Dark or System mode (System follows KOReader's night mode). Switching is
   instant, with no restart.
+- **Fonts**: Oxanium by default, or Chakra Petch, Tomorrow, Rajdhani or KOReader's own
+  fonts, plus a text size control.
 - **Covers**: typeset title cards by default, which draw fastest on e-ink, or the real
   covers.
+- **Ink Away**: the drawing and note-taking plugin opens from home. If it is not installed,
+  the button describes it and installs it from its GitHub releases with one tap (checked
+  against GitHub's SHA-256 digest), then offers KOReader's restart.
 - **Plays well with KOReader**: your KOReader gestures keep working on CyberUI's empty space,
   night mode, rotation and the frontlight work as usual, and a swipe down from the top edge
   opens KOReader's own menu.
@@ -67,20 +78,23 @@ a gesture: KOReader's gesture settings list it as **CyberUI home**.
 | Read the current book | Tap **Resume** on home |
 | Go to a section | Tap it in the launcher on home, or in the tab bar at the bottom |
 | Open a book | Tap it |
-| See a book's dossier | Hold it |
+| See what you can do with a book or folder | Hold it |
+| Go into a folder, or back up | Tap it; tap a name in the breadcrumb bar or use Back |
 | Turn a page of books | Swipe left or right, or use the arrows at the bottom |
 | Go back | The arrow at the top left, or the device's Back key |
 | Open KOReader's menu | Swipe down from the top edge, or **System > Home > KOReader menu** |
-| Use KOReader's file browser | **Files** in the launcher; CyberUI comes back when you open it again from the menu or a gesture |
+| Use KOReader's file browser | **Library > menu > KOReader browser**, or **System > Home > File browser**; CyberUI comes back when you open it again from the menu or a gesture |
+| Restore something deleted | **Library > menu > Trash**, then tap it |
 | Come home from a book | Choose **CyberUI home** in the reader's menu (**Tools** tab), or set it as a gesture |
 
-When you close a book, CyberUI is already waiting underneath, so it comes back with only the
-changed details redrawn.
+When you close a book, however you close it, CyberUI is already waiting underneath, so it
+comes back with only the changed details redrawn. It keeps doing so after a restart until you
+choose KOReader's file browser instead.
 
 ## Themes
 
-Pick a colour scheme and a mode in **System > Look**. With the **Custom** scheme, two
-**Pick** buttons set the accent colours.
+Pick a colour scheme and a mode in **System > Look**, and a font set and text size in
+**System > Fonts**. With the **Custom** scheme, two **Pick** buttons set the accent colours.
 
 Every colour, font, size and shape comes from the theme files, so new looks need no changes
 to the screens:
@@ -90,7 +104,9 @@ to the screens:
   `cyberui/themes/neon.lua`, change the id, name and colours, and add the id to
   `Registry.SCHEMES` in `cyberui/theme/registry.lua`. Text colours on the accents are chosen
   automatically for contrast.
-- A **style** (fonts, type sizes, spacing, cut corners, decorations) is a file like
+- A **font set** is an entry in `cyberui/themes/fonts.lua`: a font file for display, title,
+  body and mono text, and a scale that evens out its size.
+- A **style** (type sizes, spacing, cut corners, decorations) is a file like
   `cyberui/themes/cyberdeck.lua`, listed in `Registry.STYLES`.
 
 ## Speed
@@ -121,9 +137,11 @@ CyberUI's own work is about 11 ms (the rest is KOReader saving and closing the b
 | `cyberui/themes/` | Theme data: the Cyberdeck style and the colour schemes |
 | `cyberui/gfx/` | Drawing: shapes, text, icons |
 | `cyberui/ui/` | Widgets: layout, label, button, panel, controls, cover, grid, charts, dialogs |
-| `cyberui/data/` | Books, covers, library, history, collections, stats, device status |
-| `cyberui/screens/` | Home, library, search, dossier, collections, reading log, settings |
-| `cyberui/actions.lua` | What can be done with a book from any screen |
+| `cyberui/data/` | Books, covers, library, files (move, rename, folders), trash, history, collections, stats, device status |
+| `cyberui/screens/` | Home, library explorer, search, dossier, collections, reading log, settings, trash |
+| `cyberui/actions.lua` | What can be done with books and folders from any screen, and their hold sheets |
+| `cyberui/apps/` | Companion plugins on home (Ink Away): status, opening, the install offer |
+| `cyberui/install/` | Installing a plugin from GitHub: download, release choice, checked unpacking |
 | `tests/` | Lint, widget and screen tests, end-to-end walkthroughs |
 | `tools/` | Emulator launcher and the release zip builder |
 
@@ -147,7 +165,7 @@ see KOReader's [building guide](https://github.com/koreader/koreader/blob/master
    tests/run.sh --e2e
    ```
 
-   The emulator window opens and closes five times; the output ends with the path of the
+   The emulator window opens and closes six times; the output ends with the path of the
    screenshots taken and `all passed`.
 
 ### Try it in the emulator
@@ -169,8 +187,12 @@ It prints `built dist/CyberUI.koplugin.zip` with the file size.
 
 ## Credits
 
-- Fonts: [Chakra Petch](https://github.com/m4rc1e/Chakra-Petch) and
-  [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono), both under the SIL
-  Open Font License (licence texts in `fonts/`).
+- Fonts: [Oxanium](https://fonts.google.com/specimen/Oxanium),
+  [Chakra Petch](https://github.com/m4rc1e/Chakra-Petch),
+  [Tomorrow](https://fonts.google.com/specimen/Tomorrow),
+  [Rajdhani](https://fonts.google.com/specimen/Rajdhani) and
+  [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono), all under the SIL
+  Open Font License (licence texts in `fonts/`). Oxanium's weights are cut from its variable
+  font, as the licence allows.
 - Built on [KOReader](https://github.com/koreader/koreader) and its CoverBrowser plugin's
   book information.

@@ -11,7 +11,7 @@ local Search = Library:extend()
 
 -- Start with the given query, or ask for one as soon as the screen is up.
 function Search:init(params)
-    Library.init(self)
+    Library.init(self, params)
     params.query = params.query or ""
     if params.query == "" then UIManager:nextTick(function() self:ask() end) end
 end
