@@ -68,11 +68,15 @@ H.step(S, function() H.app().koreaderMenu() end)
 H.step(S, function()
     local m = menu()
     local i = tabIndex(m, function(t) return t.deck end)
-    H.check(i ~= nil, "the Deck tab is there")
-    m:switchTab(i)
+    if require("cyberui/menu").zenosRunning() then
+        H.check(i == nil, "no Deck while ZenOS runs")
+    else
+        H.check(i == 1, "the Deck is the first tab without ZenOS")
+        m:switchTab(i)
+        H.check(#m:deckButtons() >= 4, "the Deck has its controls")
+    end
 end)
 H.step(S, function()
-    H.check(#menu():deckButtons() >= 4, "the Deck has its controls")
     H.shot("sm04-deck")
     local m = menu()
     local qs = tabIndex(m, function(t) return t.id == "quicksettings" end)

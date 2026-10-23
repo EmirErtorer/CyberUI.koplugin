@@ -8,9 +8,9 @@
 --
 -- Tabs other plugins draw themselves (ZenOS's Controls and Launcher) are
 -- built off-screen with a stand-in menu to learn their buttons and actions,
--- then shown as CyberUI buttons that run those same actions. Over home
--- there is also CyberUI's own Deck tab: frontlight, Wi-Fi, night mode,
--- rotation, restart and exit, with the device at a glance.
+-- then shown as CyberUI buttons that run those same actions. Over home,
+-- when ZenOS is not running, CyberUI's own Deck tab comes first: frontlight,
+-- Wi-Fi, night mode, rotation, restart and exit, with the device at a glance.
 
 local Device = require("device")
 local Event = require("ui/event")
@@ -93,6 +93,13 @@ local function fmMenu()
     return m
 end
 
+-- Is ZenOS running? KOReader keeps each loaded plugin under its name, so an
+-- installed but switched off ZenOS is not there.
+function Menu.zenosRunning()
+    local fm = require("apps/filemanager/filemanager").instance
+    return fm ~= nil and fm.zenos ~= nil
+end
+
 -- Can the styled menu be shown over home now?
 function Menu.available()
     local m = fmMenu()
@@ -111,13 +118,17 @@ function Menu.open(opts)
     opts = opts or {}
     local km = opts.km or fmMenu()
     if not km.tab_item_table then km:setUpdateItemTable() end
+    -- CyberUI's Deck comes first, where ZenOS keeps its Controls, unless ZenOS
+    -- is running (installed but switched off counts as not running)
     local tabs = {}
-    for i, t in ipairs(km.tab_item_table) do tabs[i] = t end
-    if not opts.reader then tabs[#tabs + 1] = { id = "cyberui_deck", deck = true } end
-    local m = setmetatable({ km = km, reader = opts.reader, tabs = tabs, stack = {}, trail = {}, page = 1 }, Menu)
+    local deck = not opts.reader and not Menu.zenosRunning()
+    if deck then tabs[1] = { id = "cyberui_deck", deck = true } end
+    local shift = #tabs
+    for i, t in ipairs(km.tab_item_table) do tabs[i + shift] = t end
+    local m = setmetatable({ km = km, reader = opts.reader, tabs = tabs, shift = shift, stack = {}, trail = {}, page = 1 }, Menu)
     m.tab_key = opts.reader and "readermenu_tab_index" or "filemanagermenu_tab_index"
     local last = opts.reader and km.last_tab_index or G_reader_settings:readSetting(m.tab_key)
-    m.tab = math.max(1, math.min(last or 1, #tabs))
+    m.tab = math.max(1, math.min((last or 1) + shift, #tabs))
     m.items = tabs[m.tab]
     -- what item actions call on "the menu"
     m.shim = {
@@ -184,7 +195,9 @@ function Menu:switchTab(i)
     self.tab, self.items, self.stack, self.trail, self.page = i, tab, {}, {}, 1
     self.shim.item_table = tab
     if tab.remember ~= false and not tab.deck then
-        if self.reader then self.km.last_tab_index = i else G_reader_settings:saveSetting(self.tab_key, i) end
+        -- KOReader's own numbering, without the Deck
+        local own = i - self.shift
+        if self.reader then self.km.last_tab_index = own else G_reader_settings:saveSetting(self.tab_key, own) end
     end
     self:show()
 end
