@@ -4,7 +4,7 @@
 set -euo pipefail
 repo="$(cd "$(dirname "$0")/.." && pwd)"
 stage="$(mktemp -d)"
-rsync -a --exclude '.git*' --exclude 'tests' --exclude 'tools' --exclude 'dist' --exclude '.DS_Store' \
+rsync -a --exclude '.git*' --exclude 'tests' --exclude 'tools' --exclude 'dist' --exclude 'docs' --exclude '.DS_Store' \
     "$repo/" "$stage/CyberUI.koplugin/"
 mkdir -p "$repo/dist"
 rm -f "$repo/dist/CyberUI.koplugin.zip"
