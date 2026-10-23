@@ -359,8 +359,13 @@ function App.bookClosed(path)
     Stats.invalidate()
 end
 
--- Open KOReader's own main menu over CyberUI.
+-- Open KOReader's drop-down menu: in CyberUI's style unless the reader chose
+-- KOReader's own, or when the file browser's menu cannot be read.
 function App.koreaderMenu()
+    if Settings.get("styled_menu", true) and require("cyberui/screens/menu").available() then
+        if App.current() and App.current().id ~= "menu" then App.push("menu") end
+        return
+    end
     local FileManager = require("apps/filemanager/filemanager")
     if FileManager.instance and FileManager.instance.menu then
         FileManager.instance.menu:onShowMenu()

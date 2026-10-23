@@ -218,8 +218,11 @@ function SettingsScreen:home()
         row(_("Daily goal"), _("Minutes of reading a day, shown on home and in the log"),
             Controls.Stepper({ value = Settings.get("daily_goal", 30), min = 5, max = 240, step = 5,
                 format = function(v) return v .. " MIN" end, value_w = 76, on_change = function(v) save("daily_goal", v) end })),
-        row(_("KOReader menu"), _("Also opens with a swipe down from the top edge"),
-            Button:new({ label = _("Open"), on_tap = function() App.koreaderMenu() end })),
+        row(_("KOReader menu"), _("In CyberUI's style (off: KOReader's own); also opens with a swipe down from the top"),
+            Layout.Row:new({ gap = Theme.get().space.s, children = {
+                Controls.Toggle:new({ on = Settings.get("styled_menu", true), on_change = function(on) save("styled_menu", on) end }),
+                Button:new({ label = _("Open"), on_tap = function() App.koreaderMenu() end }),
+            } })),
         row(_("File browser"), _("Leave CyberUI for KOReader's own file browser"),
             Button:new({ label = _("Open"), on_tap = function() App.fileBrowser() end })),
     }
