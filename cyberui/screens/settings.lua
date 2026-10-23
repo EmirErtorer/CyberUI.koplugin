@@ -1,8 +1,10 @@
 -- System settings in five sections: Look (colour scheme, light or dark, custom
 -- colours, covers), Fonts (font set, text size), Home (start with CyberUI,
--- daily goal, KOReader menu), Speed (refresh, library index) and About.
+-- the banner's lines, daily goal, KOReader menu), Speed (refresh, library
+-- index) and About.
 
 local App = require("cyberui/app")
+local Banner = require("cyberui/data/banner")
 local Button = require("cyberui/ui/button")
 local Controls = require("cyberui/ui/controls")
 local Custom = require("cyberui/themes/custom")
@@ -19,6 +21,7 @@ local Settings = require("cyberui/settings")
 local Swatch = require("cyberui/ui/swatch")
 local Theme = require("cyberui/theme")
 local Version = require("cyberui/version")
+local util = require("util")
 local _ = require("gettext")
 
 local SettingsScreen = Screen:extend()
@@ -135,6 +138,56 @@ function SettingsScreen:fonts()
     return kids
 end
 
+-- Ask for the reader's handle, then call after().
+local function askHandle(after)
+    App.input(_("Your handle"), Settings.get("handle", ""), function(text)
+        Settings.save("handle", util.trim(text or ""))
+        if after then after() end
+        App.update()
+    end, _("Save"), { placeholder = _("OPERATOR") })
+end
+
+-- Pick what the banner's big line says. Shared with home's long-press.
+function SettingsScreen.pickBannerTitle()
+    local cur = Settings.get("banner_title", "online")
+    local options = {}
+    for _i, p in ipairs(Banner.PRESETS) do
+        options[#options + 1] = { label = p.text, checked = cur == p.id, on_tap = function() save("banner_title", p.id) end }
+    end
+    for _i, l in ipairs(Banner.LIVE) do
+        options[#options + 1] = { label = l.label, sub = l.sub, checked = cur == l.id, on_tap = function()
+            if l.id == "custom" then
+                App.input(_("Banner text"), Settings.get("banner_text", ""), function(text)
+                    Settings.set("banner_text", util.trim(text or ""))
+                    save("banner_title", "custom")
+                end, _("Save"), { placeholder = Banner.PRESETS[1].text })
+            elseif l.id == "greeting" and not Settings.get("handle") then
+                askHandle(function() save("banner_title", "greeting") end)
+            else
+                save("banner_title", l.id)
+            end
+        end }
+    end
+    App.choose({ title = _("Banner"), cols = 2, options = options })
+end
+
+-- Pick what the banner's small line says.
+function SettingsScreen.pickBannerTop()
+    local cur = Settings.get("banner_top", "device")
+    local options = {}
+    for _i, t in ipairs(Banner.TOPS) do
+        options[#options + 1] = { label = t.label, sub = t.sub, checked = cur == t.id, on_tap = function()
+            if t.id == "handle" and not Settings.get("handle") then
+                askHandle(function() save("banner_top", "handle") end)
+            else
+                save("banner_top", t.id)
+            end
+        end }
+    end
+    options[#options + 1] = { label = _("Change handle"), sub = Banner.handle(), icon = "edit", on_tap = function() askHandle() end }
+    App.choose({ title = _("Banner top line"), cols = 2, options = options })
+end
+
 -- The Home section.
 function SettingsScreen:home()
     local is_home = G_reader_settings:readSetting("start_with") == "cyberui"
@@ -144,6 +197,10 @@ function SettingsScreen:home()
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
                 App.update()
             end })),
+        row(_("Banner"), _("The big line at the top of home; hold it there to change it too"),
+            Button:new({ label = _("Change"), on_tap = SettingsScreen.pickBannerTitle })),
+        row(_("Banner top line"), _("The small line above it, and your handle"),
+            Button:new({ label = _("Change"), on_tap = SettingsScreen.pickBannerTop })),
         row(_("Daily goal"), _("Minutes of reading a day, shown on home and in the log"),
             Controls.Stepper({ value = Settings.get("daily_goal", 30), min = 5, max = 240, step = 5,
                 format = function(v) return v .. " MIN" end, value_w = 76, on_change = function(v) save("daily_goal", v) end })),

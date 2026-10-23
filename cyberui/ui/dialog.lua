@@ -55,16 +55,42 @@ function Dialog.confirm(o, close, screen_w)
         child = Layout.Column:new({ gap = th.space.m, align = centred and "center" or "stretch", children = kids }) })
 end
 
--- A list of choices; options are { label, sub, on_tap, checked }.
+-- Lay `items` out `cols` to a row, each made into a button by make(item),
+-- appending the rows to `kids`. An odd last row keeps its tiles the width
+-- of the others.
+local function tiles(kids, items, cols, make)
+    local th = Theme.get()
+    local row
+    for i, item in ipairs(items) do
+        if cols == 1 then
+            kids[#kids + 1] = make(item)
+        else
+            if (i - 1) % cols == 0 then
+                row = Layout.Row:new({ gap = th.space.s, children = {} })
+                kids[#kids + 1] = row
+            end
+            local b = make(item)
+            b.grow = true
+            row.children[#row.children + 1] = b
+        end
+    end
+    if row and #row.children < cols then
+        for _i = #row.children + 1, cols do row.children[#row.children + 1] = Layout.Spacer:new({ grow = true }) end
+    end
+end
+
+-- A list of choices; options are { label, sub, icon, on_tap, checked },
+-- `cols` to a row (1 by default).
 function Dialog.choose(o, close, screen_w)
     local th = Theme.get()
     local kids = { Label:new({ text = o.title, kind = "title" }) }
-    for _i, opt in ipairs(o.options) do
-        kids[#kids + 1] = Button:new({
+    tiles(kids, o.options, o.cols or 1, function(opt)
+        return Button:new({
             label = opt.label, sub = opt.sub, align = "left", icon = opt.checked and "check" or opt.icon,
+            height = (o.cols or 1) > 1 and opt.sub and Theme.px(58) or nil,
             variant = opt.checked and "chip_on" or "soft", on_tap = closing(close, opt.on_tap),
         })
-    end
+    end)
     kids[#kids + 1] = Button:new({ label = o.cancel or _("Close"), variant = "ghost", on_tap = closing(close) })
     return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
         child = Layout.Column:new({ gap = th.space.s, children = kids }) })
@@ -76,23 +102,13 @@ function Dialog.sheet(o, close, screen_w)
     local th = Theme.get()
     local kids = { Label:new({ text = o.title, kind = "title", lines = 2 }) }
     if o.sub then kids[#kids + 1] = Label:new({ text = o.sub, kind = "small", color = "muted" }) end
-    local cols = o.cols or 2
-    local row
-    for i, a in ipairs(o.actions) do
-        if (i - 1) % cols == 0 then
-            row = Layout.Row:new({ gap = th.space.s, children = {} })
-            kids[#kids + 1] = row
-        end
-        row.children[#row.children + 1] = Button:new({
-            icon = a.icon, label = a.label, sub = a.sub, align = "left", grow = true,
+    tiles(kids, o.actions, o.cols or 2, function(a)
+        return Button:new({
+            icon = a.icon, label = a.label, sub = a.sub, align = "left",
             height = a.sub and Theme.px(58) or nil,
             variant = a.danger and "danger" or "soft", on_tap = closing(close, a.on_tap),
         })
-    end
-    -- an odd last row keeps its tile the width of the others
-    if row and #row.children < cols then
-        for _i = #row.children + 1, cols do row.children[#row.children + 1] = Layout.Spacer:new({ grow = true }) end
-    end
+    end)
     kids[#kids + 1] = Button:new({ label = o.cancel or _("Close"), variant = "ghost", on_tap = closing(close) })
     return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
         child = Layout.Column:new({ gap = th.space.s, children = kids }) })

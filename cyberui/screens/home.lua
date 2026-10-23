@@ -4,13 +4,13 @@
 local Actions = require("cyberui/actions")
 local Addons = require("cyberui/apps/addons")
 local App = require("cyberui/app")
+local Banner = require("cyberui/data/banner")
 local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
 local Collections = require("cyberui/data/collections")
 local Cover = require("cyberui/ui/cover")
 local Deco = require("cyberui/ui/deco")
 local Format = require("cyberui/format")
-local DeviceInfo = require("cyberui/data/device")
 local History = require("cyberui/data/history")
 local InkAway = require("cyberui/apps/inkaway")
 local Icon = require("cyberui/ui/icon")
@@ -30,16 +30,30 @@ local _ = require("gettext")
 
 local Home = Screen:extend()
 
--- The identity strip: logo, device line, title and a barcode.
+-- A fresh highlight each time home is opened.
+function Home:init()
+    Banner.shuffle()
+end
+
+-- Shown again after a book: a fresh highlight too.
+function Home:onRaise()
+    Banner.shuffle()
+end
+
+-- The identity strip: logo, the banner's lines and a barcode. Holding it
+-- changes what the banner says.
 local function identity()
     local th = Theme.get()
+    local top = Banner.top()
+    local title, quote = Banner.title()
+    local lines = {}
+    if top then lines[1] = Label:new({ text = top, kind = "micro", color = "muted" }) end
+    lines[#lines + 1] = quote and Label:new({ text = title, kind = "body", lines = 2 }) or Label:new({ text = title, kind = "title" })
     return Panel:new({ shape = "chamfer", corners = "t", pad = { th.space.s, th.space.m, th.space.s, th.space.l },
+        on_hold = function() require("cyberui/screens/settings").pickBannerTitle() end,
         child = Layout.Row:new({ gap = th.space.m, children = {
             Icon:new({ name = "book", size = 28, color = "accent" }),
-            Layout.Column:new({ grow = true, children = {
-                Label:new({ text = "CYBERDECK // " .. DeviceInfo.name() .. " // " .. _("OPERATOR ACCESS"), kind = "micro", color = "muted" }),
-                Label:new({ text = _("READER ONLINE"), kind = "title" }),
-            } }),
+            Layout.Column:new({ grow = true, children = lines }),
             Deco.Barcode:new({ width = Theme.px(96), height = Theme.px(32) }),
         } }) })
 end
@@ -160,7 +174,7 @@ local function footer()
     local th = Theme.get()
     return Layout.Row:new({ gap = th.space.m, children = {
         Deco.Barcode:new({ width = Theme.px(84), height = Theme.px(18) }),
-        Label:new({ text = "ROOT@" .. DeviceInfo.name() .. ":~#", kind = "mono_small", grow = true }),
+        Label:new({ text = "ROOT@" .. Banner.device() .. ":~#", kind = "mono_small", grow = true }),
         Label:new({ text = "CYBERUI " .. Version, kind = "micro", color = "muted" }),
     } })
 end
