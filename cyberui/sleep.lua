@@ -1,58 +1,93 @@
--- The ASCII sleep screen: when it is on (the default), the screen KOReader
--- shows while the reader sleeps is the last book's cover drawn as character
--- art, whatever sleep screen KOReader is set to, except "disable" and books
--- marked to keep their cover off the sleep screen. Done by running after
--- KOReader's own Screensaver:setup, which has already loaded the cover.
+-- The ASCII sleep screen: whatever sleep screen KOReader is set to show is
+-- drawn as character art, as chosen in System > Covers: book covers only
+-- (the default), custom and random images only, everything (also the book
+-- status page, reading progress and other plugins' sleep screens), or off.
+-- KOReader builds its sleep screen as a main picture with the message and
+-- any overlay message on top; only the main picture is redrawn, so those
+-- messages stay crisp text, and it is still a single screen refresh.
 
 local Settings = require("cyberui/settings")
+local _ = require("gettext")
 
 local Sleep = {}
 
+-- The choices, in menu order.
+Sleep.MODES = {
+    { id = "covers", name = _("Book covers") },
+    { id = "images", name = _("Custom images") },
+    { id = "all", name = _("Everything") },
+    { id = "off", name = _("Off") },
+}
+
 local installed = false
 
--- The cover of the last book as KOReader's sleep screen would load it, or nil.
-local function lastCover(saver)
-    local path = G_reader_settings:readSetting("lastfile")
-    if not path or require("libs/libkoreader-lfs").attributes(path, "mode") ~= "file" then return nil end
-    local ds = saver.ui.doc_settings or require("docsettings"):open(path)
-    if ds:isTrue("exclude_screensaver") then return nil end
-    if saver.screensaver_type == "cover" and saver.image then return saver.image, path, false end
-    local ok, img = pcall(function() return saver.ui.bookinfo:getCoverImage(saver.ui.document, path) end)
-    if ok and img then return img, path, true end
-    return nil
+-- The chosen mode (an older on/off setting turned off means off).
+function Sleep.mode()
+    local m = Settings.get("ascii_sleep_mode")
+    if m then return m end
+    return Settings.get("ascii_sleep", true) == false and "off" or "covers"
 end
 
--- Swap KOReader's sleep image for the ASCII one.
-local function apply(saver)
-    if not Settings.get("ascii_sleep", true) or not saver.ui or saver.screensaver_type == "disable" then return end
-    local cover, path, own = lastCover(saver)
-    if not cover then return end
+-- Is this sleep screen one the mode redraws?
+local function wanted(saver_type, mode)
+    if mode == "all" then return true end
+    if mode == "covers" then return saver_type == "cover" end
+    if mode == "images" then return saver_type == "random_image" end
+    return false
+end
+
+-- The main picture inside the sleep screen's layers, and the layer holding
+-- it (nil when it is the top widget). Messages sit above it in the layers.
+local function mainOf(widget)
+    local OverlapGroup = require("ui/widget/overlapgroup")
+    local parent, w = nil, widget
+    while w and getmetatable(w) == OverlapGroup do parent, w = w, w[1] end
+    return w, parent
+end
+
+-- Draw the main picture as ASCII and put it in its place.
+local function redraw(widget, holder)
+    local Blitbuffer = require("ffi/blitbuffer")
     local Screen = require("device").screen
-    local RenderImage = require("ui/renderimage")
+    local ImageWidget = require("ui/widget/imagewidget")
     local w, h = Screen:getWidth(), Screen:getHeight()
-    local cw, ch = cover:getWidth(), cover:getHeight()
-    -- fit the cover to the screen, leaving a margin for the art to breathe
-    local scale = math.min(w * 0.92 / cw, h * 0.92 / ch)
-    local scaled = RenderImage:scaleBlitBuffer(cover, math.max(1, math.floor(cw * scale)), math.max(1, math.floor(ch * scale)), own)
-    local title = require("cyberui/data/books").info(path).title
-    local art = require("cyberui/gfx/ascii").render(scaled, w, h, { size = 9, title = title })
-    scaled:free()
-    if saver.image and saver.image ~= cover then saver.image:free() end
-    if saver.image == cover then cover:free() end
-    saver.screensaver_type = "cover"
-    saver.image, saver.image_file = art, nil
+    local main, parent = mainOf(widget)
+    -- a message alone (no picture under it) stays as it is
+    if not main or main.vertical_position then return end
+    local bb = Blitbuffer.new(w, h, Screen.bb:getType())
+    bb:fill(Blitbuffer.COLOR_WHITE)
+    main:paintTo(bb, 0, 0)
+    local title
+    local lastfile = G_reader_settings:readSetting("lastfile")
+    if lastfile then title = require("cyberui/data/books").info(lastfile).title end
+    local art = require("cyberui/gfx/ascii").render(bb, w, h, { size = 9, title = title })
+    bb:free()
+    if main.free then main:free() end
+    local image = ImageWidget:new({ image = art, image_disposable = true, width = w, height = h })
+    if parent then parent[1] = image else holder.widget = image end
 end
 
--- Run after KOReader's sleep screen setup from now on (once per start).
+-- Redraw KOReader's sleep screen as it is about to be shown (once per start).
 function Sleep.install()
     if installed then return end
     installed = true
     local Screensaver = require("ui/screensaver")
-    local setup = Screensaver.setup
-    Screensaver.setup = function(saver, ...)
-        setup(saver, ...)
-        local ok, err = pcall(apply, saver)
-        if not ok then require("logger").warn("CyberUI sleep screen:", err) end
+    local ScreenSaverWidget = require("ui/widget/screensaverwidget")
+    local show = Screensaver.show
+    Screensaver.show = function(saver, ...)
+        local mode = Sleep.mode()
+        if not wanted(saver.screensaver_type, mode) then return show(saver, ...) end
+        local new = ScreenSaverWidget.new
+        ScreenSaverWidget.new = function(cls, o)
+            if o and o.widget then
+                local ok, err = pcall(redraw, o.widget, o)
+                if not ok then require("logger").warn("CyberUI sleep screen:", err) end
+            end
+            return new(cls, o)
+        end
+        local ok, err = pcall(show, saver, ...)
+        ScreenSaverWidget.new = new
+        if not ok then error(err) end
     end
 end
 

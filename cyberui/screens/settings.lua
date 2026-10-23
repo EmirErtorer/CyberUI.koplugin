@@ -1,5 +1,5 @@
 -- System settings in six sections: Look (colour scheme, light or dark, custom
--- colours), Covers (style, characters, size, sleep screen), Fonts (the font
+-- colours), Covers (style, characters, size, ASCII sleep screen), Fonts (the font
 -- in use, the font page, text size), Home (start with CyberUI, the banner's
 -- lines, top bar, daily goal, KOReader menu), Speed (refresh, library index)
 -- and About.
@@ -22,6 +22,7 @@ local Panel = require("cyberui/ui/panel")
 local Registry = require("cyberui/theme/registry")
 local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
+local Sleep = require("cyberui/sleep")
 local Swatch = require("cyberui/ui/swatch")
 local Theme = require("cyberui/theme")
 local Version = require("cyberui/version")
@@ -147,8 +148,12 @@ function SettingsScreen:covers()
         Label:new({ text = _("SIZE IN THE LIBRARY"), kind = "label" }),
         Controls.Segmented({ options = { { "S", "s" }, { "M", "m" }, { "L", "l" }, { "XL", "xl" } },
             value = Settings.get("cover_size", "m"), kind = "label", on_change = function(v) save("cover_size", v) end }),
-        row(_("ASCII sleep screen"), _("The last book's cover in ASCII while the reader sleeps"),
-            Controls.Toggle:new({ on = Settings.get("ascii_sleep", true), on_change = function(on) save("ascii_sleep", on) end })),
+        Label:new({ text = _("ASCII SLEEP SCREEN"), kind = "label" }),
+        Controls.Segmented({ options = (function()
+                local o = {}
+                for _i, m in ipairs(Sleep.MODES) do o[#o + 1] = { m.name, m.id } end
+                return o
+            end)(), value = Sleep.mode(), kind = "label", on_change = function(v) save("ascii_sleep_mode", v) end }),
     }
     return kids
 end

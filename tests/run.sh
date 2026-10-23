@@ -22,7 +22,7 @@ else
 fi
 if [ "${1:-}" = "--e2e" ]; then
     out="$(mktemp -d)"
-    for scen in walkthrough flows menus exits explorer stylemenu; do
+    for scen in walkthrough flows menus exits explorer stylemenu sleep; do
         run "$scen" bash -c "'$repo/tests/e2e/run.sh' '$repo/tests/e2e/$scen.lua' '$out/$scen' | tail -1 | grep -q ' 0 failed'"
     done
     run restart bash -c "E2E_NO_DIR=1 HOME_SETUP='$repo/tests/e2e/setup_restart.sh' '$repo/tests/e2e/run.sh' '$repo/tests/e2e/restart.lua' '$out/restart' | tail -1 | grep -q ' 0 failed'"

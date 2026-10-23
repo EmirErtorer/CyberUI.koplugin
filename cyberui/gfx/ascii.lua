@@ -53,6 +53,10 @@ function Ascii.set()
     return by_id[Settings.get("ascii_set", "braille")] or Ascii.SETS[1]
 end
 
+-- Staggered thresholds for the eight braille dots of a cell (an ordered
+-- dither), so mid-tones show as partial patterns instead of vanishing.
+local DITHER = { 0.06, 0.56, 0.31, 0.81, 0.69, 0.19, 0.94, 0.44 }
+
 local MAX = 36
 local cache = {}   -- key -> { bb, used }
 local count, tick = 0, 0
@@ -154,7 +158,7 @@ function Ascii.render(img, w, h, opts)
             local x = ox + c * cw
             if set.dots then
                 for k, p in ipairs(points) do
-                    if level(cell.sub[k]) > 0.5 then
+                    if level(cell.sub[k]) > DITHER[k] then
                         Paint.fill(out, x + math.floor(cw * p[1]) - math.floor(dot / 2), y + math.floor(ch * p[2]) - math.floor(dot / 2), dot, dot, color)
                     end
                 end
