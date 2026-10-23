@@ -78,22 +78,37 @@ end
 
 local last_cpu   -- { busy, total } from the previous reading
 
--- Processor load since the last reading (or since boot), clock, cores,
--- model and load average, plus memory and KOReader's own share.
-function Sysinfo.core()
-    local c = {}
+-- Processor load (0 to 1) since the last reading, or since boot; nil
+-- without /proc/stat.
+function Sysinfo.cpuLoad()
     local line = readLine("/proc/stat")
-    if line then
-        local n = {}
-        for v in line:gmatch("%d+") do n[#n + 1] = tonumber(v) end
-        local total, idle = 0, (n[4] or 0) + (n[5] or 0)
-        for _i, v in ipairs(n) do total = total + v end
-        local busy = total - idle
-        local d_total = last_cpu and total - last_cpu.total or total
-        local d_busy = last_cpu and busy - last_cpu.busy or busy
-        if d_total > 0 then c.load = d_busy / d_total end
-        last_cpu = { busy = busy, total = total }
-    end
+    if not line then return nil end
+    local n = {}
+    for v in line:gmatch("%d+") do n[#n + 1] = tonumber(v) end
+    local total, idle = 0, (n[4] or 0) + (n[5] or 0)
+    for _i, v in ipairs(n) do total = total + v end
+    local busy = total - idle
+    local d_total = last_cpu and total - last_cpu.total or total
+    local d_busy = last_cpu and busy - last_cpu.busy or busy
+    last_cpu = { busy = busy, total = total }
+    if d_total > 0 then return d_busy / d_total end
+    return nil
+end
+
+-- Memory used and total in MB, or nil.
+function Sysinfo.memory()
+    local mem = readAll("/proc/meminfo")
+    if not mem then return nil end
+    local total = tonumber(mem:match("MemTotal:%s*(%d+)"))
+    local avail = tonumber(mem:match("MemAvailable:%s*(%d+)") or mem:match("MemFree:%s*(%d+)"))
+    if not (total and avail) then return nil end
+    return (total - avail) / 1024, total / 1024
+end
+
+-- Processor load, clock, cores, model and load average, plus memory and
+-- KOReader's own share.
+function Sysinfo.core()
+    local c = { load = Sysinfo.cpuLoad() }
     local khz = tonumber(readLine("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq") or "")
     if khz then c.mhz = math.floor(khz / 1000 + 0.5) end
     local info = readAll("/proc/cpuinfo")
@@ -107,12 +122,7 @@ function Sysinfo.core()
     end
     local la = readLine("/proc/loadavg")
     if la then c.loadavg = la:match("^(%S+ %S+ %S+)") end
-    local mem = readAll("/proc/meminfo")
-    if mem then
-        local total = tonumber(mem:match("MemTotal:%s*(%d+)"))
-        local avail = tonumber(mem:match("MemAvailable:%s*(%d+)") or mem:match("MemFree:%s*(%d+)"))
-        if total and avail then c.mem_total, c.mem_used = total / 1024, (total - avail) / 1024 end
-    end
+    c.mem_used, c.mem_total = Sysinfo.memory()
     local me = readAll("/proc/self/status")
     if me then
         local rss = tonumber(me:match("VmRSS:%s*(%d+)"))
