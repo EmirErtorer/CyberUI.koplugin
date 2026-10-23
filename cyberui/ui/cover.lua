@@ -39,8 +39,15 @@ function Cover.imagesOn()
     return Settings.get("cover_images", false)
 end
 
+-- How deep the tile's top-right corner is cut, or nil when the style has
+-- no chamfers.
+function Cover:cut(th)
+    if not th.decor.chamfer then return nil end
+    return self.w >= Theme.px(120) and th.size.cut or th.size.cut_small
+end
+
 -- Draw the tile: image or data card (an empty slot is just its frame), then
--- badge and folder tab.
+-- badge and folder tab, then the cut corner over all of it.
 function Cover:draw(bb, x, y)
     local th = Theme.get()
     local w, h = self.w, self.h
@@ -56,9 +63,15 @@ function Cover:draw(bb, x, y)
         end
     end
     if not drawn and (self.path or self.title) then self:drawCard(bb, x, y, th) end
-    Paint.frame(bb, x, y, w, h, stroke, th.c.ink)
     if self.folder then self:drawFolderTab(bb, x, y, th) end
     if self.badge then self:drawBadge(bb, x, y, th) end
+    local cut = self:cut(th)
+    if cut then
+        Paint.cutCorners(bb, x, y, w, h, cut, "r", th.c.bg)
+        Paint.chamferFrame(bb, x, y, w, h, cut, "r", stroke, th.c.ink)
+    else
+        Paint.frame(bb, x, y, w, h, stroke, th.c.ink)
+    end
 end
 
 -- The typeset card: pattern, then a box with title and author at the bottom.
@@ -87,11 +100,12 @@ function Cover:drawCard(bb, x, y, th)
     end
 end
 
--- A small label in the top-right corner.
+-- A small label in the top-right corner, kept clear of the cut corner.
 function Cover:drawBadge(bb, x, y, th)
     local s = Text.fit("micro", self.badge)
     local pad = Theme.px(4)
-    local bw = Text.width("micro", s) + 2 * pad
+    local pad_r = math.max(pad, self:cut(th) or 0)
+    local bw = Text.width("micro", s) + pad + pad_r
     local bh = Text.height("micro") + Theme.px(2)
     local fill = self.badge_on and th.c.accent or th.c.ink
     local fg = self.badge_on and th.c.on_accent or th.c.on_ink

@@ -69,6 +69,20 @@ function Paint.chamferFrame(bb, x, y, w, h, cut, spec, t, c)
     end
 end
 
+-- Paint the corners a chamfer cuts away with `c`, trimming whatever is
+-- already drawn in the box (an image) to the chamfered shape.
+function Paint.cutCorners(bb, x, y, w, h, cut, spec, c)
+    cut = math.min(cut, floor(w / 2), floor(h / 2))
+    local tl, tr, br, bl = corners(spec)
+    for i = 0, cut - 1 do
+        local inset = cut - i
+        if tl then fill(bb, x, y + i, inset, 1, c) end
+        if tr then fill(bb, x + w - inset, y + i, inset, 1, c) end
+        if bl then fill(bb, x, y + h - 1 - i, inset, 1, c) end
+        if br then fill(bb, x + w - inset, y + h - 1 - i, inset, 1, c) end
+    end
+end
+
 -- A chamfered box filled with `fill_c` and outlined with `line_c`.
 function Paint.chamferBox(bb, x, y, w, h, cut, spec, t, fill_c, line_c)
     if fill_c then Paint.chamfer(bb, x, y, w, h, cut, spec, fill_c) end
