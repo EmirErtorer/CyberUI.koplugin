@@ -226,12 +226,12 @@ function SettingsScreen:home()
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
                 App.update()
             end })),
-        row(_("Banner"), _("The big line at the top of home; hold it there to change it too"),
-            Button:new({ label = _("Change"), on_tap = SettingsScreen.pickBannerTitle })),
-        row(_("Banner top line"), _("The small line above it, and your handle"),
-            Button:new({ label = _("Change"), on_tap = SettingsScreen.pickBannerTop })),
         row(_("Top bar"), _("The tag and the readouts across the top of every screen"),
             Button:new({ label = _("Change"), on_tap = function() App.push("topbar") end })),
+        row(_("Banner top line"), _("The small line above the banner, and your handle"),
+            Button:new({ label = _("Change"), on_tap = SettingsScreen.pickBannerTop })),
+        row(_("Banner"), _("The big line at the top of home; hold it there to change it too"),
+            Button:new({ label = _("Change"), on_tap = SettingsScreen.pickBannerTitle })),
         row(_("Daily goal"), _("Minutes of reading a day, shown on home and in the log"),
             Controls.Stepper({ value = Settings.get("daily_goal", 30), min = 5, max = 240, step = 5,
                 format = function(v) return v .. " MIN" end, value_w = 76, on_change = function(v) save("daily_goal", v) end })),

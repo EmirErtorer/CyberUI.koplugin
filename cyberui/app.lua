@@ -27,7 +27,7 @@ App.TABS = {
     { id = "home", label = _("Home"), icon = "home" },
     { id = "library", label = _("Library"), icon = "library" },
     { id = "collections", label = _("Caches"), icon = "collections" },
-    { id = "history", label = _("Log"), icon = "stats" },
+    { id = "history", label = _("Log"), icon = "history" },
     { id = "settings", label = _("System"), icon = "settings" },
 }
 

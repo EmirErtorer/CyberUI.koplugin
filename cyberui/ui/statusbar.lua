@@ -16,7 +16,7 @@ local _ = require("gettext")
 local StatusBar = {}
 
 StatusBar.TAG = "CYBR//DECK"
-StatusBar.DEFAULT = { "clock", "wifi", "battery" }
+StatusBar.DEFAULT = { "clock", "battery", "cpu", "mem" }
 StatusBar.MAX = 6
 
 -- Percent text for a fraction, or nil.
