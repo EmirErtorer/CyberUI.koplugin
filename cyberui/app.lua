@@ -3,6 +3,7 @@
 -- and toasts, ticks the clock, and hands books to the reader and back.
 
 local Device = require("device")
+local Geom = require("ui/geometry")
 local UIManager = require("ui/uimanager")
 local Books = require("cyberui/data/books")
 local Covers = require("cyberui/data/covers")
@@ -13,6 +14,7 @@ local Settings = require("cyberui/settings")
 local Stats = require("cyberui/data/stats")
 local Theme = require("cyberui/theme")
 local Dialog = require("cyberui/ui/dialog")
+local TextInput = require("cyberui/ui/textinput")
 local StatusBar = require("cyberui/ui/statusbar")
 local _ = require("gettext")
 
@@ -87,11 +89,16 @@ function App.render(refresh)
     UIManager:setDirty(host, refresh or viewRefresh())
 end
 
--- Rebuild the current screen but refresh only `region` (a Geom); nil means all.
+-- Rebuild the current screen but refresh only `region` (a Geom). Without
+-- one, the whole screen, or only what is above a docked keyboard.
 function App.update(region)
     if not host then return end
     build()
     host:markRepainted()
+    local o = host.overlay
+    if not region and o and o.dock == "bottom" and o.h then
+        region = Geom:new({ x = 0, y = 0, w = host.dimen.w, h = host.dimen.h - o.h })
+    end
     UIManager:setDirty(host, "ui", region or host.dimen)
 end
 
@@ -283,24 +290,46 @@ function App.toast(text)
     UIManager:scheduleIn(2, toast_timer)
 end
 
--- Ask for a line of text with KOReader's keyboard; on_done(text) on confirm.
-function App.input(title, value, on_done, ok_label)
-    local InputDialog = require("ui/widget/inputdialog")
-    local dlg
-    dlg = InputDialog:new({
-        title = title,
-        input = value or "",
-        buttons = { {
-            { text = _("Cancel"), id = "close", callback = function() UIManager:close(dlg) end },
-            { text = ok_label or _("OK"), is_enter_default = true, callback = function()
-                local text = dlg:getInputText()
-                UIManager:close(dlg)
-                on_done(text)
-            end },
-        } },
-    })
-    UIManager:show(dlg)
-    dlg:onShowKeyboard()
+-- Ask for a line of text with CyberUI's keyboard; on_done(text) on confirm.
+-- opts: { placeholder, live = fn(text) called after every change }.
+function App.input(title, value, on_done, ok_label, opts)
+    opts = opts or {}
+    local state = { text = value or "", layer = "abc", shift = false }
+    local field
+    local show
+    -- The text changed: redraw the field alone, and tell a live caller once
+    -- typing pauses (each update refreshes the screen above the keyboard).
+    local live_task = function() if opts.live then opts.live(state.text) end end
+    local function changed()
+        App.repaint(field)
+        if opts.live then
+            UIManager:unschedule(live_task)
+            UIManager:scheduleIn(0.4, live_task)
+        end
+    end
+    show = function()
+        App.dialog(function(close, screen_w)
+            local panel
+            panel, field = TextInput.build({
+                title = title, placeholder = opts.placeholder, ok_label = ok_label, state = state, screen_w = screen_w,
+                on_char = function(c)
+                    state.text = state.text .. c
+                    if state.shift then state.shift = false; show() end
+                    changed()
+                end,
+                on_back = function()
+                    state.text = state.text:gsub("[%z\1-\127\194-\244][\128-\191]*$", "")
+                    changed()
+                end,
+                on_enter = function() UIManager:unschedule(live_task); close(); on_done(state.text) end,
+                on_cancel = function() UIManager:unschedule(live_task); close() end,
+                on_layer = function(layer) state.layer, state.shift = layer, false; show() end,
+                on_shift = function() state.shift = not state.shift; show() end,
+            })
+            return panel
+        end)
+    end
+    show()
 end
 
 -- Open a book in the reader; CyberUI stays underneath to come back to.

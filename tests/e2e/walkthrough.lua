@@ -83,12 +83,13 @@ go("System", nil, "settings")
 -- search
 H.step(S, function() H.app().push("search") end)
 H.step(S + 0.6, function()
-    local t = H.top()
-    H.check(t and t.getInputText ~= nil, "search opens the keyboard")
-    if t and t.setInputText then
-        t:setInputText("marx")
-        for _i, row in ipairs(t.buttons or {}) do for _j, b in ipairs(row) do if b.is_enter_default then b.callback() end end end
-    end
+    H.check(H.typed() == "", "search opens CyberUI's keyboard")
+    H.typeKeys("marx")
+end)
+H.step(1, function()
+    H.check(H.find("> marx") ~= nil, "results follow the typing before Search is tapped")
+    H.shot("16b-search-typing")
+    H.tap("Search")
 end)
 H.step(S, function()
     H.check(H.screen() == "search", "search results shown")

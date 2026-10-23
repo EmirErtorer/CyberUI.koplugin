@@ -128,6 +128,21 @@ function Drive:init()
     function H.swipe(dir, x, y)
         send({ ges = "swipe", direction = dir, distance = 200, pos = at(x, y) })
     end
+    -- The text being typed in CyberUI's input panel, or nil when none is open.
+    function H.typed()
+        local field = H.findWhere(function(el) return el.state ~= nil and el.state.text ~= nil end)
+        return field and field.state.text
+    end
+    -- Type `text` by tapping the keys of CyberUI's keyboard (space taps the
+    -- space bar, capitals use shift), then tap `ok` when given.
+    function H.typeKeys(text, ok)
+        for ch in text:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+            if ch == " " then H.tap("space")
+            elseif ch:match("%u") then H.tap("⇧"); H.tap(ch)
+            else H.tap(ch) end
+        end
+        if ok then H.tap(ok) end
+    end
     -- Send a KOReader event (as a gesture action would).
     function H.event(name, ...) UIManager:sendEvent(Event:new(name, ...)) end
 

@@ -106,6 +106,26 @@ function Text.fromCodepoints(cps)
     return table.concat(parts)
 end
 
+-- `s` as shown for `kind`, its start cut with an ellipsis so its end fits
+-- `max_w` (a text field shows where typing happens).
+function Text.fitTail(kind, s, max_w)
+    local spec = specOf(kind)
+    s = Text.shown(kind, s)
+    if measure(spec, s) <= max_w then return s end
+    local cps = codepoints(s)
+    local function suffix(n)
+        local chars = {}
+        for i = #cps - n + 1, #cps do chars[#chars + 1] = cps[i] end
+        return Text.fromCodepoints(chars)
+    end
+    local lo, hi = 0, #cps
+    while lo < hi do
+        local mid = math.ceil((lo + hi) / 2)
+        if measure(spec, ELLIPSIS .. suffix(mid)) <= max_w then lo = mid else hi = mid - 1 end
+    end
+    return ELLIPSIS .. suffix(lo)
+end
+
 -- `s` as shown for `kind`, cut with an ellipsis to fit `max_w` when given.
 function Text.fit(kind, s, max_w)
     local spec = specOf(kind)

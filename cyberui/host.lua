@@ -53,6 +53,7 @@ end
 -- Where the overlay sits: centred.
 function Host:overlayPos()
     local o = self.overlay
+    if o.dock == "bottom" then return 0, self.dimen.h - o.h end
     return math.floor((self.dimen.w - o.w) / 2), math.floor((self.dimen.h - o.h) / 2)
 end
 
@@ -77,12 +78,14 @@ function Host:paintAll(bb, x, y)
     Paint.fill(bb, x, y, self.dimen.w, self.dimen.h, Theme.get().c.bg)
     if self.root then self.root:paint(bb, x, y) end
     if self.overlay then
-        -- a hard offset shadow lifts the dialog off the screen behind it
+        -- a hard offset shadow lifts a centred dialog off the screen behind it
         local ox, oy = self:overlayPos()
         local th = Theme.get()
         local o = self.overlay
         local off = th.space.s
-        if o.shape == "chamfer" and th.decor.chamfer then
+        if o.dock then
+            off = 0
+        elseif o.shape == "chamfer" and th.decor.chamfer then
             Paint.chamfer(bb, x + ox + off, y + oy + off, o.w, o.h, th.size[o.cut] or o.cut, o.corners, th.c.ink)
         else
             Paint.fill(bb, x + ox + off, y + oy + off, o.w, o.h, th.c.ink)

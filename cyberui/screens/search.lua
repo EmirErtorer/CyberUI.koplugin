@@ -16,13 +16,17 @@ function Search:init(params)
     if params.query == "" then UIManager:nextTick(function() self:ask() end) end
 end
 
--- Ask for a new query with the keyboard.
+-- Set the query and show its results.
+function Search:setQuery(text)
+    self.params.query = text or ""
+    self.page = 1
+    App.update()
+end
+
+-- Type a new query; the results follow every letter.
 function Search:ask()
-    App.input(_("Search the library"), self.params.query, function(text)
-        self.params.query = text or ""
-        self.page = 1
-        App.render("ui")
-    end, _("Search"))
+    App.input(_("Search the library"), self.params.query, function(text) self:setQuery(text) end, _("Search"),
+        { placeholder = _("title, author or file name"), live = function(text) self:setQuery(text) end })
 end
 
 -- The query field: tap it to type a new search.
