@@ -144,7 +144,9 @@ local function activeFile(cur)
             Layout.Column:new({ grow = true, gap = th.space.s, children = {
                 Label:new({ text = info.title, kind = "display", lines = 2 }),
                 Label:new({ text = who, kind = "body", color = "muted" }),
-                Progress:new({ value = st.percent }),
+                -- hold the bar to change its style
+                Panel:new({ shape = "none", pad = { Theme.px(4), 0 }, on_hold = function() Progress.pickStyle() end,
+                    child = Progress:new({ value = st.percent, book = true }) }),
                 Layout.Row:new({ children = {
                     Label:new({ text = string.format(_("%d%% DECRYPTED"), pct), kind = "mono", grow = true }),
                     Label:new({ text = pages, kind = "mono", color = "muted" }),

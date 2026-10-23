@@ -89,7 +89,7 @@ function Dossier:build()
             Label:new({ text = string.format(_("DECRYPTED %d%%"), pct), kind = "mono", grow = true }),
             Label:new({ text = STATUS[st.status] or "", kind = "mono", color = "muted" }),
         } }),
-        Progress:new({ value = st.percent, segments = 30 }),
+        Progress:new({ value = st.percent, segments = 30, book = true }),
     } })
 
     local synopsis = Panel:new({ shape = "brackets", label = _("SYNOPSIS"), pad = th.space.l, grow = true,
