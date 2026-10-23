@@ -43,7 +43,7 @@ end
 -- Of the candidates, the one that reads best on `bg`.
 function Color.readableOn(bg, ...)
     local best, best_ratio
-    for _, c in ipairs({ ... }) do
+    for _i, c in ipairs({ ... }) do
         local ratio = Color.contrast(bg, c)
         if not best_ratio or ratio > best_ratio then best, best_ratio = c, ratio end
     end

@@ -28,7 +28,7 @@ function Column:layout(w, h)
     local inner_w = self.w - pl - pr
     local gap = self.gap or 0
     local used, growers = 0, {}
-    for _, c in ipairs(self.children) do
+    for _i, c in ipairs(self.children) do
         if c.grow then
             growers[#growers + 1] = c
         else
@@ -68,7 +68,7 @@ function Column:naturalWidth()
     if self.width then return self.width end
     local _t, r, _b, l = pads(self.pad)
     local widest = 0
-    for _, c in ipairs(self.children) do
+    for _i, c in ipairs(self.children) do
         local cw = c:naturalWidth()
         if not cw then return nil end
         widest = math.max(widest, cw)
@@ -83,7 +83,7 @@ function Column:paint(bb, x, y)
     local pt, pr, _pb, pl = pads(self.pad)
     local inner_w = self.w - pl - pr
     local cy = y + pt
-    for _, c in ipairs(self.children) do
+    for _i, c in ipairs(self.children) do
         local cx = x + pl
         if self.align == "center" then cx = cx + math.floor((inner_w - c.w) / 2)
         elseif self.align == "end" then cx = cx + inner_w - c.w end
@@ -106,7 +106,7 @@ function Row:layout(w, h)
     local gap = self.gap or 0
     local used, growers = gap * math.max(0, #self.children - 1), {}
     local stretch = self.valign == "stretch"
-    for _, c in ipairs(self.children) do
+    for _i, c in ipairs(self.children) do
         local cw = c.width or (not c.grow and c:naturalWidth())
         if cw then
             c:layout(cw, c.height or (stretch and inner_h) or nil)
@@ -123,10 +123,10 @@ function Row:layout(w, h)
     end
     if not h then
         local tallest = 0
-        for _, c in ipairs(self.children) do tallest = math.max(tallest, c.h) end
+        for _i, c in ipairs(self.children) do tallest = math.max(tallest, c.h) end
         h = tallest + pt + pb
         if stretch then
-            for _, c in ipairs(self.children) do
+            for _i, c in ipairs(self.children) do
                 if not c.height then c:layout(c.w, tallest) end
             end
         end
@@ -139,7 +139,7 @@ function Row:naturalWidth()
     if self.width then return self.width end
     local _t, r, _b, l = pads(self.pad)
     local total = (self.gap or 0) * math.max(0, #self.children - 1)
-    for _, c in ipairs(self.children) do
+    for _i, c in ipairs(self.children) do
         local cw = not c.grow and c:naturalWidth()
         if not cw then return nil end
         total = total + cw
@@ -154,7 +154,7 @@ function Row:paint(bb, x, y)
     local pt, _pr, pb, pl = pads(self.pad)
     local inner_h = self.h - pt - pb
     local cx = x + pl
-    for _, c in ipairs(self.children) do
+    for _i, c in ipairs(self.children) do
         local cy = y + pt
         local va = self.valign or "center"
         if va == "center" then cy = cy + math.floor((inner_h - c.h) / 2)
@@ -172,7 +172,7 @@ Layout.Overlay = Overlay
 function Overlay:layout(w, h)
     self.w = self.width or w or 0
     local tallest = 0
-    for _, c in ipairs(self.children) do
+    for _i, c in ipairs(self.children) do
         if c.place then c:layout(c.width or c:naturalWidth(), c.height)
         else c:layout(self.w, self.height or h) end
         tallest = math.max(tallest, c.h)
@@ -184,7 +184,7 @@ end
 function Overlay:paint(bb, x, y)
     self.x, self.y = x, y
     self:draw(bb, x, y)
-    for _, c in ipairs(self.children) do
+    for _i, c in ipairs(self.children) do
         local cx, cy = x, y
         local p = c.place
         if p then

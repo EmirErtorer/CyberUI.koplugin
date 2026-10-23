@@ -19,7 +19,7 @@ function Header.build(o)
     local titles = { Label:new({ text = o.title, kind = "display" }) }
     if o.path then table.insert(titles, 1, Label:new({ text = o.path, kind = "micro", color = "muted" })) end
     kids[#kids + 1] = Layout.Column:new({ grow = true, children = titles })
-    for _, b in ipairs(o.actions or {}) do kids[#kids + 1] = b end
+    for _i, b in ipairs(o.actions or {}) do kids[#kids + 1] = b end
     return Layout.Row:new({ gap = th.space.m, children = kids })
 end
 

@@ -16,7 +16,7 @@ end
 -- so their books go by file name).
 function Collections.books(name)
     local items = {}
-    for _, item in pairs(ReadCollection.coll[name] or {}) do items[#items + 1] = item end
+    for _i, item in pairs(ReadCollection.coll[name] or {}) do items[#items + 1] = item end
     table.sort(items, function(a, b)
         local oa, ob = a.order or math.huge, b.order or math.huge
         if oa ~= ob then return oa < ob end

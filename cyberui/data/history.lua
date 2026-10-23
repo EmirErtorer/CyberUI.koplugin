@@ -8,7 +8,7 @@ local History = {}
 -- The `n` most recently opened books that still exist: { path, time }.
 function History.recent(n)
     local out = {}
-    for _, item in ipairs(ReadHistory.hist or {}) do
+    for _i, item in ipairs(ReadHistory.hist or {}) do
         if #out >= n then break end
         if item.file and lfs.attributes(item.file, "mode") == "file" then
             out[#out + 1] = { path = item.file, time = item.time }

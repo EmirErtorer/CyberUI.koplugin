@@ -12,7 +12,7 @@ local TabBar = {}
 function TabBar.build(tabs, current, on_select)
     local th = Theme.get()
     local row = Layout.Row:new({ height = th.size.tabbar, children = {} })
-    for _, t in ipairs(tabs) do
+    for _i, t in ipairs(tabs) do
         row.children[#row.children + 1] = Button:new({
             label = t.label, icon = t.icon, icon_size = 18, grow = true,
             variant = (t.id == current) and "tab_on" or "tab",

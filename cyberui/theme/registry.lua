@@ -37,7 +37,7 @@ end
 -- Ids and names of every scheme, in menu order.
 function Registry.schemeList()
     local list = {}
-    for _, id in ipairs(Registry.SCHEMES) do
+    for _i, id in ipairs(Registry.SCHEMES) do
         local s = Registry.scheme(id)
         if s then list[#list + 1] = { id = id, name = s.name } end
     end

@@ -140,7 +140,7 @@ end
 -- Settings changed (or night mode, rotation, screen size): rebuild everything.
 function Theme.refresh()
     resolve()
-    for _, fn in ipairs(listeners) do fn() end
+    for _i, fn in ipairs(listeners) do fn() end
 end
 
 -- Save a theme setting and apply it at once.

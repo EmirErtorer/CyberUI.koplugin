@@ -31,6 +31,13 @@ function Label:layout(w, h)
     self.h = self.height or h or math.max(1, #self.shown) * Text.height(self.kind)
 end
 
+-- Paint; text from text_fn is worked out again now, after every sibling has
+-- been laid out (a pager learns the page count from the grid above it).
+function Label:paint(bb, x, y)
+    if self.text_fn then self:layout(self.w, self.h) end
+    Element.paint(self, bb, x, y)
+end
+
 -- Draw each line, placed by `align`.
 function Label:draw(bb, x, y)
     local color = Theme.color(self.color)

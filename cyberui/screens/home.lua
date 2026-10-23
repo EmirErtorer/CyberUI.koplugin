@@ -7,6 +7,7 @@ local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
 local Cover = require("cyberui/ui/cover")
 local Deco = require("cyberui/ui/deco")
+local Format = require("cyberui/format")
 local DeviceInfo = require("cyberui/data/device")
 local History = require("cyberui/data/history")
 local Icon = require("cyberui/ui/icon")
@@ -25,21 +26,6 @@ local Collections = require("cyberui/data/collections")
 local _ = require("gettext")
 
 local Home = Screen:extend()
-
--- "3D AGO", "2H AGO", "JUST NOW" for a time in the past.
-local function ago(t)
-    if not t then return _("NEVER") end
-    local d = os.time() - t
-    if d < 3600 then return _("JUST NOW") end
-    if d < 86400 then return string.format(_("%dH AGO"), math.floor(d / 3600)) end
-    if d < 86400 * 14 then return string.format(_("%dD AGO"), math.floor(d / 86400)) end
-    return string.format(_("%dW AGO"), math.floor(d / (86400 * 7)))
-end
-
--- Minutes from seconds, rounded down.
-local function minutes(s)
-    return math.floor((s or 0) / 60)
-end
 
 -- The identity strip: logo, device line, title and a barcode.
 local function identity()
@@ -77,7 +63,7 @@ end
 local function dateRow()
     local th = Theme.get()
     local goal = Settings.get("daily_goal", 30)
-    local line = string.format(_("STREAK %d DAYS // %d MIN TODAY // GOAL %d"), Stats.streak(), minutes(Stats.today()), goal)
+    local line = string.format(_("STREAK %d DAYS // %d MIN TODAY // GOAL %d"), Stats.streak(), Format.minutes(Stats.today()), goal)
     return Layout.Row:new({ gap = th.space.l, children = {
         Panel:new({ shape = "chamfer", corners = "l", cut = "cut", fill = "accent2", line = false,
             width = Theme.px(64), height = Theme.px(64),
@@ -119,7 +105,7 @@ local function activeFile()
                     Label:new({ text = string.format(_("%d%% DECRYPTED"), pct), kind = "mono", grow = true }),
                     Label:new({ text = pages, kind = "mono", color = "muted" }),
                 } }),
-                Label:new({ text = _("LAST OPEN ") .. ago(cur.time), kind = "mono_small", color = "muted" }),
+                Label:new({ text = _("LAST OPEN ") .. Format.ago(cur.time), kind = "mono_small", color = "muted" }),
                 Layout.Spacer:new({ grow = true }),
                 Button:new({ label = _("RESUME"), icon = "forward", variant = "primary", width = Theme.px(160),
                     on_tap = function() Actions.open(path) end }),
@@ -135,7 +121,7 @@ local function recentList()
     for i = 2, #list do
         local p = list[i].path
         local badge = Books.badge(p)
-        kids[#kids + 1] = ListRow.build({ path = p, title = Books.info(p).title, meta = badge .. " // " .. ago(list[i].time),
+        kids[#kids + 1] = ListRow.build({ path = p, title = Books.info(p).title, meta = badge .. " // " .. Format.ago(list[i].time),
             height = Theme.px(54), on_tap = function() Actions.open(p) end, on_hold = function() Actions.details(p) end })
     end
     if #list < 2 then

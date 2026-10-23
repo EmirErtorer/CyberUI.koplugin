@@ -54,7 +54,7 @@ function Stats.daily(n)
         local since = midnight(n - 1)
         local by_day = {}
         query(function(conn)
-            for _, r in ipairs(rows(conn, string.format(
+            for _i, r in ipairs(rows(conn, string.format(
                 "SELECT date(start_time,'unixepoch','localtime'), sum(duration) FROM page_stat_data "
                 .. "WHERE start_time >= %d GROUP BY 1", since))) do
                 by_day[r[1]] = tonumber(r[2]) or 0
@@ -92,7 +92,7 @@ end
 -- Longest run of reading days in the last year.
 function Stats.bestStreak()
     local best, run = 0, 0
-    for _, d in ipairs(Stats.daily(365) or {}) do
+    for _i, d in ipairs(Stats.daily(365) or {}) do
         if d.seconds > 0 then run = run + 1; best = math.max(best, run) else run = 0 end
     end
     return best
@@ -127,7 +127,7 @@ function Stats.sessions(n)
     return cached("sessions" .. n, function()
         return query(function(conn)
             local out = {}
-            for _, r in ipairs(rows(conn, string.format(
+            for _i, r in ipairs(rows(conn, string.format(
                 "SELECT b.title, max(p.start_time), sum(p.duration), count(*) FROM page_stat_data p "
                 .. "JOIN book b ON b.id = p.id_book GROUP BY p.id_book, date(p.start_time,'unixepoch','localtime') "
                 .. "ORDER BY 2 DESC LIMIT %d", n))) do

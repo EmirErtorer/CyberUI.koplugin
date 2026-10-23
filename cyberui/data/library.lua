@@ -52,9 +52,9 @@ function Library.all()
     local books = {}
     local function walk(dir, depth)
         local l = Library.list(dir)
-        for _, b in ipairs(l.books) do books[#books + 1] = b end
+        for _i, b in ipairs(l.books) do books[#books + 1] = b end
         if depth < MAX_DEPTH then
-            for _, f in ipairs(l.folders) do walk(f.path, depth + 1) end
+            for _i, f in ipairs(l.folders) do walk(f.path, depth + 1) end
         end
     end
     walk(Library.home(), 0)
@@ -114,7 +114,7 @@ function Library.filter(books, filter)
     local counts = { all = #books, reading = 0, unread = 0, done = 0 }
     local keep = FILTERS[filter]
     local out = {}
-    for _, p in ipairs(books) do
+    for _i, p in ipairs(books) do
         local status = Books.state(p).status
         if status == "reading" then counts.reading = counts.reading + 1
         elseif status == "new" then counts.unread = counts.unread + 1
@@ -130,11 +130,11 @@ function Library.search(query)
     for w in query:lower():gmatch("%S+") do words[#words + 1] = w end
     if #words == 0 then return {} end
     local out = {}
-    for _, p in ipairs(Library.all()) do
+    for _i, p in ipairs(Library.all()) do
         local info = Books.info(p)
         local hay = (info.title .. " " .. (info.authors or "") .. " " .. (info.series or "") .. " " .. p):lower()
         local all = true
-        for _, w in ipairs(words) do
+        for _i, w in ipairs(words) do
             if not hay:find(w, 1, true) then all = false; break end
         end
         if all then out[#out + 1] = p end

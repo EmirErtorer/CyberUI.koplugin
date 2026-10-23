@@ -1,0 +1,171 @@
+-- System settings in four sections: Look (colour scheme, light or dark, custom
+-- colours, covers), Home (start with CyberUI, daily goal, KOReader menu),
+-- Speed (refresh, library index) and About.
+
+local App = require("cyberui/app")
+local Button = require("cyberui/ui/button")
+local Controls = require("cyberui/ui/controls")
+local Custom = require("cyberui/themes/custom")
+local Deco = require("cyberui/ui/deco")
+local Frame = require("cyberui/screens/frame")
+local Label = require("cyberui/ui/label")
+local Layout = require("cyberui/ui/layout")
+local Library = require("cyberui/data/library")
+local Panel = require("cyberui/ui/panel")
+local Registry = require("cyberui/theme/registry")
+local Screen = require("cyberui/screens/screen")
+local Settings = require("cyberui/settings")
+local Swatch = require("cyberui/ui/swatch")
+local Theme = require("cyberui/theme")
+local _ = require("gettext")
+
+local SettingsScreen = Screen:extend()
+
+local SECTIONS = { { _("Look"), "look" }, { _("Home"), "home" }, { _("Speed"), "speed" }, { _("About"), "about" } }
+
+-- Open on the Look section.
+function SettingsScreen:init()
+    self.section = "look"
+end
+
+-- A setting: its name and explanation on the left, a control on the right.
+local function row(label, sub, control)
+    local th = Theme.get()
+    local text = { Label:new({ text = label, kind = "heading" }) }
+    if sub then text[2] = Label:new({ text = sub, kind = "small", color = "muted", lines = 2 }) end
+    return Layout.Column:new({ children = {
+        Layout.Row:new({ gap = th.space.m, pad = { th.space.s, 0 }, children = {
+            Layout.Column:new({ grow = true, children = text }), control,
+        } }),
+        Deco.Divider:new({}),
+    } })
+end
+
+-- Save a plain setting and redraw.
+local function save(key, value)
+    Settings.set(key, value)
+    Settings.flush()
+    App.update()
+end
+
+-- Pick one of the preset colours for a custom accent.
+local function pickColour(key, title)
+    local th = Theme.get()
+    App.dialog(function(close, screen_w)
+        local cells = {}
+        for _i, hex in ipairs(Custom.PRESETS) do
+            cells[#cells + 1] = Panel:new({ shape = "frame", pad = Theme.px(4), on_tap = function()
+                close()
+                Theme.set(key, hex)
+            end, child = Swatch:new({ colors = { hex }, size = 40, height = Theme.px(40) }) })
+        end
+        local grid_rows = {}
+        for i = 1, #cells, 4 do
+            grid_rows[#grid_rows + 1] = Layout.Row:new({ gap = th.space.m, children = { cells[i], cells[i + 1], cells[i + 2], cells[i + 3] } })
+        end
+        table.insert(grid_rows, 1, Label:new({ text = title, kind = "title" }))
+        grid_rows[#grid_rows + 1] = Button:new({ label = _("Close"), variant = "ghost", on_tap = close })
+        return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl,
+            width = math.min(screen_w - 2 * th.space.xl, Theme.px(420)),
+            child = Layout.Column:new({ gap = th.space.m, align = "center", children = grid_rows }) })
+    end)
+end
+
+-- The Look section.
+function SettingsScreen:look()
+    local th = Theme.get()
+    local scheme = Settings.get("scheme", "mono")
+    local dark = Theme.paintsDark()
+    local schemes = {}
+    for _i, s in ipairs(Registry.schemeList()) do
+        local data = Registry.scheme(s.id)
+        local pal = dark and data.dark or data.light
+        schemes[#schemes + 1] = Button:new({ label = s.name, align = "left", variant = s.id == scheme and "chip_on" or "chip",
+            grow = true, on_tap = function() Theme.set("scheme", s.id) end })
+        schemes[#schemes + 1] = Swatch:new({ colors = { pal.bg, pal.ink, pal.accent, pal.accent2 }, width = Theme.px(96) })
+    end
+    local scheme_rows = {}
+    for i = 1, #schemes, 2 do
+        scheme_rows[#scheme_rows + 1] = Layout.Row:new({ gap = th.space.m, children = { schemes[i], schemes[i + 1] } })
+    end
+    local kids = {
+        Label:new({ text = _("COLOUR SCHEME"), kind = "label" }),
+        Layout.Column:new({ gap = th.space.s, children = scheme_rows }),
+        Label:new({ text = _("MODE"), kind = "label" }),
+        Controls.Segmented({ options = { { _("Light"), "light" }, { _("Dark"), "dark" }, { _("System"), "system" } },
+            value = Theme.mode(), kind = "label", on_change = function(v) Theme.set("mode", v) end }),
+    }
+    if scheme == "custom" then
+        kids[#kids + 1] = row(_("Accent"), _("Buttons, badges and the active tab"), Button:new({ label = _("Pick"), on_tap = function()
+            pickColour("custom_accent", _("Accent")) end }))
+        kids[#kids + 1] = row(_("Second accent"), _("The date block and highlights"), Button:new({ label = _("Pick"), on_tap = function()
+            pickColour("custom_accent2", _("Second accent")) end }))
+    end
+    kids[#kids + 1] = row(_("Cover images"), _("Off draws title cards, which is faster on e-ink"),
+        Controls.Toggle:new({ on = Settings.get("cover_images", false), on_change = function(on) save("cover_images", on) end }))
+    return kids
+end
+
+-- The Home section.
+function SettingsScreen:home()
+    local is_home = G_reader_settings:readSetting("start_with") == "cyberui"
+    return {
+        row(_("Start with CyberUI"), _("Open CyberUI when KOReader starts and after closing a book"),
+            Controls.Toggle:new({ on = is_home, on_change = function(on)
+                G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
+                App.update()
+            end })),
+        row(_("Daily goal"), _("Minutes of reading a day, shown on home and in the log"),
+            Controls.Stepper({ value = Settings.get("daily_goal", 30), min = 5, max = 240, step = 5,
+                format = function(v) return v .. " MIN" end, value_w = 76, on_change = function(v) save("daily_goal", v) end })),
+        row(_("KOReader menu"), _("Also opens with a swipe down from the top edge"),
+            Button:new({ label = _("Open"), on_tap = function() App.koreaderMenu() end })),
+        row(_("File browser"), _("Leave CyberUI for KOReader's own file browser"),
+            Button:new({ label = _("Open"), on_tap = function() App.fileBrowser() end })),
+    }
+end
+
+-- The Speed section.
+function SettingsScreen:speed()
+    local th = Theme.get()
+    return {
+        row(_("Full refresh every"), _("Screens between flashing refreshes that clear ghosting (0 never)"),
+            Controls.Stepper({ value = Settings.get("full_refresh_every", 6), min = 0, max = 20,
+                format = function(v) return tostring(v) end, value_w = 48, on_change = function(v) save("full_refresh_every", v) end })),
+        row(_("Library index"), string.format(_("%d books indexed; rebuild after copying books over"), Library.count() or 0),
+            Button:new({ label = _("Rebuild"), on_tap = function()
+                Library.reset()
+                Library.all()
+                App.toast(string.format(_("%d books indexed"), Library.count() or 0))
+                App.update()
+            end })),
+        Panel:new({ shape = "frame", pad = th.space.m, child = Layout.Column:new({ gap = th.space.xs, children = {
+            Label:new({ text = _("HOW CYBERUI STAYS FAST"), kind = "micro", color = "muted" }),
+            Label:new({ text = _("Home stays loaded while you read, so closing a book is a redraw, not a rebuild. Everything is drawn with flat shapes and refreshed only where it changed."),
+                kind = "small", lines = 4 }),
+        } }) }),
+    }
+end
+
+-- The About section.
+function SettingsScreen:about()
+    return {
+        row(_("Version"), nil, Label:new({ text = require("cyberui/version"), kind = "mono" })),
+        row(_("Fonts"), _("Chakra Petch and Share Tech Mono, SIL Open Font License"), Layout.Spacer:new({ width = 1 })),
+        Label:new({ text = _("A fast cyberpunk home screen for KOReader."), kind = "body", color = "muted", lines = 2 }),
+    }
+end
+
+-- Build the screen.
+function SettingsScreen:build()
+    local th = Theme.get()
+    local tabs = Controls.Segmented({ options = SECTIONS, value = self.section, kind = "label", on_change = function(v) self.section = v; App.update() end })
+    local body = { tabs }
+    for _i, el in ipairs(self[self.section](self)) do body[#body + 1] = el end
+    return Frame.page({
+        screen = self, title = _("System"), path = "~/.cyberui/config", tab = "settings",
+        body = Layout.Column:new({ gap = th.space.m, clip = true, children = body }),
+    })
+end
+
+return SettingsScreen

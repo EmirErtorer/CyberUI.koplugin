@@ -35,7 +35,7 @@ end
 -- Pick the collections the book is in, or make a new one for it.
 function Actions.collect(path)
     local options = {}
-    for _, c in ipairs(Collections.list()) do
+    for _i, c in ipairs(Collections.list()) do
         options[#options + 1] = {
             label = c.title, checked = Collections.has(path, c.name),
             on_tap = function() Collections.toggle(path, c.name); App.update(); Actions.collect(path) end,

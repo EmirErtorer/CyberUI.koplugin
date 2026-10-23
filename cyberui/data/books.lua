@@ -106,7 +106,7 @@ local function poll()
     waiting = {}
     local callbacks = on_extracted
     on_extracted = {}
-    for _, fn in ipairs(callbacks) do fn(done) end
+    for _i, fn in ipairs(callbacks) do fn(done) end
 end
 
 -- Ask CoverBrowser to read a book's details in the background (batched to

@@ -38,7 +38,8 @@ function Cover.imagesOn()
     return Settings.get("cover_images", false)
 end
 
--- Draw the tile: image or data card, then badge and folder tab.
+-- Draw the tile: image or data card (an empty slot is just its frame), then
+-- badge and folder tab.
 function Cover:draw(bb, x, y)
     local th = Theme.get()
     local w, h = self.w, self.h
@@ -53,7 +54,7 @@ function Cover:draw(bb, x, y)
             drawn = true
         end
     end
-    if not drawn then self:drawCard(bb, x, y, th) end
+    if not drawn and (self.path or self.title) then self:drawCard(bb, x, y, th) end
     Paint.frame(bb, x, y, w, h, stroke, th.c.ink)
     if self.folder then self:drawFolderTab(bb, x, y, th) end
     if self.badge then self:drawBadge(bb, x, y, th) end

@@ -8,6 +8,12 @@ local Custom = {}
 Custom.DEFAULT_ACCENT = "#2457D6"
 Custom.DEFAULT_ACCENT2 = "#0F8076"
 
+-- Ready-made colours offered when picking a custom accent.
+Custom.PRESETS = {
+    "#2457D6", "#0F8076", "#C62828", "#7B3FB0", "#D06000", "#E0574B",
+    "#93E4EA", "#7BF0A8", "#FFB347", "#F2C94C", "#EC4899", "#000000",
+}
+
 -- Build the scheme from two hex colours.
 function Custom.build(accent_hex, accent2_hex)
     local accent = Color.parse(accent_hex) or Color.parse(Custom.DEFAULT_ACCENT)

@@ -116,7 +116,7 @@ function Text.draw(bb, x, y, kind, s, color)
     color = color or Blitbuffer.COLOR_BLACK
     local pen = 0
     local prev = 0
-    for _, cp in ipairs(codepoints(s)) do
+    for _i, cp in ipairs(codepoints(s)) do
         local glyph = RenderText:getGlyph(face, cp, false)
         if prev ~= 0 then pen = pen + face.ftsize:getKerning(prev, cp) end
         local gbb = glyph.bb

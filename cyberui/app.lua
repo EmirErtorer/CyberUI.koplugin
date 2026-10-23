@@ -169,7 +169,7 @@ function App.afterShow()
             if s and s.onIndexed then s:onIndexed() end
         end
         Books.whenExtracted(function(paths)
-            for _, p in ipairs(paths) do Covers.forget(p) end
+            for _i, p in ipairs(paths) do Covers.forget(p) end
             if App.isOpen() then App.update() end
         end)
     end)
