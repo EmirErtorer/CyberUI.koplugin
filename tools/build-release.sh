@@ -15,5 +15,6 @@ mkdir -p "$repo/dist"
 rm -rf "$repo/dist/CyberUI.koplugin" "$repo/dist/$name"
 rsync -a --exclude '.git*' --exclude 'tests' --exclude 'tools' --exclude 'dist' --exclude 'docs' --exclude '.DS_Store' \
     "$repo/" "$repo/dist/CyberUI.koplugin/"
+touch "$repo/dist/CyberUI.koplugin"   # the build time, not the repo folder's
 (cd "$repo/dist" && zip -qr "$name" CyberUI.koplugin)
 echo "built dist/$name ($(du -h "$repo/dist/$name" | cut -f1))"
