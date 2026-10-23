@@ -2,7 +2,8 @@
 -- (the default; in colour on colour screens), the cover image, or a typeset
 -- "data card" with the title, author and a pattern, which is also what any
 -- style falls back to without a cover. Can carry a small badge (NEW, 64%,
--- DONE) and a folder tab.
+-- DONE). A folder shows its first book's cover stacked on two sheets with a
+-- FOLDER strip; an empty one a card with a folder icon.
 
 local Element = require("cyberui/ui/element")
 local Ascii = require("cyberui/gfx/ascii")
@@ -56,9 +57,41 @@ function Cover:cut(th)
     return self.w >= Theme.px(120) and th.size.cut or th.size.cut_small
 end
 
--- Draw the tile: image or data card (an empty slot is just its frame), then
--- badge and folder tab, then the cut corner over all of it.
+-- Draw the tile. A folder (stack = true) is its first book's cover with two
+-- sheets peeking out behind it and a FOLDER strip along the bottom.
 function Cover:draw(bb, x, y)
+    if not self.stack then return self:drawFace(bb, x, y) end
+    local th = Theme.get()
+    local w, h = self.w, self.h
+    local off = math.max(Theme.px(4), math.floor(w / 24))
+    local stroke = th.size.stroke
+    Paint.fill(bb, x, y, w, h, th.c.bg)
+    -- the sheets behind, offset up and to the right
+    Paint.frame(bb, x + 2 * off, y, w - 2 * off, h - 2 * off, stroke, th.c.muted)
+    Paint.fill(bb, x + off, y + off, w - 2 * off, h - 2 * off, th.c.bg)
+    Paint.frame(bb, x + off, y + off, w - 2 * off, h - 2 * off, stroke, th.c.ink)
+    -- the front cover
+    self.w, self.h = w - 2 * off, h - 2 * off
+    self:drawFace(bb, x, y + 2 * off)
+    self:drawFolderStrip(bb, x, y + 2 * off, th)
+    self.w, self.h = w, h
+end
+
+-- The FOLDER strip along a folder's bottom edge: icon, word and count.
+function Cover:drawFolderStrip(bb, x, y, th)
+    local kind = self.w < Theme.px(90) and "micro" or "label"
+    local sh = Text.height(kind) + Theme.px(6)
+    local sy = y + self.h - sh
+    Paint.fill(bb, x, sy, self.w, sh, th.c.ink)
+    local isz = sh - Theme.px(6)
+    Icons.draw(bb, "folder", x + Theme.px(4), sy + Theme.px(3), isz, th.c.on_ink, th.c.on_ink)
+    local text = self.count and string.format("FOLDER // %d", self.count) or "FOLDER"
+    Text.draw(bb, x + Theme.px(8) + isz, sy + Theme.px(3), kind, Text.fit(kind, text, self.w - isz - Theme.px(12)), th.c.on_ink)
+end
+
+-- Draw a cover face: image or data card (an empty slot is just its frame),
+-- then badge and folder icon, then the cut corner over all of it.
+function Cover:drawFace(bb, x, y)
     local th = Theme.get()
     local w, h = self.w, self.h
     local stroke = th.size.stroke
@@ -75,7 +108,7 @@ function Cover:draw(bb, x, y)
         end
     end
     if not drawn and (self.path or self.title) then self:drawCard(bb, x, y, th) end
-    if self.folder then self:drawFolderTab(bb, x, y, th) end
+    if self.folder and not self.path then self:drawFolderTab(bb, x, y, th) end
     if self.badge then self:drawBadge(bb, x, y, th) end
     local cut = self:cut(th)
     if cut then
@@ -105,7 +138,7 @@ function Cover:drawCard(bb, x, y, th)
     local bx, by = x + pad, y + h - pad - box_h
     Paint.fill(bb, bx, by, w - 2 * pad, box_h, th.c.bg)
     for i, line in ipairs(lines) do
-        Text.draw(bb, bx + pad, by + pad + (i - 1) * lh, kind, line, th.c.ink)
+        Text.draw(bb, bx + pad, by + pad + (i - 1) * lh, kind, Text.fit(kind, line, inner), th.c.ink)
     end
     if author and w >= Theme.px(70) then
         Text.draw(bb, bx + pad, by + pad + #lines * lh, "micro", Text.fit("micro", author, inner), th.c.muted)
@@ -125,15 +158,12 @@ function Cover:drawBadge(bb, x, y, th)
     Text.draw(bb, x + self.w - bw + pad, y + Theme.px(1), "micro", s, fg)
 end
 
--- A folder tab along the top-left edge and a folder icon.
+-- An empty folder's card: a large folder icon in the middle.
 function Cover:drawFolderTab(bb, x, y, th)
-    local tab_w = math.floor(self.w / 2.5)
-    local tab_h = Theme.px(7)
-    Paint.chamfer(bb, x + Theme.px(6), y, tab_w, tab_h, tab_h, "r", th.c.ink)
-    local s = math.min(Theme.px(36), math.floor(self.w / 3))
-    local pad = Theme.px(10)
-    Paint.fill(bb, x + pad - Theme.px(3), y + tab_h + pad - Theme.px(3), s + Theme.px(6), s + Theme.px(6), th.c.bg)
-    Icons.draw(bb, "folder", x + pad, y + tab_h + pad, s, th.c.ink, th.c.accent)
+    local size = math.floor(math.min(self.w, self.h) * 0.42)
+    local ix, iy = x + math.floor((self.w - size) / 2), y + math.floor((self.h - size) / 2) - Theme.px(8)
+    Paint.fill(bb, ix - Theme.px(4), iy - Theme.px(4), size + Theme.px(8), size + Theme.px(8), th.c.bg)
+    Icons.draw(bb, "folder", ix, iy, size, th.c.ink, th.c.accent)
 end
 
 return Cover

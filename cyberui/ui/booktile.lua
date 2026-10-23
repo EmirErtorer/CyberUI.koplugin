@@ -24,13 +24,14 @@ function BookTile.build(path, _w, h, o)
     } })
 end
 
--- Build a folder tile w x h; `count` books inside (nil when unknown).
-function BookTile.folder(folder, _w, h, count, on_tap)
+-- Build a folder tile w x h: the cover of `first` (its first book, or nil
+-- when it has none) stacked as a folder, `count` books inside.
+function BookTile.folder(folder, _w, h, count, on_tap, first)
     local th = Theme.get()
     local title_h = th.space.xs + Theme.text("small").height
     return Layout.Column:new({ gap = th.space.xs, on_tap = on_tap, children = {
-        Cover:new({ title = folder.name, height = h - title_h - Theme.px(4) - th.space.xs, folder = true,
-            badge = (count and count > 0) and tostring(count) or nil }),
+        Cover:new({ path = first, title = not first and folder.name or nil, height = h - title_h - Theme.px(4) - th.space.xs,
+            folder = true, stack = first ~= nil, count = count }),
         Label:new({ text = folder.name, kind = "small" }),
         Layout.Spacer:new({ height = Theme.px(4) }),
     } })

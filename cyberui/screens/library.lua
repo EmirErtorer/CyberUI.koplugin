@@ -172,7 +172,8 @@ function Library:cell(item, w, h, as_list)
             return ListRow.build({ icon = "folder", title = item.folder.name, meta = _("FOLDER"), height = h,
                 on_tap = open, on_hold = hold })
         end
-        local tile = BookTile.folder(item.folder, w, h, #Data.list(path).books, open)
+        local inside = Data.list(path).books
+        local tile = BookTile.folder(item.folder, w, h, #inside, open, inside[1])
         tile.on_hold = hold
         return tile
     end
