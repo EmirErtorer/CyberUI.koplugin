@@ -10,6 +10,7 @@ local Button = require("cyberui/ui/button")
 local Collections = require("cyberui/data/collections")
 local Cover = require("cyberui/ui/cover")
 local Deco = require("cyberui/ui/deco")
+local Files = require("cyberui/data/files")
 local Format = require("cyberui/format")
 local History = require("cyberui/data/history")
 local InkAway = require("cyberui/apps/inkaway")
@@ -35,9 +36,11 @@ function Home:init()
     Banner.shuffle()
 end
 
--- Shown again after a book: a fresh highlight too.
+-- Shown again after a book: a fresh highlight, and the book just read back
+-- in the active panel.
 function Home:onRaise()
     Banner.shuffle()
+    self.picked = nil
 end
 
 -- The identity strip: logo, the banner's lines and a barcode. Holding it
@@ -93,10 +96,18 @@ local function dateRow()
     } })
 end
 
--- The panel of the book being read, or a prompt when there is none.
-local function activeFile()
+-- The book in the active panel: the one picked from the recent list, or the
+-- one being read. { path, time } or nil.
+function Home:shown()
+    if self.picked and Files.exists(self.picked) then
+        return { path = self.picked, time = History.lastOpened(self.picked) }
+    end
+    return History.current()
+end
+
+-- The panel of the shown book, or a prompt when there is none.
+local function activeFile(cur)
     local th = Theme.get()
-    local cur = History.current()
     if not cur then
         return Panel:new({ shape = "brackets", label = _("ACTIVE_FILE"), pad = th.space.l, child = Layout.Column:new({
             gap = th.space.m, children = {
@@ -122,26 +133,30 @@ local function activeFile()
                     Label:new({ text = string.format(_("%d%% DECRYPTED"), pct), kind = "mono", grow = true }),
                     Label:new({ text = pages, kind = "mono", color = "muted" }),
                 } }),
-                Label:new({ text = _("LAST OPEN ") .. Format.ago(cur.time), kind = "mono_small", color = "muted" }),
+                Label:new({ text = cur.time and (_("LAST OPEN ") .. Format.ago(cur.time)) or _("NEVER OPENED"), kind = "mono_small", color = "muted" }),
                 Layout.Spacer:new({ grow = true }),
-                Button:new({ label = _("RESUME"), icon = "forward", variant = "primary", width = Theme.px(160),
+                Button:new({ label = st.percent > 0 and _("RESUME") or _("OPEN"), icon = "forward", variant = "primary", width = Theme.px(160),
                     on_tap = function() Actions.open(path) end }),
             } }),
         } }) })
 end
 
--- Recent books after the current one, as many as fit.
-local function recentList()
+-- Recent books other than the shown one, as many as fit. Tapping one shows
+-- it in the active panel; holding it opens its details.
+local function recentList(home, shown)
     local th = Theme.get()
     local kids = { Label:new({ text = _("RECENT_FILES"), kind = "micro", color = "muted" }) }
-    local list = History.recent(8)
-    for i = 2, #list do
-        local p = list[i].path
-        local badge = Books.badge(p)
-        kids[#kids + 1] = ListRow.build({ path = p, title = Books.info(p).title, meta = badge .. " // " .. Format.ago(list[i].time),
-            height = Theme.px(54), on_tap = function() Actions.open(p) end, on_hold = function() Actions.details(p) end })
+    local n = 0
+    for _i, item in ipairs(History.recent(8)) do
+        local p = item.path
+        if not (shown and p == shown.path) then
+            n = n + 1
+            kids[#kids + 1] = ListRow.build({ path = p, title = Books.info(p).title, meta = Books.badge(p) .. " // " .. Format.ago(item.time),
+                height = Theme.px(54), on_tap = function() home.picked = p; App.update() end,
+                on_hold = function() Actions.details(p) end })
+        end
     end
-    if #list < 2 then
+    if n == 0 then
         kids[#kids + 1] = Label:new({ text = _("Books you open show up here."), kind = "small", color = "muted" })
     end
     return Panel:new({ shape = "rail", line = "accent", grow = true, pad = { 0, 0, 0, th.space.l },
@@ -184,13 +199,14 @@ function Home:build()
     local th = Theme.get()
     local status, clock = StatusBar.build()
     self.clock = clock
+    local shown = self:shown()
     return Layout.Column:new({ pad = { th.space.s, th.space.xl, th.space.m, th.space.xl }, gap = th.space.m, children = {
         status,
         identity(),
         indexStrip(),
         dateRow(),
-        activeFile(),
-        Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(), launcher() } }),
+        activeFile(shown),
+        Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown), launcher() } }),
         footer(),
     } })
 end

@@ -15,6 +15,7 @@ local Layout = require("cyberui/ui/layout")
 local Panel = require("cyberui/ui/panel")
 local Progress = require("cyberui/ui/progress")
 local Screen = require("cyberui/screens/screen")
+local ScrollText = require("cyberui/ui/scrolltext")
 local Theme = require("cyberui/theme")
 local filemanagerutil = require("apps/filemanager/filemanagerutil")
 local lfs = require("libs/libkoreader-lfs")
@@ -48,9 +49,18 @@ local function fact(k, v)
     } })
 end
 
+-- Swipe up and down to page through a long synopsis.
+function Dossier:onSwipe(dir)
+    if not self.synopsis then return false end
+    if dir == "north" then return self.synopsis:turn(1) end
+    if dir == "south" then return self.synopsis:turn(-1) end
+    return false
+end
+
 -- Build the dossier.
 function Dossier:build()
     local th = Theme.get()
+    self.synopsis_page = self.synopsis_page or {}
     local path = self.params.path
     local info, st = Books.info(path), Books.state(path)
     local dir, file = util.splitFilePathName(path)
@@ -83,8 +93,9 @@ function Dossier:build()
     } })
 
     local synopsis = Panel:new({ shape = "brackets", label = _("SYNOPSIS"), pad = th.space.l, grow = true,
-        child = Label:new({ text = info.description and util.htmlToPlainTextIfHtml(info.description) or _("No description in this book's details."),
-            kind = "body", lines = 7, color = info.description and "ink" or "muted" }) })
+        child = ScrollText:new({ text = info.description and util.htmlToPlainTextIfHtml(info.description) or _("No description in this book's details."),
+            color = info.description and "ink" or "muted", state = self.synopsis_page, on_turn = function() App.update() end }) })
+    self.synopsis = synopsis.child
 
     local c = annotationCounts(path)
     local function count(n, label) return Button:new({ label = string.format("%02d", n), sub = label, kind = "number", grow = true, height = Theme.px(64) }) end

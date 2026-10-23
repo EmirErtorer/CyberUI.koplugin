@@ -25,8 +25,25 @@ function Registry.fontSets()
     return load("fonts") or {}
 end
 
--- The font set with this id, or the first one.
+-- A font installed on the device as a set: its file for every role but mono.
+-- Ids look like "device:<path>".
+local function deviceSet(id)
+    local path = id:match("^device:(.+)$")
+    if not path or not require("libs/libkoreader-lfs").attributes(path, "mode") then return nil end
+    return { id = id, device = true, name = Registry.fontName(path), note = path,
+        display = path, title = path, body = path, mono = "ShareTechMono-Regular.ttf", scale = 1 }
+end
+
+-- A readable name from a font file's name: "NotoSans-Bold.ttf" -> "NotoSans Bold".
+function Registry.fontName(path)
+    return (path:match("([^/]+)%.%w+$") or path):gsub("[-_]+", " ")
+end
+
+-- The font set with this id (a device font when it starts with "device:"),
+-- or the first one.
 function Registry.fontSet(id)
+    local dev = id and deviceSet(id)
+    if dev then return dev end
     local sets = Registry.fontSets()
     for _i, s in ipairs(sets) do
         if s.id == id then return s end

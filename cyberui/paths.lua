@@ -17,13 +17,13 @@ function Paths.file(rel)
     return Paths.root .. "/" .. rel
 end
 
--- A plugin file's path as seen from KOReader's fonts folder. Font:getFace
+-- A font file's path as seen from KOReader's fonts folder. Font:getFace
 -- puts that folder in front of every name in releases up to 2026.07 (later
 -- ones also take absolute paths), so a relative path works in all of them.
-function Paths.fromFonts(rel)
+function Paths.fontRelative(path)
     local ffiUtil = require("ffi/util")
     local fontdir = ffiUtil.realpath(require("fontlist").fontdir)
-    local file = ffiUtil.realpath(Paths.file(rel)) or Paths.file(rel)
+    local file = ffiUtil.realpath(path) or path
     if not fontdir then return file end
     local a, b = {}, {}
     for part in fontdir:gmatch("[^/]+") do a[#a + 1] = part end
@@ -34,6 +34,11 @@ function Paths.fromFonts(rel)
     for _i = same + 1, #a do out[#out + 1] = ".." end
     for i = same + 1, #b do out[#out + 1] = b[i] end
     return table.concat(out, "/")
+end
+
+-- A plugin file's path as seen from KOReader's fonts folder.
+function Paths.fromFonts(rel)
+    return Paths.fontRelative(Paths.file(rel))
 end
 
 return Paths
