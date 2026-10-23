@@ -1,6 +1,9 @@
 -- The status line across the top of every screen: the tag on the left (the
 -- reader's own text), a ruler, then the readouts the reader chose, in their
--- order (System > Home > Top bar). The readouts can be refreshed on their own.
+-- order (System > Home > Top bar). Once a minute only the `live` readouts
+-- (clock, date, battery, Wi-Fi) are read again, and the bar is redrawn only
+-- when one of them changed; the rest are read when a screen is drawn, so
+-- jumpy values like processor load never cause e-ink refreshes by themselves.
 
 local DeviceInfo = require("cyberui/data/device")
 local Deco = require("cyberui/ui/deco")
@@ -24,10 +27,10 @@ end
 -- Every readout the bar can show: its name in the editor and how to read it
 -- now (nil hides it). `muted` ones are drawn in the quiet colour.
 StatusBar.ITEMS = {
-    { id = "clock", name = _("Clock"), read = function() return DeviceInfo.clock() end },
-    { id = "date", name = _("Date"), read = function() return os.date("%d.%m") end },
-    { id = "wifi", name = _("Wi-Fi"), muted = true, read = function() return DeviceInfo.wifi() and _("WIFI") or nil end },
-    { id = "battery", name = _("Battery"), read = function()
+    { id = "clock", name = _("Clock"), live = true, read = function() return DeviceInfo.clock() end },
+    { id = "date", name = _("Date"), live = true, read = function() return os.date("%d.%m") end },
+    { id = "wifi", name = _("Wi-Fi"), muted = true, live = true, read = function() return DeviceInfo.wifi() and _("WIFI") or nil end },
+    { id = "battery", name = _("Battery"), live = true, read = function()
         local p = DeviceInfo.battery()
         return p and ((DeviceInfo.charging() and "BAT+ " or "BAT ") .. p .. "%")
     end },
@@ -75,11 +78,17 @@ function StatusBar.tag()
     return (t and t ~= "") and t or StatusBar.TAG
 end
 
--- Fill the readout labels with what each item reads now.
-local function fill(labels)
+-- Fill the readout labels with what each item reads now (only the live
+-- ones when `live_only`). True when any text changed.
+local function fill(labels, live_only)
+    local changed = false
     for _i, l in ipairs(labels) do
-        l.text = l.item.read() or ""
+        if l.item.live or not live_only then
+            local text = l.item.read() or ""
+            if text ~= l.text then l.text, changed = text, true end
+        end
     end
+    return changed
 end
 
 -- Build the bar. Returns the row twice: the second is what the app ticks.
@@ -103,10 +112,12 @@ function StatusBar.build()
     return row, row
 end
 
--- Read every item again and lay the bar out anew (the caller repaints it).
+-- Read the live items again; when one changed, lay the bar out anew and
+-- return true so the caller repaints it.
 function StatusBar.tick(row)
-    fill(row.labels)
+    if not fill(row.labels, true) then return false end
     row:layout(row.w, row.h)
+    return true
 end
 
 return StatusBar

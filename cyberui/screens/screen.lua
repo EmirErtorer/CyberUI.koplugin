@@ -1,7 +1,6 @@
 -- Base of every screen: holds its parameters and state between rebuilds.
 -- A screen builds its element tree in build(ctx) and may handle onSwipe,
--- onRaise (shown again), onIndexed (library index ready) and onTick (each
--- minute, instead of the clock alone being redrawn).
+-- onRaise (shown again) and onIndexed (library index ready).
 
 local App = require("cyberui/app")
 

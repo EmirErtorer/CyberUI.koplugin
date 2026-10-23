@@ -1,10 +1,12 @@
 -- System diagnostics, opened from the scope button on home: power cell,
 -- core (processor and memory), storage, uplink, optics (screen and light),
 -- uptime and identity, as a deck readout. Readings the device does not offer
--- are left out. Refreshed every minute with the clock.
+-- are left out. A snapshot taken when the screen opens: it never redraws by
+-- itself (no e-ink refreshes for jumpy values); RESCAN takes a new one.
 
 local App = require("cyberui/app")
 local Banner = require("cyberui/data/banner")
+local Button = require("cyberui/ui/button")
 local Format = require("cyberui/format")
 local Frame = require("cyberui/screens/frame")
 local Label = require("cyberui/ui/label")
@@ -159,11 +161,6 @@ local function identLines()
     } })
 end
 
--- Fresh readings with the clock, once a minute.
-function Diagnostics:onTick()
-    App.update()
-end
-
 -- Build the readout: power across the top, two columns, uptime and identity.
 function Diagnostics:build()
     local th = Theme.get()
@@ -177,7 +174,8 @@ function Diagnostics:build()
         identLines(),
     } })
     return Frame.page({ screen = self, title = _("Diagnostics"), path = "ROOT@" .. Banner.device() .. " // SYS.MONITOR",
-        tab = "home", body = body })
+        tab = "home", body = body,
+        actions = { Button:new({ label = _("RESCAN"), on_tap = function() App.update() end }) } })
 end
 
 return Diagnostics
