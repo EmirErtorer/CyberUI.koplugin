@@ -104,7 +104,10 @@ function Drive:init()
     end
     local function at(x, y) return Geom:new({ x = math.floor(x), y = math.floor(y), w = 0, h = 0 }) end
     -- Tap a point.
-    function H.tapAt(x, y) send({ ges = "tap", pos = at(x, y) }) end
+    function H.tapAt(x, y)
+        send({ ges = "tap", pos = at(x, y) })
+        UIManager:forceRePaint()   -- as the event loop would before the next touch
+    end
     -- Tap the middle of the element with this text (or icon); false when missing.
     function H.tap(text, icon)
         local el = H.find(text, icon, true)
