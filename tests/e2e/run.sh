@@ -25,6 +25,8 @@ if [ -n "$lib" ] && [ -d "$lib" ]; then
     done
 fi
 # KOReader finds the driver in <KO_HOME>/plugins on its own
+# an optional setup step gets the copied home folder (compare.sh uses it)
+[ -n "${HOME_SETUP:-}" ] && "$HOME_SETUP" "$home"
 cd "$emu"
 set +e
 KO_HOME="$home" CYBERUI_DRIVE_SCRIPT="$scen" CYBERUI_DRIVE_OUT="$out" \
