@@ -6,9 +6,13 @@ local Element = require("cyberui/ui/element")
 
 local Layout = {}
 
--- Padding as top, right, bottom, left from a number or a {t, r, b, l} table.
+-- Padding as top, right, bottom, left from a number, a {vertical, horizontal}
+-- pair or a {top, right, bottom, left} table.
 local function pads(p)
-    if type(p) == "table" then return p[1] or 0, p[2] or 0, p[3] or 0, p[4] or 0 end
+    if type(p) == "table" then
+        if #p == 2 then return p[1], p[2], p[1], p[2] end
+        return p[1] or 0, p[2] or 0, p[3] or 0, p[4] or 0
+    end
     p = p or 0
     return p, p, p, p
 end

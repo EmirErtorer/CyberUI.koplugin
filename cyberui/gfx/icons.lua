@@ -20,7 +20,9 @@ local function build(name, size)
     if straight then mask:alphablitFrom(raw, 0, 0, 0, 0, w, h)
     else mask:pmulalphablitFrom(raw, 0, 0, 0, 0, w, h) end
     raw:free()
-    mask:invert()
+    -- flip the pixels themselves: bb:invert() only sets a flag that the fast
+    -- C blitter ignores, which left icons blank in night mode
+    mask:invertRect(0, 0, w, h)
     return mask
 end
 

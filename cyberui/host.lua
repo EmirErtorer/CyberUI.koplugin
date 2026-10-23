@@ -7,7 +7,9 @@ local Geom = require("ui/geometry")
 local GestureRange = require("ui/gesturerange")
 local InputContainer = require("ui/widget/container/inputcontainer")
 local UIManager = require("ui/uimanager")
+local logger = require("logger")
 local Paint = require("cyberui/gfx/paint")
+local Perf = require("cyberui/perf")
 local Theme = require("cyberui/theme")
 
 local Screen = Device.screen
@@ -60,9 +62,13 @@ function Host:toastPos()
     return math.floor((self.dimen.w - t.w) / 2), Theme.get().size.status + Theme.get().space.l
 end
 
--- Paint background, screen, overlay and toast. A size change (rotation)
--- re-lays everything out first.
+-- Paint background, screen, overlay and toast (timed).
 function Host:paintTo(bb, x, y)
+    Perf.measure("paint", self.paintAll, self, bb, x, y)
+end
+
+-- The painting itself. A size change (rotation) re-lays everything out first.
+function Host:paintAll(bb, x, y)
     Theme.sync()
     if self.laid_w ~= Screen:getWidth() or self.laid_h ~= Screen:getHeight() then
         if self.on_resize then self.on_resize() else self:relayout() end
@@ -70,8 +76,17 @@ function Host:paintTo(bb, x, y)
     Paint.fill(bb, x, y, self.dimen.w, self.dimen.h, Theme.get().c.bg)
     if self.root then self.root:paint(bb, x, y) end
     if self.overlay then
+        -- a hard offset shadow lifts the dialog off the screen behind it
         local ox, oy = self:overlayPos()
-        self.overlay:paint(bb, x + ox, y + oy)
+        local th = Theme.get()
+        local o = self.overlay
+        local off = th.space.s
+        if o.shape == "chamfer" and th.decor.chamfer then
+            Paint.chamfer(bb, x + ox + off, y + oy + off, o.w, o.h, th.size[o.cut] or o.cut, o.corners, th.c.ink)
+        else
+            Paint.fill(bb, x + ox + off, y + oy + off, o.w, o.h, th.c.ink)
+        end
+        o:paint(bb, x + ox, y + oy)
     end
     if self.toast then
         local tx, ty = self:toastPos()
@@ -93,7 +108,12 @@ function Host:press(el, handler)
     UIManager:setDirty(nil, "fast", d)
     UIManager:forceRePaint()
     self.repainted = false
-    el[handler](el)
+    -- a failing action must never take KOReader down: log it and say so
+    local ok, err = xpcall(el[handler], debug.traceback, el)
+    if not ok then
+        logger.err("CyberUI: action failed:", err)
+        if self.on_error then self.on_error(err) end
+    end
     if not self.repainted and UIManager:isWidgetShown(self) then
         UIManager:setDirty(self, "ui", d)
     end
@@ -116,24 +136,55 @@ function Host:target(pos, handler)
     return self.root and self.root:hit(pos.x, pos.y, handler)
 end
 
--- A tap runs the innermost element's on_tap.
+-- Key input CyberUI does not use stops here, so it never reaches the hidden
+-- file list.
+local KEYS = { onKeyPress = true, onKeyRepeat = true, onKeyRelease = true }
+
+-- Handle an event; stray keys are swallowed. Other events CyberUI does not
+-- handle (night mode, rotation, frontlight...) reach the file browser's
+-- modules through `active_widgets`, which KOReader feeds only on that path.
+function Host:handleEvent(event)
+    if InputContainer.handleEvent(self, event) then return true end
+    return KEYS[event.handler] == true
+end
+
+-- Let the file browser underneath receive the events CyberUI leaves.
+function Host:attachFileManager()
+    local FileManager = require("apps/filemanager/filemanager")
+    self.active_widgets = FileManager.instance and { FileManager.instance } or nil
+end
+
+-- Gestures CyberUI does not use go to the file browser's own gesture zones,
+-- where KOReader keeps the gestures set up by the reader (corner taps,
+-- rotation...). Only those zones: the hidden file list never sees them.
+function Host:onGesture(ev)
+    if InputContainer.onGesture(self, ev) then return true end
+    if self.overlay then return true end
+    local FileManager = require("apps/filemanager/filemanager")
+    local fm = FileManager.instance
+    if fm and fm ~= self then InputContainer.onGesture(fm, ev) end
+    return true
+end
+
+-- A tap runs the innermost element's on_tap; false when nothing took it.
 function Host:onTap(_, ges)
     local el = self:target(ges.pos, "on_tap")
     if el then self:press(el, "on_tap") end
-    return true
+    return el ~= nil or self.overlay ~= nil
 end
 
--- A hold runs on_hold, or nothing.
+-- A hold runs on_hold; false when nothing took it.
 function Host:onHold(_, ges)
     local el = self:target(ges.pos, "on_hold")
     if el then self:press(el, "on_hold") end
-    return true
+    return el ~= nil or self.overlay ~= nil
 end
 
--- Swipes go to the app (paging, the KOReader menu from the top edge).
+-- Swipes go to the app (paging, the KOReader menu from the top edge);
+-- false when it did not use the swipe.
 function Host:onSwipe(_, ges)
-    if self.on_swipe and not self.overlay then self.on_swipe(ges.direction, ges.pos) end
-    return true
+    if self.overlay then return true end
+    return self.on_swipe ~= nil and self.on_swipe(ges.direction, ges.pos) == true
 end
 
 -- The Back key goes back a screen.

@@ -8,6 +8,7 @@ local Books = require("cyberui/data/books")
 local Covers = require("cyberui/data/covers")
 local Host = require("cyberui/host")
 local Library = require("cyberui/data/library")
+local Perf = require("cyberui/perf")
 local Settings = require("cyberui/settings")
 local Stats = require("cyberui/data/stats")
 local Theme = require("cyberui/theme")
@@ -30,6 +31,7 @@ App.TABS = {
 local host        -- the window, kept while CyberUI is home (also under the reader)
 local stack = {}  -- screen instances, the current one last
 local views = 0   -- screens shown since the last full refresh
+local left = false  -- the reader chose the file browser over CyberUI
 local clock_timer
 local toast_timer
 
@@ -61,7 +63,9 @@ end
 local function build()
     local s = App.current()
     if not (host and s) then return end
-    host:setRoot(s:build({ w = Screen:getWidth(), h = Screen:getHeight() }))
+    Perf.measure("build", function()
+        host:setRoot(s:build({ w = Screen:getWidth(), h = Screen:getHeight() }))
+    end)
 end
 
 -- Refresh kind for a new screen: a full flash every few screens clears ghosting.
@@ -120,15 +124,29 @@ local function newHost()
     h.on_back = function() App.back() end
     h.on_outside = function() App.closeDialog() end
     h.on_resize = function() build() end
+    h.on_error = function() App.toast(_("Something went wrong; see crash.log")) end
     return h
+end
+
+-- Did the reader leave CyberUI for the file browser? Closing a book then
+-- returns to the file browser, as they chose.
+function App.leftForFiles()
+    return left
+end
+
+-- The reader asked for CyberUI again (menu or gesture): come back to it.
+function App.returnHome()
+    left = false
 end
 
 -- Open CyberUI at a screen (home by default), on top of everything.
 function App.open(id, params)
+    left = false
     if not host then
         host = newHost()
         stack = { make(id or "home", params) }
         build()
+        host:attachFileManager()
         UIManager:show(host, "ui")
         host:markRepainted()
         scheduleClock()
@@ -153,6 +171,7 @@ function App.raise()
             end
         end
     end
+    host:attachFileManager()
     local s = App.current()
     if s and s.onRaise then s:onRaise() end
     App.render("ui")
@@ -208,11 +227,15 @@ function App.back()
     end
 end
 
--- Swipes: the current screen may page; down from the top edge opens KOReader's menu.
+-- Swipes: down from the top edge opens KOReader's menu, a paging screen
+-- pages left and right. Returns true when the swipe was used.
 function App.swipe(dir, pos)
-    if dir == "south" and pos.y < Screen:getHeight() / 8 then return App.koreaderMenu() end
+    if dir == "south" and pos.y < Screen:getHeight() / 8 then
+        App.koreaderMenu()
+        return true
+    end
     local s = App.current()
-    if s and s.onSwipe then s:onSwipe(dir) end
+    return (s and s.onSwipe and s:onSwipe(dir)) == true
 end
 
 -- Show a dialog built by builder(close, screen_w) over the screen.
@@ -303,8 +326,9 @@ function App.koreaderMenu()
     end
 end
 
--- Leave CyberUI for the file browser.
+-- Leave CyberUI for the file browser (and stay there after reading).
 function App.fileBrowser()
+    left = true
     App.close()
 end
 

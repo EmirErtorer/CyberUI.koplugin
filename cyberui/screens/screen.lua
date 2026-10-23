@@ -19,11 +19,12 @@ function Screen:new(params)
     return o
 end
 
--- Page left and right with swipes when the screen pages.
+-- Page left and right with swipes when the screen pages; true when used.
 function Screen:onSwipe(dir)
-    if not self.pages then return end
-    if dir == "west" then self:setPage(self.page + 1)
-    elseif dir == "east" then self:setPage(self.page - 1) end
+    if not self.pages then return false end
+    if dir == "west" then self:setPage(self.page + 1); return true end
+    if dir == "east" then self:setPage(self.page - 1); return true end
+    return false
 end
 
 -- Go to a page (clamped) and redraw.
