@@ -75,6 +75,15 @@ function Books.state(path)
     return { status = status, percent = percent, pages = bi.pages, opened = true, annotated = bi.has_annotations }
 end
 
+-- The small badge for a book's tile: text and whether it stands out.
+function Books.badge(path)
+    local st = Books.state(path)
+    if st.status == "new" then return "NEW", true end
+    if st.status == "complete" then return "DONE", false end
+    if st.status == "abandoned" then return "HOLD", false end
+    return string.format("%d%%", math.floor(st.percent * 100 + 0.5)), false
+end
+
 -- Forget what is known about a book (it was just read, moved or changed).
 function Books.forget(path)
     info_cache[path] = nil

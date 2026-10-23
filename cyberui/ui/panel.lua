@@ -1,6 +1,7 @@
 -- A container that frames one child in the style's shapes: "chamfer" (cut
 -- corners), "frame" (plain outline), "brackets" (corner marks), "header" (an
--- inverted title strip over a frame) or "none". A `label` sits on the border.
+-- inverted title strip over a frame), "rail" (a bar down the left) or "none".
+-- A `label` sits on the border.
 
 local Element = require("cyberui/ui/element")
 local Layout = require("cyberui/ui/layout")
@@ -63,6 +64,8 @@ function Panel:draw(bb, x, y)
             Paint.frame(bb, x, y, w, h, stroke, line)
         elseif shape == "brackets" then
             Paint.brackets(bb, x, y, w, h, th.size.bracket, stroke, line)
+        elseif shape == "rail" then
+            Paint.fill(bb, x, y, Theme.px(5), h, line)
         end
     end
     if shape == "header" then

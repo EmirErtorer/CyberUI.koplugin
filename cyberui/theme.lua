@@ -79,6 +79,7 @@ local function resolve()
     for k, v in pairs(style.space) do space[k] = Screen:scaleBySize(v) end
 
     current = {
+        night = Theme.nightMode(),
         style = style,
         scheme = scheme,
         colour = colour,
@@ -123,6 +124,12 @@ function Theme.text(kind)
     }
     t.faces[kind] = f
     return f
+end
+
+-- Pick up a night mode switch made in KOReader since the look was worked out.
+-- Elements read colours when they draw, so nothing needs rebuilding.
+function Theme.sync()
+    if current and current.night ~= Theme.nightMode() then resolve() end
 end
 
 -- Call fn() whenever the look changes.

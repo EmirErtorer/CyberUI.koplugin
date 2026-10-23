@@ -35,8 +35,9 @@ end
 -- The string as it is shown for this kind of text (capitals when the style asks).
 function Text.shown(kind, s)
     s = tostring(s or "")
-    if Theme.text(kind).caps then return Utf8Proc.uppercase_dumb(s) end
-    return s
+    if Theme.text(kind).caps then s = Utf8Proc.uppercase_dumb(s) end
+    -- composed form, so accents are part of their letter and not drawn apart
+    return Utf8Proc.normalize_NFC(s)
 end
 
 -- Width in pixels of an already shown string.

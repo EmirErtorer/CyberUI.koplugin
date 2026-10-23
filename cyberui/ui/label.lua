@@ -19,8 +19,9 @@ function Label:naturalHeight(w)
     return n * Text.height(self.kind)
 end
 
--- Fit the text to the width given.
+-- Fit the text to the width given (text_fn, when set, gives the text now).
 function Label:layout(w, h)
+    if self.text_fn then self.text = self.text_fn() end
     self.w = self.width or w or self:naturalWidth()
     if self.lines > 1 then
         self.shown = Text.wrap(self.kind, self.text, self.w, self.lines)

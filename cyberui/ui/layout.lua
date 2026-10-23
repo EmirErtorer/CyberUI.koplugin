@@ -39,6 +39,18 @@ function Column:layout(w, h)
     end
     used = used + gap * math.max(0, #self.children - 1)
     h = self.height or h
+    if self.clip and h then
+        -- show only the children that fit; the rest are hidden
+        local room = h - pt - pb
+        local acc, shown = 0, 0
+        for i, c in ipairs(self.children) do
+            local need = c.h + (i > 1 and gap or 0)
+            if acc + need > room then break end
+            acc, shown = acc + need, i
+        end
+        for i = #self.children, shown + 1, -1 do self.children[i] = nil end
+        used = acc
+    end
     if #growers > 0 then
         local left = math.max(0, (h or used) - pt - pb - used)
         local each = math.floor(left / #growers)
