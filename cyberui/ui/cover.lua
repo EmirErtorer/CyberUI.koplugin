@@ -121,7 +121,7 @@ function Cover:drawFolderTab(bb, x, y, th)
     local s = math.min(Theme.px(36), math.floor(self.w / 3))
     local pad = Theme.px(10)
     Paint.fill(bb, x + pad - Theme.px(3), y + tab_h + pad - Theme.px(3), s + Theme.px(6), s + Theme.px(6), th.c.bg)
-    Icons.draw(bb, "folder", x + pad, y + tab_h + pad, s, th.c.ink)
+    Icons.draw(bb, "folder", x + pad, y + tab_h + pad, s, th.c.ink, th.c.accent)
 end
 
 return Cover

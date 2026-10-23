@@ -79,11 +79,12 @@ function Button:draw(bb, x, y)
     if look.brackets and th.decor.brackets then
         Paint.sideBrackets(bb, x, y, w, h, math.floor(h / 4), stroke, Theme.color(look.text))
     end
-    self:drawContent(bb, x, y, Theme.color(look.text))
+    -- an icon's accent lights only stand out on an unfilled button
+    self:drawContent(bb, x, y, Theme.color(look.text), not fill and Theme.color("accent") or nil)
 end
 
 -- Lay out icon, label and small line inside the button.
-function Button:drawContent(bb, x, y, color)
+function Button:drawContent(bb, x, y, color, accent)
     local th = Theme.get()
     local kind, sub_kind = self:kinds()
     local pad = self.variant:sub(1, 4) == "icon" and 0 or th.space.m
@@ -98,7 +99,7 @@ function Button:drawContent(bb, x, y, color)
     local cx = x + pad
     if self.align == "center" then cx = x + math.floor((self.w - content_w) / 2) end
     if self.icon then
-        Icons.draw(bb, self.icon, cx, y + math.floor((self.h - isz) / 2), isz, color)
+        Icons.draw(bb, self.icon, cx, y + math.floor((self.h - isz) / 2), isz, color, accent)
         cx = cx + isz + igap
     end
     local lh = label and Text.height(kind) or 0
