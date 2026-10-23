@@ -129,7 +129,8 @@ function Host:press(el, handler)
         if self.on_error then self.on_error(err) end
     end
     if not self.repainted and UIManager:isWidgetShown(self) then
-        UIManager:setDirty(self, "ui", d)
+        -- on a dark screen a small flash over the button clears its trace
+        UIManager:setDirty(self, Theme.isDark() and "flashui" or "ui", d)
     end
 end
 

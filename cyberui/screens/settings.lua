@@ -250,6 +250,9 @@ end
 function SettingsScreen:speed()
     local th = Theme.get()
     return {
+        row(_("Full refresh in dark mode"), _("Dark screens ghost more, so they flash sooner (0 never)"),
+            Controls.Stepper({ value = Settings.get("dark_full_refresh_every", 2), min = 0, max = 20,
+                format = function(v) return tostring(v) end, value_w = 48, on_change = function(v) save("dark_full_refresh_every", v) end })),
         row(_("Full refresh every"), _("Screens between flashing refreshes that clear ghosting (0 never)"),
             Controls.Stepper({ value = Settings.get("full_refresh_every", 6), min = 0, max = 20,
                 format = function(v) return tostring(v) end, value_w = 48, on_change = function(v) save("full_refresh_every", v) end })),

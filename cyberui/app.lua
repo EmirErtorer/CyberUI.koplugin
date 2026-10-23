@@ -72,10 +72,11 @@ local function build()
     end)
 end
 
--- Refresh kind for a new screen: a full flash every few screens clears ghosting.
+-- Refresh kind for a new screen: a full flash every few screens clears
+-- ghosting; more often on a dark screen, where e-ink ghosts the most.
 local function viewRefresh()
     views = views + 1
-    local every = Settings.get("full_refresh_every", 6)
+    local every = Theme.isDark() and Settings.get("dark_full_refresh_every", 2) or Settings.get("full_refresh_every", 6)
     if every > 0 and views >= every then
         views = 0
         return "full"
@@ -107,7 +108,8 @@ end
 -- Repaint one element in place after changing it (no rebuild).
 function App.repaint(el)
     if not (host and el.x) then return end
-    UIManager:setDirty(host, "fast", Host.box(el))
+    -- the quickest refresh leaves traces on a dark screen
+    UIManager:setDirty(host, Theme.isDark() and "ui" or "fast", Host.box(el))
 end
 
 -- Show the clock change once a minute while CyberUI is on top.
