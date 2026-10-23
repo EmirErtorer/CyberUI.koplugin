@@ -1,0 +1,26 @@
+# Lints CyberUI on every push and pull request. The test suites draw with
+# KOReader's own code, so they run where the emulator is built (tests/run.sh).
+name: Lint
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install LuaJIT and luacheck
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q luajit luarocks
+          sudo luarocks install luacheck 1.2.0
+
+      - name: luacheck
+        run: luacheck cyberui main.lua _meta.lua
+
+      - name: Globals and requires
+        run: luajit tests/lint.lua

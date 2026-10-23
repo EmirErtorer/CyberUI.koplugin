@@ -1,0 +1,6 @@
+# Development files stay out of GitHub's "Source code" downloads; the release
+# zip from tools/build-release.sh holds only what the plugin needs.
+/tests export-ignore
+/tools export-ignore
+/docs export-ignore
+/.github export-ignore

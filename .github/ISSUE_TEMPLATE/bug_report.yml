@@ -1,0 +1,76 @@
+name: Bug report
+description: Something does not work as it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time. The more of this you fill in, the faster I can find it.
+  - type: input
+    id: cyberui
+    attributes:
+      label: CyberUI version
+      description: System, About shows it (and the footer on home).
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: koreader
+    attributes:
+      label: KOReader version
+      description: Top menu, Help, Version. Nightlies look like v2026.07.2-145-g062a844ea.
+      placeholder: "v2026.07.1"
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      placeholder: "Kindle Paperwhite 4, Kobo Libra Colour, Boox Go 7..."
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did it happen?
+      multiple: true
+      options:
+        - Home
+        - Library
+        - Book details
+        - Search
+        - Collections or log
+        - Diagnostics
+        - System settings
+        - Drop-down menu
+        - Sleep screen
+        - Leaving or opening a book
+        - Updates
+        - Somewhere else
+  - type: input
+    id: look
+    attributes:
+      label: Colour scheme and mode
+      description: Some problems only show in one scheme, or in dark mode.
+      placeholder: "Neon, dark"
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: And what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to make it happen
+      placeholder: |
+        1. Open the library
+        2. Hold a folder
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots and crash.log
+      description: A screenshot, a photo of the screen, and the crash.log from the koreader folder all help. Drag them in here.

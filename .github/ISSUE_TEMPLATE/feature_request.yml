@@ -1,0 +1,22 @@
+name: Feature request
+description: An idea for something new or better.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What would you like?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why?
+      description: What are you trying to do that is hard or impossible now?
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: Optional, but it helps when the idea depends on the screen (grey or colour) or its size.
