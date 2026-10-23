@@ -107,11 +107,11 @@ function Theme.color(role)
 end
 
 -- A font set's file as Font:getFace wants it: KOReader's own faces by name,
--- the plugin's by absolute path.
+-- the plugin's by a path from KOReader's fonts folder.
 local function fontPath(file)
     local builtin = file:match("^koreader:(.+)$")
     if builtin then return builtin end
-    return Paths.file("fonts/" .. file)
+    return Paths.fromFonts("fonts/" .. file)
 end
 
 -- The face for a kind of text in a font set (the chosen one by default):
@@ -126,7 +126,9 @@ function Theme.text(kind, set_id)
     local spec = t.style.text[kind] or t.style.text.body
     local role = spec[1]
     local scale = (role == "mono" and (set.mono_scale or 1) or set.scale or 1) * Settings.get("text_scale", 1)
-    local face = Font:getFace(fontPath(set[role] or set.body), math.floor(spec[2] * scale + 0.5))
+    local size = math.floor(spec[2] * scale + 0.5)
+    -- KOReader's own face if the file cannot be read, rather than no text
+    local face = Font:getFace(fontPath(set[role] or set.body), size) or Font:getFace("cfont", size)
     local height, ascent = face.ftsize:getHeightAndAscender()
     f = {
         face = face,
