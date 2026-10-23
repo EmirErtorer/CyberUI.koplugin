@@ -1,5 +1,5 @@
 -- System settings in five sections: Look (colour scheme, light or dark, custom
--- colours, covers), Fonts (the font in use, the font page, text size), Home (start with CyberUI,
+-- colours, cover style), Fonts (the font in use, the font page, text size), Home (start with CyberUI,
 -- the banner's lines, daily goal, KOReader menu), Speed (refresh, library
 -- index) and About.
 
@@ -7,6 +7,7 @@ local App = require("cyberui/app")
 local Banner = require("cyberui/data/banner")
 local Button = require("cyberui/ui/button")
 local Controls = require("cyberui/ui/controls")
+local Cover = require("cyberui/ui/cover")
 local Custom = require("cyberui/themes/custom")
 local Deco = require("cyberui/ui/deco")
 local Fonts = require("cyberui/screens/fonts")
@@ -106,8 +107,9 @@ function SettingsScreen:look()
         kids[#kids + 1] = row(_("Second accent"), _("The date block and highlights"), Button:new({ label = _("Pick"), on_tap = function()
             pickColour("custom_accent2", _("Second accent")) end }))
     end
-    kids[#kids + 1] = row(_("Cover images"), _("Off draws title cards, which is faster on e-ink"),
-        Controls.Toggle:new({ on = Settings.get("cover_images", false), on_change = function(on) save("cover_images", on) end }))
+    kids[#kids + 1] = Label:new({ text = _("COVERS"), kind = "label" })
+    kids[#kids + 1] = Controls.Segmented({ options = { { _("ASCII"), "ascii" }, { _("Image"), "image" }, { _("Card"), "card" } },
+        value = Cover.style(), kind = "label", on_change = function(v) save("cover_style", v) end })
     return kids
 end
 

@@ -1,8 +1,11 @@
--- A book's cover tile: the real cover when there is one and covers are on,
--- otherwise a typeset "data card" with the title, author and a pattern. Can
--- carry a small badge (NEW, 64%, DONE) and a folder tab.
+-- A book's cover tile in the reader's cover style: ASCII art of the cover
+-- (the default; in colour on colour screens), the cover image, or a typeset
+-- "data card" with the title, author and a pattern, which is also what any
+-- style falls back to without a cover. Can carry a small badge (NEW, 64%,
+-- DONE) and a folder tab.
 
 local Element = require("cyberui/ui/element")
+local Ascii = require("cyberui/gfx/ascii")
 local Books = require("cyberui/data/books")
 local Covers = require("cyberui/data/covers")
 local Icons = require("cyberui/gfx/icons")
@@ -34,9 +37,12 @@ local function pattern(bb, x, y, w, h, name, th)
     elseif name == "solid" then Paint.fill(bb, x, y, w, h, th.c.soft) end
 end
 
--- Show real covers? (the reader's choice; data cards are the fast default)
-function Cover.imagesOn()
-    return Settings.get("cover_images", false)
+-- The cover style: "ascii" (the default), "image" or "card". Readers who
+-- turned real covers on before styles existed keep them.
+function Cover.style()
+    local s = Settings.get("cover_style")
+    if s then return s end
+    return Settings.get("cover_images") and "image" or "ascii"
 end
 
 -- How deep the tile's top-right corner is cut, or nil when the style has
@@ -54,8 +60,10 @@ function Cover:draw(bb, x, y)
     local stroke = th.size.stroke
     Paint.fill(bb, x, y, w, h, th.c.bg)
     local drawn = false
-    if self.path and Cover.imagesOn() then
+    local style = Cover.style()
+    if self.path and style ~= "card" then
         local img = Covers.get(self.path, w - 2 * stroke, h - 2 * stroke)
+        if img and style == "ascii" then img = Ascii.get(self.path, img) end
         if img then
             local iw, ih = img:getWidth(), img:getHeight()
             bb:blitFrom(img, x + math.floor((w - iw) / 2), y + math.floor((h - ih) / 2), 0, 0, iw, ih)
