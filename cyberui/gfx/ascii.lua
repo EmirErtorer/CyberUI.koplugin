@@ -50,7 +50,7 @@ end
 
 -- The chosen set.
 function Ascii.set()
-    return by_id[Settings.get("ascii_set", "classic")] or Ascii.SETS[1]
+    return by_id[Settings.get("ascii_set", "braille")] or Ascii.SETS[1]
 end
 
 local MAX = 36

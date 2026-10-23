@@ -194,7 +194,7 @@ function Menu:row(item, w, h)
         kids[#kids + 1] = Panel:new({ shape = item.radio and "brackets" or "frame", width = Theme.px(22), height = Theme.px(22),
             child = checked and Icon:new({ name = "check", size = 16, color = on and "ink" or "muted" }) or Layout.Spacer:new({}) })
     end
-    kids[#kids + 1] = Label:new({ text = textOf(item), kind = "body", color = on and "ink" or "muted", grow = true })
+    kids[#kids + 1] = Label:new({ text = textOf(item), kind = "label", color = on and "ink" or "muted", grow = true })
     if item.sub_item_table or item.sub_item_table_func then
         kids[#kids + 1] = Icon:new({ name = "forward", size = 18, color = on and "ink" or "muted" })
     end
@@ -233,7 +233,7 @@ function Menu:build(_close, screen_w)
     local tab_buttons = {}
     for i, tab in ipairs(self.tabs) do
         local look = TABS[tab.icon] or EXTRA
-        tab_buttons[i] = Button:new({ icon = look[1], variant = i == self.tab and "icon_on" or "icon", grow = true,
+        tab_buttons[i] = Button:new({ icon = look[1], variant = i == self.tab and "chip_on" or "chip", grow = true,
             height = tabs_h, on_tap = function() self:switchTab(i) end })
     end
     local name = (TABS[self.tabs[self.tab].icon] or EXTRA)[2]

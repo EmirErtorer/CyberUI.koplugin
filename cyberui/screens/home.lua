@@ -98,7 +98,7 @@ local function dateRow(home)
             Label:new({ text = os.date("%A, %B %d"), kind = "title" }),
             home.streak,
         } }),
-        Button:new({ icon = "stats", variant = "icon", width = th.size.touch, on_tap = function() App.push("diagnostics") end }),
+        Button:new({ icon = "stats", label = _("SYS"), variant = "secondary", on_tap = function() App.push("diagnostics") end }),
     } })
 end
 
@@ -193,7 +193,7 @@ local function launcher()
     }
     local kids = {}
     for i, it in ipairs(items) do
-        kids[i] = Button:new({ icon = it[1], label = it[2], sub = it[3], align = "left", variant = i == 1 and "primary" or "soft",
+        kids[i] = Button:new({ icon = it[1], label = it[2], sub = it[3], align = "left", variant = "soft",
             corners = "r", grow = true, on_tap = it[4] })
     end
     return Panel:new({ shape = "rail", side = "r", line = "accent", width = Theme.px(212), pad = { 0, th.space.l, 0, 0 },

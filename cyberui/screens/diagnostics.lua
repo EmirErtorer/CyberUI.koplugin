@@ -41,7 +41,7 @@ local function panel(title, right, rows)
     for i = 1, table.maxn(rows) do
         if rows[i] then kids[#kids + 1] = rows[i] end
     end
-    if #kids == 0 then kids[1] = Label:new({ text = _("NO SIGNAL"), kind = "mono_small", color = "muted" }) end
+    if #kids == 0 then kids[1] = Label:new({ text = _("NOT REPORTED BY THIS DEVICE"), kind = "mono_small", color = "muted" }) end
     local th = Theme.get()
     return Panel:new({ shape = "header", title = title, title_right = right, pad = th.space.s,
         child = Layout.Column:new({ gap = Theme.px(3), children = kids }) })
@@ -108,7 +108,7 @@ local function uplinkPanel()
     return panel(_("UPLINK"), state, {
         kv(_("NODE"), u.ssid),
         kv(_("ADDR"), u.ip),
-        kv(_("RADIO"), u.on and _("ON") or _("OFF")),
+        kv(_("WI-FI"), u.on and _("ON") or _("OFF")),
         kv(_("SSH"), u.ssh and string.format(_("OPEN :%s"), u.ssh) or _("CLOSED")),
     })
 end
@@ -129,11 +129,14 @@ local function opticsPanel()
     })
 end
 
--- How long KOReader has run and how much of it awake.
+-- How long the device and KOReader have been up, and how much of KOReader's
+-- time awake.
 local function uptimePanel()
     local up = Sysinfo.uptime()
     local awake = up.total and up.asleep and up.total - up.asleep
-    return panel(_("UPTIME"), hm(up.total), {
+    return panel(_("UPTIME"), hm(up.device or up.total), {
+        kv(_("DEVICE"), up.device and hm(up.device)),
+        kv(_("KOREADER"), up.total and hm(up.total)),
         awake and up.total > 0 and gauge(awake / up.total, 30),
         kv(_("AWAKE"), awake and string.format("%s // %s %s", hm(awake), _("SLEEP"), hm(up.asleep))),
         kv(_("WAKES"), up.wakes and up.wakes > 0 and up.wakes or nil),

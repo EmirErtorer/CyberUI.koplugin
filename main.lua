@@ -14,6 +14,7 @@ local CyberUI = WidgetContainer:extend({
     is_doc_only = false,
 })
 
+local started = os.time()  -- when KOReader started (this file loads at start)
 local booted = false        -- the boot takeover runs once per session
 local book_closed = false   -- a book closed since the file browser was last shown
 
@@ -52,6 +53,7 @@ end
 -- Hook into KOReader when the file browser or the reader starts.
 function CyberUI:init()
     registerStartWith()
+    require("cyberui/data/sysinfo").started = started
     require("cyberui/sleep").install()
     self.ui.menu:registerToMainMenu(self)
     self:onDispatcherRegisterActions()

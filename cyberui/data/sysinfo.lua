@@ -207,22 +207,25 @@ end
 
 ---------------------------------------------------------------- uptime
 
--- How long KOReader has run, how much of it awake, and the sleep counts.
+-- How long the device and KOReader have been up, how much of KOReader's
+-- time was spent asleep, and the sleep counts (those need KOReader's System
+-- statistics plugin).
 function Sysinfo.uptime()
-    local stat = plugin("systemstat")
     local time = require("ui/time")
-    local up = {}
+    local stat = plugin("systemstat")
+    local up = { device = tonumber((readLine("/proc/uptime") or ""):match("^(%S+)")) }
     if stat and stat.start_monotonic_time then
         up.total = time.to_s(time.boottime_or_realtime_coarse() - stat.start_monotonic_time)
+        up.wakes = stat.wakeup_count
+        up.last_sleep = stat.suspend_time and time.to_s(stat.suspend_time)
+    elseif Sysinfo.started then
+        up.total = os.time() - Sysinfo.started
+    end
+    if up.total then
         local asleep = 0
         if Device:canSuspend() then asleep = asleep + time.to_s(Device.total_suspend_time or 0) end
         if Device:canStandby() then asleep = asleep + time.to_s(Device.total_standby_time or 0) end
         up.asleep = math.min(asleep, up.total)
-        up.wakes = stat.wakeup_count
-        up.last_sleep = stat.suspend_time and time.to_s(stat.suspend_time)
-    else
-        local s = tonumber((readLine("/proc/uptime") or ""):match("^(%S+)"))
-        up.total = s
     end
     return up
 end
