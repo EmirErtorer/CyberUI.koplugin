@@ -275,6 +275,11 @@ end
 function SettingsScreen:about()
     return {
         row(_("Version"), nil, Label:new({ text = Version, kind = "mono" })),
+        row(_("Updates"), (function()
+                local v = require("cyberui/update/updater").available()
+                return v and string.format(_("CyberUI %s is ready to install"), v) or _("New versions from GitHub, with their notes")
+            end)(),
+            Button:new({ label = _("Open"), on_tap = function() App.push("updates") end })),
         row(_("Fonts"), _("Oxanium, Chakra Petch, Tomorrow, Rajdhani, Orbitron, Exo 2, Turret Road, Michroma, Electrolize, Audiowide, Wallpoet, Russo One, Iceland, VT323, Press Start 2P, Share Tech, Share Tech Mono and JetBrains Mono, SIL Open Font License"), Layout.Spacer:new({ width = 1 })),
         Label:new({ text = _("A fast cyberpunk home screen for KOReader."), kind = "body", color = "muted", lines = 2 }),
     }

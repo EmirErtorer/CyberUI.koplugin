@@ -2,7 +2,9 @@
 -- digest GitHub lists, every entry must sit inside the plugin's own folder
 -- (plain files and folders, within limits), every Lua file must load, and
 -- main.lua and _meta.lua must be there. It is unpacked into a staging
--- folder beside the plugins and only then moved into place.
+-- folder beside the plugins and only then moved into place. An update
+-- replaces a plugin the same way, keeping the old copy aside until the next
+-- start in case the swap fails halfway.
 
 local lfs = require("libs/libkoreader-lfs")
 
@@ -129,6 +131,34 @@ function Unpack.install(zip, release, folder, plugins_dir)
     if not moved then
         Unpack.removeTree(stage)
         return nil, merr or "it could not be put in place"
+    end
+    return true
+end
+
+-- Where an updated plugin's previous copy waits until the next start.
+function Unpack.previous(plugins_dir, folder)
+    return plugins_dir .. "/." .. folder .. ".previous"
+end
+
+-- Replace the installed plugin `plugins_dir/installed` (its folder name on
+-- this device; `folder` is the zip's) with `zip`, checked against `release`:
+-- the new copy is unpacked and checked beside it first, then the two swap
+-- places. Returns true, or nil and why (the old copy is back).
+function Unpack.replace(zip, release, folder, plugins_dir, installed)
+    local target = plugins_dir .. "/" .. (installed or folder)
+    local stage = plugins_dir .. "/.cyberui-install-" .. folder
+    local ok, err = prepare(zip, stage, release, folder)
+    if not ok then return nil, err end
+    local old = Unpack.previous(plugins_dir, installed or folder)
+    Unpack.removeTree(old)
+    if lfs.symlinkattributes(target) and not os.rename(target, old) then
+        Unpack.removeTree(stage)
+        return nil, "the installed copy could not be moved aside"
+    end
+    if not os.rename(stage, target) then
+        os.rename(old, target)
+        Unpack.removeTree(stage)
+        return nil, "the new copy could not be put in place"
     end
     return true
 end

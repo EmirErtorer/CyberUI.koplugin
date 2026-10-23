@@ -191,7 +191,10 @@ local function launcher()
         { "history", _("HISTORY"), _("TELEMETRY.LOG"), function() App.go("history") end },
         { "search", _("SEARCH"), _("GREP THE ARCHIVE"), function() App.push("search") end },
         { InkAway.icon, _("INK AWAY"), Addons.statusLine(InkAway), function() Addons.launch(InkAway) end },
-        { "settings", _("SYSTEM"), _("THEME // SETTINGS"), function() App.go("settings") end },
+        { "settings", _("SYSTEM"), (function()
+                local v = require("cyberui/update/updater").available()
+                return v and string.format(_("UPDATE v%s READY"), v) or _("THEME // SETTINGS")
+            end)(), function() App.go("settings") end },
     }
     local kids = {}
     for i, it in ipairs(items) do

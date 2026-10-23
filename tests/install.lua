@@ -1,6 +1,7 @@
--- The plugin installer on KOReader's real zip and hash code: choosing the
--- release, refusing unsafe zip entries, and installing a zip into a
--- temporary plugins folder only when it matches what GitHub lists.
+-- The plugin installer and CyberUI's updater on KOReader's real zip and hash
+-- code: choosing the release and channel, refusing unsafe zip entries,
+-- installing a zip into a temporary plugins folder only when it matches what
+-- GitHub lists, and replacing an installed copy in place.
 -- Run: cd <emulator>/koreader && ./luajit <repo>/tests/install.lua <repo>
 
 local REPO = arg[1] or "."
@@ -66,6 +67,41 @@ Kit.ok(Unpack.install(tmp .. "/bad.zip", { size = bsize, digest = bsum }, F, tmp
     "a zip with an unsafe entry is refused")
 local left = io.popen("ls -A '" .. tmp .. "/plugins2'"):read("*a")
 Kit.ok(left == "", "and nothing of it is left behind")
+-- replacing an installed copy (an update): a mismatched zip leaves it alone
+write(tmp .. "/plugins/" .. F .. "/old.txt", "old\n")
+Kit.ok(Unpack.replace(tmp .. "/good.zip", { size = size, digest = string.rep("0", 64) }, F, tmp .. "/plugins") == nil,
+    "an update that does not match GitHub's digest is refused")
+Kit.ok(io.open(tmp .. "/plugins/" .. F .. "/old.txt") ~= nil, "and the installed copy is untouched")
+local rok, rerr = Unpack.replace(tmp .. "/good.zip", rel, F, tmp .. "/plugins")
+Kit.ok(rok, "a matching update replaces the installed copy: " .. tostring(rerr))
+Kit.ok(io.open(tmp .. "/plugins/" .. F .. "/old.txt") == nil and io.open(tmp .. "/plugins/" .. F .. "/ink/core.lua") ~= nil,
+    "the new copy is in place")
+Kit.ok(io.open(Unpack.previous(tmp .. "/plugins", F) .. "/old.txt") ~= nil, "the old copy waits aside until the next start")
 os.execute("rm -rf '" .. tmp .. "'")
+
+-- the update rules
+local Policy = require("cyberui/update/policy")
+Kit.ok(Policy.compare("1.1.0-beta.2", "1.1.0") == -1 and Policy.compare("v1.2.0", "1.1.9") == 1
+    and Policy.compare("1.1.0-beta.10", "1.1.0-beta.2") == 1, "versions compare the semantic way")
+local function self_rel(tag, pre, extra)
+    local a = { name = Policy.SELF.zip(tag), state = "uploaded", size = 1000,
+        browser_download_url = "https://github.com/" .. Policy.SELF.repo .. "/releases/download/" .. tag .. "/" .. Policy.SELF.zip(tag),
+        digest = "sha256:" .. string.rep("cd", 32) }
+    local r = { tag_name = tag, draft = false, prerelease = pre, assets = { a }, body = "## New\n- a thing" }
+    for k, v in pairs(extra or {}) do r[k] = v end
+    return r
+end
+local feed = { self_rel("v1.2.0-beta.1", true), self_rel("v1.1.0", false), self_rel("v1.0.0", false),
+    self_rel("v9.0.0", false, { draft = true }) }
+local o = Policy.offers(feed, "1.0.0")
+Kit.ok(o.stable.version == "1.1.0" and o.stable_action == "update", "the newest stable release is offered as an update")
+Kit.ok(o.pre and o.pre.version == "1.2.0-beta.1" and o.pre_action == "try", "a newer prerelease is offered to try")
+o = Policy.offers(feed, "1.2.0-beta.1")
+Kit.ok(o.on_pre and o.stable_action == "back" and o.pre_action == "current", "from a prerelease, stable is offered to go back to")
+o = Policy.offers({ self_rel("v1.3.0-beta.1", true), self_rel("v1.3.0", false) }, "1.3.0")
+Kit.ok(o.pre == nil and o.stable_action == "current", "a prerelease older than stable is not offered")
+Kit.ok(Policy.due(100000, nil, nil) and not Policy.due(100000, 99000, nil) and not Policy.due(200000, nil, 199000),
+    "the daily check is due once a day, not right after a failed try")
+Kit.ok(Policy.notes("## Added\n- **Bold** [link](http://x)"):find("// ADDED\n%- Bold link") ~= nil, "release notes read as plain lines")
 
 Kit.finish("install")

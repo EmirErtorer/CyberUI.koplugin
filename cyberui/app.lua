@@ -36,6 +36,7 @@ local stack = {}  -- screen instances, the current one last
 local views = 0   -- screens shown since the last full refresh
 local prepainted = false   -- home shown before the book it left closed
 local prewarmed = false    -- the reader's code is loaded
+local update_started = false  -- the daily update check was set off this session
 local clock_timer
 local toast_timer
 
@@ -212,7 +213,8 @@ end
 -- first, then KOReader closes the book and rebuilds its file browser under
 -- home (without a full-screen flash), so going home takes one paint.
 function App.homeFromBook(ui)
-    UIManager:setSuspendRepaints(false)
+    -- (newer KOReader only: 2026.07.1 does not have it)
+    if UIManager.setSuspendRepaints then UIManager:setSuspendRepaints(false) end
     local file = ui.document and ui.document.file
     ui:saveSettings()
     App.bookClosed(file)
@@ -244,6 +246,15 @@ end
 -- Work done once the screen is up, so it never delays the first paint.
 function App.afterShow()
     prewarm()
+    if not update_started then
+        -- once a session: tidy up after an update, and the daily check
+        update_started = true
+        UIManager:scheduleIn(2, function()
+            local Updater = require("cyberui/update/updater")
+            Updater.cleanup()
+            Updater.autoCheck(function() if App.isOpen() then App.update() end end)
+        end)
+    end
     UIManager:nextTick(function()
         if Library.stale() then
             Library.all()
