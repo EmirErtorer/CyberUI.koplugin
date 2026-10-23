@@ -37,6 +37,10 @@ local function pattern(bb, x, y, w, h, name, th)
     elseif name == "solid" then Paint.fill(bb, x, y, w, h, th.c.soft) end
 end
 
+-- The narrowest a cover may be in the library grid, per size setting (base
+-- pixels): the grid fits as many as the screen allows, in any orientation.
+Cover.SIZES = { s = 90, m = 120, l = 170, xl = 240 }
+
 -- The cover style: "ascii" (the default), "image" or "card". Readers who
 -- turned real covers on before styles existed keep them.
 function Cover.style()
@@ -63,7 +67,7 @@ function Cover:draw(bb, x, y)
     local style = Cover.style()
     if self.path and style ~= "card" then
         local img = Covers.get(self.path, w - 2 * stroke, h - 2 * stroke)
-        if img and style == "ascii" then img = Ascii.get(self.path, img) end
+        if img and style == "ascii" then img = Ascii.get(self.path, img, Books.info(self.path).title) end
         if img then
             local iw, ih = img:getWidth(), img:getHeight()
             bb:blitFrom(img, x + math.floor((w - iw) / 2), y + math.floor((h - ih) / 2), 0, 0, iw, ih)

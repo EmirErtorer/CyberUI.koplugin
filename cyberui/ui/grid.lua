@@ -15,9 +15,16 @@ function Grid:layout(w, h)
     local gap = self.gap or Theme.get().space.m
     local row_gap = self.row_gap or gap
     local cols = self.cols or math.max(2, math.floor((self.w + gap) / ((self.min_cell_w or Theme.px(120)) + gap)))
-    self.ncols = cols
     local cell_w = math.floor((self.w - gap * (cols - 1)) / cols)
     local cell_h = self.cell_h or math.floor(cell_w * (self.ratio or 1.5))
+    -- a row taller than the box (big covers on a landscape screen): narrower
+    -- cells, more to a row, until one row fits
+    while not self.cell_h and not self.cols and cell_h > self.h and cell_w > Theme.px(40) do
+        cols = cols + 1
+        cell_w = math.floor((self.w - gap * (cols - 1)) / cols)
+        cell_h = math.floor(cell_w * (self.ratio or 1.5))
+    end
+    self.ncols = cols
     local rows = math.max(1, math.floor((self.h + row_gap) / (cell_h + row_gap)))
     local capacity = rows * cols
     local pages = math.max(1, math.ceil(#self.items / capacity))

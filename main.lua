@@ -52,6 +52,7 @@ end
 -- Hook into KOReader when the file browser or the reader starts.
 function CyberUI:init()
     registerStartWith()
+    require("cyberui/sleep").install()
     self.ui.menu:registerToMainMenu(self)
     self:onDispatcherRegisterActions()
 end

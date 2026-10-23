@@ -1,9 +1,11 @@
--- System settings in five sections: Look (colour scheme, light or dark, custom
--- colours, cover style), Fonts (the font in use, the font page, text size), Home (start with CyberUI,
--- the banner's lines, daily goal, KOReader menu), Speed (refresh, library
--- index) and About.
+-- System settings in six sections: Look (colour scheme, light or dark, custom
+-- colours), Covers (style, characters, size, sleep screen), Fonts (the font
+-- in use, the font page, text size), Home (start with CyberUI, the banner's
+-- lines, top bar, daily goal, KOReader menu), Speed (refresh, library index)
+-- and About.
 
 local App = require("cyberui/app")
+local Ascii = require("cyberui/gfx/ascii")
 local Banner = require("cyberui/data/banner")
 local Button = require("cyberui/ui/button")
 local Controls = require("cyberui/ui/controls")
@@ -27,7 +29,7 @@ local _ = require("gettext")
 
 local SettingsScreen = Screen:extend()
 
-local SECTIONS = { { _("Look"), "look" }, { _("Fonts"), "fonts" }, { _("Home"), "home" }, { _("Speed"), "speed" },
+local SECTIONS = { { _("Look"), "look" }, { _("Covers"), "covers" }, { _("Fonts"), "fonts" }, { _("Home"), "home" }, { _("Speed"), "speed" },
     { _("About"), "about" } }
 
 -- Open on the Look section.
@@ -107,9 +109,30 @@ function SettingsScreen:look()
         kids[#kids + 1] = row(_("Second accent"), _("The date block and highlights"), Button:new({ label = _("Pick"), on_tap = function()
             pickColour("custom_accent2", _("Second accent")) end }))
     end
-    kids[#kids + 1] = Label:new({ text = _("COVERS"), kind = "label" })
-    kids[#kids + 1] = Controls.Segmented({ options = { { _("ASCII"), "ascii" }, { _("Image"), "image" }, { _("Card"), "card" } },
-        value = Cover.style(), kind = "label", on_change = function(v) save("cover_style", v) end })
+    return kids
+end
+
+-- The Covers section: style, character set, size in the library and the
+-- sleep screen.
+function SettingsScreen:covers()
+    local set = Ascii.set()
+    local kids = {
+        Label:new({ text = _("STYLE"), kind = "label" }),
+        Controls.Segmented({ options = { { _("ASCII"), "ascii" }, { _("Image"), "image" }, { _("Card"), "card" } },
+            value = Cover.style(), kind = "label", on_change = function(v) save("cover_style", v) end }),
+        row(_("Characters"), _("What ASCII covers are drawn with"), Button:new({ label = set.name, on_tap = function()
+            local options = {}
+            for _i, s in ipairs(Ascii.SETS) do
+                options[#options + 1] = { label = s.name, checked = s.id == set.id, on_tap = function() save("ascii_set", s.id) end }
+            end
+            App.choose({ title = _("Characters"), cols = 2, options = options })
+        end })),
+        Label:new({ text = _("SIZE IN THE LIBRARY"), kind = "label" }),
+        Controls.Segmented({ options = { { "S", "s" }, { "M", "m" }, { "L", "l" }, { "XL", "xl" } },
+            value = Settings.get("cover_size", "m"), kind = "label", on_change = function(v) save("cover_size", v) end }),
+        row(_("ASCII sleep screen"), _("The last book's cover in ASCII while the reader sleeps"),
+            Controls.Toggle:new({ on = Settings.get("ascii_sleep", true), on_change = function(on) save("ascii_sleep", on) end })),
+    }
     return kids
 end
 
@@ -228,7 +251,7 @@ end
 function SettingsScreen:about()
     return {
         row(_("Version"), nil, Label:new({ text = Version, kind = "mono" })),
-        row(_("Fonts"), _("Oxanium, Chakra Petch, Tomorrow, Rajdhani, Orbitron, Exo 2, Turret Road, Michroma, Electrolize, Audiowide, Wallpoet, Russo One, Iceland, VT323, Press Start 2P, Share Tech and Share Tech Mono, SIL Open Font License"), Layout.Spacer:new({ width = 1 })),
+        row(_("Fonts"), _("Oxanium, Chakra Petch, Tomorrow, Rajdhani, Orbitron, Exo 2, Turret Road, Michroma, Electrolize, Audiowide, Wallpoet, Russo One, Iceland, VT323, Press Start 2P, Share Tech, Share Tech Mono and JetBrains Mono, SIL Open Font License"), Layout.Spacer:new({ width = 1 })),
         Label:new({ text = _("A fast cyberpunk home screen for KOReader."), kind = "body", color = "muted", lines = 2 }),
     }
 end

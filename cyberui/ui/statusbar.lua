@@ -46,11 +46,13 @@ StatusBar.ITEMS = {
         return used and pct("MEM", used / total)
     end },
     { id = "disk", name = _("Storage"), read = function()
-        local d = require("cyberui/data/sysinfo").storage()[1]
+        local drives = require("cyberui/data/sysinfo").storage()
+        local d = drives[1]
         return d and pct("DSK", d.used / d.total)
     end },
     { id = "book", name = _("Book progress"), read = function()
-        local cur = require("cyberui/data/history").current()
+        local History = require("cyberui/data/history")
+        local cur = History.current()
         return cur and pct("FILE", require("cyberui/data/books").state(cur.path).percent)
     end },
     { id = "uptime", name = _("Uptime"), read = function()

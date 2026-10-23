@@ -10,6 +10,7 @@ local App = require("cyberui/app")
 local BookTile = require("cyberui/ui/booktile")
 local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
+local Cover = require("cyberui/ui/cover")
 local Collections = require("cyberui/data/collections")
 local Data = require("cyberui/data/library")
 local Files = require("cyberui/data/files")
@@ -234,7 +235,7 @@ function Library:build()
     else
         body_kids[#body_kids + 1] = Grid:new({
             grow = true, items = items, page = self.page,
-            cols = as_list and 1 or nil, min_cell_w = Theme.px(120), cell_h = as_list and Theme.px(56) or nil, ratio = 1.72,
+            cols = as_list and 1 or nil, min_cell_w = Theme.px(Cover.SIZES[Settings.get("cover_size", "m")] or 120), cell_h = as_list and Theme.px(56) or nil, ratio = 1.72,
             row_gap = as_list and 0 or th.space.l,
             make = function(item, w, h) return self:cell(item, w, h, as_list) end,
             on_layout = function(_cap, pages, page) self.pages, self.page = pages, page end,

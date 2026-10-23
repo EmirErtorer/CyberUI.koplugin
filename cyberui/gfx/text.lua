@@ -32,6 +32,7 @@ local function codepoints(s)
     end
     return out
 end
+Text.codepoints = codepoints
 
 -- The face spec for a kind (see the note at the top).
 local function specOf(kind)
