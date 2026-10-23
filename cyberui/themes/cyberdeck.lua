@@ -1,16 +1,11 @@
--- The Cyberdeck style: fonts, type sizes, spacing and the shapes every element
--- is drawn with. Sizes are in base pixels; the theme scales them to the screen.
+-- The Cyberdeck style: type sizes, spacing and the shapes every element is
+-- drawn with. Sizes are in base pixels; the theme scales them to the screen.
+-- The faces come from the font set chosen in System > Fonts (themes/fonts.lua).
 
 return {
     id = "cyberdeck",
     name = "Cyberdeck",
-    fonts = {
-        display = "ChakraPetch-Bold.ttf",
-        title = "ChakraPetch-SemiBold.ttf",
-        body = "ChakraPetch-Regular.ttf",
-        mono = "ShareTechMono-Regular.ttf",
-    },
-    -- font and size for each kind of text
+    -- font role (from the font set) and size for each kind of text
     text = {
         hero = { "display", 30 },
         display = { "display", 24 },

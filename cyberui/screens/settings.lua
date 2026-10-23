@@ -1,6 +1,6 @@
--- System settings in four sections: Look (colour scheme, light or dark, custom
--- colours, covers), Home (start with CyberUI, daily goal, KOReader menu),
--- Speed (refresh, library index) and About.
+-- System settings in five sections: Look (colour scheme, light or dark, custom
+-- colours, covers), Fonts (font set, text size), Home (start with CyberUI,
+-- daily goal, KOReader menu), Speed (refresh, library index) and About.
 
 local App = require("cyberui/app")
 local Button = require("cyberui/ui/button")
@@ -8,6 +8,7 @@ local Controls = require("cyberui/ui/controls")
 local Custom = require("cyberui/themes/custom")
 local Deco = require("cyberui/ui/deco")
 local Frame = require("cyberui/screens/frame")
+local Icon = require("cyberui/ui/icon")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Library = require("cyberui/data/library")
@@ -22,7 +23,8 @@ local _ = require("gettext")
 
 local SettingsScreen = Screen:extend()
 
-local SECTIONS = { { _("Look"), "look" }, { _("Home"), "home" }, { _("Speed"), "speed" }, { _("About"), "about" } }
+local SECTIONS = { { _("Look"), "look" }, { _("Fonts"), "fonts" }, { _("Home"), "home" }, { _("Speed"), "speed" },
+    { _("About"), "about" } }
 
 -- Open on the Look section.
 function SettingsScreen:init()
@@ -103,6 +105,33 @@ function SettingsScreen:look()
     end
     kids[#kids + 1] = row(_("Cover images"), _("Off draws title cards, which is faster on e-ink"),
         Controls.Toggle:new({ on = Settings.get("cover_images", false), on_change = function(on) save("cover_images", on) end }))
+    return kids
+end
+
+-- One font set as a card shown in its own faces; tapping it picks the set.
+local function fontCard(set, chosen)
+    local th = Theme.get()
+    return Panel:new({ shape = chosen and "chamfer" or "frame", corners = "r", fill = chosen and "soft" or nil,
+        pad = { th.space.s, th.space.m }, on_tap = function() Theme.set("fontset", set.id) end,
+        child = Layout.Row:new({ gap = th.space.m, children = {
+            Layout.Column:new({ grow = true, children = {
+                Label:new({ text = set.name, kind = { "title", set.id } }),
+                Label:new({ text = _("Reader online // 0123 // ÇĞİŞ"), kind = { "body", set.id } }),
+                Label:new({ text = set.note, kind = "micro", color = "muted" }),
+            } }),
+            chosen and Icon:new({ name = "check", size = 26 }) or Layout.Spacer:new({ width = 1 }),
+        } }) })
+end
+
+-- The Fonts section.
+function SettingsScreen:fonts()
+    local chosen = Settings.get("fontset", "oxanium")
+    local kids = {}
+    for _i, set in ipairs(Registry.fontSets()) do kids[#kids + 1] = fontCard(set, set.id == chosen) end
+    kids[#kids + 1] = row(_("Text size"), _("Makes every text in CyberUI larger or smaller"),
+        Controls.Stepper({ value = math.floor(Settings.get("text_scale", 1) * 100 + 0.5), min = 80, max = 140, step = 10,
+            format = function(v) return v .. "%" end, value_w = 64,
+            on_change = function(v) Theme.set("text_scale", v / 100) end }))
     return kids
 end
 

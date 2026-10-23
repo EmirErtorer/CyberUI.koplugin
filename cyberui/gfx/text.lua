@@ -1,6 +1,8 @@
 -- Text drawing for every widget: measures and paints a line in any theme
 -- colour (KOReader's own text path is grey only), with letter spacing,
 -- capitals, ellipsis and word wrap. Widths are cached per face and string.
+-- A `kind` is a text kind ("body", "title"...) in the chosen font set, or a
+-- { kind, font_set_id } pair to show another set (the Fonts page does).
 
 local RenderText = require("ui/rendertext")
 local Utf8Proc = require("ffi/utf8proc")
@@ -31,10 +33,16 @@ local function codepoints(s)
     return out
 end
 
+-- The face spec for a kind (see the note at the top).
+local function specOf(kind)
+    if type(kind) == "table" then return Theme.text(kind[1], kind[2]) end
+    return Theme.text(kind)
+end
+
 -- The string as it is shown for this kind of text (capitals when the style asks).
 function Text.shown(kind, s)
     s = tostring(s or "")
-    if Theme.text(kind).caps then s = Utf8Proc.uppercase_dumb(s) end
+    if specOf(kind).caps then s = Utf8Proc.uppercase_dumb(s) end
     -- composed form, so accents are part of their letter and not drawn apart
     return Utf8Proc.normalize_NFC(s)
 end
@@ -61,7 +69,7 @@ end
 
 -- Width of `s` drawn as `kind`.
 function Text.width(kind, s)
-    return measure(Theme.text(kind), Text.shown(kind, s))
+    return measure(specOf(kind), Text.shown(kind, s))
 end
 
 -- `s` shortened with an ellipsis to fit `max_w` (already shown form).
@@ -100,7 +108,7 @@ end
 
 -- `s` as shown for `kind`, cut with an ellipsis to fit `max_w` when given.
 function Text.fit(kind, s, max_w)
-    local spec = Theme.text(kind)
+    local spec = specOf(kind)
     s = Text.shown(kind, s)
     if not max_w then return s end
     return fit(spec, s, max_w)
@@ -108,7 +116,7 @@ end
 
 -- Draw an already fitted string with its top-left at (x, y); returns its width.
 function Text.draw(bb, x, y, kind, s, color)
-    local spec = Theme.text(kind)
+    local spec = specOf(kind)
     local face, track = spec.face, spec.tracking
     local baseline = y + spec.ascent
     color = color or Theme.color("ink")
@@ -132,13 +140,13 @@ end
 
 -- Line height of a kind of text.
 function Text.height(kind)
-    return Theme.text(kind).height
+    return specOf(kind).height
 end
 
 -- Split `s` into at most `max_lines` lines that fit `max_w`; the last line
 -- gets an ellipsis when text is left over.
 function Text.wrap(kind, s, max_w, max_lines)
-    local spec = Theme.text(kind)
+    local spec = specOf(kind)
     s = Text.shown(kind, s)
     local lines, line = {}, ""
     local words = {}

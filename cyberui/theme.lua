@@ -106,14 +106,27 @@ function Theme.color(role)
     return t.c[role] or t.c.ink
 end
 
--- The face for a kind of text: { face, tracking, caps, height, ascent }.
-function Theme.text(kind)
+-- A font set's file as Font:getFace wants it: KOReader's own faces by name,
+-- the plugin's by absolute path.
+local function fontPath(file)
+    local builtin = file:match("^koreader:(.+)$")
+    if builtin then return builtin end
+    return Paths.file("fonts/" .. file)
+end
+
+-- The face for a kind of text in a font set (the chosen one by default):
+-- { face, tracking, caps, height, ascent }. Cached per set and kind.
+function Theme.text(kind, set_id)
     local t = Theme.get()
-    local f = t.faces[kind]
+    set_id = set_id or Settings.get("fontset", "oxanium")
+    local key = set_id .. "|" .. kind
+    local f = t.faces[key]
     if f then return f end
+    local set = Registry.fontSet(set_id)
     local spec = t.style.text[kind] or t.style.text.body
-    local file = t.style.fonts[spec[1]] or t.style.fonts.body
-    local face = Font:getFace(Paths.file("fonts/" .. file), spec[2])
+    local role = spec[1]
+    local scale = (role == "mono" and (set.mono_scale or 1) or set.scale or 1) * Settings.get("text_scale", 1)
+    local face = Font:getFace(fontPath(set[role] or set.body), math.floor(spec[2] * scale + 0.5))
     local height, ascent = face.ftsize:getHeightAndAscender()
     f = {
         face = face,
@@ -122,7 +135,7 @@ function Theme.text(kind)
         height = math.ceil(height),
         ascent = math.ceil(ascent),
     }
-    t.faces[kind] = f
+    t.faces[key] = f
     return f
 end
 

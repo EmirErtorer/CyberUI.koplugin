@@ -1,5 +1,6 @@
 -- The one list of looks CyberUI knows. A new colour scheme or style is a data
--- file in this folder plus its id here; nothing else needs to change.
+-- file in cyberui/themes plus its id here; a new font set is an entry in
+-- cyberui/themes/fonts.lua. Nothing else needs to change.
 
 local Settings = require("cyberui/settings")
 
@@ -17,6 +18,20 @@ local function load(id)
         loaded[id] = ok and data or false
     end
     return loaded[id] or nil
+end
+
+-- Every font set, in menu order.
+function Registry.fontSets()
+    return load("fonts") or {}
+end
+
+-- The font set with this id, or the first one.
+function Registry.fontSet(id)
+    local sets = Registry.fontSets()
+    for _i, s in ipairs(sets) do
+        if s.id == id then return s end
+    end
+    return sets[1]
 end
 
 -- The style with this id, or the first one.
