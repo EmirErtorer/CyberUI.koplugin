@@ -9,6 +9,7 @@ local Ascii = require("cyberui/gfx/ascii")
 local Banner = require("cyberui/data/banner")
 local Button = require("cyberui/ui/button")
 local Controls = require("cyberui/ui/controls")
+local Device = require("device")
 local Cover = require("cyberui/ui/cover")
 local Custom = require("cyberui/themes/custom")
 local Deco = require("cyberui/ui/deco")
@@ -92,9 +93,18 @@ function SettingsScreen:look()
             grow = true, on_tap = function() Theme.set("scheme", s.id) end })
         schemes[#schemes + 1] = Swatch:new({ colors = { pal.bg, pal.ink, pal.accent, pal.accent2 }, width = Theme.px(96) })
     end
+    -- one scheme to a row, two on a wide (landscape) screen so the rest fits
+    local per_row = Device.screen:getWidth() > Device.screen:getHeight() and 2 or 1
     local scheme_rows = {}
-    for i = 1, #schemes, 2 do
-        scheme_rows[#scheme_rows + 1] = Layout.Row:new({ gap = th.space.m, children = { schemes[i], schemes[i + 1] } })
+    for i = 1, #schemes, 2 * per_row do
+        local kids = {}
+        for j = i, math.min(#schemes, i + 2 * per_row - 1) do kids[#kids + 1] = schemes[j] end
+        -- a lone last scheme keeps the width of the others
+        if per_row == 2 and #kids == 2 then
+            kids[3] = Layout.Spacer:new({ grow = true })
+            kids[4] = Layout.Spacer:new({ width = Theme.px(96) })
+        end
+        scheme_rows[#scheme_rows + 1] = Layout.Row:new({ gap = th.space.m, children = kids })
     end
     local kids = {
         Label:new({ text = _("COLOUR SCHEME"), kind = "label" }),
@@ -104,10 +114,17 @@ function SettingsScreen:look()
             value = Theme.mode(), kind = "label", on_change = function(v) Theme.set("mode", v) end }),
     }
     if scheme == "custom" then
-        kids[#kids + 1] = row(_("Accent"), _("Buttons, badges and the active tab"), Button:new({ label = _("Pick"), on_tap = function()
+        local a = row(_("Accent"), _("Buttons, badges and the active tab"), Button:new({ label = _("Pick"), on_tap = function()
             pickColour("custom_accent", _("Accent")) end }))
-        kids[#kids + 1] = row(_("Second accent"), _("The date block and highlights"), Button:new({ label = _("Pick"), on_tap = function()
+        local b = row(_("Second accent"), _("The date block and highlights"), Button:new({ label = _("Pick"), on_tap = function()
             pickColour("custom_accent2", _("Second accent")) end }))
+        if per_row == 2 then
+            a.grow, b.grow = true, true
+            kids[#kids + 1] = Layout.Row:new({ gap = th.space.xl, children = { a, b } })
+        else
+            kids[#kids + 1] = a
+            kids[#kids + 1] = b
+        end
     end
     return kids
 end

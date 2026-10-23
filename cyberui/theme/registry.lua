@@ -7,7 +7,7 @@ local Settings = require("cyberui/settings")
 local Registry = {}
 
 Registry.STYLES = { "cyberdeck" }
-Registry.SCHEMES = { "mono", "neon", "terminal", "amber", "custom" }
+Registry.SCHEMES = { "mono", "neon", "synthwave", "bloodline", "terminal", "amber", "custom" }
 
 local loaded = {}
 
