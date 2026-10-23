@@ -114,6 +114,7 @@ end
 -- Open CyberUI; from the reader, home shows at once and the book closes
 -- just after.
 function CyberUI:onCyberUIHome()
+    require("logger").info("CyberUI: home action", self.ui.document and "from a book" or "from the file browser")
     local App = require("cyberui/app")
     if self.ui.document then
         App.homeFromBook(self.ui)

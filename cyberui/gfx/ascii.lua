@@ -91,7 +91,8 @@ local function cellColour(rgb, dark_bg)
 end
 
 -- Draw `img` as character art into a new w x h buffer (the picture centred).
--- opts: { set, size (base font size), title (for the title set) }.
+-- opts: { set, size (base font size), title (for the title set), on_black
+-- (the picture drawn on black too, so see-through parts stay empty) }.
 function Ascii.render(img, w, h, opts)
     opts = opts or {}
     local th = Theme.get()
@@ -107,10 +108,19 @@ function Ascii.render(img, w, h, opts)
     local oy = math.floor((h - rows * ch) / 2)
     local sx, sy = math.floor((iw - cols * cw) / 2), math.floor((ih - rows * ch) / 2)
 
-    -- brightness at a point of the picture, and its colour
+    -- brightness at a point of the picture and its colour, or nil where the
+    -- picture is see-through (opts.on_black is the same picture drawn on black
+    -- instead of white: where they differ, the picture lets the backdrop through)
+    local alt = opts.on_black
     local function at(px, py)
-        local p = img:getPixel(math.min(iw - 1, math.max(0, px)), math.min(ih - 1, math.max(0, py))):getColorRGB32()
-        return (0.299 * p.r + 0.587 * p.g + 0.114 * p.b) / 255, p.r, p.g, p.b
+        px, py = math.min(iw - 1, math.max(0, px)), math.min(ih - 1, math.max(0, py))
+        local p = img:getPixel(px, py):getColorRGB32()
+        local l = (0.299 * p.r + 0.587 * p.g + 0.114 * p.b) / 255
+        if alt then
+            local q = alt:getPixel(px, py):getColorRGB32()
+            if l - (0.299 * q.r + 0.587 * q.g + 0.114 * q.b) / 255 > 0.5 then return nil end
+        end
+        return l, p.r, p.g, p.b
     end
 
     -- sample every cell: 8 points for braille dots, 4 for a character
@@ -119,25 +129,36 @@ function Ascii.render(img, w, h, opts)
         or { { 0.3, 0.3 }, { 0.7, 0.3 }, { 0.3, 0.7 }, { 0.7, 0.7 } }
     local cells = {}
     local lo, hi = 1, 0
+    local see_through = false
     for r = 0, rows - 1 do
         for c = 0, cols - 1 do
             local x0, y0 = sx + c * cw, sy + r * ch
-            local sum, sr, sg, sb, sub = 0, 0, 0, 0, {}
+            local sum, sr, sg, sb, sub, n = 0, 0, 0, 0, {}, 0
             for k, p in ipairs(points) do
                 local l, pr, pg, pb = at(x0 + math.floor(cw * p[1]), y0 + math.floor(ch * p[2]))
                 sub[k] = l
-                sum, sr, sg, sb = sum + l, sr + pr, sg + pg, sb + pb
-                if l < lo then lo = l end
-                if l > hi then hi = l end
+                if l then
+                    n = n + 1
+                    sum, sr, sg, sb = sum + l, sr + pr, sg + pg, sb + pb
+                    if l < lo then lo = l end
+                    if l > hi then hi = l end
+                end
             end
-            local n = #points
-            cells[#cells + 1] = { l = sum / n, sub = sub, rgb = { sr / n, sg / n, sb / n } }
+            if n < #points then see_through = true end
+            -- a see-through cell stays empty
+            cells[#cells + 1] = n > 0 and { l = sum / n, sub = sub, rgb = { sr / n, sg / n, sb / n } } or false
         end
     end
 
     -- dense where the picture stands out from the background: the bright
     -- parts on a dark background, the dark parts on a light one
     local dark_bg = Color.luminance(th.rgb.bg) < 0.5
+    -- a picture with see-through parts is measured against the background
+    -- it will sit on, so a single flat colour still stands out
+    if see_through then
+        local bg = dark_bg and 0 or 1
+        lo, hi = math.min(lo, bg), math.max(hi, bg)
+    end
     local span = math.max(0.05, hi - lo)
     local function level(l)
         local t = (l - lo) / span
@@ -154,11 +175,13 @@ function Ascii.render(img, w, h, opts)
         for c = 0, cols - 1 do
             i = i + 1
             local cell = cells[i]
-            local color = th.colour and cellColour(cell.rgb, dark_bg) or th.c.ink
+            local color = cell and (th.colour and cellColour(cell.rgb, dark_bg) or th.c.ink)
             local x = ox + c * cw
-            if set.dots then
+            if not cell then -- luacheck: ignore 542
+                -- see-through: nothing drawn
+            elseif set.dots then
                 for k, p in ipairs(points) do
-                    if level(cell.sub[k]) > DITHER[k] then
+                    if cell.sub[k] and level(cell.sub[k]) > DITHER[k] then
                         Paint.fill(out, x + math.floor(cw * p[1]) - math.floor(dot / 2), y + math.floor(ch * p[2]) - math.floor(dot / 2), dot, dot, color)
                     end
                 end

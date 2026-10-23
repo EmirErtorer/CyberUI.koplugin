@@ -54,14 +54,20 @@ local function redraw(widget, holder)
     local main, parent = mainOf(widget)
     -- a message alone (no picture under it) stays as it is
     if not main or main.vertical_position then return end
+    -- drawn on white and on black: where the two differ the picture is
+    -- see-through (a transparent PNG), and the art leaves those parts empty
     local bb = Blitbuffer.new(w, h, Screen.bb:getType())
     bb:fill(Blitbuffer.COLOR_WHITE)
     main:paintTo(bb, 0, 0)
+    local on_black = Blitbuffer.new(w, h, Screen.bb:getType())
+    on_black:fill(Blitbuffer.COLOR_BLACK)
+    main:paintTo(on_black, 0, 0)
     local title
     local lastfile = G_reader_settings:readSetting("lastfile")
     if lastfile then title = require("cyberui/data/books").info(lastfile).title end
-    local art = require("cyberui/gfx/ascii").render(bb, w, h, { size = 9, title = title })
+    local art = require("cyberui/gfx/ascii").render(bb, w, h, { size = 9, title = title, on_black = on_black })
     bb:free()
+    on_black:free()
     if main.free then main:free() end
     local image = ImageWidget:new({ image = art, image_disposable = true, width = w, height = h })
     if parent then parent[1] = image else holder.widget = image end

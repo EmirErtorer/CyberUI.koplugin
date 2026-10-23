@@ -37,3 +37,23 @@ H.step(S, function()
     H.check(not sleep("random_image", "covers", "sl03-untouched"), "Book covers mode leaves images alone")
 end)
 H.step(S, function() Screensaver:close() end)
+-- a transparent PNG: its see-through background must stay empty
+H.step(S, function()
+    G_reader_settings:saveSetting("screensaver_dir", os.getenv("CYBERUI_DRIVE_SCRIPT"):match("^(.*)/") .. "/fixtures/sleep")
+    G_reader_settings:makeFalse("screensaver_show_message")
+    Settings.set("ascii_sleep_mode", "images")
+    G_reader_settings:saveSetting("screensaver_type", "random_image")
+    Screensaver:setup()
+    Screensaver:show()
+    require("ui/uimanager"):forceRePaint()
+    H.shot("sl04-transparent")
+    -- the corner is see-through in the PNG: no dots there, only the background
+    local bb = require("device").screen.bb
+    local corner_lit = 0
+    for x = 0, 60, 3 do for y = 0, 60, 3 do
+        local p = bb:getPixel(x, y):getColorRGB32()
+        if p.r + p.g + p.b > 200 then corner_lit = corner_lit + 1 end
+    end end
+    H.check(corner_lit == 0, "the transparent background stays empty (" .. corner_lit .. " lit)")
+end)
+H.step(S, function() Screensaver:close() end)
