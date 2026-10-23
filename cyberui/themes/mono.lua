@@ -3,6 +3,7 @@
 return {
     id = "mono",
     name = "Mono",
+    grey = true,
     light = {
         bg = "#FFFFFF", ink = "#000000", muted = "#555555",
         line = "#BDBDBD", soft = "#DADADA", accent = "#000000", accent2 = "#000000",

@@ -7,7 +7,7 @@ local Settings = require("cyberui/settings")
 local Registry = {}
 
 Registry.STYLES = { "cyberdeck" }
-Registry.SCHEMES = { "mono", "neon", "synthwave", "bloodline", "terminal", "amber", "custom" }
+Registry.SCHEMES = { "mono", "graphite", "neon", "synthwave", "bloodline", "terminal", "amber", "custom" }
 
 local loaded = {}
 
@@ -66,12 +66,14 @@ function Registry.scheme(id)
     return load(id) or load(Registry.SCHEMES[1])
 end
 
--- Ids and names of every scheme, in menu order.
+-- Ids and names of the schemes to offer, in menu order: on a screen without
+-- colour only the grey ones (colours would just turn into greys there).
 function Registry.schemeList()
+    local colour = require("device").screen:isColorEnabled()
     local list = {}
     for _i, id in ipairs(Registry.SCHEMES) do
         local s = Registry.scheme(id)
-        if s then list[#list + 1] = { id = id, name = s.name } end
+        if s and (colour or s.grey) then list[#list + 1] = { id = id, name = s.name } end
     end
     return list
 end
