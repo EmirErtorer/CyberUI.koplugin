@@ -89,16 +89,25 @@ function CyberUI:onCloseDocument()
     require("cyberui/app").bookClosed(doc and doc.file)
 end
 
--- Open CyberUI; from the reader this closes the book first.
+-- Open CyberUI; from the reader, home shows at once and the book closes
+-- just after.
 function CyberUI:onCyberUIHome()
     local App = require("cyberui/app")
     if self.ui.document then
-        App.setHome(true)
-        self.ui:onClose()
-        self.ui:showFileManager()
+        App.homeFromBook(self.ui)
     else
         App.open()
     end
+    return true
+end
+
+-- KOReader's own Home action in the reader takes the same fast way when
+-- CyberUI is the reader's home (plugins hear it before the reader does).
+function CyberUI:onHome()
+    if not self.ui.document then return false end
+    local App = require("cyberui/app")
+    if not (App.isHome() or CyberUI.isHome()) then return false end
+    App.homeFromBook(self.ui)
     return true
 end
 

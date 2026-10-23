@@ -34,6 +34,8 @@ App.TABS = {
 local host        -- the window, kept while CyberUI is home (also under the reader)
 local stack = {}  -- screen instances, the current one last
 local views = 0   -- screens shown since the last full refresh
+local prepainted = false   -- home shown before the book it left closed
+local prewarmed = false    -- the reader's code is loaded
 local clock_timer
 local toast_timer
 
@@ -167,6 +169,24 @@ end
 -- Bring the window back to the top with fresh data (after a book closes).
 function App.raise()
     if not host then return App.open() end
+    if prepainted then
+        -- home was painted before the book closed: put it back on top of the
+        -- file browser KOReader just built, without painting it again
+        prepainted = false
+        local ws = UIManager._window_stack
+        for i, entry in ipairs(ws) do
+            if entry.widget == host then
+                if i ~= #ws then table.insert(ws, table.remove(ws, i)) end
+                break
+            end
+        end
+        host:attachFileManager()
+        local s = App.current()
+        if s and s.onBookClosed then s:onBookClosed() end
+        scheduleClock()
+        App.afterShow()
+        return
+    end
     if not UIManager:isWidgetShown(host) then
         UIManager:show(host, "ui")
     else
@@ -186,8 +206,42 @@ function App.raise()
     App.afterShow()
 end
 
+-- Leave the open book for home at once: progress is saved and home painted
+-- first, then KOReader closes the book and rebuilds its file browser under
+-- home (without a full-screen flash), so going home takes one paint.
+function App.homeFromBook(ui)
+    UIManager:setSuspendRepaints(false)
+    local file = ui.document and ui.document.file
+    ui:saveSettings()
+    App.bookClosed(file)
+    App.setHome(true)
+    App.raise()
+    UIManager:forceRePaint()
+    prepainted = true
+    UIManager:nextTick(function()
+        ui:onClose(false)
+        ui:showFileManager(file)
+    end)
+end
+
+-- Load the reader's code once, while home sits idle, so even the first book
+-- of a session only pays for opening the book itself.
+local function prewarm()
+    if prewarmed then return end
+    prewarmed = true
+    UIManager:scheduleIn(3, function()
+        if not onTop() then return end
+        pcall(function()
+            require("apps/reader/readerui")
+            local CreDocument = require("document/credocument")
+            if CreDocument.engineInit then CreDocument:engineInit() end
+        end)
+    end)
+end
+
 -- Work done once the screen is up, so it never delays the first paint.
 function App.afterShow()
+    prewarm()
     UIManager:nextTick(function()
         if Library.stale() then
             Library.all()

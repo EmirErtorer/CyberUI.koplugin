@@ -1,5 +1,5 @@
 -- Time opening a book and coming back home with the home-screen plugin named
--- by CYBERUI_COMPARE (cyberui, bookshelf or simpleui), each through its own
+-- by CYBERUI_COMPARE (cyberui, cyberui_home, bookshelf or simpleui), each through its own
 -- open and go-home actions: the same book three times, then two books in
 -- turn, then one return followed by 45 s idle (Bookshelf closes a parked book
 -- after 30 s idle). Also timed: every KOReader book close, wherever it falls,
@@ -18,6 +18,12 @@ local P = {
         home = "cyberui",
         open = function(book) require("cyberui/app").openBook(book) end,
         back = function() H.event("CyberUIHome") end,
+    },
+    -- CyberUI again, going home through KOReader's own Home action
+    cyberui_home = {
+        home = "cyberui",
+        open = function(book) require("cyberui/app").openBook(book) end,
+        back = function() H.event("Home") end,
     },
     bookshelf = {
         home = "bookshelf",

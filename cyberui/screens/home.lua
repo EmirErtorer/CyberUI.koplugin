@@ -43,6 +43,7 @@ function Home:onRaise()
     self.picked = nil
 end
 
+
 -- The identity strip: logo, the banner's lines and a barcode. Holding it
 -- changes what the banner says.
 local function identity()
@@ -80,20 +81,35 @@ local function indexStrip()
 end
 
 -- The date block with the streak line and a button to the reading log.
-local function dateRow()
-    local th = Theme.get()
+-- The streak line under the date.
+local function streakLine()
     local goal = Settings.get("daily_goal", 30)
-    local line = string.format(_("STREAK %d DAYS // %d MIN TODAY // GOAL %d"), Stats.streak(), Format.minutes(Stats.today()), goal)
+    return string.format(_("STREAK %d DAYS // %d MIN TODAY // GOAL %d"), Stats.streak(), Format.minutes(Stats.today()), goal)
+end
+
+local function dateRow(home)
+    local th = Theme.get()
+    home.streak = Label:new({ text = streakLine(), kind = "mono_small", color = "muted" })
     return Layout.Row:new({ gap = th.space.l, children = {
         Panel:new({ shape = "chamfer", corners = "l", cut = "cut", fill = "accent2", line = false,
             width = Theme.px(64), height = Theme.px(64),
             child = Label:new({ text = os.date("%d"), kind = "hero", color = "on_accent2", align = "center" }) }),
         Layout.Column:new({ grow = true, children = {
             Label:new({ text = os.date("%A, %B %d"), kind = "title" }),
-            Label:new({ text = line, kind = "mono_small", color = "muted" }),
+            home.streak,
         } }),
         Button:new({ icon = "stats", variant = "icon", width = th.size.touch, on_tap = function() App.push("diagnostics") end }),
     } })
+end
+
+-- The book has now really closed (home was shown before it did): its
+-- reading time is counted, so redraw the streak line alone if it changed.
+function Home:onBookClosed()
+    local line = streakLine()
+    if not self.streak or self.streak.text == line then return end
+    self.streak.text = line
+    self.streak:layout(self.streak.w, self.streak.h)
+    App.repaint(self.streak)
 end
 
 -- The book in the active panel: the one picked from the recent list, or the
@@ -204,7 +220,7 @@ function Home:build()
         status,
         identity(),
         indexStrip(),
-        dateRow(),
+        dateRow(self),
         activeFile(shown),
         Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown), launcher() } }),
         footer(),
