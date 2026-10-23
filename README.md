@@ -1,198 +1,152 @@
-# CyberUI
+<p><img src="assets/cyberui-title.svg" width="45%" alt="CyberUI"><br>
+<img src="assets/readme-divider.svg" width="100%" alt=""></p>
 
-A fast, cyberpunk-styled home screen for [KOReader](https://github.com/koreader/koreader).
-CyberUI replaces the file browser as the first thing you see: the book you are reading with
-a Resume button, your recent books, a library browser, collections, a reading log and
-settings, all drawn in one consistent "cyberdeck" look that switches between light, dark
-and colour themes.
+[![GitHub Release](https://img.shields.io/github/v/release/EmirErtorer/CyberUI.koplugin?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMyAzaDguNUwyMSAxMi41IDEyLjUgMjEgMyAxMS41ek03LjUgNS41YTIgMiAwIDEgMCAwIDQgMiAyIDAgMCAwIDAtNHoiLz48L3N2Zz4%3D&label=Latest%20Release&labelColor=rgb(224%2C87%2C75)&color=rgb(147%2C228%2C234))](https://github.com/EmirErtorer/CyberUI.koplugin/releases/latest)
+[![Changelog](https://img.shields.io/badge/Changelog-What%27s%20new-white?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI%2BPHBhdGggZD0iTTEzIDNhOSA5IDAgMCAwLTkgOUgxbDMuODkgMy44OS4wNy4xNEw5IDEySDZjMC0zLjg3IDMuMTMtNyA3LTdzNyAzLjEzIDcgNy0zLjEzIDctNyA3Yy0xLjkzIDAtMy42OC0uNzktNC45NC0yLjA2bC0xLjQyIDEuNDJBOC45NTQgOC45NTQgMCAwIDAgMTMgMjFhOSA5IDAgMCAwIDAtMTh6bS0xIDV2NWw0LjI4IDIuNTQuNzItMS4yMS0zLjUtMi4wOFY4SDEyeiIvPjwvc3ZnPg%3D%3D&labelColor=rgb(224%2C87%2C75)&color=rgb(147%2C228%2C234))](CHANGELOG.md)
+[![Buy me a coffee](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-white?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI%2BPHBhdGggZD0iTTIwIDNINHYxMGMwIDIuMjEgMS43OSA0IDQgNGg2YzIuMjEgMCA0LTEuNzkgNC00di0zaDJjMS4xMSAwIDItLjg5IDItMlY1YzAtMS4xMS0uODktMi0yLTJ6bTAgNWgtMlY1aDJ2M3pNNCAxOWgxNnYySDR6Ii8%2BPC9zdmc%2B&labelColor=rgb(224%2C87%2C75)&color=rgb(147%2C228%2C234))](https://buymeacoffee.com/emirertorer)
 
-<p>
-<img src="docs/screenshots/home.png" width="260" alt="Home screen">
-<img src="docs/screenshots/library.png" width="260" alt="Library explorer">
-<img src="docs/screenshots/book-sheet.png" width="260" alt="Holding a book: its actions">
-</p>
-<p>
-<img src="docs/screenshots/search.png" width="260" alt="Search with CyberUI's keyboard">
-<img src="docs/screenshots/settings-neon.png" width="260" alt="Settings in the Neon theme, dark">
-<img src="docs/screenshots/landscape.png" width="347" alt="Home in landscape">
-</p>
+
+
+
+CyberUI is a **cyberpunk home screen** for KOReader, built to be fast on e-ink.
+
+* **A home that feels like a deck**: the book you are reading, your recent books, your streak and a launcher, with a status bar of live readouts.
+* **A library you can work in**: folders, ASCII covers, search, collections, a reading log and a trash, with rename, move and delete that take your reading data along.
+* **Your look**: seven colour schemes and your own, fourteen cyberpunk font sets, ASCII covers and sleep screens, and KOReader's own menu restyled to match.
+
+Home comes back the moment you close a book, in a single screen refresh.
+
+## At a glance
+
+<table>
+  <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/01-home.png"><img src="assets/screenshots/01-home.png" alt="Home"></a><br><sub>Home: the book you are reading with Resume, recent books and a launcher, in Neon.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/02-library.png"><img src="assets/screenshots/02-library.png" alt="Library"></a><br><sub>The library: ASCII covers, folders stacked under their first book, filters and sort.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/03-menu.png"><img src="assets/screenshots/03-menu.png" alt="KOReader's menu"></a><br><sub>KOReader's own menu, restyled: every setting and plugin, with the Deck tab first.</sub></td>
+  </tr>
+</table>
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/04-details.png"><img src="assets/screenshots/04-details.png" alt="Book details"></a><br><sub>A book's details: facts, progress, a paged synopsis, and every action in reach.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/05-search.png"><img src="assets/screenshots/05-search.png" alt="Search"></a><br><sub>Search as you type with CyberUI's own keyboard.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/06-collections.png"><img src="assets/screenshots/06-collections.png" alt="Collections"></a><br><sub>Collections, each a fan of its books.</sub></td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/07-log.png"><img src="assets/screenshots/07-log.png" alt="Reading log"></a><br><sub>The reading log: your week, your streak and each session.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/08-diagnostics.png"><img src="assets/screenshots/08-diagnostics.png" alt="Diagnostics"></a><br><sub>Diagnostics: battery, processor, memory, storage, Wi-Fi, screen and uptime.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/09-look.png"><img src="assets/screenshots/09-look.png" alt="Colour schemes"></a><br><sub>Seven colour schemes and your own, in light and dark.</sub></td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/10-fonts.png"><img src="assets/screenshots/10-fonts.png" alt="Fonts"></a><br><sub>Fourteen cyberpunk font sets, or any font on your reader.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/11-sleep.png"><img src="assets/screenshots/11-sleep.png" alt="ASCII sleep screen"></a><br><sub>The sleep screen in ASCII: your book's cover, a picture, or anything KOReader shows.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/12-landscape.png"><img src="assets/screenshots/12-landscape.png" alt="Landscape"></a><br><sub>Every screen works in landscape too.</sub></td>
+  </tr>
+</table>
+
 
 ## Features
 
-- **Home**: today's date and reading streak, the current book with its progress and a
-  Resume button, recent books, and a launcher for every section, Ink Away included.
-- **Library explorer**: your folders and books as a paged grid or list, with Reading, Unread
-  and Done filters and four sort orders. Folders open in place with a breadcrumb bar to go
-  back up. Tap a book to read it; hold a book or folder for its actions (details, mark done,
-  collections, rename, move to another folder, delete). **+ New** makes folders.
-- **Trash**: deleted books and folders wait 30 days with their reading data, and go back
-  where they were, into their collections and history, with one tap.
-- **Dossier**: everything about one book (format, size, pages, collections, synopsis,
-  highlight and note counts) and every action on it: open, mark done or reading, add to
-  collections, show its folder, delete.
-- **Collections**: Favorites pinned on top, every other collection as a card with its covers,
-  and new collections in one tap.
-- **Search**: finds books by title, author, series or file name across the whole library,
-  with results that follow your typing.
-- **Keyboard**: CyberUI's own on-screen keyboard for every text it asks for, with number and
-  accented-letter layers.
-- **Reading log**: time and pages this week, the streak, minutes per day against your daily
-  goal, twelve weeks of activity and the latest sessions (from KOReader's statistics).
-- **Themes**: Mono, Neon, Terminal, Amber and a Custom scheme with your own accent colours,
-  each in Light, Dark or System mode (System follows KOReader's night mode). Switching is
-  instant, with no restart.
-- **Fonts**: Oxanium by default, or Chakra Petch, Tomorrow, Rajdhani or KOReader's own
-  fonts, plus a text size control.
-- **Covers**: typeset title cards by default, which draw fastest on e-ink, or the real
-  covers.
-- **Ink Away**: the drawing and note-taking plugin opens from home. If it is not installed,
-  the button describes it and installs it from its GitHub releases with one tap (checked
-  against GitHub's SHA-256 digest), then offers KOReader's restart.
-- **Plays well with KOReader**: your KOReader gestures keep working on CyberUI's empty space,
-  night mode, rotation and the frontlight work as usual, and a swipe down from the top edge
-  opens KOReader's own menu.
+### Home
 
-## Install
+<img src="assets/readme-launcher.svg" alt="The launcher: Library, Collections, History, Search, Ink Away and System">
 
-1. Download `CyberUI.koplugin.zip` from the
-   [releases page](https://github.com/EmirErtorer/CyberUI.koplugin/releases), or build it
-   yourself (see [Build the zip](#build-the-zip)).
-2. Unzip it. You get one folder named `CyberUI.koplugin`.
-3. Connect your reader to your computer and copy that folder into KOReader's `plugins`
-   folder:
-   - Kobo: `.adds/koreader/plugins/`
-   - Kindle: `koreader/plugins/`
-   - Android: `koreader/plugins/` on the internal storage
-4. Eject the reader and restart KOReader.
-5. Open KOReader's top menu, tap the first tab (the filing cabinet), then
-   **Start with** and choose **CyberUI**.
-6. Restart KOReader once more. It now opens on CyberUI.
+| | |
+|---|---|
+| **Active file** | The book you are reading, with its cover, progress and Resume. Tap a recent book to bring it here; open it from the panel. |
+| **Back from a book** | Home shows first and KOReader closes the book behind it, so coming home is one quick refresh. KOReader's own Home action takes the same way while CyberUI is your home, and the "CyberUI home" action goes on any gesture. |
+| **Banner** | A set line, a greeting with your handle, a random highlight from your books, the device's status or your own words, with a top line of its own. Hold it to change it. |
+| **Status bar** | Your tag, then up to six readouts in the order you choose: clock, date, battery, Wi-Fi, frontlight, processor, memory, storage, book progress, uptime. |
+| **Progress** | Segments, an ASCII bar, a heartbeat trace, a scan line or an equalizer, each marking exactly where you are. Hold the bar to switch. |
+| **Diagnostics** | Battery and drain, processor and memory, storage, Wi-Fi, screen and light, uptime and the device at a glance, behind the SYS button. |
 
-You can also open CyberUI at any time from the menu (**Tools** tab, **CyberUI**) or give it
-a gesture: KOReader's gesture settings list it as **CyberUI home**.
+### Library
 
-## Using it
+| | |
+|---|---|
+| **Browse** | Folders with breadcrumbs, a grid or a list, sort by recent, title, author or added, and filters for reading, unread and done. Folders show as a stack under their first book's cover. |
+| **Book actions** | Hold a book or folder to open, see details, mark it done, add it to collections, rename, move or delete it. Rename and move keep its reading data, history and collections. |
+| **Trash** | Deleted books and folders wait 30 days and go back exactly where they were. |
+| **Details** | Facts, progress, a synopsis that pages, and highlight, note and bookmark counts. |
+| **Search** | Titles, authors and file names as you type, on CyberUI's own keyboard. |
+| **Collections and log** | KOReader's collections as fans of covers, and your reading log by day and session. |
 
-| To | Do |
-| --- | --- |
-| Read the current book | Tap **Resume** on home |
-| Go to a section | Tap it in the launcher on home, or in the tab bar at the bottom |
-| Open a book | Tap it |
-| See what you can do with a book or folder | Hold it |
-| Go into a folder, or back up | Tap it; tap a name in the breadcrumb bar or use Back |
-| Turn a page of books | Swipe left or right, or use the arrows at the bottom |
-| Go back | The arrow at the top left, or the device's Back key |
-| Open KOReader's menu | Swipe down from the top edge, or **System > Home > KOReader menu** |
-| Use KOReader's file browser | **Library > menu > KOReader browser**, or **System > Home > File browser**; CyberUI comes back when you open it again from the menu or a gesture |
-| Restore something deleted | **Library > menu > Trash**, then tap it |
-| Come home from a book | Choose **CyberUI home** in the reader's menu (**Tools** tab), or set it as a gesture |
+### Look
 
-When you close a book, however you close it, CyberUI is already waiting underneath, so it
-comes back with only the changed details redrawn. It keeps doing so after a restart until you
-choose KOReader's file browser instead.
+| | |
+|---|---|
+| **Colour schemes** | Mono, Graphite, Neon, Synthwave, Bloodline, Terminal and Amber, or your own two colours, each in light and dark and following KOReader's night mode. Greyscale screens get the grey ones. |
+| **Fonts** | Fourteen sets, from Oxanium (the default) and Orbitron to the VT323 terminal and Press Start 2P arcade, or any font installed on your reader, with a text size of your own. |
+| **ASCII covers** | Covers drawn as character art, in colour on colour screens, in Braille, Classic, Detailed, Blocks, Binary, Hex, Glitch or your book's own title. Image covers and title cards too, in four sizes. |
+| **ASCII sleep screen** | KOReader's sleep screen redrawn in ASCII: book covers by default, or custom images, or everything. Transparent pictures let your book or home show through, and KOReader's message stays crisp. |
+| **Icons** | A set of its own, drawn for CyberUI, with small lights in your accent colour. |
 
-## Themes
+### KOReader's menu
 
-Pick a colour scheme and a mode in **System > Look**, and a font set and text size in
-**System > Fonts**. With the **Custom** scheme, two **Pick** buttons set the accent colours.
+| | |
+|---|---|
+| **Restyled** | The drop-down menu over home and inside books, in CyberUI's style, read live from KOReader so every setting and every plugin's entry is there. It drops from the top and takes up to half the screen. |
+| **Deck** | Frontlight and warmth, Wi-Fi, night mode, rotate, restart and exit, with the device at a glance. |
+| **With ZenOS** | When ZenOS is running, its Controls and Launcher show as CyberUI tiles instead of the Deck. |
 
-Every colour, font, size and shape comes from the theme files, so new looks need no changes
-to the screens:
+### Speed and e-ink
 
-- A **colour scheme** is a file in `cyberui/themes/` with a `light` and a `dark` palette of
-  seven colours (`bg`, `ink`, `muted`, `line`, `soft`, `accent`, `accent2`). Copy
-  `cyberui/themes/neon.lua`, change the id, name and colours, and add the id to
-  `Registry.SCHEMES` in `cyberui/theme/registry.lua`. Text colours on the accents are chosen
-  automatically for contrast.
-- A **font set** is an entry in `cyberui/themes/fonts.lua`: a font file for display, title,
-  body and mono text, and a scale that evens out its size.
-- A **style** (type sizes, spacing, cut corners, decorations) is a file like
-  `cyberui/themes/cyberdeck.lua`, listed in `Registry.STYLES`.
+| | |
+|---|---|
+| **Fast** | Home paints in a few milliseconds, covers are drawn once and cached, and the reader's code loads while home sits idle, so even your first book opens quicker. |
+| **Refreshes** | Only what changed is redrawn. Values that keep changing never refresh the screen by themselves, and dark screens get the cleaner refreshes they need. |
 
-## Speed
+### Companions and updates
 
-CyberUI is built to stay out of the way:
+| | |
+|---|---|
+| **Ink Away** | On the launcher: it opens when installed, and otherwise installs from GitHub in one tap. |
+| **Updates** | System, About, Updates shows the newest release (and prereleases, if you want them) with its notes, and installs it after checking the download. Once a day, only on Wi-Fi that is already on, it looks by itself and says so on home. |
 
-- Home stays loaded while you read. Closing a book redraws it instead of rebuilding it.
-- Everything is drawn with flat shapes using KOReader's fast C drawing, with no gradients,
-  blurs or shadows that would need dithering.
-- Library folders and the stats are cached until something changes; covers are scaled once.
-- Screens refresh only where they change, with a full refresh every few screens
-  (**System > Speed**) to clear ghosting.
 
-Measured in the KOReader emulator on a laptop: a screen builds and paints in 2 to 6 ms;
-opening a book from CyberUI takes about 80 ms and coming back home about 60 ms, of which
-CyberUI's own work is about 11 ms (the rest is KOReader saving and closing the book).
+## Installation
 
-## Development
+<a href="https://github.com/EmirErtorer/CyberUI.koplugin/releases/latest"><img src="assets/readme-download.svg" alt="Download the latest release"></a>
 
-### Layout of the code
+Unzip the download and copy the `CyberUI.koplugin` folder inside it into KOReader's `plugins` directory:
 
-| Path | What it holds |
-| --- | --- |
-| `main.lua` | The KOReader plugin: Start with entry, opening at boot, coming back after a book, menu and gesture action |
-| `cyberui/app.lua` | The controller: window, screen stack, dialogs, toasts, clock, reader hand-off |
-| `cyberui/host.lua` | The full-screen window: painting, taps, holds, swipes, gesture pass-through |
-| `cyberui/theme.lua`, `cyberui/theme/` | The active look, colour helpers and the theme registry |
-| `cyberui/themes/` | Theme data: the Cyberdeck style and the colour schemes |
-| `cyberui/gfx/` | Drawing: shapes, text, icons |
-| `cyberui/ui/` | Widgets: layout, label, button, panel, controls, cover, grid, charts, dialogs |
-| `cyberui/data/` | Books, covers, library, files (move, rename, folders), trash, history, collections, stats, device status |
-| `cyberui/screens/` | Home, library explorer, search, dossier, collections, reading log, settings, trash |
-| `cyberui/actions.lua` | What can be done with books and folders from any screen, and their hold sheets |
-| `cyberui/apps/` | Companion plugins on home (Ink Away): status, opening, the install offer |
-| `cyberui/install/` | Installing a plugin from GitHub: download, release choice, checked unpacking |
-| `tests/` | Lint, widget and screen tests, end-to-end walkthroughs |
-| `tools/` | Emulator launcher and the release zip builder |
+- Kindle: `koreader/plugins/CyberUI.koplugin/`
+- Kobo: `.adds/koreader/plugins/CyberUI.koplugin/`
+- Android: `koreader/plugins/CyberUI.koplugin/` in app storage
 
-### Run the tests
+Then restart KOReader and open the top menu, the first tab (the file browser's), **Start with**, **CyberUI**. From then on CyberUI updates itself: System, About, Updates.
 
-The tests need [LuaJIT](https://luajit.org) (and run [luacheck](https://github.com/lunarmodules/luacheck)
-too when it is installed) and, for everything but the lint, a KOReader
-checkout with the emulator built in `~/koreader-emulator` (set `KO_DIR` if it is elsewhere;
-see KOReader's [building guide](https://github.com/koreader/koreader/blob/master/doc/Building.md)).
+What changed in each version is in the [changelog](CHANGELOG.md).
 
-1. From the plugin folder, run:
+<details>
+<summary><b>Getting started</b></summary>
 
-   ```bash
-   tests/run.sh
-   ```
+1. **Make it your start screen** in the top menu's first tab, Start with, CyberUI, or in CyberUI's System, Home, Start with CyberUI.
+2. **Open a book** from Resume, a recent book, or the library. Close it and you are back home.
+3. **Want a gesture home?** Open a book first, then Settings, Taps and gestures, Gesture manager, and pick "CyberUI home" under General. A book has its own gestures, apart from the file browser's.
+4. **Swipe down from the top** for KOReader's menu in CyberUI's style.
+5. **Hold things.** Books, folders, the banner and the progress bar all have more on a long press.
+6. **Make it yours** in System: colour scheme, fonts, covers, the banner and the status bar.
 
-   It ends with `all passed`.
-2. To also click through every screen in the visible emulator, run:
+</details>
 
-   ```bash
-   tests/run.sh --e2e
-   ```
 
-   The emulator window opens and closes six times; the output ends with the path of the
-   screenshots taken and `all passed`.
+## Notes
 
-### Try it in the emulator
+- Made for KOReader 2026.07 and newer, and tested on a Kindle Paperwhite.
+- CyberUI only reads your library to show it. It changes files only when you rename, move or delete something, and deleted things wait in its trash for 30 days.
+- ASCII covers use the cover pictures KOReader already keeps, so a new book shows a title card until KOReader has read its cover.
 
-```bash
-tools/emulator.sh
-```
+## About
 
-This copies the plugin into the emulator and starts it at 600 x 800. For another screen
-size, pass width, height and dpi, for example `tools/emulator.sh 1072 1448 300`.
+I'm a computer science and engineering graduate, and I design CyberUI and test it on my Kindle Paperwhite. It is built around what e-readers can do: slow processors and screens that redraw slowly, so every screen paints in milliseconds and nothing redraws more than it needs to. Every change runs against CyberUI's checks on KOReader's own drawing code and in the emulator, and anything I can't test there goes out as a prerelease first.
 
-### Build the zip
+## Contributing
 
-```bash
-tools/build-release.sh
-```
+Bug reports, testing prereleases on your reader, colour schemes, ideas and pull requests are all welcome. [CONTRIBUTING.md](CONTRIBUTING.md) explains how to get started, and [SECURITY.md](SECURITY.md) how to report a security problem.
 
-It prints `built dist/CyberUI.koplugin.zip` with the file size.
+## License
 
-## Credits
-
-- Fonts: [Oxanium](https://fonts.google.com/specimen/Oxanium),
-  [Chakra Petch](https://github.com/m4rc1e/Chakra-Petch),
-  [Tomorrow](https://fonts.google.com/specimen/Tomorrow),
-  [Rajdhani](https://fonts.google.com/specimen/Rajdhani) and
-  [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono), all under the SIL
-  Open Font License (licence texts in `fonts/`). Oxanium's weights are cut from its variable
-  font, as the licence allows.
-- Built on [KOReader](https://github.com/koreader/koreader) and its CoverBrowser plugin's
-  book information.
+MIT (see [`LICENSE`](LICENSE)). The bundled fonts are under the SIL Open Font License; see [NOTICE.md](NOTICE.md).
