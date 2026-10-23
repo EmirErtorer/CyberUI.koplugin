@@ -14,9 +14,10 @@ local Icons = {}
 local masks = {}   -- "name|size" -> BB8 coverage mask, or false when it failed
 
 -- Rasterise an icon file into a mask: 255 where its lines are, 0 elsewhere;
--- false when there is no such file.
+-- false when there is no such file. A name with a slash is a file path
+-- (another plugin's own icon).
 local function build(name, size)
-    local file = Paths.file("icons/" .. name .. ".svg")
+    local file = name:find("/", 1, true) and name or Paths.file("icons/" .. name .. ".svg")
     if lfs.attributes(file, "mode") ~= "file" then return false end
     local raw, straight = RenderImage:renderSVGImageFile(file, size, size)
     if not raw then return false end
@@ -59,7 +60,7 @@ function Icons.draw(bb, name, x, y, size, color, accent)
     local m = mask(name, size)
     if not m then return end
     blit(bb, m, x, y, color)
-    local a = mask(name .. ".accent", size)
+    local a = not name:find("/", 1, true) and mask(name .. ".accent", size)
     if a then blit(bb, a, x, y, accent or color) end
 end
 

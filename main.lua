@@ -57,6 +57,26 @@ function CyberUI:init()
     require("cyberui/sleep").install()
     self.ui.menu:registerToMainMenu(self)
     self:onDispatcherRegisterActions()
+    if self.ui.document then self:styleReaderMenu() end
+end
+
+-- Inside a book, the drop-down menu is CyberUI's too (unless the reader
+-- chose KOReader's own in System > Home).
+function CyberUI:styleReaderMenu()
+    local km = self.ui.menu
+    local show = km.onShowMenu
+    km.onShowMenu = function(menu, tab_index, do_not_show)
+        if do_not_show or not require("cyberui/settings").get("styled_menu", true) then
+            return show(menu, tab_index, do_not_show)
+        end
+        local Menu = require("cyberui/menu")
+        local ok, err = pcall(function() if not Menu.current() then Menu.open({ km = menu, reader = true }) end end)
+        if not ok then
+            require("logger").warn("CyberUI menu:", err)
+            return show(menu, tab_index, do_not_show)
+        end
+        return true
+    end
 end
 
 -- The gesture and hotkey action "CyberUI home".

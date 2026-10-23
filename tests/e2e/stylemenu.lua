@@ -61,3 +61,47 @@ H.step(S, function()
 end)
 H.step(S, function() H.event("Back") end)
 H.step(S, function() H.check(menu() == nil and H.screen() == "home", "Back at the top closes the menu") end)
+
+-- CyberUI's own Deck tab, ZenOS's tabs when it is there, and the styled menu inside a book
+local function tabIndex(m, pred) for i, t in ipairs(m.tabs) do if pred(t) then return i end end end
+H.step(S, function() H.app().koreaderMenu() end)
+H.step(S, function()
+    local m = menu()
+    local i = tabIndex(m, function(t) return t.deck end)
+    H.check(i ~= nil, "the Deck tab is there")
+    m:switchTab(i)
+end)
+H.step(S, function()
+    H.check(#menu():deckButtons() >= 4, "the Deck has its controls")
+    H.shot("sm04-deck")
+    local m = menu()
+    local qs = tabIndex(m, function(t) return t.id == "quicksettings" end)
+    if qs then m:switchTab(qs) end
+end)
+H.step(S, function()
+    local m = menu()
+    if m.tabs[m.tab].id == "quicksettings" then
+        H.check(#m:panelButtons(m.tabs[m.tab]) > 0, "ZenOS Controls show their buttons")
+        H.shot("sm05-zen-controls")
+        local la = tabIndex(m, function(t) return t.id == "app_launcher" end)
+        if la then m:switchTab(la) end
+    end
+end)
+H.step(S, function()
+    local m = menu()
+    if m.tabs[m.tab].id == "app_launcher" then
+        H.check(#m:panelButtons(m.tabs[m.tab]) > 0, "ZenOS Launcher shows its buttons")
+        H.shot("sm06-zen-launcher")
+    end
+    m:close()
+end)
+H.step(S, function() H.app().openBook(require("cyberui/data/library").all()[1]) end)
+H.step(3, function() require("apps/reader/readerui").instance.menu:onShowMenu() end)
+H.step(S, function()
+    local m = menu()
+    H.check(m ~= nil and m.reader, "the menu inside a book is the styled one")
+    require("ui/uimanager"):forceRePaint()
+    H.shot("sm07-reader")
+    if m then m:close() end
+end)
+H.step(S, function() H.check(menu() == nil, "and it closes") end)
