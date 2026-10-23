@@ -11,7 +11,7 @@ local Theme = require("cyberui/theme")
 local BookTile = {}
 
 -- Build a tile w x h for `path`; o: { on_tap, on_hold }.
-function BookTile.build(path, w, h, o)
+function BookTile.build(path, _w, h, o)
     local th = Theme.get()
     local badge, badge_on = Books.badge(path)
     local title_h = th.space.xs + Theme.text("small").height
@@ -25,7 +25,7 @@ function BookTile.build(path, w, h, o)
 end
 
 -- Build a folder tile w x h; `count` books inside (nil when unknown).
-function BookTile.folder(folder, w, h, count, on_tap)
+function BookTile.folder(folder, _w, h, count, on_tap)
     local th = Theme.get()
     local title_h = th.space.xs + Theme.text("small").height
     return Layout.Column:new({ gap = th.space.xs, on_tap = on_tap, children = {

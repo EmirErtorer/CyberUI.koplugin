@@ -129,7 +129,8 @@ CyberUI's own work is about 11 ms (the rest is KOReader saving and closing the b
 
 ### Run the tests
 
-The tests need [LuaJIT](https://luajit.org) and, for everything but the lint, a KOReader
+The tests need [LuaJIT](https://luajit.org) (and run [luacheck](https://github.com/lunarmodules/luacheck)
+too when it is installed) and, for everything but the lint, a KOReader
 checkout with the emulator built in `~/koreader-emulator` (set `KO_DIR` if it is elsewhere;
 see KOReader's [building guide](https://github.com/koreader/koreader/blob/master/doc/Building.md)).
 

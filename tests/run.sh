@@ -10,6 +10,9 @@ fail=0
 run() { echo "== $1"; shift; "$@" || fail=$((fail + 1)); }
 filter() { grep -v -e '^ffi\.' -e '^lib_' -e 'monolibtic' -e 'DEBUG' -e 'INFO' -e 'Started SDL' -e '^  [hw] =' -e '^}'; }
 run lint bash -c "cd '$repo' && luajit tests/lint.lua"
+if command -v luacheck >/dev/null; then
+    run luacheck bash -c "cd '$repo' && luacheck -q cyberui main.lua _meta.lua"
+fi
 if [ -x "$emu/luajit" ]; then
     for suite in widgets screens; do
         run "$suite" bash -c "cd '$emu' && SDL_VIDEODRIVER=offscreen ./luajit '$repo/tests/$suite.lua' '$repo' 2>&1 | { $(declare -f filter); filter; }; exit \${PIPESTATUS[0]}"

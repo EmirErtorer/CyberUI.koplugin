@@ -40,7 +40,7 @@ local function open(c)
 end
 
 -- One collection card.
-local function card(c, w, h)
+local function card(c, _w, h)
     local th = Theme.get()
     local inner_h = h - 2 * th.space.s
     return Panel:new({ shape = "frame", pad = th.space.s, on_tap = open(c), child = Layout.Row:new({ gap = th.space.m, children = {

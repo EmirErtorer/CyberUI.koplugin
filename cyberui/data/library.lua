@@ -134,7 +134,7 @@ function Library.search(query)
         local info = Books.info(p)
         local hay = (info.title .. " " .. (info.authors or "") .. " " .. (info.series or "") .. " " .. p):lower()
         local all = true
-        for _i, w in ipairs(words) do
+        for _j, w in ipairs(words) do
             if not hay:find(w, 1, true) then all = false; break end
         end
         if all then out[#out + 1] = p end
