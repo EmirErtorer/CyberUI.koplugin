@@ -1,15 +1,18 @@
--- KOReader's drop-down menu in CyberUI's style: opens from CyberUI, switches
--- tabs, goes into a submenu, toggles a checkbox in place and goes back up.
+-- KOReader's drop-down menu in CyberUI's style: drops down over CyberUI
+-- (30-50% of the screen), switches tabs, goes into a submenu, toggles a
+-- checkbox in place and goes back up.
 local H = ...
 local S = 0.8
 
-local function menu() return H.app().current() end
+local function menu() return require("cyberui/menu").current() end
 
 H.step(1, function() H.app().koreaderMenu() end)
 H.step(S, function()
-    H.check(H.screen() == "menu", "the styled menu opens from CyberUI")
-    H.shot("sm01-menu")
     local m = menu()
+    local h = m and m.panel.h / require("device").screen:getHeight()
+    H.check(m ~= nil, "the styled menu drops down over CyberUI")
+    H.check(h and h >= 0.29 and h <= 0.51, "and covers 30-50% of the screen: " .. tostring(h))
+    H.shot("sm01-menu")
     for i, tab in ipairs(m.tabs) do
         if tab.icon == "appbar.settings" then m:switchTab(i) end
     end
@@ -47,14 +50,14 @@ H.step(S, function()
     local m = menu()
     if m.probe then
         H.check(m.probe.checked_func() ~= m.before, "a checkbox toggles: " .. tostring(m.probe.text or "?"))
-        H.check(H.screen() == "menu", "and the menu stays open")
+        H.check(menu() == m, "and the menu stays open")
         m:select(m.probe)   -- put it back
     end
 end)
 H.step(S, function() H.event("Back") end)
 H.step(S, function()
     local m = menu()
-    H.check(H.screen() == "menu" and #m.trail == 0, "Back goes up a menu")
+    H.check(m ~= nil and #m.trail == 0, "Back goes up a menu")
 end)
 H.step(S, function() H.event("Back") end)
-H.step(S, function() H.check(H.screen() == "home", "Back at the top leaves the menu") end)
+H.step(S, function() H.check(menu() == nil and H.screen() == "home", "Back at the top closes the menu") end)

@@ -235,7 +235,10 @@ end
 
 -- Back one screen; at home nothing happens.
 function App.back()
-    if host and host.overlay then return App.closeDialog() end
+    if host and host.overlay then
+        if host.overlay.on_back and host.overlay.on_back() then return end
+        return App.closeDialog()
+    end
     local cur = App.current()
     if cur and cur:onBack() then return end
     App.pop()
@@ -255,18 +258,27 @@ end
 -- Show a dialog built by builder(close, screen_w) over the screen.
 function App.dialog(builder)
     if not host then return end
+    local before = host:overlayBox()
     host.overlay = builder(App.closeDialog, Screen:getWidth())
     host:relayout()
     host:markRepainted()
-    UIManager:setDirty(host, "ui")
+    -- refresh only what the old and new dialog cover
+    local box = host:overlayBox()
+    UIManager:setDirty(host, "ui", before and box:combine(before) or box)
+end
+
+-- The dialog showing, or nil.
+function App.overlay()
+    return host and host.overlay
 end
 
 -- Close the dialog and repaint what it covered.
 function App.closeDialog()
     if not (host and host.overlay) then return end
+    local box = host:overlayBox()
     host.overlay = nil
     host:markRepainted()
-    UIManager:setDirty(host, "ui")
+    UIManager:setDirty(host, "ui", box)
 end
 
 -- Ask before doing something (see Dialog.confirm for the fields).
@@ -362,8 +374,9 @@ end
 -- Open KOReader's drop-down menu: in CyberUI's style unless the reader chose
 -- KOReader's own, or when the file browser's menu cannot be read.
 function App.koreaderMenu()
-    if Settings.get("styled_menu", true) and require("cyberui/screens/menu").available() then
-        if App.current() and App.current().id ~= "menu" then App.push("menu") end
+    local Menu = require("cyberui/menu")
+    if Settings.get("styled_menu", true) and Menu.available() then
+        if not Menu.current() then Menu.open() end
         return
     end
     local FileManager = require("apps/filemanager/filemanager")

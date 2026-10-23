@@ -48,7 +48,7 @@ function Dialog.confirm(o, close, screen_w)
         kids[#kids + 1] = Label:new({ text = o.text, kind = "body", lines = 9, align = centred and "center" or "left" })
     end
     kids[#kids + 1] = Layout.Row:new({ gap = th.space.m, children = {
-        Button:new({ label = o.cancel or _("Cancel"), grow = true, on_tap = closing(close) }),
+        Button:new({ label = o.cancel or _("Cancel"), grow = true, on_tap = closing(close, o.on_cancel) }),
         Button:new({ label = o.ok or _("OK"), variant = "primary", grow = true, on_tap = closing(close, o.on_ok) }),
     } })
     return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),

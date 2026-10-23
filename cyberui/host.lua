@@ -54,7 +54,17 @@ end
 function Host:overlayPos()
     local o = self.overlay
     if o.dock == "bottom" then return 0, self.dimen.h - o.h end
+    if o.dock == "top" then return 0, 0 end
     return math.floor((self.dimen.w - o.w) / 2), math.floor((self.dimen.h - o.h) / 2)
+end
+
+-- The screen area the overlay covers, its shadow included.
+function Host:overlayBox()
+    local o = self.overlay
+    if not o then return nil end
+    local x, y = self:overlayPos()
+    local off = o.dock and 0 or Theme.get().space.s
+    return Geom:new({ x = x, y = y, w = o.w + off, h = o.h + off })
 end
 
 -- Where the toast sits: centred near the bottom, clear of the tab bar.
