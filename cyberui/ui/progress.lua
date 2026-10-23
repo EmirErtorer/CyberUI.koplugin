@@ -16,7 +16,7 @@ local Progress = Element:extend({ value = 0, segments = 20, cell_h = 12, color =
 Progress.STYLES = {
     { id = "segments", name = _("Segments"), h = 12 },
     { id = "ascii", name = _("ASCII"), h = 16 },
-    { id = "heartbeat", name = _("Heartbeat"), h = 26 },
+    { id = "heartbeat", name = _("Heartbeat"), h = 36 },
     { id = "scanline", name = _("Scanline"), h = 18 },
     { id = "equalizer", name = _("Equalizer"), h = 24 },
 }
@@ -70,38 +70,65 @@ local function ascii(_self, bb, x, y, c, w, v)
     Text.draw(bb, cx, y, kind, "]", c)
 end
 
--- The height of a heartbeat trace at `t` pixels into one beat of `period`.
-local function beat(t, period, amp)
-    local p = t / period
-    if p < 0.30 then return 0 end
-    if p < 0.36 then return amp * 0.15 end          -- P wave
-    if p < 0.40 then return 0 end
-    if p < 0.43 then return -amp * 0.25 end         -- Q
-    if p < 0.48 then return amp end                 -- R spike
-    if p < 0.52 then return -amp * 0.45 end         -- S
-    if p < 0.62 then return 0 end
-    if p < 0.74 then return amp * 0.25 end          -- T wave
+-- A steady pseudo-random number in [0, 1) for beat `i` (the same every draw).
+local function jitter(i, salt)
+    local v = math.sin(i * 12.9898 + salt * 78.233) * 43758.5453
+    return v - math.floor(v)
+end
+
+-- One heartbeat as (fraction through the beat, height) points: P wave,
+-- the sharp Q-R-S spike, T wave; heights in between are interpolated.
+local WAVE = {
+    { 0, 0 }, { 0.28, 0 }, { 0.31, 0.10 }, { 0.34, 0.14 }, { 0.37, 0 },
+    { 0.41, 0 }, { 0.43, -0.22 }, { 0.47, 1 }, { 0.51, -0.42 }, { 0.54, 0 },
+    { 0.60, 0 }, { 0.65, 0.20 }, { 0.70, 0.26 }, { 0.76, 0 }, { 1, 0 },
+}
+
+-- The height of a heartbeat at fraction p (0 to 1) through one beat.
+local function beat(p, amp)
+    for k = 2, #WAVE do
+        local a, b = WAVE[k - 1], WAVE[k]
+        if p <= b[1] then
+            local t = (p - a[1]) / (b[1] - a[1])
+            return amp * (a[2] + (b[2] - a[2]) * t)
+        end
+    end
     return 0
 end
 
--- A heart monitor trace up to the reader's place, a bright cursor there, and
--- a dotted flat line for what is still to read.
+-- A heart monitor trace across the whole bar, each beat with its own length
+-- and strength like a real one: solid in the accent up to the reader's
+-- place, a thin dotted outline after it, and a bright cursor at the place.
 local function heartbeat(_self, bb, x, y, c, w, v, h)
-    local mid = y + math.floor(h / 2)
-    local amp = math.floor(h / 2) - Theme.px(2)
-    local period = Theme.px(56)
+    local mid = y + math.floor(h * 0.62)   -- the spike rises higher than it dips
+    local amp = math.floor(h * 0.58)
+    local base = Theme.px(52)
     local stroke = math.max(1, Theme.px(2))
     local at = math.floor(w * v)
-    local accent = Theme.color("accent")
+    local accent, muted = Theme.color("accent"), Theme.color("muted")
+    -- the trace's height at every column, beat by beat
+    local ys = {}
+    local i, start = 0, 0
+    while start < w do
+        local len = math.floor(base * (0.75 + 0.55 * jitter(i, 1)))
+        local a = amp * (0.7 + 0.3 * jitter(i, 2))
+        for t = 0, len - 1 do
+            if start + t >= w then break end
+            ys[start + t] = mid - math.floor(beat(t / len, a))
+        end
+        start, i = start + len, i + 1
+    end
     local prev = mid
-    for i = 0, at - 1 do
-        local yy = mid - math.floor(beat(i % period, period, amp))
+    for col = 0, w - 1 do
+        local yy = ys[col] or mid
         local top, bottom = math.min(prev, yy), math.max(prev, yy)
-        Paint.fill(bb, x + i, top, stroke, bottom - top + stroke, accent)
+        if col < at then
+            Paint.fill(bb, x + col, top, stroke, bottom - top + stroke, accent)
+        elseif col % 2 == 0 then
+            Paint.fill(bb, x + col, top, 1, bottom - top + 1, muted)
+        end
         prev = yy
     end
-    local muted = Theme.color("muted")
-    for i = at + Theme.px(4), w - 1, Theme.px(5) do Paint.fill(bb, x + i, mid, stroke, stroke, muted) end
     -- the cursor at the reader's place
     Paint.fill(bb, x + math.min(at, w - stroke), y, stroke, h, c)
     Paint.fill(bb, x + math.min(at, w - 4 * stroke) - stroke, mid - 2 * stroke, 4 * stroke, 4 * stroke, c)
