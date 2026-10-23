@@ -266,7 +266,7 @@ function App.choose(o)
     App.dialog(function(close, w) return Dialog.choose(o, close, w) end)
 end
 
--- A short notice at the top for two seconds.
+-- A short notice near the bottom for two seconds.
 function App.toast(text)
     if not host then return end
     host.toast = Dialog.toast(text)

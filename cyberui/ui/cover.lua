@@ -5,6 +5,7 @@
 local Element = require("cyberui/ui/element")
 local Books = require("cyberui/data/books")
 local Covers = require("cyberui/data/covers")
+local Icons = require("cyberui/gfx/icons")
 local Paint = require("cyberui/gfx/paint")
 local Settings = require("cyberui/settings")
 local Text = require("cyberui/gfx/text")
@@ -98,11 +99,15 @@ function Cover:drawBadge(bb, x, y, th)
     Text.draw(bb, x + self.w - bw + pad, y + Theme.px(1), "micro", s, fg)
 end
 
--- A folder tab sticking out of the top-left edge.
+-- A folder tab along the top-left edge and a folder icon.
 function Cover:drawFolderTab(bb, x, y, th)
     local tab_w = math.floor(self.w / 2.5)
     local tab_h = Theme.px(7)
     Paint.chamfer(bb, x + Theme.px(6), y, tab_w, tab_h, tab_h, "r", th.c.ink)
+    local s = math.min(Theme.px(36), math.floor(self.w / 3))
+    local pad = Theme.px(10)
+    Paint.fill(bb, x + pad - Theme.px(3), y + tab_h + pad - Theme.px(3), s + Theme.px(6), s + Theme.px(6), th.c.bg)
+    Icons.draw(bb, "folder", x + pad, y + tab_h + pad, s, th.c.ink)
 end
 
 return Cover

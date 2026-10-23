@@ -30,7 +30,7 @@ function BookTile.folder(folder, w, h, count, on_tap)
     local title_h = th.space.xs + Theme.text("small").height
     return Layout.Column:new({ gap = th.space.xs, on_tap = on_tap, children = {
         Cover:new({ title = folder.name, height = h - title_h - Theme.px(4) - th.space.xs, folder = true,
-            badge = count and (count .. "") or nil }),
+            badge = (count and count > 0) and tostring(count) or nil }),
         Label:new({ text = folder.name, kind = "small" }),
         Layout.Spacer:new({ height = Theme.px(4) }),
     } })

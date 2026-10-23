@@ -17,6 +17,7 @@ local ListRow = require("cyberui/ui/listrow")
 local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
+local ffiUtil = require("ffi/util")
 local filemanagerutil = require("apps/filemanager/filemanagerutil")
 local util = require("util")
 local _ = require("gettext")
@@ -42,10 +43,10 @@ function Library:source()
     if p.query then
         return {}, Data.search(p.query), _("Search"), "/GREP/"
     end
-    local dir = p.dir or Data.home()
+    local dir = ffiUtil.realpath(p.dir or Data.home()) or p.dir or Data.home()
     local l = Data.list(dir)
     local parent, name = util.splitFilePathName(dir)
-    local at_home = dir == Data.home()
+    local at_home = dir == (ffiUtil.realpath(Data.home()) or Data.home())
     return l.folders, l.books, at_home and _("Library") or name, filemanagerutil.abbreviate(at_home and dir or parent)
 end
 
@@ -84,7 +85,7 @@ function Library:cell(item, w, h, as_list)
     if item.folder then
         local open = function() App.push("library", { dir = item.folder.path }) end
         if as_list then
-            return ListRow.build({ title = item.folder.name, meta = _("FOLDER"), value = "›", height = h, on_tap = open })
+            return ListRow.build({ icon = "folder", title = item.folder.name, meta = _("FOLDER"), height = h, on_tap = open })
         end
         return BookTile.folder(item.folder, w, h, #Data.list(item.folder.path).books, open)
     end

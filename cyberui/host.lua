@@ -56,10 +56,11 @@ function Host:overlayPos()
     return math.floor((self.dimen.w - o.w) / 2), math.floor((self.dimen.h - o.h) / 2)
 end
 
--- Where the toast sits: centred near the top.
+-- Where the toast sits: centred near the bottom, clear of the tab bar.
 function Host:toastPos()
     local t = self.toast
-    return math.floor((self.dimen.w - t.w) / 2), Theme.get().size.status + Theme.get().space.l
+    local th = Theme.get()
+    return math.floor((self.dimen.w - t.w) / 2), self.dimen.h - th.size.tabbar - th.space.xl - t.h
 end
 
 -- Paint background, screen, overlay and toast (timed).

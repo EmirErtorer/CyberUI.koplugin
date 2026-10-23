@@ -65,7 +65,7 @@ function Dialog.choose(o, close, screen_w)
         child = Layout.Column:new({ gap = th.space.s, children = kids }) })
 end
 
--- A short notice for the top of the screen.
+-- A short notice shown near the bottom of the screen.
 function Dialog.toast(text)
     local th = Theme.get()
     return Panel:new({ shape = "chamfer", corners = "trbl", cut = "cut_small", fill = "ink", line = "ink",

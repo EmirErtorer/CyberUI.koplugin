@@ -23,6 +23,9 @@ local _ = require("gettext")
 
 local Dossier = Screen:extend()
 
+-- Reading status as the dossier names it.
+local STATUS = { new = _("NEW"), reading = _("READING"), complete = _("DONE"), abandoned = _("ON HOLD") }
+
 -- Highlights, notes and bookmarks saved for the book.
 local function annotationCounts(path)
     local counts = { highlights = 0, notes = 0, bookmarks = 0 }
@@ -74,7 +77,7 @@ function Dossier:build()
     local progress = Layout.Column:new({ gap = th.space.xs, children = {
         Layout.Row:new({ children = {
             Label:new({ text = string.format(_("DECRYPTED %d%%"), pct), kind = "mono", grow = true }),
-            Label:new({ text = (Books.badge(path)), kind = "mono", color = "muted" }),
+            Label:new({ text = STATUS[st.status] or "", kind = "mono", color = "muted" }),
         } }),
         Progress:new({ value = st.percent, segments = 30 }),
     } })
