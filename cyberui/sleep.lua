@@ -65,11 +65,14 @@ local function redraw(widget, holder)
     local title
     local lastfile = G_reader_settings:readSetting("lastfile")
     if lastfile then title = require("cyberui/data/books").info(lastfile).title end
-    local art = require("cyberui/gfx/ascii").render(bb, w, h, { size = 9, title = title, on_black = on_black })
+    -- see-through parts show the screen as it is (the book, or home)
+    local art, transparent = require("cyberui/gfx/ascii").render(bb, w, h,
+        { size = 9, title = title, on_black = on_black, backdrop = Screen.bb })
     bb:free()
     on_black:free()
     if main.free then main:free() end
-    local image = ImageWidget:new({ image = art, image_disposable = true, width = w, height = h })
+    local image = ImageWidget:new({ image = art, image_disposable = true, width = w, height = h, alpha = transparent })
+    if transparent then holder.background = nil end
     if parent then parent[1] = image else holder.widget = image end
 end
 
@@ -83,6 +86,10 @@ function Sleep.install()
     Screensaver.show = function(saver, ...)
         local mode = Sleep.mode()
         if not wanted(saver.screensaver_type, mode) then return show(saver, ...) end
+        -- KOReader wipes the screen to its sleep background before drawing an
+        -- image; skipped here (its anti-ghosting refresh stays), as the art
+        -- covers the screen, or shows it through a transparent picture
+        saver.screensaver_background = "none"
         local new = ScreenSaverWidget.new
         ScreenSaverWidget.new = function(cls, o)
             if o and o.widget then

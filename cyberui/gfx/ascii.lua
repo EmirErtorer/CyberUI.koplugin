@@ -92,7 +92,9 @@ end
 
 -- Draw `img` as character art into a new w x h buffer (the picture centred).
 -- opts: { set, size (base font size), title (for the title set), on_black
--- (the picture drawn on black too, so see-through parts stay empty) }.
+-- (the picture drawn on black too, so see-through parts are found),
+-- backdrop (what is on the screen: see-through parts then stay transparent
+-- and show it) }. Returns the art and whether it is transparent.
 function Ascii.render(img, w, h, opts)
     opts = opts or {}
     local th = Theme.get()
@@ -153,19 +155,36 @@ function Ascii.render(img, w, h, opts)
     -- dense where the picture stands out from the background: the bright
     -- parts on a dark background, the dark parts on a light one
     local dark_bg = Color.luminance(th.rgb.bg) < 0.5
-    -- a picture with see-through parts is measured against the background
-    -- it will sit on, so a single flat colour still stands out
-    if see_through then
+    -- a see-through picture laid over the screen (opts.backdrop, what is on
+    -- the screen now) keeps the screen showing through: the art is made
+    -- transparent there, and each cell is drawn for what is behind it
+    local over = see_through and opts.backdrop
+    local function behindDark(x, y)
+        local p = over:getPixel(math.min(w - 1, x), math.min(h - 1, y)):getColorRGB32()
+        return (0.299 * p.r + 0.587 * p.g + 0.114 * p.b) / 255 < 0.5
+    end
+    if over then
+        lo, hi = 0, 1
+    elseif see_through then
+        -- measured against the background it will sit on, so a single flat
+        -- colour still stands out
         local bg = dark_bg and 0 or 1
         lo, hi = math.min(lo, bg), math.max(hi, bg)
     end
     local span = math.max(0.05, hi - lo)
-    local function level(l)
+    local function level(l, dark)
         local t = (l - lo) / span
-        return dark_bg and t or 1 - t
+        return dark and t or 1 - t
     end
-    local out = Blitbuffer.new(w, h, th.colour and Blitbuffer.TYPE_BBRGB32 or Blitbuffer.TYPE_BB8)
-    out:fill(th.c.bg)
+    local out
+    if over then
+        -- a new buffer starts fully transparent (filling it would not: a
+        -- fill stores colours opaque)
+        out = Blitbuffer.new(w, h, Blitbuffer.TYPE_BBRGB32)
+    else
+        out = Blitbuffer.new(w, h, th.colour and Blitbuffer.TYPE_BBRGB32 or Blitbuffer.TYPE_BB8)
+        out:fill(th.c.bg)
+    end
     local title = Text.codepoints(opts.title and opts.title:upper():gsub("%s+", "") or "#")
     if #title == 0 then title = { 35 } end
     local dot = math.max(1, math.floor(cw / 4))
@@ -175,24 +194,31 @@ function Ascii.render(img, w, h, opts)
         for c = 0, cols - 1 do
             i = i + 1
             local cell = cells[i]
-            local color = cell and (th.colour and cellColour(cell.rgb, dark_bg) or th.c.ink)
             local x = ox + c * cw
+            local dark, color = dark_bg, nil
+            if cell and over then
+                dark = behindDark(x + math.floor(cw / 2), y + math.floor(ch / 2))
+                local mono = dark and 255 or 0
+                color = th.colour and cellColour(cell.rgb, dark) or Blitbuffer.ColorRGB32(mono, mono, mono, 0xFF)
+            elseif cell then
+                color = th.colour and cellColour(cell.rgb, dark) or th.c.ink
+            end
             if not cell then -- luacheck: ignore 542
                 -- see-through: nothing drawn
             elseif set.dots then
                 for k, p in ipairs(points) do
-                    if cell.sub[k] and level(cell.sub[k]) > DITHER[k] then
+                    if cell.sub[k] and level(cell.sub[k], dark) > DITHER[k] then
                         Paint.fill(out, x + math.floor(cw * p[1]) - math.floor(dot / 2), y + math.floor(ch * p[2]) - math.floor(dot / 2), dot, dot, color)
                     end
                 end
             else
-                local t = level(cell.l)
+                local t = level(cell.l, dark)
                 local cp = set.pick and set.pick(t, r, c, title)
                     or set.cps[math.max(1, math.min(#set.cps, math.floor(t * (#set.cps - 1) + 1.5)))]
                 if cp ~= 32 then
                     local g = RenderText:getGlyph(f, cp, false)
                     local gw, gh = g.bb:getWidth(), g.bb:getHeight()
-                    if th.colour then
+                    if th.colour or over then
                         out:colorblitFromRGB32(g.bb, x + g.l, y + ascent - g.t, 0, 0, gw, gh, color)
                     else
                         out:colorblitFrom(g.bb, x + g.l, y + ascent - g.t, 0, 0, gw, gh, color)
@@ -201,7 +227,7 @@ function Ascii.render(img, w, h, opts)
             end
         end
     end
-    return out
+    return out, over and true or false
 end
 
 -- The art of a scaled cover at the cover's own size, drawn once and reused.

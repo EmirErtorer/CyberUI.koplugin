@@ -37,23 +37,34 @@ H.step(S, function()
     H.check(not sleep("random_image", "covers", "sl03-untouched"), "Book covers mode leaves images alone")
 end)
 H.step(S, function() Screensaver:close() end)
--- a transparent PNG: its see-through background must stay empty
+-- a transparent PNG: its see-through background shows the screen behind it
+H.step(S, function() H.app().render("full"); require("ui/uimanager"):forceRePaint() end)
 H.step(S, function()
     G_reader_settings:saveSetting("screensaver_dir", os.getenv("CYBERUI_DRIVE_SCRIPT"):match("^(.*)/") .. "/fixtures/sleep")
     G_reader_settings:makeFalse("screensaver_show_message")
     Settings.set("ascii_sleep_mode", "images")
     G_reader_settings:saveSetting("screensaver_type", "random_image")
+    local bb = require("device").screen.bb
+    local before = bb:copy()
     Screensaver:setup()
     Screensaver:show()
     require("ui/uimanager"):forceRePaint()
     H.shot("sl04-transparent")
-    -- the corner is see-through in the PNG: no dots there, only the background
-    local bb = require("device").screen.bb
-    local corner_lit = 0
-    for x = 0, 60, 3 do for y = 0, 60, 3 do
-        local p = bb:getPixel(x, y):getColorRGB32()
-        if p.r + p.g + p.b > 200 then corner_lit = corner_lit + 1 end
+    -- the corners are see-through in the PNG: they still show what was there
+    local same, total = 0, 0
+    for x = 0, 80, 4 do for y = 0, 80, 4 do
+        total = total + 1
+        local a, b = bb:getPixel(x, y):getColorRGB32(), before:getPixel(x, y):getColorRGB32()
+        if a.r == b.r and a.g == b.g and a.b == b.b then same = same + 1 end
     end end
-    H.check(corner_lit == 0, "the transparent background stays empty (" .. corner_lit .. " lit)")
+    before:free()
+    H.check(same == total, "the screen shows through the transparent background (" .. same .. "/" .. total .. ")")
+    -- and the circle in the middle is drawn
+    local lit = 0
+    local cx, cy = math.floor(bb:getWidth() / 2), math.floor(bb:getHeight() / 2)
+    for x = cx - 40, cx + 40, 2 do for y = cy - 40, cy + 40, 2 do
+        local p = bb:getPixel(x, y):getColorRGB32()
+        if p.r > 120 and p.g < 110 then lit = lit + 1 end
+    end end
+    H.check(lit > 50, "the circle is drawn (" .. lit .. " red points)")
 end)
-H.step(S, function() Screensaver:close() end)
