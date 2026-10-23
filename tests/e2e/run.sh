@@ -15,6 +15,15 @@ cp -R "$repo/tests/e2e/drive.koplugin" "$home/plugins/"
 cp "$emu/settings.reader.lua" "$home/settings.reader.lua"
 cp -R "$emu/settings" "$home/settings"
 [ -f "$emu/history.lua" ] && cp "$emu/history.lua" "$home/history.lua"
+# the books too (copy-on-write clones on APFS, plain copies elsewhere), with the
+# copied settings pointing at them, so a run never writes into the real library
+lib="$(grep -o '"home_dir"\] = "[^"]*"' "$emu/settings.reader.lua" | sed 's/.*= "//; s/"$//')"
+if [ -n "$lib" ] && [ -d "$lib" ]; then
+    cp -cR "$lib" "$home/Books" 2>/dev/null || cp -R "$lib" "$home/Books"
+    for f in "$home/settings.reader.lua" "$home/history.lua" "$home/settings/collection.lua"; do
+        [ -f "$f" ] && LC_ALL=C sed -i '' "s#$lib#$home/Books#g" "$f"
+    done
+fi
 # KOReader finds the driver in <KO_HOME>/plugins on its own
 cd "$emu"
 set +e

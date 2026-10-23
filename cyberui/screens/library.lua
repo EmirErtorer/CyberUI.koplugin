@@ -47,7 +47,7 @@ function Library:source()
     local l = Data.list(dir)
     local parent, name = util.splitFilePathName(dir)
     local at_home = dir == (ffiUtil.realpath(Data.home()) or Data.home())
-    return l.folders, l.books, at_home and _("Library") or name, filemanagerutil.abbreviate(at_home and dir or parent)
+    return l.folders, l.books, at_home and _("Library") or name, filemanagerutil.abbreviate(at_home and Data.home() or parent)
 end
 
 -- The filter chips and the grid / list switch.
