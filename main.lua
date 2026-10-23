@@ -14,7 +14,8 @@ local CyberUI = WidgetContainer:extend({
     is_doc_only = false,
 })
 
-local booted = false   -- the boot takeover runs once per session
+local booted = false        -- the boot takeover runs once per session
+local book_closed = false   -- a book closed since the file browser was last shown
 
 -- CyberUI's own modules are required inside the handlers, not at the top, so
 -- KOReader's start loads none of them unless CyberUI is actually used.
@@ -62,21 +63,27 @@ function CyberUI:onDispatcherRegisterActions()
     })
 end
 
--- The file browser is being shown: open CyberUI over it at boot, or bring it
--- back after a book was closed.
+-- The file browser is being shown. After a book closes, CyberUI comes back
+-- when it is the reader's home; at a fresh start it opens when it is the
+-- chosen start screen.
 function CyberUI:onShow()
     if self.ui.document then return end
     local App = require("cyberui/app")
-    if not booted then
-        booted = true
-        if CyberUI.isHome() then App.open() end
-    elseif App.isOpen() or (CyberUI.isHome() and not App.leftForFiles()) then
-        App.raise()
+    local from_book = book_closed
+    book_closed = false
+    local first = not booted
+    booted = true
+    if from_book then
+        if App.isOpen() or App.isHome() or CyberUI.isHome() then App.raise() end
+    elseif first and CyberUI.isHome() then
+        App.open()
     end
 end
 
--- A book was closed in the reader: its details changed.
+-- A book was closed in the reader: its details changed, and the next file
+-- browser shown is a return from it.
 function CyberUI:onCloseDocument()
+    book_closed = true
     local doc = self.ui and self.ui.document
     require("cyberui/app").bookClosed(doc and doc.file)
 end
@@ -85,7 +92,7 @@ end
 function CyberUI:onCyberUIHome()
     local App = require("cyberui/app")
     if self.ui.document then
-        App.returnHome()
+        App.setHome(true)
         self.ui:onClose()
         self.ui:showFileManager()
     else

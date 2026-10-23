@@ -27,12 +27,16 @@ fi
 # KOReader finds the driver in <KO_HOME>/plugins on its own
 # an optional setup step gets the copied home folder (compare.sh uses it)
 [ -n "${HOME_SETUP:-}" ] && "$HOME_SETUP" "$home"
+# KOReader opens the folder given on its command line; E2E_NO_DIR=1 starts it
+# without one, so the start screen setting decides (restart.lua uses it)
+start_dir="$ko/sandbox"
+[ -n "${E2E_NO_DIR:-}" ] && start_dir=""
 cd "$emu"
 set +e
 KO_HOME="$home" CYBERUI_DRIVE_SCRIPT="$scen" CYBERUI_DRIVE_OUT="$out" \
     EMULATE_READER_W="$w" EMULATE_READER_H="$h" EMULATE_READER_DPI="$dpi" \
     KOREADER_WINDOW_POS_X="${KOEMU_WIN_X:-420}" KOREADER_WINDOW_POS_Y="${KOEMU_WIN_Y:-28}" \
-    gtimeout "${TIMEOUT:-300}" ./luajit reader.lua "$ko/sandbox" > "$out/emulator.log" 2>&1
+    gtimeout "${TIMEOUT:-300}" ./luajit reader.lua ${start_dir:+"$start_dir"} > "$out/emulator.log" 2>&1
 echo "emulator exit: $?"
 set -e
 cat "$out/drive.log" 2>/dev/null || echo "(no drive.log)"

@@ -32,7 +32,6 @@ App.TABS = {
 local host        -- the window, kept while CyberUI is home (also under the reader)
 local stack = {}  -- screen instances, the current one last
 local views = 0   -- screens shown since the last full refresh
-local left = false  -- the reader chose the file browser over CyberUI
 local clock_timer
 local toast_timer
 
@@ -129,20 +128,21 @@ local function newHost()
     return h
 end
 
--- Did the reader leave CyberUI for the file browser? Closing a book then
--- returns to the file browser, as they chose.
-function App.leftForFiles()
-    return left
+-- Is CyberUI the reader's home right now? Opening it makes it so, leaving for
+-- KOReader's file browser stops it; saved, so a closed book (even after a
+-- restart) goes back to where the reader chose to be.
+function App.isHome()
+    return Settings.get("home_active", false)
 end
 
--- The reader asked for CyberUI again (menu or gesture): come back to it.
-function App.returnHome()
-    left = false
+-- Make CyberUI the place closed books return to, or stop that.
+function App.setHome(on)
+    if App.isHome() ~= on then Settings.save("home_active", on) end
 end
 
 -- Open CyberUI at a screen (home by default), on top of everything.
 function App.open(id, params)
-    left = false
+    App.setHome(true)
     if not host then
         host = newHost()
         stack = { make(id or "home", params) }
@@ -329,7 +329,7 @@ end
 
 -- Leave CyberUI for the file browser (and stay there after reading).
 function App.fileBrowser()
-    left = true
+    App.setHome(false)
     App.close()
 end
 

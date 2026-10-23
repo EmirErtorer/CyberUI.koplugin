@@ -22,9 +22,10 @@ else
 fi
 if [ "${1:-}" = "--e2e" ]; then
     out="$(mktemp -d)"
-    for scen in walkthrough flows menus; do
+    for scen in walkthrough flows menus exits; do
         run "$scen" bash -c "'$repo/tests/e2e/run.sh' '$repo/tests/e2e/$scen.lua' '$out/$scen' | tail -1 | grep -q ' 0 failed'"
     done
+    run restart bash -c "E2E_NO_DIR=1 HOME_SETUP='$repo/tests/e2e/setup_restart.sh' '$repo/tests/e2e/run.sh' '$repo/tests/e2e/restart.lua' '$out/restart' | tail -1 | grep -q ' 0 failed'"
     echo "e2e screenshots in $out"
 fi
 echo "$([ $fail -eq 0 ] && echo 'all passed' || echo "$fail suite(s) failed")"

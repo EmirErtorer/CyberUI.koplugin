@@ -147,7 +147,7 @@ see KOReader's [building guide](https://github.com/koreader/koreader/blob/master
    tests/run.sh --e2e
    ```
 
-   The emulator window opens and closes three times; the output ends with the path of the
+   The emulator window opens and closes five times; the output ends with the path of the
    screenshots taken and `all passed`.
 
 ### Try it in the emulator
