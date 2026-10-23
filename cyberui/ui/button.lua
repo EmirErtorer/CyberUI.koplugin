@@ -83,7 +83,8 @@ function Button:draw(bb, x, y)
     self:drawContent(bb, x, y, Theme.color(look.text), not fill and Theme.color("accent") or nil)
 end
 
--- Lay out icon, label and small line inside the button.
+-- Lay out icon, label and small line inside the button (the small line only
+-- when there is room for both).
 function Button:drawContent(bb, x, y, color, accent)
     local th = Theme.get()
     local kind, sub_kind = self:kinds()
@@ -92,7 +93,9 @@ function Button:drawContent(bb, x, y, color, accent)
     local igap = (self.icon and self.label) and th.space.s or 0
     local text_w = self.w - 2 * pad - isz - igap
     local label = self.label and Text.fit(kind, self.label, text_w)
-    local sub = self.sub and Text.fit(sub_kind, self.sub, text_w)
+    -- a button too short for both lines keeps its label alone
+    local two_lines = self.label and self.sub and Text.height(kind) + Text.height(sub_kind) <= self.h
+    local sub = self.sub and (two_lines or not self.label) and Text.fit(sub_kind, self.sub, text_w)
     local lw = label and Text.width(kind, label) or 0
     local sw = sub and Text.width(sub_kind, sub) or 0
     local content_w = isz + igap + math.max(lw, sw)
