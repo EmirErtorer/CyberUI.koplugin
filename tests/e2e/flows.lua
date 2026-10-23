@@ -5,30 +5,10 @@ local H = ...
 local S = 0.8
 local UIManager = require("ui/uimanager")
 
--- The first element whose field `key` is set, under the CyberUI window.
-local function findBy(key)
-    local found
-    local function walk(el)
-        if found or type(el) ~= "table" then return end
-        if el[key] ~= nil and el.x then found = el return end
-        for _i, c in ipairs(el.children or {}) do walk(c) end
-        if el.child then walk(el.child) end
-    end
-    for _i, e in ipairs(UIManager._window_stack) do if e.widget.name == "cyberui" then walk(e.widget.root) end end
-    return found
-end
+-- The first element that has field `key`.
+local function findBy(key) return H.findWhere(function(el) return el[key] ~= nil end) end
 -- The stepper's minus button (a "back" icon in a segment, not the header's).
-local function stepperMinus()
-    local found
-    local function walk(el)
-        if found or type(el) ~= "table" then return end
-        if el.icon == "back" and el.variant == "seg" and el.x then found = el return end
-        for _i, c in ipairs(el.children or {}) do walk(c) end
-        if el.child then walk(el.child) end
-    end
-    for _i, e in ipairs(UIManager._window_stack) do if e.widget.name == "cyberui" then walk(e.widget.root) end end
-    return found
-end
+local function stepperMinus() return H.findWhere(function(el) return el.icon == "back" and el.variant == "seg" end) end
 local function perf() local p = require("cyberui/perf").last; return string.format("build %.1f ms, paint %.1f ms", p.build or -1, p.paint or -1) end
 -- A book that already has reading data, so changing its status adds no new files.
 local BOOK
@@ -91,21 +71,9 @@ H.step(S, function() H.tap("Custom") end)
 H.step(S, function() H.check(H.find("Accent") ~= nil, "custom offers accent pickers"); H.tap("Pick") end)
 H.step(S, function()
     H.shot("f05-picker")
-    local sw = findBy("colors")
-    local cell
-    for _i, e in ipairs(UIManager._window_stack) do
-        if e.widget.name == "cyberui" and e.widget.overlay then
-            local function walk(el) if cell or type(el) ~= "table" then return end
-                if el.on_tap and el.child and el.child.colors then cell = el return end
-                for _j, c in ipairs(el.children or {}) do walk(c) end
-                if el.child then walk(el.child) end
-            end
-            walk(e.widget.overlay)
-        end
-    end
+    local cell = H.findWhere(function(el) return el.on_tap and el.child and el.child.colors end)
     H.check(cell ~= nil, "picker shows colour cells")
     if cell then H.tapAt(cell.x + cell.w / 2, cell.y + cell.h / 2) end
-    H.say("swatch " .. tostring(sw ~= nil))
 end)
 H.step(S, function()
     H.check(require("cyberui/settings").get("custom_accent") ~= nil, "custom accent saved")

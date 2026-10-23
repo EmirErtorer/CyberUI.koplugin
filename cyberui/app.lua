@@ -13,6 +13,7 @@ local Settings = require("cyberui/settings")
 local Stats = require("cyberui/data/stats")
 local Theme = require("cyberui/theme")
 local Dialog = require("cyberui/ui/dialog")
+local StatusBar = require("cyberui/ui/statusbar")
 local _ = require("gettext")
 
 local Screen = Device.screen
@@ -109,7 +110,7 @@ local function scheduleClock()
         if not host then return end
         local s = App.current()
         if onTop() and s and s.clock then
-            require("cyberui/ui/statusbar").tick(s.clock)
+            StatusBar.tick(s.clock)
             App.repaint(s.clock)
         end
         scheduleClock()

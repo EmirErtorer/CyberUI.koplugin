@@ -2,7 +2,6 @@
 -- colour (KOReader's own text path is grey only), with letter spacing,
 -- capitals, ellipsis and word wrap. Widths are cached per face and string.
 
-local Blitbuffer = require("ffi/blitbuffer")
 local RenderText = require("ui/rendertext")
 local Utf8Proc = require("ffi/utf8proc")
 local Color = require("cyberui/theme/color")
@@ -112,8 +111,8 @@ function Text.draw(bb, x, y, kind, s, color)
     local spec = Theme.text(kind)
     local face, track = spec.face, spec.tracking
     local baseline = y + spec.ascent
+    color = color or Theme.color("ink")
     local rgb = Color.isRGB(color)
-    color = color or Blitbuffer.COLOR_BLACK
     local pen = 0
     local prev = 0
     for _i, cp in ipairs(codepoints(s)) do

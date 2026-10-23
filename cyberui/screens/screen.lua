@@ -2,6 +2,8 @@
 -- A screen builds its element tree in build(ctx) and may handle onSwipe,
 -- onRaise (shown again) and onIndexed (library index ready).
 
+local App = require("cyberui/app")
+
 local Screen = {}
 Screen.__index = Screen
 
@@ -32,7 +34,7 @@ function Screen:setPage(p)
     p = math.max(1, math.min(p, self.pages or 1))
     if p == self.page then return end
     self.page = p
-    require("cyberui/app").render("ui")
+    App.render("ui")
 end
 
 return Screen

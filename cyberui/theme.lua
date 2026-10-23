@@ -145,8 +145,7 @@ end
 
 -- Save a theme setting and apply it at once.
 function Theme.set(key, value)
-    Settings.set(key, value)
-    Settings.flush()
+    Settings.save(key, value)
     Theme.refresh()
 end
 

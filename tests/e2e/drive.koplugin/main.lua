@@ -53,28 +53,48 @@ function Drive:init()
         return t ~= nil and t.name == "cyberui"
     end
 
+    -- The first element (dialog first, then screen) for which pred(el) is true.
+    function H.findWhere(pred)
+        local host
+        for _i, e in ipairs(UIManager._window_stack) do if e.widget.name == "cyberui" then host = e.widget end end
+        if not host then return nil end
+        local function walk(el)
+            if type(el) ~= "table" then return nil end
+            if el.x and pred(el) then return el end
+            for _i, c in ipairs(el.children or {}) do
+                local f = walk(c)
+                if f then return f end
+            end
+            if el.child then return walk(el.child) end
+        end
+        return (host.overlay and walk(host.overlay)) or walk(host.root)
+    end
+
     -- Find the first element in the shown tree (dialog first) whose label,
     -- text, sub line or title equals `text`, or whose icon is `icon`. With
     -- `tappable`, the nearest element around it that answers a tap or hold.
     function H.find(text, icon, tappable)
-        local host
-        for _i, e in ipairs(UIManager._window_stack) do if e.widget.name == "cyberui" then host = e.widget end end
-        if not host then return nil end
         local function matches(el)
-            return el.x and ((text and (el.label == text or el.text == text or el.sub == text or el.title == text))
-                or (icon and el.icon == icon))
+            return (text and (el.label == text or el.text == text or el.sub == text or el.title == text))
+                or (icon and el.icon == icon)
         end
+        if not tappable then return H.findWhere(matches) end
+        -- the nearest element around the match that answers a tap or hold
+        local found
         local function walk(el, around)
-            if type(el) ~= "table" then return nil end
+            if found or type(el) ~= "table" then return end
             if el.on_tap or el.on_hold then around = el end
-            if matches(el) and (not tappable or around) then return tappable and around or el end
-            for _i, c in ipairs(el.children or {}) do
-                local f = walk(c, around)
-                if f then return f end
-            end
-            if el.child then return walk(el.child, around) end
+            if el.x and matches(el) and around then found = around return end
+            for _i, c in ipairs(el.children or {}) do walk(c, around) end
+            if el.child then walk(el.child, around) end
         end
-        return (host.overlay and walk(host.overlay)) or walk(host.root)
+        for _i, e in ipairs(UIManager._window_stack) do
+            if e.widget.name == "cyberui" then
+                if e.widget.overlay then walk(e.widget.overlay) end
+                if not found then walk(e.widget.root) end
+            end
+        end
+        return found
     end
 
     -- Send a gesture to KOReader.
@@ -92,12 +112,16 @@ function Drive:init()
         H.tapAt(el.x + el.w / 2, el.y + el.h / 2)
         return true
     end
+    -- Hold on a point, then lift.
+    function H.holdAt(x, y)
+        send({ ges = "hold", pos = at(x, y) })
+        send({ ges = "hold_release", pos = at(x, y) })
+    end
     -- Hold on the element with this text.
     function H.hold(text)
         local el = H.find(text, nil, true)
         if not el then H.check(false, "found '" .. tostring(text) .. "' to hold"); return false end
-        send({ ges = "hold", pos = at(el.x + el.w / 2, el.y + el.h / 2) })
-        send({ ges = "hold_release", pos = at(el.x + el.w / 2, el.y + el.h / 2) })
+        H.holdAt(el.x + el.w / 2, el.y + el.h / 2)
         return true
     end
     -- Swipe in a direction ("west", "east", "north", "south") from a point.

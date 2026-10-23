@@ -28,6 +28,12 @@ function Settings.set(key, value)
     open():saveSetting(key, value)
 end
 
+-- Save a setting and write it to disk at once.
+function Settings.save(key, value)
+    Settings.set(key, value)
+    Settings.flush()
+end
+
 -- Write pending changes to disk.
 function Settings.flush()
     if store then store:flush() end

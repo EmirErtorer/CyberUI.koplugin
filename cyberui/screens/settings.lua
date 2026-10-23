@@ -17,6 +17,7 @@ local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
 local Swatch = require("cyberui/ui/swatch")
 local Theme = require("cyberui/theme")
+local Version = require("cyberui/version")
 local _ = require("gettext")
 
 local SettingsScreen = Screen:extend()
@@ -43,8 +44,7 @@ end
 
 -- Save a plain setting and redraw.
 local function save(key, value)
-    Settings.set(key, value)
-    Settings.flush()
+    Settings.save(key, value)
     App.update()
 end
 
@@ -150,7 +150,7 @@ end
 -- The About section.
 function SettingsScreen:about()
     return {
-        row(_("Version"), nil, Label:new({ text = require("cyberui/version"), kind = "mono" })),
+        row(_("Version"), nil, Label:new({ text = Version, kind = "mono" })),
         row(_("Fonts"), _("Chakra Petch and Share Tech Mono, SIL Open Font License"), Layout.Spacer:new({ width = 1 })),
         Label:new({ text = _("A fast cyberpunk home screen for KOReader."), kind = "body", color = "muted", lines = 2 }),
     }

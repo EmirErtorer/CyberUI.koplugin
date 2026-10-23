@@ -61,7 +61,7 @@ function Library:filterRow(counts)
     end
     kids[#kids + 1] = Layout.Spacer:new({ grow = true })
     local grid = Settings.get("library_view", "grid") == "grid"
-    local function view(v) return function() Settings.set("library_view", v); Settings.flush(); self.page = 1; App.render("ui") end end
+    local function view(v) return function() Settings.save("library_view", v); self.page = 1; App.render("ui") end end
     kids[#kids + 1] = Button:new({ icon = "grid", variant = grid and "icon_on" or "icon", width = Theme.px(40), height = Theme.px(40), on_tap = view("grid") })
     kids[#kids + 1] = Button:new({ icon = "list", variant = grid and "icon" or "icon_on", width = Theme.px(40), height = Theme.px(40), on_tap = view("list") })
     return Layout.Row:new({ gap = th.space.s, children = kids })
@@ -73,7 +73,7 @@ function Library:chooseSort()
     local options = {}
     for _i, s in ipairs(Data.SORTS) do
         options[#options + 1] = { label = SORT_NAMES[s], checked = s == current, on_tap = function()
-            Settings.set("library_sort", s); Settings.flush(); self.page = 1; App.render("ui")
+            Settings.save("library_sort", s); self.page = 1; App.render("ui")
         end }
     end
     App.choose({ title = _("Sort by"), options = options })

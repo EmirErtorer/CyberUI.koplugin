@@ -16,6 +16,9 @@ local CyberUI = WidgetContainer:extend({
 
 local booted = false   -- the boot takeover runs once per session
 
+-- CyberUI's own modules are required inside the handlers, not at the top, so
+-- KOReader's start loads none of them unless CyberUI is actually used.
+
 -- Add "CyberUI" to the Start with menu (once, on KOReader's own class).
 local function registerStartWith()
     local ok, FMMenu = pcall(require, "apps/filemanager/filemanagermenu")

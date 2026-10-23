@@ -39,20 +39,10 @@ H.step(S, function() H.tap("Recent") end)
 
 -- dossier from a hold on the first book tile
 H.step(S, function()
-    local grid
-    local function walk(el) if type(el) ~= "table" then return end
-        if el.items and el.children then grid = el return end
-        for _i, c in ipairs(el.children or {}) do walk(c) end
-        if el.child then walk(el.child) end
-    end
-    for _i, e in ipairs(require("ui/uimanager")._window_stack) do if e.widget.name == "cyberui" then walk(e.widget.root) end end
+    local grid = H.findWhere(function(el) return el.items ~= nil and el.children ~= nil end)
     local first = grid and grid.children[1]
     H.check(first ~= nil, "library grid has tiles")
-    if first then
-        local Event, Geom = require("ui/event"), require("ui/geometry")
-        local pos = Geom:new({ x = first.x + 20, y = first.y + 20, w = 0, h = 0 })
-        require("ui/uimanager"):sendEvent(Event:new("Gesture", { ges = "hold", pos = pos, time = require("ui/time").now() }))
-    end
+    if first then H.holdAt(first.x + 20, first.y + 20) end
 end)
 H.step(S, function() H.check(H.screen() == "dossier", "hold opens the dossier"); H.shot("06-dossier") end)
 H.step(S, function() H.tap("COLLECTION +") end)
@@ -73,13 +63,7 @@ go("Log", nil, "history", "11-history")
 H.step(S, function()
     local s = H.app().current()
     local before = s.day
-    local bars
-    local function walk(el) if type(el) ~= "table" then return end
-        if el.values and el.children then bars = el return end
-        for _i, c in ipairs(el.children or {}) do walk(c) end
-        if el.child then walk(el.child) end
-    end
-    for _i, e in ipairs(require("ui/uimanager")._window_stack) do if e.widget.name == "cyberui" then walk(e.widget.root) end end
+    local bars = H.findWhere(function(el) return el.values ~= nil and el.children ~= nil end)
     local b = bars and bars.children[2]
     if b then H.tapAt(b.x + b.w / 2, b.y + b.h - 2) end
     H.check(b ~= nil, "chart has bars (day was " .. tostring(before) .. ")")

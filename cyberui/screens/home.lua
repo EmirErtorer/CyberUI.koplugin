@@ -5,6 +5,7 @@ local Actions = require("cyberui/actions")
 local App = require("cyberui/app")
 local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
+local Collections = require("cyberui/data/collections")
 local Cover = require("cyberui/ui/cover")
 local Deco = require("cyberui/ui/deco")
 local Format = require("cyberui/format")
@@ -22,7 +23,7 @@ local Settings = require("cyberui/settings")
 local Stats = require("cyberui/data/stats")
 local StatusBar = require("cyberui/ui/statusbar")
 local Theme = require("cyberui/theme")
-local Collections = require("cyberui/data/collections")
+local Version = require("cyberui/version")
 local _ = require("gettext")
 
 local Home = Screen:extend()
@@ -158,7 +159,7 @@ local function footer()
     return Layout.Row:new({ gap = th.space.m, children = {
         Deco.Barcode:new({ width = Theme.px(84), height = Theme.px(18) }),
         Label:new({ text = "ROOT@" .. DeviceInfo.name() .. ":~#", kind = "mono_small", grow = true }),
-        Label:new({ text = "CYBERUI " .. require("cyberui/version"), kind = "micro", color = "muted" }),
+        Label:new({ text = "CYBERUI " .. Version, kind = "micro", color = "muted" }),
     } })
 end
 
