@@ -8,6 +8,10 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Fixed
+- KOReader 2025.10 crashed at start with CyberUI installed (it looked up the
+  home folder in a way only newer KOReader has).
+
 ## [1.0.0] - 2026-10-24
 
 The first release.

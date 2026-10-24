@@ -14,11 +14,17 @@ local index           -- { books = {paths}, built = time } for the whole library
 
 local MAX_DEPTH = 8
 
+-- KOReader's home folder (KOReader before 2026 has no getHomeFolder).
+local function homeFolder()
+    if filemanagerutil.getHomeFolder then return filemanagerutil.getHomeFolder() end
+    return G_reader_settings:readSetting("home_dir") or require("device").home_dir or "."
+end
+
 -- The library's top folder (KOReader's home folder), as configured; only a
 -- relative one is made absolute, so paths keep the form history and
 -- collections store them in.
 function Library.home()
-    local home = filemanagerutil.getHomeFolder():gsub("(.)/+$", "%1")
+    local home = homeFolder():gsub("(.)/+$", "%1")
     if home:sub(1, 1) ~= "/" then home = require("ffi/util").realpath(home) or home end
     return home
 end
