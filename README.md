@@ -135,7 +135,7 @@ What changed in each version is in the [changelog](CHANGELOG.md).
 
 ## Notes
 
-- Made for KOReader 2026.07 and newer, and tested on a Kindle Paperwhite.
+- Tested on KOReader 2026.07.1 and newer, on a Kindle Paperwhite, a Kindle Scribe and an Android tablet.
 - CyberUI only reads your library to show it. It changes files only when you rename, move or delete something, and deleted things wait in its trash for 30 days.
 - ASCII covers use the cover pictures KOReader already keeps, so a new book shows a title card until KOReader has read its cover.
 
