@@ -141,7 +141,7 @@ What changed in each version is in the [changelog](CHANGELOG.md).
 
 ## About
 
-I'm a computer science and engineering graduate, and I design CyberUI and test it on my Kindle Paperwhite. It is built around what e-readers can do: slow processors and screens that redraw slowly, so every screen paints in milliseconds and nothing redraws more than it needs to. Every change runs against CyberUI's checks on KOReader's own drawing code and in the emulator, and anything I can't test there goes out as a prerelease first.
+I design CyberUI and test it on my Kindle Paperwhite. It is built around what e-readers can do: slow processors and screens that redraw slowly, so every screen paints in milliseconds and nothing redraws more than it needs to. Every change runs against CyberUI's checks on KOReader's own drawing code and in the emulator, and anything I can't test there goes out as a prerelease first.
 
 ## Contributing
 
