@@ -46,7 +46,7 @@ local function mainOf(widget)
 end
 
 -- Draw the main picture as ASCII and put it in its place.
-local function redraw(widget, holder)
+local function redraw(widget, holder, see_through)
     local Blitbuffer = require("ffi/blitbuffer")
     local Screen = require("device").screen
     local ImageWidget = require("ui/widget/imagewidget")
@@ -67,7 +67,7 @@ local function redraw(widget, holder)
     if lastfile then title = require("cyberui/data/books").info(lastfile).title end
     -- see-through parts show the screen as it is (the book, or home)
     local art, transparent = require("cyberui/gfx/ascii").render(bb, w, h,
-        { size = 9, title = title, on_black = on_black, backdrop = Screen.bb })
+        { size = 9, title = title, on_black = see_through and on_black or nil, backdrop = see_through and Screen.bb or nil })
     bb:free()
     on_black:free()
     if main.free then main:free() end
@@ -93,7 +93,9 @@ function Sleep.install()
         local new = ScreenSaverWidget.new
         ScreenSaverWidget.new = function(cls, o)
             if o and o.widget then
-                local ok, err = pcall(redraw, o.widget, o)
+                -- only custom images can be see-through; a book cover drawn
+                -- smaller than the screen just has margins
+                local ok, err = pcall(redraw, o.widget, o, saver.screensaver_type == "random_image")
                 if not ok then require("logger").warn("CyberUI sleep screen:", err) end
             end
             return new(cls, o)

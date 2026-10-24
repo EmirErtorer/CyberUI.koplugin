@@ -181,7 +181,8 @@ local function recentList(home, shown)
         child = Layout.Column:new({ gap = th.space.s, clip = true, children = kids }) })
 end
 
--- The launcher column: one button per section, sharing the full height.
+-- The launcher: one button per section, sharing the full height (in two
+-- columns on a landscape screen).
 local function launcher()
     local th = Theme.get()
     local count = Library.count()
@@ -196,13 +197,22 @@ local function launcher()
                 return v and string.format(_("UPDATE v%s READY"), v) or _("THEME // SETTINGS")
             end)(), function() App.go("settings") end },
     }
-    local kids = {}
+    local buttons = {}
     for i, it in ipairs(items) do
-        kids[i] = Button:new({ icon = it[1], label = it[2], sub = it[3], align = "left", variant = "soft",
+        buttons[i] = Button:new({ icon = it[1], label = it[2], sub = it[3], align = "left", variant = "soft",
             corners = "r", grow = true, on_tap = it[4] })
     end
-    return Panel:new({ shape = "rail", side = "r", line = "accent", width = Theme.px(212), pad = { 0, th.space.l, 0, 0 },
-        child = Layout.Column:new({ gap = th.space.xs, children = kids }) })
+    -- one column; on a wide, short (landscape) screen two, so each keeps
+    -- room for both of its lines
+    local screen = require("device").screen
+    local cols = screen:getWidth() > screen:getHeight() and 2 or 1
+    local rows = {}
+    for i = 1, #buttons, cols do
+        rows[#rows + 1] = cols == 1 and buttons[i]
+            or Layout.Row:new({ grow = true, gap = th.space.xs, valign = "stretch", children = { buttons[i], buttons[i + 1] } })
+    end
+    return Panel:new({ shape = "rail", side = "r", line = "accent", width = Theme.px(cols == 1 and 212 or 400),
+        pad = { 0, th.space.l, 0, 0 }, child = Layout.Column:new({ gap = th.space.xs, children = rows }) })
 end
 
 -- The footer: barcode, prompt and version.

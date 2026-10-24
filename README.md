@@ -40,7 +40,7 @@ Home comes back the moment you close a book, in a single screen refresh.
     <td width="33%" valign="top"><a href="assets/screenshots/09-look.png"><img src="assets/screenshots/09-look.png" alt="Colour schemes"></a><br><sub>Seven colour schemes and your own, in light and dark.</sub></td>
   </tr>
   <tr>
-    <td width="33%" valign="top"><a href="assets/screenshots/10-fonts.png"><img src="assets/screenshots/10-fonts.png" alt="Fonts"></a><br><sub>Fourteen cyberpunk font sets, or any font on your reader.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/10-covers.png"><img src="assets/screenshots/10-covers.png" alt="ASCII cover settings"></a><br><sub>Covers as ASCII art in eight character sets, as pictures or as title cards.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/11-sleep.png"><img src="assets/screenshots/11-sleep.png" alt="ASCII sleep screen"></a><br><sub>The sleep screen in ASCII: your book's cover, a picture, or anything KOReader shows.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/12-landscape.png"><img src="assets/screenshots/12-landscape.png" alt="Landscape"></a><br><sub>Every screen works in landscape too.</sub></td>
   </tr>
