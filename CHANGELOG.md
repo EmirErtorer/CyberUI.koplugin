@@ -8,6 +8,10 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Added
+- A size setting for the covers in the recent list on home (System > Home >
+  Recent covers): S, as before, up to XL.
+
 ### Fixed
 - KOReader 2025.10 crashed at start with CyberUI installed (it looked up the
   home folder in a way only newer KOReader has).

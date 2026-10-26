@@ -10,8 +10,9 @@ local Theme = require("cyberui/theme")
 
 local ListRow = {}
 
--- Build a row from { path, icon, title, meta, value, on_tap, on_hold, thumb }:
--- a small cover for a book path, or an icon.
+-- Build a row from { path, icon, title, meta, value, on_tap, on_hold, thumb,
+-- thumb_w, thumb_h }: a small cover for a book path (thumb_w x thumb_h when
+-- given), or an icon.
 function ListRow.build(o)
     local th = Theme.get()
     local h = o.height or Theme.px(54)
@@ -19,8 +20,11 @@ function ListRow.build(o)
     if o.icon then
         kids[#kids + 1] = Icon:new({ name = o.icon, size = 26, width = Theme.px(30) })
     elseif o.thumb ~= false and o.path then
-        local cw = Theme.px(30)
-        kids[#kids + 1] = Cover:new({ path = o.path, width = cw, height = math.min(h - th.space.s, Theme.px(44)) })
+        local cw, ch = o.thumb_w or Theme.px(30), o.thumb_h or Theme.px(44)
+        local fit = math.min(h - th.space.s, ch)
+        -- a cover of a given size that is taller than the row shrinks, keeping its shape
+        if o.thumb_h then cw = math.floor(cw * fit / ch) end
+        kids[#kids + 1] = Cover:new({ path = o.path, width = cw, height = fit })
     end
     local lines = { Label:new({ text = o.title, kind = o.title_kind or "heading" }) }
     if o.meta then lines[#lines + 1] = Label:new({ text = o.meta, kind = "mono_small", color = "muted" }) end
