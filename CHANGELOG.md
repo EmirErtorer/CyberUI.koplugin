@@ -9,6 +9,8 @@ versions marked *Prerelease* are test builds.
 ## [Unreleased]
 
 ### Fixed
+- Toggling the frontlight inside a book opened from CyberUI turned it on and
+  straight off again.
 - KOReader 2025.10 crashed at start with CyberUI installed (it looked up the
   home folder in a way only newer KOReader has).
 

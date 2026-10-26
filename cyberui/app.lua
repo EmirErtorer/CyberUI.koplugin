@@ -158,7 +158,6 @@ function App.open(id, params)
         host = newHost()
         stack = { make(id or "home", params) }
         build()
-        host:attachFileManager()
         UIManager:show(host, "ui")
         host:markRepainted()
         scheduleClock()
@@ -183,7 +182,6 @@ function App.raise()
                 break
             end
         end
-        host:attachFileManager()
         local s = App.current()
         if s and s.onBookClosed then s:onBookClosed() end
         scheduleClock()
@@ -201,7 +199,6 @@ function App.raise()
             end
         end
     end
-    host:attachFileManager()
     local s = App.current()
     if s and s.onRaise then s:onRaise() end
     App.render("ui")

@@ -163,11 +163,15 @@ function Host:handleEvent(event)
     return KEYS[event.handler] == true
 end
 
--- Let the file browser underneath receive the events CyberUI leaves.
-function Host:attachFileManager()
-    local FileManager = require("apps/filemanager/filemanager")
-    self.active_widgets = FileManager.instance and { FileManager.instance } or nil
+-- Hands the events CyberUI leaves to the file browser open now, if any.
+local ToFileManager = {}
+
+-- Pass the event on to the open file browser.
+function ToFileManager:handleEvent(event)
+    local fm = require("apps/filemanager/filemanager").instance
+    return fm ~= nil and fm:handleEvent(event)
 end
+Host.active_widgets = { ToFileManager }
 
 -- Gestures CyberUI does not use go to the file browser's own gesture zones,
 -- where KOReader keeps the gestures set up by the reader (corner taps,
