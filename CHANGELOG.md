@@ -22,6 +22,8 @@ versions marked *Prerelease* are test builds.
   of every plugin, CyberUI's own included.
 - Toggling the frontlight inside a book opened from CyberUI turned it on and
   straight off again.
+- Home flashed over the page when KOReader reloaded the open book in the
+  background to apply a change.
 - KOReader 2025.10 crashed at start with CyberUI installed (it looked up the
   home folder in a way only newer KOReader has).
 
