@@ -111,6 +111,11 @@ function CyberUI:onCloseDocument()
     require("cyberui/app").bookClosed(doc and doc.file)
 end
 
+-- Close CyberUI on Exit too, or a window is left and KOReader never quits.
+function CyberUI:onExit()
+    require("cyberui/app").close()
+end
+
 -- Open CyberUI; from the reader, home shows at once and the book closes
 -- just after.
 function CyberUI:onCyberUIHome()

@@ -9,6 +9,8 @@ versions marked *Prerelease* are test builds.
 ## [Unreleased]
 
 ### Fixed
+- Exit left KOReader running behind a frozen screen when CyberUI was open;
+  it now quits.
 - KOReader 2025.10 crashed at start with CyberUI installed (it looked up the
   home folder in a way only newer KOReader has).
 
