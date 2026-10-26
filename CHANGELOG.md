@@ -9,6 +9,8 @@ versions marked *Prerelease* are test builds.
 ## [Unreleased]
 
 ### Fixed
+- Home flashed over the page when KOReader reloaded the open book in the
+  background to apply a change.
 - KOReader 2025.10 crashed at start with CyberUI installed (it looked up the
   home folder in a way only newer KOReader has).
 

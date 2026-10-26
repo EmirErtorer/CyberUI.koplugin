@@ -20,6 +20,7 @@ local Host = InputContainer:extend({
     root = nil,        -- element tree of the current screen
     overlay = nil,     -- dialog element shown over it
     toast = nil,       -- notice element at the top
+    invisible = false, -- a book is open over it (see App.bookOpened)
 })
 
 -- Full-screen gesture ranges and the Back key.
@@ -74,8 +75,9 @@ function Host:toastPos()
     return math.floor((self.dimen.w - t.w) / 2), self.dimen.h - th.size.tabbar - th.space.xl - t.h
 end
 
--- Paint background, screen, overlay and toast (timed).
+-- Paint background, screen, overlay and toast (timed), unless invisible.
 function Host:paintTo(bb, x, y)
+    if self.invisible then return end
     Perf.measure("paint", self.paintAll, self, bb, x, y)
 end
 
@@ -159,6 +161,8 @@ local KEYS = { onKeyPress = true, onKeyRepeat = true, onKeyRelease = true }
 -- handle (night mode, rotation, frontlight...) reach the file browser's
 -- modules through `active_widgets`, which KOReader feeds only on that path.
 function Host:handleEvent(event)
+    -- while invisible, a touch would press a button no one can see
+    if self.invisible and event.handler == "onGesture" then return true end
     if InputContainer.handleEvent(self, event) then return true end
     return KEYS[event.handler] == true
 end

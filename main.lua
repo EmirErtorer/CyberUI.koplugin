@@ -103,6 +103,12 @@ function CyberUI:onShow()
     end
 end
 
+-- A book is open: hide CyberUI's window, without loading CyberUI if unused.
+function CyberUI:onReaderReady()
+    local App = _G.package.loaded["cyberui/app"]
+    if App then App.bookOpened() end
+end
+
 -- A book was closed in the reader: its details changed, and the next file
 -- browser shown is a return from it.
 function CyberUI:onCloseDocument()
