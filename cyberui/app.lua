@@ -446,10 +446,8 @@ function App.koreaderMenu()
         if not Menu.current() then Menu.open() end
         return
     end
-    local FileManager = require("apps/filemanager/filemanager")
-    if FileManager.instance and FileManager.instance.menu then
-        FileManager.instance.menu:onShowMenu()
-    end
+    local m = Menu.fileManagerMenu()
+    if m then m:onShowMenu() end
 end
 
 -- Leave CyberUI for the file browser (and stay there after reading).

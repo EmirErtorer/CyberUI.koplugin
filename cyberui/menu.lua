@@ -85,10 +85,21 @@ local function submenu(item)
     return item.sub_item_table_func and item.sub_item_table_func() or item.sub_item_table
 end
 
+-- The file browser's menu with the most entries (Project: Title adds an empty one).
+function Menu.fileManagerMenu()
+    local fm = require("apps/filemanager/filemanager").instance
+    if not fm then return nil end
+    local function entries(m) return m and m.registered_widgets and #m.registered_widgets or 0 end
+    local best = fm.menu
+    for _i, module in ipairs(fm) do
+        if module.name == "filemanagermenu" and entries(module) > entries(best) then best = module end
+    end
+    return best
+end
+
 -- The file browser's menu, its item tree built if needed.
 local function fmMenu()
-    local fm = require("apps/filemanager/filemanager").instance
-    local m = fm and fm.menu
+    local m = Menu.fileManagerMenu()
     if m and not m.tab_item_table then m:setUpdateItemTable() end
     return m
 end
