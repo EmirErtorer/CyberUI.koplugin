@@ -13,6 +13,8 @@ versions marked *Prerelease* are test builds.
   it now quits.
 - With Project: Title installed, the menu over home was missing the entries
   of every plugin, CyberUI's own included.
+- Toggling the frontlight inside a book opened from CyberUI turned it on and
+  straight off again.
 - KOReader 2025.10 crashed at start with CyberUI installed (it looked up the
   home folder in a way only newer KOReader has).
 
