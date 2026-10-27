@@ -11,6 +11,7 @@ versions marked *Prerelease* are test builds.
 ### Added
 - A size setting for the covers in the recent list on home (System > Home >
   Recent covers): S, as before, up to XL.
+- All books in the Library menu: every book of every folder in one list.
 
 ### Fixed
 - Exit left KOReader running behind a frozen screen when CyberUI was open;

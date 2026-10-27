@@ -84,6 +84,10 @@ function Library:source()
     if p.query then
         return {}, Data.search(p.query), _("Search"), "/GREP/"
     end
+    -- every book of every folder in one list, when the reader chose it
+    if Settings.get("library_flat", false) and not p.dir and not p.pick then
+        return {}, Data.all(), _("All books"), nil
+    end
     local dir = self:dir()
     local l = Data.list(dir)
     local folders = l.folders
@@ -142,6 +146,9 @@ function Library:menu()
             Settings.save("library_sort", s); self.page = 1; App.render("ui")
         end }
     end
+    local flat = Settings.get("library_flat", false)
+    actions[#actions + 1] = { icon = flat and "check" or "files", label = _("All books"), sub = _("No folders, every book"),
+        on_tap = function() Settings.save("library_flat", not flat); self.page = 1; App.render("ui") end }
     actions[#actions + 1] = { icon = "trash", label = _("Trash"), sub = string.format(_("%d waiting"), Trash.count()),
         on_tap = function() App.push("trash") end }
     local dir = self:dir()
