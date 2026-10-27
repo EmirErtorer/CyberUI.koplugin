@@ -11,6 +11,8 @@ versions marked *Prerelease* are test builds.
 ### Fixed
 - Exit left KOReader running behind a frozen screen when CyberUI was open;
   it now quits.
+- With Project: Title installed, the menu over home was missing the entries
+  of every plugin, CyberUI's own included.
 - KOReader 2025.10 crashed at start with CyberUI installed (it looked up the
   home folder in a way only newer KOReader has).
 
