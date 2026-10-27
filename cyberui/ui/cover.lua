@@ -42,6 +42,27 @@ end
 -- pixels): the grid fits as many as the screen allows, in any orientation.
 Cover.SIZES = { s = 90, m = 120, l = 170, xl = 240 }
 
+-- The recent list on home, per size setting (base pixels): row height, cover
+-- width and cover height.
+Cover.RECENT_SIZES = {
+    s = { row = 54, w = 30, h = 44 },
+    m = { row = 74, w = 45, h = 66 },
+    l = { row = 96, w = 60, h = 88 },
+    xl = { row = 126, w = 80, h = 118 },
+}
+
+-- The recent list size setting, "s" when unset or unknown.
+function Cover.recentSizeKey()
+    local k = Settings.get("recent_cover_size", "s")
+    return Cover.RECENT_SIZES[k] and k or "s"
+end
+
+-- Row height, cover width and cover height for the recent list on home.
+function Cover.recentSize()
+    local s = Cover.RECENT_SIZES[Cover.recentSizeKey()]
+    return Theme.px(s.row), Theme.px(s.w), Theme.px(s.h)
+end
+
 -- The cover style: "ascii" (the default), "image" or "card". Readers who
 -- turned real covers on before styles existed keep them.
 function Cover.style()

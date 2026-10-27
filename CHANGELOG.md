@@ -8,6 +8,10 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Added
+- A size setting for the covers in the recent list on home (System > Home >
+  Recent covers): S, as before, up to XL.
+
 ### Fixed
 - Exit left KOReader running behind a frozen screen when CyberUI was open;
   it now quits.

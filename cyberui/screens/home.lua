@@ -165,12 +165,14 @@ local function recentList(home, shown)
     local th = Theme.get()
     local kids = { Label:new({ text = _("RECENT_FILES"), kind = "micro", color = "muted" }) }
     local n = 0
+    local row_h, thumb_w, thumb_h = Cover.recentSize()
     for _i, item in ipairs(History.recent(8)) do
         local p = item.path
         if not (shown and p == shown.path) then
             n = n + 1
             kids[#kids + 1] = ListRow.build({ path = p, title = Books.info(p).title, meta = Books.badge(p) .. " // " .. Format.ago(item.time),
-                height = Theme.px(54), on_tap = function() home.picked = p; App.update() end,
+                height = row_h, thumb_w = thumb_w, thumb_h = thumb_h,
+                on_tap = function() home.picked = p; App.update() end,
                 on_hold = function() Actions.details(p) end })
         end
     end
