@@ -8,6 +8,8 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-10-27 *Prerelease*
+
 ### Added
 - A size setting for the covers in the recent list on home (System > Home >
   Recent covers): S, as before, up to XL.
@@ -92,5 +94,6 @@ The first release.
   checking the download. Once a day, only on Wi-Fi that is already on, it
   looks by itself and says so on home.
 
-[Unreleased]: https://github.com/EmirErtorer/CyberUI.koplugin/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/EmirErtorer/CyberUI.koplugin/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.0.5
 [1.0.0]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.0.0
