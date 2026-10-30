@@ -103,19 +103,19 @@ function Dossier:build()
         count(c.highlights, _("HIGHLIGHTS")), count(c.notes, _("NOTES")), count(c.bookmarks, _("BOOKMARKS")),
     } })
 
-    local done = st.status == "complete"
     -- after a rename or move the dossier follows the book to its new path
     local function moved(to) self.params.path = to; App.update() end
+    local folder_row = { Button:new({ label = _("SHOW FOLDER"), grow = true, on_tap = function() Actions.showFolder(path) end }) }
+    if History.lastOpened(path) then
+        folder_row[2] = Button:new({ label = _("FORGET"), sub = _("remove from history"), grow = true, on_tap = function() Actions.unhistory(path) end })
+    end
     local actions = Layout.Column:new({ gap = th.space.s, children = {
         Button:new({ label = _("OPEN FILE"), icon = "forward", variant = "primary", corners = "tb", on_tap = function() Actions.open(path) end }),
         Layout.Row:new({ gap = th.space.s, children = {
-            Button:new({ label = done and _("MARK READING") or _("MARK DONE"), grow = true,
-                on_tap = function() Actions.setStatus(path, done and "reading" or "complete") end }),
+            Button:new({ label = _("STATUS"), sub = STATUS[st.status], grow = true, on_tap = function() Actions.statusSheet(path) end }),
             Button:new({ label = _("COLLECTION +"), grow = true, on_tap = function() Actions.collect(path) end }),
         } }),
-        Layout.Row:new({ gap = th.space.s, children = {
-            Button:new({ label = _("SHOW FOLDER"), grow = true, on_tap = function() Actions.showFolder(path) end }),
-        } }),
+        Layout.Row:new({ gap = th.space.s, children = folder_row }),
         Layout.Row:new({ gap = th.space.s, children = {
             Button:new({ label = _("RENAME"), icon = "edit", grow = true, on_tap = function() Actions.rename(path, moved) end }),
             Button:new({ label = _("MOVE TO"), icon = "move", grow = true, on_tap = function() Actions.move(path, moved) end }),

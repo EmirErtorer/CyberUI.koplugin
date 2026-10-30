@@ -65,10 +65,11 @@ function Books.info(path)
 end
 
 -- Reading state: { status, percent, pages, opened, annotated }. Status is
--- "new", "reading", "complete" or "abandoned".
+-- "new", "reading", "complete" or "abandoned". "new" is a book never opened or
+-- one the reader marked unread (KOReader sets reading again when it is opened).
 function Books.state(path)
     local bi = BookList.getBookInfo(path)
-    if not bi.been_opened then return { status = "new", percent = 0, opened = false } end
+    if not bi.been_opened or bi.status == "new" then return { status = "new", percent = 0, opened = bi.been_opened or false } end
     local status = bi.status or "reading"
     local percent = bi.percent_finished or 0
     if status == "complete" then percent = 1 end
