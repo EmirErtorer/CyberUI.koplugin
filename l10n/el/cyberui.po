@@ -9,2954 +9,2954 @@ msgstr ""
 
 #: _meta.lua main.lua
 msgid "CyberUI"
-msgstr ""
+msgstr "CyberUI"
 
 #: _meta.lua
 msgid "A fast, cyberpunk-styled home screen for KOReader with a library browser, collections, reading stats and switchable colour themes."
-msgstr ""
+msgstr "Μια γρήγορη αρχική οθόνη σε στιλ cyberpunk για το KOReader, με περιηγητή βιβλιοθήκης, συλλογές, στατιστικά ανάγνωσης και εναλλάξιμα θέματα χρωμάτων."
 
 #: cyberui/actions.lua
 msgid "TAP AGAIN TO OPEN"
-msgstr ""
+msgstr "ΠΑΤΗΣΤΕ ΞΑΝΑ ΓΙΑ ΑΝΟΙΓΜΑ"
 
 #: cyberui/actions.lua
 msgid "Removed from history"
-msgstr ""
+msgstr "Αφαιρέθηκε από το ιστορικό"
 
 #: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
 msgid "Unread"
-msgstr ""
+msgstr "Μη αναγνωσμένο"
 
 #: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
 msgid "Reading"
-msgstr ""
+msgstr "Υπό ανάγνωση"
 
 #: cyberui/actions.lua cyberui/data/libgroups.lua
 msgid "On hold"
-msgstr ""
+msgstr "Σε αναμονή"
 
 #: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
 msgid "Done"
-msgstr ""
+msgstr "Τελειωμένο"
 
 #: cyberui/actions.lua cyberui/data/banner.lua cyberui/data/libgroups.lua
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "New collection"
-msgstr ""
+msgstr "Νέα συλλογή"
 
 #: cyberui/actions.lua
 msgid "Added to %s"
-msgstr ""
+msgstr "Προστέθηκε στη συλλογή %s"
 
 #: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Create"
-msgstr ""
+msgstr "Δημιουργία"
 
 #: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Collections"
-msgstr ""
+msgstr "Συλλογές"
 
 #: cyberui/actions.lua cyberui/screens/trash.lua
 msgid "That did not work"
-msgstr ""
+msgstr "Δεν λειτούργησε"
 
 #: cyberui/actions.lua cyberui/menu.lua cyberui/screens/trash.lua cyberui/screens/updates.lua ...
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: cyberui/actions.lua
 msgid "Rename"
-msgstr ""
+msgstr "Μετονομασία"
 
 #: cyberui/actions.lua
 msgid "Renamed"
-msgstr ""
+msgstr "Μετονομάστηκε"
 
 #: cyberui/actions.lua
 msgid "Move to"
-msgstr ""
+msgstr "Μετακίνηση σε"
 
 #: cyberui/actions.lua
 msgid "Moved to %s"
-msgstr ""
+msgstr "Μετακινήθηκε σε %s"
 
 #: cyberui/actions.lua
 msgid "New folder"
-msgstr ""
+msgstr "Νέος φάκελος"
 
 #: cyberui/actions.lua
 msgid "Folder created"
-msgstr ""
+msgstr "Ο φάκελος δημιουργήθηκε"
 
 #: cyberui/actions.lua
 msgid "folder name"
-msgstr ""
+msgstr "όνομα φακέλου"
 
 #: cyberui/actions.lua
 msgid "Delete “%s”?"
-msgstr ""
+msgstr "Διαγραφή του «%s»;"
 
 #: cyberui/actions.lua
 msgid "The folder and everything in it go. It waits in the trash for %d day."
 msgid_plural "The folder and everything in it go. It waits in the trash for %d days."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ο φάκελος και όλα όσα περιέχει θα διαγραφούν. Παραμένει στον κάδο για %d ημέρα."
+msgstr[1] "Ο φάκελος και όλα όσα περιέχει θα διαγραφούν. Παραμένει στον κάδο για %d ημέρες."
 
 #: cyberui/actions.lua
 msgid "It waits in the trash for %d day."
 msgid_plural "It waits in the trash for %d days."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Παραμένει στον κάδο για %d ημέρα."
+msgstr[1] "Παραμένει στον κάδο για %d ημέρες."
 
 #: cyberui/actions.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
 msgid "Delete"
-msgstr ""
+msgstr "Διαγραφή"
 
 #: cyberui/actions.lua
 msgid "Moved to the trash"
-msgstr ""
+msgstr "Μετακινήθηκε στον κάδο"
 
 #: cyberui/actions.lua
 msgid "Library home set"
-msgstr ""
+msgstr "Ορίστηκε ο αρχικός φάκελος της βιβλιοθήκης"
 
 #: cyberui/actions.lua
 msgid "Library opens in %s"
-msgstr ""
+msgstr "Η βιβλιοθήκη ανοίγει στο %s"
 
 #: cyberui/actions.lua
 msgid "Library opens in the home folder"
-msgstr ""
+msgstr "Η βιβλιοθήκη ανοίγει στον αρχικό φάκελο"
 
 #: cyberui/actions.lua cyberui/screens/settings.lua
 msgid "Library opens in"
-msgstr ""
+msgstr "Η βιβλιοθήκη ανοίγει στο"
 
 #: cyberui/actions.lua
 msgid "Open library here"
-msgstr ""
+msgstr "Άνοιγμα της βιβλιοθήκης εδώ"
 
 #: cyberui/actions.lua
 msgid "%d book marked %s"
 msgid_plural "%d books marked %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d βιβλίο επισημάνθηκε ως %s"
+msgstr[1] "%d βιβλία επισημάνθηκαν ως %s"
 
 #: cyberui/actions.lua
 msgid "Status of %d book"
 msgid_plural "Status of %d books"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Κατάσταση %d βιβλίου"
+msgstr[1] "Κατάσταση %d βιβλίων"
 
 #: cyberui/actions.lua
 msgid "%d book added to %s"
 msgid_plural "%d books added to %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d βιβλίο προστέθηκε στη συλλογή %s"
+msgstr[1] "%d βιβλία προστέθηκαν στη συλλογή %s"
 
 #: cyberui/actions.lua
 msgid "Add %d book to"
 msgid_plural "Add %d books to"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Προσθήκη %d βιβλίου σε"
+msgstr[1] "Προσθήκη %d βιβλίων σε"
 
 #: cyberui/actions.lua cyberui/screens/library.lua
 msgid "Move here"
-msgstr ""
+msgstr "Μετακίνηση εδώ"
 
 #: cyberui/actions.lua
 msgid "%d book moved to %s"
 msgid_plural "%d books moved to %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d βιβλίο μετακινήθηκε σε %s"
+msgstr[1] "%d βιβλία μετακινήθηκαν σε %s"
 
 #: cyberui/actions.lua
 msgid "Delete %d book?"
 msgid_plural "Delete %d books?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Διαγραφή %d βιβλίου;"
+msgstr[1] "Διαγραφή %d βιβλίων;"
 
 #: cyberui/actions.lua
 msgid "They wait in the trash for %d day."
 msgid_plural "They wait in the trash for %d days."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Παραμένουν στον κάδο για %d ημέρα."
+msgstr[1] "Παραμένουν στον κάδο για %d ημέρες."
 
 #: cyberui/actions.lua cyberui/screens/settings.lua
 msgid "Open"
-msgstr ""
+msgstr "Άνοιγμα"
 
 #: cyberui/actions.lua cyberui/screens/bounty.lua
 msgid "Details"
-msgstr ""
+msgstr "Λεπτομέρειες"
 
 #: cyberui/actions.lua
 msgid "Forget"
-msgstr ""
+msgstr "Ξεχάστε"
 
 #: cyberui/actions.lua
 msgid "Remove from history"
-msgstr ""
+msgstr "Αφαίρεση από το ιστορικό"
 
 #: cyberui/actions.lua
 msgid "Make library home"
-msgstr ""
+msgstr "Ορισμός ως αρχικού φακέλου βιβλιοθήκης"
 
 #: cyberui/app.lua cyberui/screens/settings.lua
 msgid "Home"
-msgstr ""
+msgstr "Αρχική"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr ""
+msgstr "Βιβλιοθήκη"
 
 #: cyberui/app.lua
 msgid "Caches"
-msgstr ""
+msgstr "Συλλογές"
 
 #: cyberui/app.lua cyberui/screens/history.lua
 msgid "Log"
-msgstr ""
+msgstr "Αρχείο"
 
 #: cyberui/app.lua cyberui/screens/settings.lua
 msgid "System"
-msgstr ""
+msgstr "Σύστημα"
 
 #: cyberui/app.lua
 msgid "Something went wrong; see crash.log"
-msgstr ""
+msgstr "Κάτι πήγε στραβά· δείτε το crash.log"
 
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
-msgstr ""
+msgstr "ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ // ΠΑΤΗΣΤΕ"
 
 #: cyberui/apps/addons.lua
 msgid "RESTART TO USE"
-msgstr ""
+msgstr "ΕΠΑΝΕΚΚΙΝΗΣΤΕ ΓΙΑ ΧΡΗΣΗ"
 
 #: cyberui/apps/addons.lua
 msgid "GET IT // FREE"
-msgstr ""
+msgstr "ΛΗΨΗ // ΔΩΡΕΑΝ"
 
 #: cyberui/apps/addons.lua
 msgid "Installing %s"
-msgstr ""
+msgstr "Εγκατάσταση του %s"
 
 #: cyberui/apps/addons.lua
 msgid "%s was not installed"
-msgstr ""
+msgstr "Το %s δεν εγκαταστάθηκε"
 
 #: cyberui/apps/addons.lua
 msgid "Try again"
-msgstr ""
+msgstr "Δοκιμάστε ξανά"
 
 #: cyberui/apps/addons.lua
 msgid "1/3 // ASKING GITHUB"
-msgstr ""
+msgstr "1/3 // ΕΡΩΤΗΣΗ ΣΤΟ GITHUB"
 
 #: cyberui/apps/addons.lua
 msgid "2/3 // DOWNLOADING %s %s (%.1f MB)"
-msgstr ""
+msgstr "2/3 // ΛΗΨΗ %s %s (%.1f MB)"
 
 #: cyberui/apps/addons.lua
 msgid "3/3 // CHECKING AND UNPACKING"
-msgstr ""
+msgstr "3/3 // ΕΛΕΓΧΟΣ ΚΑΙ ΑΠΟΣΥΜΠΙΕΣΗ"
 
 #: cyberui/apps/addons.lua
 msgid "%s %s is installed. Restart KOReader to use it."
-msgstr ""
+msgstr "Το %s %s εγκαταστάθηκε. Επανεκκινήστε το KOReader για να το χρησιμοποιήσετε."
 
 #: cyberui/apps/addons.lua
 msgid "%s is installed. Restart KOReader to use it."
-msgstr ""
+msgstr "Το %s εγκαταστάθηκε. Επανεκκινήστε το KOReader για να το χρησιμοποιήσετε."
 
 #: cyberui/apps/addons.lua
 msgid "Switch on"
-msgstr ""
+msgstr "Ενεργοποίηση"
 
 #: cyberui/apps/addons.lua
 msgid "%s is installed but switched off in KOReader's plugins. Switch it on?"
-msgstr ""
+msgstr "Το %s είναι εγκατεστημένο αλλά απενεργοποιημένο στα πρόσθετα του KOReader. Να ενεργοποιηθεί;"
 
 #: cyberui/apps/addons.lua
 msgid "%s is switched on. Restart KOReader to use it."
-msgstr ""
+msgstr "Το %s ενεργοποιήθηκε. Επανεκκινήστε το KOReader για να το χρησιμοποιήσετε."
 
 #: cyberui/apps/addons.lua cyberui/screens/updates.lua
 msgid "Install"
-msgstr ""
+msgstr "Εγκατάσταση"
 
 #: cyberui/apps/addons.lua
 msgid "Not now"
-msgstr ""
+msgstr "Όχι τώρα"
 
 #: cyberui/apps/addons.lua
 msgid "Free, from github.com/%s. Needs Wi-Fi."
-msgstr ""
+msgstr "Δωρεάν, από το github.com/%s. Απαιτεί Wi-Fi."
 
 #: cyberui/apps/inkaway.lua
 msgid "DRAW // NOTES // INK"
-msgstr ""
+msgstr "ΣΧΕΔΙΑΣΗ // ΣΗΜΕΙΩΣΕΙΣ // ΜΕΛΑΝΙ"
 
 #: cyberui/apps/inkaway.lua
 msgid "Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."
-msgstr ""
+msgstr "Σχεδιάστε, κρατήστε σημειώσεις και γράψτε πάνω στα βιβλία σας με το δάχτυλο ή μια γραφίδα: σχέδια με επίπεδα, τετράδια με γραμμωτές, καρό και σελίδες οργάνωσης και μελάνι σε οποιοδήποτε βιβλίο που ακολουθεί το κείμενο. Εξαγωγή διαφανούς PNG ή PDF."
 
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
-msgstr ""
+msgstr "ΠΡΟΣΒΑΣΗ"
 
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE_%dH"
-msgstr ""
+msgstr "ΠΡΟΣΒΑΣΗ_%dΩ"
 
 #: cyberui/data/achievements.lua cyberui/screens/diagnostics.lua
 msgid "UPTIME"
-msgstr ""
+msgstr "UPTIME"
 
 #: cyberui/data/achievements.lua
 msgid "UPTIME_%dD"
-msgstr ""
+msgstr "UPTIME_%dΗ"
 
 #: cyberui/data/achievements.lua cyberui/screens/diagnostics.lua
 msgid "ARCHIVE"
-msgstr ""
+msgstr "ΑΡΧΕΙΟ"
 
 #: cyberui/data/achievements.lua cyberui/screens/log/goal.lua
 msgid "ARCHIVE_%d"
-msgstr ""
+msgstr "ΑΡΧΕΙΟ_%d"
 
 #: cyberui/data/banner.lua
 msgid "READER // ONLINE"
-msgstr ""
+msgstr "ΑΝΑΓΝΩΣΤΗΣ // ΣΥΝΔΕΔΕΜΕΝΟΣ"
 
 #: cyberui/data/banner.lua
 msgid "DECK ACTIVE"
-msgstr ""
+msgstr "DECK ΕΝΕΡΓΟ"
 
 #: cyberui/data/banner.lua
 msgid "SYSTEMS NOMINAL"
-msgstr ""
+msgstr "ΣΥΣΤΗΜΑΤΑ ΚΑΝΟΝΙΚΑ"
 
 #: cyberui/data/banner.lua
 msgid "BOOT COMPLETE"
-msgstr ""
+msgstr "Η ΕΚΚΙΝΗΣΗ ΟΛΟΚΛΗΡΩΘΗΚΕ"
 
 #: cyberui/data/banner.lua
 msgid "READY TO JACK IN"
-msgstr ""
+msgstr "ΕΤΟΙΜΟΣ ΓΙΑ JACK-IN"
 
 #: cyberui/data/banner.lua
 msgid "LINK ESTABLISHED"
-msgstr ""
+msgstr "ΣΥΝΔΕΣΗ ΕΓΙΝΕ"
 
 #: cyberui/data/banner.lua
 msgid "Greeting"
-msgstr ""
+msgstr "Χαιρετισμός"
 
 #: cyberui/data/banner.lua
 msgid "Time of day + handle"
-msgstr ""
+msgstr "Ώρα της ημέρας + ψευδώνυμο"
 
 #: cyberui/data/banner.lua
 msgid "Highlight"
-msgstr ""
+msgstr "Επισήμανση"
 
 #: cyberui/data/banner.lua
 msgid "From your books"
-msgstr ""
+msgstr "Από τα βιβλία σας"
 
 #: cyberui/data/banner.lua
 msgid "Battery // Wi-Fi"
-msgstr ""
+msgstr "Μπαταρία // Wi-Fi"
 
 #: cyberui/data/banner.lua
 msgid "Your own text"
-msgstr ""
+msgstr "Δικό σας κείμενο"
 
 #: cyberui/data/banner.lua
 msgid "Typed in"
-msgstr ""
+msgstr "Πληκτρολογημένο"
 
 #: cyberui/data/banner.lua cyberui/screens/fonts.lua cyberui/targetlist.lua
 msgid "Device"
-msgstr ""
+msgstr "Συσκευή"
 
 #: cyberui/data/banner.lua cyberui/profileflow.lua
 msgid "Your handle"
-msgstr ""
+msgstr "Το ψευδώνυμό σας"
 
 #: cyberui/data/banner.lua
 msgid "Book"
-msgstr ""
+msgstr "Βιβλίο"
 
 #: cyberui/data/banner.lua
 msgid "Highlight's or current"
-msgstr ""
+msgstr "Της επισήμανσης ή το τρέχον"
 
 #: cyberui/data/banner.lua
 msgid "Nothing"
-msgstr ""
+msgstr "Τίποτα"
 
 #: cyberui/data/banner.lua
 msgid "NIGHT SHIFT, %s"
-msgstr ""
+msgstr "ΝΥΧΤΕΡΙΝΗ ΒΑΡΔΙΑ, %s"
 
 #: cyberui/data/banner.lua
 msgid "GOOD MORNING, %s"
-msgstr ""
+msgstr "ΚΑΛΗΜΕΡΑ, %s"
 
 #: cyberui/data/banner.lua
 msgid "GOOD AFTERNOON, %s"
-msgstr ""
+msgstr "ΚΑΛΟ ΜΕΣΗΜΕΡΙ, %s"
 
 #: cyberui/data/banner.lua
 msgid "GOOD EVENING, %s"
-msgstr ""
+msgstr "ΚΑΛΗΣΠΕΡΑ, %s"
 
 #: cyberui/data/banner.lua
 msgid "CHARGING // %d%%"
-msgstr ""
+msgstr "ΦΟΡΤΙΣΗ // %d%%"
 
 #: cyberui/data/banner.lua
 msgid "POWER LOW // PLUG IN"
-msgstr ""
+msgstr "ΧΑΜΗΛΗ ΜΠΑΤΑΡΙΑ // ΣΥΝΔΕΣΤΕ ΦΟΡΤΙΣΤΗ"
 
 #: cyberui/data/banner.lua
 msgid "UPLINK ACTIVE"
-msgstr ""
+msgstr "UPLINK ΕΝΕΡΓΟ"
 
 #: cyberui/data/banner.lua
 msgid "ID // %s"
-msgstr ""
+msgstr "ID // %s"
 
 #: cyberui/data/banner.lua
 msgid "FILE // %s"
-msgstr ""
+msgstr "ΑΡΧΕΙΟ // %s"
 
 #: cyberui/data/banner.lua
 msgid "CYBERDECK // %s // OPERATOR ACCESS"
-msgstr ""
+msgstr "CYBERDECK // %s // ΠΡΟΣΒΑΣΗ ΧΕΙΡΙΣΤΗ"
 
 #: cyberui/data/books.lua cyberui/screens/colourpick.lua cyberui/screens/dossier.lua
 msgid "NEW"
-msgstr ""
+msgstr "ΝΕΟ"
 
 #: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DONE"
-msgstr ""
+msgstr "ΤΕΛΟΣ"
 
 #: cyberui/data/books.lua
 msgid "HOLD"
-msgstr ""
+msgstr "ΑΝΑΜΟΝΗ"
 
 #: cyberui/data/collections.lua
 msgid "Favorites"
-msgstr ""
+msgstr "Αγαπημένα"
 
 #: cyberui/data/files.lua
 msgid "There is already something called “%s” there."
-msgstr ""
+msgstr "Υπάρχει ήδη κάτι με όνομα «%s» εκεί."
 
 #: cyberui/data/files.lua
 msgid "It could not be moved."
-msgstr ""
+msgstr "Δεν ήταν δυνατή η μετακίνηση."
 
 #: cyberui/data/files.lua
 msgid "That name cannot be used."
-msgstr ""
+msgstr "Αυτό το όνομα δεν μπορεί να χρησιμοποιηθεί."
 
 #: cyberui/data/files.lua
 msgid "A folder cannot go inside itself."
-msgstr ""
+msgstr "Ένας φάκελος δεν μπορεί να μπει μέσα στον εαυτό του."
 
 #: cyberui/data/files.lua
 msgid "There is already something called “%s” here."
-msgstr ""
+msgstr "Υπάρχει ήδη κάτι με όνομα «%s» εδώ."
 
 #: cyberui/data/files.lua
 msgid "The folder could not be made."
-msgstr ""
+msgstr "Δεν ήταν δυνατή η δημιουργία του φακέλου."
 
 #: cyberui/data/libgroups.lua
 msgid "Folders"
-msgstr ""
+msgstr "Φάκελοι"
 
 #: cyberui/data/libgroups.lua cyberui/screens/library.lua cyberui/screens/log/scope.lua
 msgid "All books"
-msgstr ""
+msgstr "Όλα τα βιβλία"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Author"
-msgstr ""
+msgstr "Συγγραφέας"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Series"
-msgstr ""
+msgstr "Σειρά"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Format"
-msgstr ""
+msgstr "Μορφή"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Added"
-msgstr ""
+msgstr "Προστέθηκε"
 
 #: cyberui/data/libgroups.lua cyberui/screens/dossier.lua
 msgid "Unknown author"
-msgstr ""
+msgstr "Άγνωστος συγγραφέας"
 
 #: cyberui/data/libgroups.lua
 msgid "No series"
-msgstr ""
+msgstr "Χωρίς σειρά"
 
 #: cyberui/data/metric.lua
 msgid "PG"
-msgstr ""
+msgstr "ΣΕΛ"
 
 #: cyberui/data/metric.lua
 msgid "MIN"
-msgstr ""
+msgstr "ΛΕΠ"
 
 #: cyberui/data/metric.lua
 msgid "PAGES READ // LAST 7 DAYS"
-msgstr ""
+msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΔΙΑΒΑΣΤΗΚΑΝ // ΤΕΛΕΥΤΑΙΕΣ 7 ΗΜΕΡΕΣ"
 
 #: cyberui/data/metric.lua
 msgid "MINUTES READ // LAST 7 DAYS"
-msgstr ""
+msgstr "ΛΕΠΤΑ ΑΝΑΓΝΩΣΗΣ // ΤΕΛΕΥΤΑΙΕΣ 7 ΗΜΕΡΕΣ"
 
 #: cyberui/data/metric.lua
 msgid "PAGES READ // 12 WEEKS"
-msgstr ""
+msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΔΙΑΒΑΣΤΗΚΑΝ // 12 ΕΒΔΟΜΑΔΕΣ"
 
 #: cyberui/data/metric.lua
 msgid "MINUTES READ // 12 WEEKS"
-msgstr ""
+msgstr "ΛΕΠΤΑ ΑΝΑΓΝΩΣΗΣ // 12 ΕΒΔΟΜΑΔΕΣ"
 
 #: cyberui/data/metric.lua cyberui/screens/log/period.lua
 msgid "PAGES READ"
-msgstr ""
+msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΔΙΑΒΑΣΤΗΚΑΝ"
 
 #: cyberui/data/metric.lua cyberui/screens/log/period.lua
 msgid "MINUTES READ"
-msgstr ""
+msgstr "ΛΕΠΤΑ ΑΝΑΓΝΩΣΗΣ"
 
 #: cyberui/data/profile.lua
 msgid "SCRIPT KID"
-msgstr ""
+msgstr "SCRIPT KID"
 
 #: cyberui/data/profile.lua
 msgid "RUNNER"
-msgstr ""
+msgstr "RUNNER"
 
 #: cyberui/data/profile.lua
 msgid "FIXER"
-msgstr ""
+msgstr "FIXER"
 
 #: cyberui/data/profile.lua
 msgid "NETRUNNER"
-msgstr ""
+msgstr "NETRUNNER"
 
 #: cyberui/data/profile.lua
 msgid "LEGEND"
-msgstr ""
+msgstr "ΘΡΥΛΟΣ"
 
 #: cyberui/data/profile.lua
 msgid "That file is not a picture KOReader can read"
-msgstr ""
+msgstr "Αυτό το αρχείο δεν είναι εικόνα που μπορεί να διαβάσει το KOReader"
 
 #: cyberui/data/profile.lua
 msgid "The photo could not be saved"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η αποθήκευση της φωτογραφίας"
 
 #: cyberui/data/sysinfo.lua
 msgid "INTERNAL"
-msgstr ""
+msgstr "ΕΣΩΤΕΡΙΚΟΣ"
 
 #: cyberui/data/sysinfo.lua cyberui/ui/launcher.lua
 msgid "LIBRARY"
-msgstr ""
+msgstr "ΒΙΒΛΙΟΘΗΚΗ"
 
 #: cyberui/data/trash.lua
 msgid "The trash could not be written to."
-msgstr ""
+msgstr "Δεν ήταν δυνατή η εγγραφή στον κάδο."
 
 #: cyberui/data/trash.lua
 msgid "It is not in the trash any more."
-msgstr ""
+msgstr "Δεν βρίσκεται πια στον κάδο."
 
 #: cyberui/data/trash.lua
 msgid "Its folder is gone. Restore that first."
-msgstr ""
+msgstr "Ο φάκελός του δεν υπάρχει πια. Επαναφέρετέ τον πρώτα."
 
 #: cyberui/format.lua
 msgid "NEVER"
-msgstr ""
+msgstr "ΠΟΤΕ"
 
 #: cyberui/format.lua
 msgid "JUST NOW"
-msgstr ""
+msgstr "ΤΩΡΑ ΜΟΛΙΣ"
 
 #: cyberui/format.lua
 msgid "%dH AGO"
-msgstr ""
+msgstr "ΠΡΙΝ %dΩ"
 
 #: cyberui/format.lua
 msgid "%dD AGO"
-msgstr ""
+msgstr "ΠΡΙΝ %dΗ"
 
 #: cyberui/format.lua
 msgid "%dW AGO"
-msgstr ""
+msgstr "ΠΡΙΝ %dΕΒΔ"
 
 #: cyberui/format.lua
 msgid "%dM"
-msgstr ""
+msgstr "%dΛΕΠ"
 
 #: cyberui/gfx/ascii.lua
 msgid "Classic"
-msgstr ""
+msgstr "Κλασικό"
 
 #: cyberui/gfx/ascii.lua
 msgid "Detailed"
-msgstr ""
+msgstr "Αναλυτικό"
 
 #: cyberui/gfx/ascii.lua
 msgid "Braille"
-msgstr ""
+msgstr "Braille"
 
 #: cyberui/gfx/ascii.lua
 msgid "Blocks"
-msgstr ""
+msgstr "Μπλοκ"
 
 #: cyberui/gfx/ascii.lua
 msgid "Binary"
-msgstr ""
+msgstr "Δυαδικό"
 
 #: cyberui/gfx/ascii.lua
 msgid "Hex dump"
-msgstr ""
+msgstr "Hex dump"
 
 #: cyberui/gfx/ascii.lua
 msgid "Glitch"
-msgstr ""
+msgstr "Glitch"
 
 #: cyberui/gfx/ascii.lua
 msgid "Book title"
-msgstr ""
+msgstr "Τίτλος βιβλίου"
 
 #: cyberui/gfx/icons.lua
 msgid "CYBERUI"
-msgstr ""
+msgstr "CYBERUI"
 
 #: cyberui/gfx/icons.lua
 msgid "READER"
-msgstr ""
+msgstr "ΑΝΑΓΝΩΣΤΗΣ"
 
 #: cyberui/gfx/icons.lua cyberui/screens/diagnostics.lua
 msgid "KOREADER"
-msgstr ""
+msgstr "KOREADER"
 
 #: cyberui/jackin.lua
 msgid "RESUMING AT %d%%"
-msgstr ""
+msgstr "ΣΥΝΕΧΕΙΑ ΑΠΟ %d%%"
 
 #: cyberui/jackin.lua
 msgid "FIRST OPEN"
-msgstr ""
+msgstr "ΠΡΩΤΟ ΑΝΟΙΓΜΑ"
 
 #: cyberui/jackin.lua
 msgid "[OK] MOUNT FILE // [OK] READ INDEX"
-msgstr ""
+msgstr "[OK] ΑΡΧΕΙΟ ΕΝΣΩΜΑΤΩΘΗΚΕ // [OK] ΕΥΡΕΤΗΡΙΟ ΑΝΑΓΝΩΣΤΗΚΕ"
 
 #: cyberui/jackin.lua
 msgid "[..] RENDERING PAGE"
-msgstr ""
+msgstr "[..] ΣΧΕΔΙΑΣΗ ΣΕΛΙΔΑΣ"
 
 #: cyberui/jackin.lua
 msgid "JACK-IN"
-msgstr ""
+msgstr "JACK-IN"
 
 #: cyberui/jackin.lua
 msgid "DECRYPTING..."
-msgstr ""
+msgstr "ΑΠΟΚΡΥΠΤΟΓΡΑΦΗΣΗ..."
 
 #: cyberui/menu.lua cyberui/screens/filepick.lua
 msgid "FILES"
-msgstr ""
+msgstr "ΑΡΧΕΙΑ"
 
 #: cyberui/menu.lua
 msgid "SETTINGS"
-msgstr ""
+msgstr "ΡΥΘΜΙΣΕΙΣ"
 
 #: cyberui/menu.lua
 msgid "TOOLS"
-msgstr ""
+msgstr "ΕΡΓΑΛΕΙΑ"
 
 #: cyberui/menu.lua cyberui/ui/launcher.lua
 msgid "SEARCH"
-msgstr ""
+msgstr "ΑΝΑΖΗΤΗΣΗ"
 
 #: cyberui/menu.lua
 msgid "MAIN"
-msgstr ""
+msgstr "ΚΥΡΙΟ"
 
 #: cyberui/menu.lua
 msgid "NAVIGATION"
-msgstr ""
+msgstr "ΠΛΟΗΓΗΣΗ"
 
 #: cyberui/menu.lua
 msgid "TYPESET"
-msgstr ""
+msgstr "ΤΥΠΟΓΡΑΦΙΑ"
 
 #: cyberui/menu.lua
 msgid "VIEW"
-msgstr ""
+msgstr "ΠΡΟΒΟΛΗ"
 
 #: cyberui/menu.lua
 msgid "CONTROLS"
-msgstr ""
+msgstr "ΧΕΙΡΙΣΤΗΡΙΑ"
 
 #: cyberui/menu.lua
 msgid "LAUNCHER"
-msgstr ""
+msgstr "ΕΚΚΙΝΗΤΗΣ"
 
 #: cyberui/menu.lua
 msgid "DECK"
-msgstr ""
+msgstr "DECK"
 
 #: cyberui/menu.lua
 msgid "EXTRA"
-msgstr ""
+msgstr "ΕΠΙΠΛΕΟΝ"
 
 #: cyberui/menu.lua
 msgid "HOME"
-msgstr ""
+msgstr "ΑΡΧΙΚΗ"
 
 #: cyberui/menu.lua
 msgid "ZENOS"
-msgstr ""
+msgstr "ZENOS"
 
 #: cyberui/menu.lua
 msgid "THAT ONE CANNOT BE USED"
-msgstr ""
+msgstr "ΑΥΤΟ ΔΕΝ ΜΠΟΡΕΙ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΘΕΙ"
 
 #: cyberui/menu.lua
 msgid "Button %d"
-msgstr ""
+msgstr "Κουμπί %d"
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "LUMEN"
-msgstr ""
+msgstr "LUMEN"
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "TINT"
-msgstr ""
+msgstr "ΑΠΟΧΡΩΣΗ"
 
 #: cyberui/menu.lua
 msgid "Wi-Fi on"
-msgstr ""
+msgstr "Wi-Fi ενεργό"
 
 #: cyberui/menu.lua
 msgid "Wi-Fi off"
-msgstr ""
+msgstr "Wi-Fi ανενεργό"
 
 #: cyberui/menu.lua
 msgid "Night mode"
-msgstr ""
+msgstr "Νυχτερινή λειτουργία"
 
 #: cyberui/menu.lua
 msgid "Rotate"
-msgstr ""
+msgstr "Περιστροφή"
 
 #: cyberui/menu.lua
 msgid "Restart"
-msgstr ""
+msgstr "Επανεκκίνηση"
 
 #: cyberui/menu.lua
 msgid "Restart KOReader?"
-msgstr ""
+msgstr "Επανεκκίνηση του KOReader;"
 
 #: cyberui/menu.lua
 msgid "Exit"
-msgstr ""
+msgstr "Έξοδος"
 
 #: cyberui/menu.lua
 msgid "Exit KOReader?"
-msgstr ""
+msgstr "Έξοδος από το KOReader;"
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "UPLINK"
-msgstr ""
+msgstr "UPLINK"
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "NO CARRIER"
-msgstr ""
+msgstr "ΧΩΡΙΣ ΣΗΜΑ"
 
 #: cyberui/menu.lua
 msgid "PICK // %s"
-msgstr ""
+msgstr "ΕΠΙΛΟΓΗ // %s"
 
 #: cyberui/menu.lua
 msgid "KOREADER // %s"
-msgstr ""
+msgstr "KOREADER // %s"
 
 #: cyberui/menu.lua
 msgid "TAP AN ENTRY TO USE IT. HOLD A SUBMENU TO USE THE MENU ITSELF."
-msgstr ""
+msgstr "ΠΑΤΗΣΤΕ ΜΙΑ ΕΓΓΡΑΦΗ ΓΙΑ ΝΑ ΤΗ ΧΡΗΣΙΜΟΠΟΙΗΣΕΤΕ. ΠΑΤΗΣΤΕ ΠΑΡΑΤΕΤΑΜΕΝΑ ΕΝΑ ΥΠΟΜΕΝΟΥ ΓΙΑ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΣΕΤΕ ΤΟ ΙΔΙΟ ΤΟ ΜΕΝΟΥ."
 
 #: cyberui/menu.lua
 msgid "Nothing to show here yet."
-msgstr ""
+msgstr "Δεν υπάρχει ακόμη τίποτα να εμφανιστεί εδώ."
 
 #: cyberui/menu.lua cyberui/screens/launcher.lua cyberui/screens/settings.lua
 msgid "PAGE"
-msgstr ""
+msgstr "ΣΕΛΙΔΑ"
 
 #: cyberui/profileflow.lua cyberui/screens/photocrop.lua
 msgid "Photo"
-msgstr ""
+msgstr "Φωτογραφία"
 
 #: cyberui/profileflow.lua
 msgid "Photo changed"
-msgstr ""
+msgstr "Η φωτογραφία άλλαξε"
 
 #: cyberui/profileflow.lua
 msgid "Choose a picture"
-msgstr ""
+msgstr "Επιλογή εικόνας"
 
 #: cyberui/profileflow.lua
 msgid "From any folder on this device"
-msgstr ""
+msgstr "Από οποιονδήποτε φάκελο αυτής της συσκευής"
 
 #: cyberui/profileflow.lua
 msgid "Remove photo"
-msgstr ""
+msgstr "Αφαίρεση φωτογραφίας"
 
 #: cyberui/profileflow.lua
 msgid "Use the generated glyph"
-msgstr ""
+msgstr "Χρήση του δημιουργημένου γλύφου"
 
 #: cyberui/profileflow.lua
 msgid "Photo removed"
-msgstr ""
+msgstr "Η φωτογραφία αφαιρέθηκε"
 
 #: cyberui/profileflow.lua
 msgid "Your photo"
-msgstr ""
+msgstr "Η φωτογραφία σας"
 
 #: cyberui/profileflow.lua
 msgid "Shown on your ID card"
-msgstr ""
+msgstr "Εμφανίζεται στην κάρτα ID σας"
 
 #: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/settings.lua ...
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #: cyberui/profileflow.lua cyberui/ui/idcard.lua
 msgid "PHOTO"
-msgstr ""
+msgstr "ΦΩΤΟ"
 
 #: cyberui/profileflow.lua cyberui/ui/idcard.lua
 msgid "HANDLE"
-msgstr ""
+msgstr "ΨΕΥΔΩΝΥΜΟ"
 
 #: cyberui/profileflow.lua
 msgid "SAVE"
-msgstr ""
+msgstr "ΑΠΟΘΗΚΕΥΣΗ"
 
 #: cyberui/profileflow.lua
 msgid "Saved %s"
-msgstr ""
+msgstr "Αποθηκεύτηκε το %s"
 
 #: cyberui/profileflow.lua
 msgid "The card could not be saved"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η αποθήκευση της κάρτας"
 
 #: cyberui/screens/bounty.lua
 msgid "%s ON ITS HEAD"
-msgstr ""
+msgstr "%s ΓΙΑ ΤΟ ΚΕΦΑΛΙ ΤΟΥ"
 
 #: cyberui/screens/bounty.lua
 msgid "Claim it"
-msgstr ""
+msgstr "Διεκδίκηση"
 
 #: cyberui/screens/bounty.lua
 msgid "Open the book"
-msgstr ""
+msgstr "Άνοιγμα του βιβλίου"
 
 #: cyberui/screens/bounty.lua
 msgid "Not wanted"
-msgstr ""
+msgstr "Δεν καταζητείται"
 
 #: cyberui/screens/bounty.lua
 msgid "Take it off the board"
-msgstr ""
+msgstr "Αφαίρεση από τον πίνακα"
 
 #: cyberui/screens/bounty.lua
 msgid "MOST_WANTED"
-msgstr ""
+msgstr "ΠΙΟ_ΚΑΤΑΖΗΤΟΥΜΕΝΑ"
 
 #: cyberui/screens/bounty.lua
 msgid "WANTED"
-msgstr ""
+msgstr "ΚΑΤΑΖΗΤΕΙΤΑΙ"
 
 #: cyberui/screens/bounty.lua
 msgid "AT LARGE %d DAY"
 msgid_plural "AT LARGE %d DAYS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ΣΕ ΦΥΓΗ ΕΔΩ ΚΑΙ %d ΗΜΕΡΑ"
+msgstr[1] "ΣΕ ΦΥΓΗ ΕΔΩ ΚΑΙ %d ΗΜΕΡΕΣ"
 
 #: cyberui/screens/bounty.lua
 msgid "CLAIM"
-msgstr ""
+msgstr "ΔΙΕΚΔΙΚΗΣΗ"
 
 #: cyberui/screens/bounty.lua
 msgid "NO OUTSTANDING TARGETS"
-msgstr ""
+msgstr "ΚΑΝΕΝΑΣ ΕΚΚΡΕΜΗΣ ΣΤΟΧΟΣ"
 
 #: cyberui/screens/bounty.lua
 msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week appear here with a bounty on them."
-msgstr ""
+msgstr "Κάθε βιβλίο της βιβλιοθήκης έχει ανοιχτεί ή είναι ακόμη καινούριο. Τα βιβλία που μένουν αδιάβαστα για μια εβδομάδα εμφανίζονται εδώ με αμοιβή."
 
 #: cyberui/screens/bounty.lua
 msgid "Bounties"
-msgstr ""
+msgstr "Αμοιβές"
 
 #: cyberui/screens/bounty.lua
 msgid "MOST WANTED // %s ON THE BOARD"
-msgstr ""
+msgstr "ΠΙΟ ΚΑΤΑΖΗΤΟΥΜΕΝΑ // %s ΣΤΟΝ ΠΙΝΑΚΑ"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
 msgid_plural "%d FILES"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΑΡΧΕΙΟ"
+msgstr[1] "%d ΑΡΧΕΙΑ"
 
 #: cyberui/screens/collections.lua
 msgid "PINNED // QUEUE"
-msgstr ""
+msgstr "ΚΑΡΦΙΤΣΩΜΕΝΑ // ΟΥΡΑ"
 
 #: cyberui/screens/collections.lua
 msgid "Collection created"
-msgstr ""
+msgstr "Η συλλογή δημιουργήθηκε"
 
 #: cyberui/screens/collections.lua
 msgid "No other collections yet. Make one with + New."
-msgstr ""
+msgstr "Δεν υπάρχουν άλλες συλλογές ακόμη. Δημιουργήστε μία με το + Νέα."
 
 #: cyberui/screens/collections.lua
 msgid "CACHE"
-msgstr ""
+msgstr "ΣΥΛΛΟΓΗ"
 
 #: cyberui/screens/collections.lua cyberui/screens/library.lua
 msgid "+ New"
-msgstr ""
+msgstr "+ Νέα"
 
 #: cyberui/screens/colourpick.lua
 msgid "That is not a colour code"
-msgstr ""
+msgstr "Αυτό δεν είναι κωδικός χρώματος"
 
 #: cyberui/screens/colourpick.lua
 msgid "IN USE"
-msgstr ""
+msgstr "ΣΕ ΧΡΗΣΗ"
 
 #: cyberui/screens/colourpick.lua
 msgid "IN GREY"
-msgstr ""
+msgstr "ΣΕ ΓΚΡΙ"
 
 #: cyberui/screens/colourpick.lua
 msgid "READS ON THE PAGE"
-msgstr ""
+msgstr "ΔΙΑΒΑΖΕΤΑΙ ΣΤΗ ΣΕΛΙΔΑ"
 
 #: cyberui/screens/colourpick.lua
 msgid "TOO FAINT ON THE PAGE"
-msgstr ""
+msgstr "ΠΟΛΥ ΑΧΝΟ ΣΤΗ ΣΕΛΙΔΑ"
 
 #: cyberui/screens/colourpick.lua
 msgid "HEX"
-msgstr ""
+msgstr "HEX"
 
 #: cyberui/screens/colourpick.lua
 msgid "Colour code"
-msgstr ""
+msgstr "Κωδικός χρώματος"
 
 #: cyberui/screens/colourpick.lua
 msgid "Use"
-msgstr ""
+msgstr "Χρήση"
 
 #: cyberui/screens/colourpick.lua
 msgid "HUE"
-msgstr ""
+msgstr "ΑΠΟΧΡΩΣΗ"
 
 #: cyberui/screens/colourpick.lua
 msgid "CANCEL"
-msgstr ""
+msgstr "ΑΚΥΡΟ"
 
 #: cyberui/screens/colourpick.lua
 msgid "USE COLOUR"
-msgstr ""
+msgstr "ΧΡΗΣΗ ΧΡΩΜΑΤΟΣ"
 
 #: cyberui/screens/colourpick.lua
 msgid "Colour"
-msgstr ""
+msgstr "Χρώμα"
 
 #: cyberui/screens/colourpick.lua
 msgid "PICK // HSV"
-msgstr ""
+msgstr "ΕΠΙΛΟΓΗ // HSV"
 
 #: cyberui/screens/diagnostics.lua
 msgid "NOT REPORTED BY THIS DEVICE"
-msgstr ""
+msgstr "ΔΕΝ ΑΝΑΦΕΡΕΤΑΙ ΑΠΟ ΑΥΤΗ ΤΗ ΣΥΣΚΕΥΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "POWER CELL"
-msgstr ""
+msgstr "ΜΠΑΤΑΡΙΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CHARGING"
-msgstr ""
+msgstr "ΦΟΡΤΙΣΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "FULL"
-msgstr ""
+msgstr "ΠΛΗΡΗΣ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DISCHARGING"
-msgstr ""
+msgstr "ΕΚΦΟΡΤΙΣΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "STATE"
-msgstr ""
+msgstr "ΚΑΤΑΣΤΑΣΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DRAIN"
-msgstr ""
+msgstr "ΚΑΤΑΝΑΛΩΣΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "%.1f%%/H // ~%dH LEFT"
-msgstr ""
+msgstr "%.1f%%/Ω // ~%dΩ ΑΠΟΜΕΝΟΥΝ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CHARGED"
-msgstr ""
+msgstr "ΦΟΡΤΙΣΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CYCLES"
-msgstr ""
+msgstr "ΚΥΚΛΟΙ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "AUX CELL"
-msgstr ""
+msgstr "ΒΟΗΘ. ΜΠΑΤΑΡΙΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CORE"
-msgstr ""
+msgstr "ΠΥΡΗΝΑΣ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CLOCK"
-msgstr ""
+msgstr "ΡΟΛΟΪ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CORES"
-msgstr ""
+msgstr "ΠΥΡΗΝΕΣ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "LOAD"
-msgstr ""
+msgstr "ΦΟΡΤΟΣ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "MEM"
-msgstr ""
+msgstr "ΜΝΗΜΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PROC"
-msgstr ""
+msgstr "ΕΠΕΞ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "%s // %d THR"
-msgstr ""
+msgstr "%s // %d ΝΗΜ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "%d FILE // %s"
 msgid_plural "%d FILES // %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΑΡΧΕΙΟ // %s"
+msgstr[1] "%d ΑΡΧΕΙΑ // %s"
 
 #: cyberui/screens/diagnostics.lua
 msgid "STORAGE"
-msgstr ""
+msgstr "ΑΠΟΘΗΚΕΥΣΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "ACTIVE"
-msgstr ""
+msgstr "ΕΝΕΡΓΟ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "SEARCHING"
-msgstr ""
+msgstr "ΑΝΑΖΗΤΗΣΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "NODE"
-msgstr ""
+msgstr "ΚΟΜΒΟΣ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "ADDR"
-msgstr ""
+msgstr "ΔΙΕΥΘ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "WI-FI"
-msgstr ""
+msgstr "WI-FI"
 
 #: cyberui/screens/diagnostics.lua cyberui/ui/controls.lua
 msgid "ON"
-msgstr ""
+msgstr "ON"
 
 #: cyberui/screens/diagnostics.lua cyberui/ui/controls.lua
 msgid "OFF"
-msgstr ""
+msgstr "OFF"
 
 #: cyberui/screens/diagnostics.lua
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 #: cyberui/screens/diagnostics.lua
 msgid "OPEN :%s"
-msgstr ""
+msgstr "ΑΝΟΙΧΤΟ :%s"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CLOSED"
-msgstr ""
+msgstr "ΚΛΕΙΣΤΟ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "TOUCH"
-msgstr ""
+msgstr "ΑΦΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PEN"
-msgstr ""
+msgstr "ΓΡΑΦΙΔΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "KEYS"
-msgstr ""
+msgstr "ΠΛΗΚΤΡΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "KEYBOARD"
-msgstr ""
+msgstr "ΠΛΗΚΤΡΟΛΟΓΙΟ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "OPTICS"
-msgstr ""
+msgstr "ΟΠΤΙΚΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PANEL"
-msgstr ""
+msgstr "ΟΘΟΝΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DEPTH"
-msgstr ""
+msgstr "ΒΑΘΟΣ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "COLOUR"
-msgstr ""
+msgstr "ΕΓΧΡΩΜΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "MONO"
-msgstr ""
+msgstr "MONO"
 
 #: cyberui/screens/diagnostics.lua cyberui/screens/settings.lua
 msgid "MODE"
-msgstr ""
+msgstr "ΛΕΙΤΟΥΡΓΙΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PORTRAIT"
-msgstr ""
+msgstr "ΚΑΤΑΚΟΡΥΦΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "LANDSCAPE"
-msgstr ""
+msgstr "ΟΡΙΖΟΝΤΙΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT ON"
-msgstr ""
+msgstr "ΑΝΤΙΣΤΡΟΦΗ ΕΝΕΡΓΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT OFF"
-msgstr ""
+msgstr "ΑΝΤΙΣΤΡΟΦΗ ΑΝΕΝΕΡΓΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INPUT"
-msgstr ""
+msgstr "ΕΙΣΟΔΟΣ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DEVICE"
-msgstr ""
+msgstr "ΣΥΣΚΕΥΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "AWAKE"
-msgstr ""
+msgstr "ΕΝΕΡΓΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "SLEEP"
-msgstr ""
+msgstr "ΑΝΑΜΟΝΗ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "WAKES"
-msgstr ""
+msgstr "ΞΥΠΝΗΜΑΤΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "SLEPT AT"
-msgstr ""
+msgstr "ΑΝΑΜΟΝΗ ΣΤΙΣ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "MODULES %d/%d"
-msgstr ""
+msgstr "ΕΝΟΤΗΤΕΣ %d/%d"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DICTS %d"
-msgstr ""
+msgstr "ΛΕΞΙΚΑ %d"
 
 #: cyberui/screens/diagnostics.lua
 msgid "FONTS %d"
-msgstr ""
+msgstr "ΓΡΑΜΜΑΤΟΣΕΙΡΕΣ %d"
 
 #: cyberui/screens/diagnostics.lua
 msgid "Diagnostics"
-msgstr ""
+msgstr "Διαγνωστικά"
 
 #: cyberui/screens/diagnostics.lua
 msgid "RESCAN"
-msgstr ""
+msgstr "ΝΕΑ ΣΑΡΩΣΗ"
 
 #: cyberui/screens/dossier.lua
 msgid "READING"
-msgstr ""
+msgstr "ΥΠΟ ΑΝΑΓΝΩΣΗ"
 
 #: cyberui/screens/dossier.lua
 msgid "ON HOLD"
-msgstr ""
+msgstr "ΣΕ ΑΝΑΜΟΝΗ"
 
 #: cyberui/screens/dossier.lua
 msgid "FORMAT"
-msgstr ""
+msgstr "ΜΟΡΦΗ"
 
 #: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
 msgid "PAGES"
-msgstr ""
+msgstr "ΣΕΛΙΔΕΣ"
 
 #: cyberui/screens/dossier.lua
 msgid "ADDED"
-msgstr ""
+msgstr "ΠΡΟΣΤΕΘΗΚΕ"
 
 #: cyberui/screens/dossier.lua
 msgid "OPENED"
-msgstr ""
+msgstr "ΑΝΟΙΧΤΗΚΕ"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
-msgstr ""
+msgstr "ΣΥΛΛΟΓΕΣ"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
-msgstr ""
+msgstr "ΑΠΟΚΡΥΠΤΟΓΡΑΦΗΘΗΚΕ %d%%"
 
 #: cyberui/screens/dossier.lua
 msgid "READ %s // %dD // %d PG/H%s"
-msgstr ""
+msgstr "ΑΝΑΓΝΩΣΗ %s // %dΗ // %d ΣΕΛ/Ω%s"
 
 #: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
-msgstr ""
+msgstr " // ΑΠΟΜΕΝΟΥΝ %s"
 
 #: cyberui/screens/dossier.lua
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "ΠΕΡΙΛΗΨΗ"
 
 #: cyberui/screens/dossier.lua
 msgid "No description in this book's details."
-msgstr ""
+msgstr "Δεν υπάρχει περιγραφή στις λεπτομέρειες αυτού του βιβλίου."
 
 #: cyberui/screens/dossier.lua
 msgid "HIGHLIGHTS"
-msgstr ""
+msgstr "ΕΠΙΣΗΜΑΝΣΕΙΣ"
 
 #: cyberui/screens/dossier.lua
 msgid "NOTES"
-msgstr ""
+msgstr "ΣΗΜΕΙΩΣΕΙΣ"
 
 #: cyberui/screens/dossier.lua
 msgid "BOOKMARKS"
-msgstr ""
+msgstr "ΣΕΛΙΔΟΔΕΙΚΤΕΣ"
 
 #: cyberui/screens/dossier.lua
 msgid "SHOW FOLDER"
-msgstr ""
+msgstr "ΕΜΦΑΝΙΣΗ ΦΑΚΕΛΟΥ"
 
 #: cyberui/screens/dossier.lua
 msgid "FORGET"
-msgstr ""
+msgstr "ΞΕΧΑΣΤΕ"
 
 #: cyberui/screens/dossier.lua
 msgid "remove from history"
-msgstr ""
+msgstr "αφαίρεση από το ιστορικό"
 
 #: cyberui/screens/dossier.lua
 msgid "OPEN FILE"
-msgstr ""
+msgstr "ΑΝΟΙΓΜΑ ΑΡΧΕΙΟΥ"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "STATUS"
-msgstr ""
+msgstr "ΚΑΤΑΣΤΑΣΗ"
 
 #: cyberui/screens/dossier.lua
 msgid "COLLECTION +"
-msgstr ""
+msgstr "ΣΥΛΛΟΓΗ +"
 
 #: cyberui/screens/dossier.lua
 msgid "RENAME"
-msgstr ""
+msgstr "ΜΕΤΟΝΟΜΑΣΙΑ"
 
 #: cyberui/screens/dossier.lua
 msgid "MOVE TO"
-msgstr ""
+msgstr "ΜΕΤΑΚΙΝΗΣΗ ΣΕ"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DELETE"
-msgstr ""
+msgstr "ΔΙΑΓΡΑΦΗ"
 
 #: cyberui/screens/dossier.lua
 msgid "File dossier"
-msgstr ""
+msgstr "Φάκελος αρχείου"
 
 #: cyberui/screens/filepick.lua cyberui/screens/library.lua cyberui/ui/cover.lua
 msgid "FOLDER"
-msgstr ""
+msgstr "ΦΑΚΕΛΟΣ"
 
 #: cyberui/screens/filepick.lua
 msgid "No pictures or folders here."
-msgstr ""
+msgstr "Δεν υπάρχουν εικόνες ή φάκελοι εδώ."
 
 #: cyberui/screens/filepick.lua
 msgid "Choose a file"
-msgstr ""
+msgstr "Επιλογή αρχείου"
 
 #: cyberui/screens/filepick.lua
 msgid "PICK // FILE"
-msgstr ""
+msgstr "ΕΠΙΛΟΓΗ // ΑΡΧΕΙΟ"
 
 #: cyberui/screens/fonts.lua
 msgid "Cyberpunk"
-msgstr ""
+msgstr "Cyberpunk"
 
 #: cyberui/screens/fonts.lua
 msgid "No fonts found on this device."
-msgstr ""
+msgstr "Δεν βρέθηκαν γραμματοσειρές σε αυτή τη συσκευή."
 
 #: cyberui/screens/fonts.lua
 msgid "FONTS"
-msgstr ""
+msgstr "ΓΡΑΜΜΑΤΟΣΕΙΡΕΣ"
 
 #: cyberui/screens/fonts.lua
 msgid "SETS"
-msgstr ""
+msgstr "ΣΕΤ"
 
 #: cyberui/screens/fonts.lua cyberui/screens/settings.lua
 msgid "Fonts"
-msgstr ""
+msgstr "Γραμματοσειρές"
 
 #: cyberui/screens/fonts.lua
 msgid "%d AVAILABLE"
 msgid_plural "%d AVAILABLE"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΔΙΑΘΕΣΙΜΟ"
+msgstr[1] "%d ΔΙΑΘΕΣΙΜΑ"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
-msgstr ""
+msgstr "Στατιστικά"
 
 #: cyberui/screens/history.lua
 msgid "Streaks"
-msgstr ""
+msgstr "Σειρές"
 
 #: cyberui/screens/history.lua
 msgid "Calendar"
-msgstr ""
+msgstr "Ημερολόγιο"
 
 #: cyberui/screens/history.lua
 msgid "Goal"
-msgstr ""
+msgstr "Στόχος"
 
 #: cyberui/screens/history.lua
 msgid "%d FOLDER"
 msgid_plural "%d FOLDERS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΦΑΚΕΛΟΣ"
+msgstr[1] "%d ΦΑΚΕΛΟΙ"
 
 #: cyberui/screens/history.lua
 msgid "Telemetry.log"
-msgstr ""
+msgstr "Telemetry.log"
 
 #: cyberui/screens/home.lua
 msgid "INDEX OK ..."
-msgstr ""
+msgstr "ΕΥΡΕΤΗΡΙΟ OK ..."
 
 #: cyberui/screens/home.lua cyberui/screens/library.lua
 msgid "%d BOOK"
 msgid_plural "%d BOOKS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΒΙΒΛΙΟ"
+msgstr[1] "%d ΒΙΒΛΙΑ"
 
 #: cyberui/screens/home.lua
 msgid "SCANNING"
-msgstr ""
+msgstr "ΣΑΡΩΣΗ"
 
 #: cyberui/screens/home.lua
 msgid "STREAK %d DAY // %d MIN TODAY // GOAL %d"
 msgid_plural "STREAK %d DAYS // %d MIN TODAY // GOAL %d"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ΣΕΙΡΑ %d ΗΜΕΡΑ // ΣΗΜΕΡΑ %d ΛΕΠ // ΣΤΟΧΟΣ %d"
+msgstr[1] "ΣΕΙΡΑ %d ΗΜΕΡΕΣ // ΣΗΜΕΡΑ %d ΛΕΠ // ΣΤΟΧΟΣ %d"
 
 #: cyberui/screens/home.lua
 msgid "SYS"
-msgstr ""
+msgstr "ΣΥΣ"
 
 #: cyberui/screens/home.lua
 msgid "ACTIVE_FILE"
-msgstr ""
+msgstr "ΕΝΕΡΓΟ_ΑΡΧΕΙΟ"
 
 #: cyberui/screens/home.lua
 msgid "NO ACTIVE FILE"
-msgstr ""
+msgstr "ΚΑΝΕΝΑ ΕΝΕΡΓΟ ΑΡΧΕΙΟ"
 
 #: cyberui/screens/home.lua
 msgid "Open a book from the library and it will wait for you here."
-msgstr ""
+msgstr "Ανοίξτε ένα βιβλίο από τη βιβλιοθήκη και θα σας περιμένει εδώ."
 
 #: cyberui/screens/home.lua
 msgid "OPEN LIBRARY"
-msgstr ""
+msgstr "ΑΝΟΙΓΜΑ ΒΙΒΛΙΟΘΗΚΗΣ"
 
 #: cyberui/screens/home.lua
 msgid "PG %d/%d"
-msgstr ""
+msgstr "ΣΕΛ %d/%d"
 
 #: cyberui/screens/home.lua
 msgid "%d%% DECRYPTED"
-msgstr ""
+msgstr "%d%% ΑΠΟΚΡΥΠΤΟΓΡΑΦΗΘΗΚΕ"
 
 #: cyberui/screens/home.lua
 msgid "LAST OPEN %s"
-msgstr ""
+msgstr "ΤΕΛΕΥΤΑΙΟ ΑΝΟΙΓΜΑ %s"
 
 #: cyberui/screens/home.lua
 msgid "NEVER OPENED"
-msgstr ""
+msgstr "ΠΟΤΕ ΑΝΟΙΧΤΟ"
 
 #: cyberui/screens/home.lua
 msgid "RESUME"
-msgstr ""
+msgstr "ΣΥΝΕΧΕΙΑ"
 
 #: cyberui/screens/home.lua
 msgid "OPEN"
-msgstr ""
+msgstr "ΑΝΟΙΓΜΑ"
 
 #: cyberui/screens/home.lua
 msgid "RECENT_FILES"
-msgstr ""
+msgstr "ΠΡΟΣΦΑΤΑ_ΑΡΧΕΙΑ"
 
 #: cyberui/screens/home.lua
 msgid "Books you open show up here."
-msgstr ""
+msgstr "Τα βιβλία που ανοίγετε εμφανίζονται εδώ."
 
 #: cyberui/screens/iconpick.lua
 msgid "Add your own SVGs to the cyberui-icons folder in KOReader's settings folder."
-msgstr ""
+msgstr "Προσθέστε τα δικά σας SVG στον φάκελο cyberui-icons μέσα στον φάκελο ρυθμίσεων του KOReader."
 
 #: cyberui/screens/iconpick.lua
 msgid "GLYPHS"
-msgstr ""
+msgstr "ΓΛΥΦΟΙ"
 
 #: cyberui/screens/iconpick.lua cyberui/screens/launchedit.lua
 msgid "Icon"
-msgstr ""
+msgstr "Εικονίδιο"
 
 #: cyberui/screens/iconpick.lua
 msgid "PICK // GLYPH"
-msgstr ""
+msgstr "ΕΠΙΛΟΓΗ // ΓΛΥΦΟΣ"
 
 #: cyberui/screens/launchedit.lua
 msgid "Button"
-msgstr ""
+msgstr "Κουμπί"
 
 #: cyberui/screens/launchedit.lua
 msgid "Gone"
-msgstr ""
+msgstr "Χάθηκε"
 
 #: cyberui/screens/launchedit.lua
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua
 msgid "Edit"
-msgstr ""
+msgstr "Επεξεργασία"
 
 #: cyberui/screens/launchedit.lua
 msgid "Button name"
-msgstr ""
+msgstr "Όνομα κουμπιού"
 
 #: cyberui/screens/launchedit.lua
 msgid "NAME"
-msgstr ""
+msgstr "ΟΝΟΜΑ"
 
 #: cyberui/screens/launchedit.lua cyberui/screens/settings.lua
 msgid "Choose"
-msgstr ""
+msgstr "Επιλογή"
 
 #: cyberui/screens/launchedit.lua
 msgid "Opens"
-msgstr ""
+msgstr "Ανοίγει"
 
 #: cyberui/screens/launchedit.lua cyberui/screens/settings.lua
 msgid "Pick"
-msgstr ""
+msgstr "Επιλογή"
 
 #: cyberui/screens/launchedit.lua
 msgid "RESTORE THE ORIGINAL"
-msgstr ""
+msgstr "ΕΠΑΝΑΦΟΡΑ ΤΟΥ ΠΡΩΤΟΤΥΠΟΥ"
 
 #: cyberui/screens/launchedit.lua
 msgid "DELETE THIS BUTTON"
-msgstr ""
+msgstr "ΔΙΑΓΡΑΦΗ ΑΥΤΟΥ ΤΟΥ ΚΟΥΜΠΙΟΥ"
 
 #: cyberui/screens/launchedit.lua
 msgid "BUILT-IN // REPLACE"
-msgstr ""
+msgstr "ΕΝΣΩΜΑΤΩΜΕΝΟ // ΑΝΤΙΚΑΤΑΣΤΑΣΗ"
 
 #: cyberui/screens/launchedit.lua
 msgid "CUSTOM // BUTTON"
-msgstr ""
+msgstr "ΠΡΟΣΑΡΜΟΣΜΕΝΟ // ΚΟΥΜΠΙ"
 
 #: cyberui/screens/launcher.lua
 msgid "HIDDEN"
-msgstr ""
+msgstr "ΚΡΥΜΜΕΝΟ"
 
 #: cyberui/screens/launcher.lua
 msgid "+ ADD BUTTON"
-msgstr ""
+msgstr "+ ΠΡΟΣΘΗΚΗ ΚΟΥΜΠΙΟΥ"
 
 #: cyberui/screens/launcher.lua
 msgid "The launcher is full"
-msgstr ""
+msgstr "Ο εκκινητής είναι γεμάτος"
 
 #: cyberui/screens/launcher.lua cyberui/screens/settings.lua
 msgid "Launcher"
-msgstr ""
+msgstr "Εκκινητής"
 
 #: cyberui/screens/launcher.lua
 msgid "ADD // MOVE // HIDE // EDIT"
-msgstr ""
+msgstr "ΠΡΟΣΘΗΚΗ // ΜΕΤΑΚΙΝΗΣΗ // ΑΠΟΚΡΥΨΗ // ΕΠΕΞΕΡΓΑΣΙΑ"
 
 #: cyberui/screens/libmenu.lua
 msgid "Recent"
-msgstr ""
+msgstr "Πρόσφατα"
 
 #: cyberui/screens/libmenu.lua
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #: cyberui/screens/libmenu.lua
 msgid "Progress"
-msgstr ""
+msgstr "Πρόοδος"
 
 #: cyberui/screens/libmenu.lua
 msgid "Pages"
-msgstr ""
+msgstr "Σελίδες"
 
 #: cyberui/screens/libmenu.lua
 msgid "Size"
-msgstr ""
+msgstr "Μέγεθος"
 
 #: cyberui/screens/libmenu.lua
 msgid "Reverse order"
-msgstr ""
+msgstr "Αντίστροφη σειρά"
 
 #: cyberui/screens/libmenu.lua
 msgid "Sort"
-msgstr ""
+msgstr "Ταξινόμηση"
 
 #: cyberui/screens/libmenu.lua
 msgid "Group by"
-msgstr ""
+msgstr "Ομαδοποίηση κατά"
 
 #: cyberui/screens/libmenu.lua
 msgid "Any"
-msgstr ""
+msgstr "Οποιοδήποτε"
 
 #: cyberui/screens/libmenu.lua
 msgid "Collection"
-msgstr ""
+msgstr "Συλλογή"
 
 #: cyberui/screens/libmenu.lua
 msgid "With notes"
-msgstr ""
+msgstr "Με σημειώσεις"
 
 #: cyberui/screens/libmenu.lua
 msgid "Only books with highlights or notes"
-msgstr ""
+msgstr "Μόνο βιβλία με επισημάνσεις ή σημειώσεις"
 
 #: cyberui/screens/libmenu.lua
 msgid "Clear filters"
-msgstr ""
+msgstr "Εκκαθάριση φίλτρων"
 
 #: cyberui/screens/libmenu.lua
 msgid "Filters"
-msgstr ""
+msgstr "Φίλτρα"
 
 #: cyberui/screens/libmenu.lua
 msgid "Save this view"
-msgstr ""
+msgstr "Αποθήκευση αυτής της προβολής"
 
 #: cyberui/screens/libmenu.lua
 msgid "Name this view"
-msgstr ""
+msgstr "Ονομάστε αυτή την προβολή"
 
 #: cyberui/screens/libmenu.lua
 msgid "View saved"
-msgstr ""
+msgstr "Η προβολή αποθηκεύτηκε"
 
 #: cyberui/screens/libmenu.lua
 msgid "Delete a view"
-msgstr ""
+msgstr "Διαγραφή προβολής"
 
 #: cyberui/screens/libmenu.lua
 msgid "View deleted"
-msgstr ""
+msgstr "Η προβολή διαγράφηκε"
 
 #: cyberui/screens/libmenu.lua
 msgid "Saved views"
-msgstr ""
+msgstr "Αποθηκευμένες προβολές"
 
 #: cyberui/screens/libmenu.lua
 msgid "Jump to"
-msgstr ""
+msgstr "Μετάβαση σε"
 
 #: cyberui/screens/libmenu.lua
 msgid "On"
-msgstr ""
+msgstr "Ενεργό"
 
 #: cyberui/screens/libmenu.lua cyberui/sleep.lua
 msgid "Off"
-msgstr ""
+msgstr "Ανενεργό"
 
 #: cyberui/screens/libmenu.lua
 msgid "%d saved"
 msgid_plural "%d saved"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d αποθηκευμένη"
+msgstr[1] "%d αποθηκευμένες"
 
 #: cyberui/screens/libmenu.lua
 msgid "Jump to letter"
-msgstr ""
+msgstr "Μετάβαση στο γράμμα"
 
 #: cyberui/screens/libmenu.lua
 msgid "A to Z in the current order"
-msgstr ""
+msgstr "Από το Α έως το Ω στην τρέχουσα σειρά"
 
 #: cyberui/screens/libmenu.lua
 msgid "Select books"
-msgstr ""
+msgstr "Επιλογή βιβλίων"
 
 #: cyberui/screens/libmenu.lua
 msgid "Status, collections, move or delete many"
-msgstr ""
+msgstr "Κατάσταση, συλλογές, μετακίνηση ή διαγραφή πολλών"
 
 #: cyberui/screens/libmenu.lua cyberui/screens/trash.lua
 msgid "Trash"
-msgstr ""
+msgstr "Κάδος"
 
 #: cyberui/screens/libmenu.lua
 msgid "%d waiting"
 msgid_plural "%d waiting"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d σε αναμονή"
+msgstr[1] "%d σε αναμονή"
 
 #: cyberui/screens/libmenu.lua
 msgid "KOReader browser"
-msgstr ""
+msgstr "Περιηγητής KOReader"
 
 #: cyberui/screens/libmenu.lua
 msgid "The stock file browser"
-msgstr ""
+msgstr "Ο προεπιλεγμένος περιηγητής αρχείων"
 
 #: cyberui/screens/library.lua
 msgid "All"
-msgstr ""
+msgstr "Όλα"
 
 #: cyberui/screens/library.lua cyberui/screens/search.lua
 msgid "Search"
-msgstr ""
+msgstr "Αναζήτηση"
 
 #: cyberui/screens/library.lua
 msgid "New in %s"
-msgstr ""
+msgstr "Νέα στο %s"
 
 #: cyberui/screens/library.lua
 msgid "Folder"
-msgstr ""
+msgstr "Φάκελος"
 
 #: cyberui/screens/library.lua
 msgid "To keep books together"
-msgstr ""
+msgstr "Για να κρατάτε βιβλία μαζί"
 
 #: cyberui/screens/library.lua
 msgid "Nothing starts with %s here"
-msgstr ""
+msgstr "Τίποτα δεν ξεκινά από %s εδώ"
 
 #: cyberui/screens/library.lua
 msgid "Pick some books first"
-msgstr ""
+msgstr "Επιλέξτε πρώτα μερικά βιβλία"
 
 #: cyberui/screens/library.lua
 msgid "%d PICKED"
 msgid_plural "%d PICKED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΕΠΙΛΕΓΜΕΝΟ"
+msgstr[1] "%d ΕΠΙΛΕΓΜΕΝΑ"
 
 #: cyberui/screens/library.lua cyberui/screens/shards.lua
 msgid "ALL"
-msgstr ""
+msgstr "ΟΛΑ"
 
 #: cyberui/screens/library.lua
 msgid "CACHE +"
-msgstr ""
+msgstr "ΣΥΛΛΟΓΗ +"
 
 #: cyberui/screens/library.lua
 msgid "MOVE"
-msgstr ""
+msgstr "ΜΕΤΑΚΙΝΗΣΗ"
 
 #: cyberui/screens/library.lua
 msgid "[X]"
-msgstr ""
+msgstr "[X]"
 
 #: cyberui/screens/library.lua
 msgid "[ ]"
-msgstr ""
+msgstr "[ ]"
 
 #: cyberui/screens/library.lua
 msgid "PICKED"
-msgstr ""
+msgstr "ΕΠΙΛΕΓΜΕΝΑ"
 
 #: cyberui/screens/library.lua
 msgid "TAP"
-msgstr ""
+msgstr "ΠΑΤΗΣΤΕ"
 
 #: cyberui/screens/library.lua
 msgid "+ Folder"
-msgstr ""
+msgstr "+ Φάκελος"
 
 #: cyberui/screens/library.lua
 msgid "No folders here. Make one with + Folder, or move it here."
-msgstr ""
+msgstr "Δεν υπάρχουν φάκελοι εδώ. Δημιουργήστε έναν με το + Φάκελος ή μετακινήστε έναν εδώ."
 
 #: cyberui/screens/library.lua
 msgid "NO MATCHES"
-msgstr ""
+msgstr "ΚΑΜΙΑ ΑΝΤΙΣΤΟΙΧΙΣΗ"
 
 #: cyberui/screens/library.lua
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
-msgstr ""
+msgstr "Δεν υπάρχει ακόμη τίποτα εδώ. Αντιγράψτε βιβλία ή δημιουργήστε φάκελο με το + Νέα."
 
 #: cyberui/screens/library.lua
 msgid "SECTOR"
-msgstr ""
+msgstr "ΤΟΜΕΑΣ"
 
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
-msgstr ""
+msgstr "ΠΟΤΕ ΔΙΑΒΑΖΕΤΕ // ΔΕΥ-ΚΥΡ ΑΝΑ ΩΡΑ // %s"
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
 msgid "TIME"
-msgstr ""
+msgstr "ΧΡΟΝΟΣ"
 
 #: cyberui/screens/log/calendar.lua
 msgid "GRID"
-msgstr ""
+msgstr "ΠΛΕΓΜΑ"
 
 #: cyberui/screens/log/calendar.lua
 msgid "SKYLINE"
-msgstr ""
+msgstr "SKYLINE"
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua
 msgid "HEIGHT = PAGES // LIT WINDOWS = TIME READ"
-msgstr ""
+msgstr "ΥΨΟΣ = ΣΕΛΙΔΕΣ // ΑΝΑΜΜΕΝΑ ΠΑΡΑΘΥΡΑ = ΧΡΟΝΟΣ ΑΝΑΓΝΩΣΗΣ"
 
 #: cyberui/screens/log/calendar.lua
 msgid "%s // %d PAGE THIS MONTH"
 msgid_plural "%s // %d PAGES THIS MONTH"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s // %d ΣΕΛΙΔΑ ΑΥΤΟΝ ΤΟΝ ΜΗΝΑ"
+msgstr[1] "%s // %d ΣΕΛΙΔΕΣ ΑΥΤΟΝ ΤΟΝ ΜΗΝΑ"
 
 #: cyberui/screens/log/goal.lua
 msgid "FINISHED"
-msgstr ""
+msgstr "ΤΕΛΕΙΩΜΕΝΑ"
 
 #: cyberui/screens/log/goal.lua
 msgid "%d%% OF THE GOAL"
-msgstr ""
+msgstr "%d%% ΤΟΥ ΣΤΟΧΟΥ"
 
 #: cyberui/screens/log/goal.lua
 msgid "ACHIEVED"
-msgstr ""
+msgstr "ΕΠΙΤΕΥΧΘΗΚΑΝ"
 
 #: cyberui/screens/log/goal.lua
 msgid "NONE YET"
-msgstr ""
+msgstr "ΚΑΝΕΝΑ ΑΚΟΜΗ"
 
 #: cyberui/screens/log/goal.lua
 msgid "YEAR GOAL"
-msgstr ""
+msgstr "ΕΤΗΣΙΟΣ ΣΤΟΧΟΣ"
 
 #: cyberui/screens/log/goal.lua
 msgid "NO BOOKS FINISHED THIS YEAR. MARK A BOOK DONE AND IT SHELVES HERE."
-msgstr ""
+msgstr "ΚΑΝΕΝΑ ΒΙΒΛΙΟ ΔΕΝ ΤΕΛΕΙΩΣΕ ΑΥΤΗ ΤΗ ΧΡΟΝΙΑ. ΣΗΜΕΙΩΣΤΕ ΕΝΑ ΒΙΒΛΙΟ ΩΣ ΤΕΛΕΙΩΜΕΝΟ ΚΑΙ ΘΑ ΤΟΠΟΘΕΤΗΘΕΙ ΕΔΩ ΣΤΟ ΡΑΦΙ."
 
 #: cyberui/screens/log/goal.lua
 msgid "SHELF"
-msgstr ""
+msgstr "ΡΑΦΙ"
 
 #: cyberui/screens/log/period.lua
 msgid "NOTHING BEFORE"
-msgstr ""
+msgstr "ΤΙΠΟΤΑ ΠΡΙΝ"
 
 #: cyberui/screens/log/period.lua
 msgid "+%d%% VS BEFORE"
-msgstr ""
+msgstr "+%d%% ΣΕ ΣΧΕΣΗ ΜΕ ΠΡΙΝ"
 
 #: cyberui/screens/log/period.lua
 msgid "%d%% VS BEFORE"
-msgstr ""
+msgstr "%d%% ΣΕ ΣΧΕΣΗ ΜΕ ΠΡΙΝ"
 
 #: cyberui/screens/log/period.lua
 msgid "Week"
-msgstr ""
+msgstr "Εβδομάδα"
 
 #: cyberui/screens/log/period.lua
 msgid "Month"
-msgstr ""
+msgstr "Μήνας"
 
 #: cyberui/screens/log/period.lua
 msgid "Year"
-msgstr ""
+msgstr "Έτος"
 
 #: cyberui/screens/log/period.lua
 msgid "%d DAY READ"
 msgid_plural "%d DAYS READ"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΗΜΕΡΑ ΑΝΑΓΝΩΣΗΣ"
+msgstr[1] "%d ΗΜΕΡΕΣ ΑΝΑΓΝΩΣΗΣ"
 
 #: cyberui/screens/log/period.lua
 msgid "AVG / DAY"
-msgstr ""
+msgstr "ΜΕΣΟΣ / ΗΜΕΡΑ"
 
 #: cyberui/screens/log/period.lua
 msgid "OVER THE PERIOD"
-msgstr ""
+msgstr "ΣΤΗ ΔΙΑΡΚΕΙΑ ΤΗΣ ΠΕΡΙΟΔΟΥ"
 
 #: cyberui/screens/log/period.lua
 msgid "%s = %d MIN"
-msgstr ""
+msgstr "%s = %d ΛΕΠ"
 
 #: cyberui/screens/log/period.lua
 msgid "BEST %s"
-msgstr ""
+msgstr "ΚΑΛΥΤΕΡΟ %s"
 
 #: cyberui/screens/log/period.lua
 msgid "%s = %d PG"
-msgstr ""
+msgstr "%s = %d ΣΕΛ"
 
 #: cyberui/screens/log/period.lua
 msgid "BEST %d PG"
-msgstr ""
+msgstr "ΚΑΛΥΤΕΡΟ %d ΣΕΛ"
 
 #: cyberui/screens/log/scope.lua
 msgid "Count the whole library"
-msgstr ""
+msgstr "Μέτρηση ολόκληρης της βιβλιοθήκης"
 
 #: cyberui/screens/log/scope.lua
 msgid "Counting the whole library"
-msgstr ""
+msgstr "Μετράται ολόκληρη η βιβλιοθήκη"
 
 #: cyberui/screens/log/scope.lua
 msgid "Tap to stop counting it"
-msgstr ""
+msgstr "Πατήστε για να σταματήσει η μέτρηση"
 
 #: cyberui/screens/log/scope.lua
 msgid "Add a folder"
-msgstr ""
+msgstr "Προσθήκη φακέλου"
 
 #: cyberui/screens/log/scope.lua
 msgid "Count only the books in chosen folders"
-msgstr ""
+msgstr "Μέτρηση μόνο των βιβλίων των επιλεγμένων φακέλων"
 
 #: cyberui/screens/log/scope.lua
 msgid "Count this folder"
-msgstr ""
+msgstr "Μέτρηση αυτού του φακέλου"
 
 #: cyberui/screens/log/scope.lua
 msgid "Statistics scope"
-msgstr ""
+msgstr "Εύρος στατιστικών"
 
 #: cyberui/screens/log/streaks.lua
 msgid "DAY STREAK"
-msgstr ""
+msgstr "ΣΕΙΡΑ ΗΜΕΡΩΝ"
 
 #: cyberui/screens/log/streaks.lua
 msgid "BEST %d"
-msgstr ""
+msgstr "ΚΑΛΥΤΕΡΟ %d"
 
 #: cyberui/screens/log/streaks.lua
 msgid "WEEK STREAK"
-msgstr ""
+msgstr "ΣΕΙΡΑ ΕΒΔΟΜΑΔΩΝ"
 
 #: cyberui/screens/log/streaks.lua cyberui/ui/idcard.lua
 msgid "HOURS"
-msgstr ""
+msgstr "ΩΡΕΣ"
 
 #: cyberui/screens/log/streaks.lua
 msgid "%d PAGE"
 msgid_plural "%d PAGES"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΣΕΛΙΔΑ"
+msgstr[1] "%d ΣΕΛΙΔΕΣ"
 
 #: cyberui/screens/log/streaks.lua
 msgid "RECORDS"
-msgstr ""
+msgstr "ΡΕΚΟΡ"
 
 #: cyberui/screens/log/streaks.lua
 msgid "LONGEST DAY"
-msgstr ""
+msgstr "ΜΕΓΑΛΥΤΕΡΗ ΗΜΕΡΑ"
 
 #: cyberui/screens/log/streaks.lua
 msgid "MOST PAGES"
-msgstr ""
+msgstr "ΠΕΡΙΣΣΟΤΕΡΕΣ ΣΕΛΙΔΕΣ"
 
 #: cyberui/screens/log/streaks.lua cyberui/ui/idcard.lua
 msgid "DAYS READ"
-msgstr ""
+msgstr "ΗΜΕΡΕΣ ΑΝΑΓΝΩΣΗΣ"
 
 #: cyberui/screens/log/streaks.lua cyberui/ui/idcard.lua
 msgid "SINCE"
-msgstr ""
+msgstr "ΑΠΟ"
 
 #: cyberui/screens/log/streaks.lua
 msgid "CLEARANCE LEVEL %02d"
-msgstr ""
+msgstr "ΕΠΙΠΕΔΟ ΠΡΟΣΒΑΣΗΣ %02d"
 
 #: cyberui/screens/log/streaks.lua
 msgid "NEXT %dH // %dH LEFT"
-msgstr ""
+msgstr "ΕΠΟΜΕΝΟ %dΩ // ΑΠΟΜΕΝΟΥΝ %dΩ"
 
 #: cyberui/screens/log/streaks.lua
 msgid "MAXED"
-msgstr ""
+msgstr "ΜΕΓΙΣΤΟ"
 
 #: cyberui/screens/log/week.lua
 msgid "last 7 days"
-msgstr ""
+msgstr "τελευταίες 7 ημέρες"
 
 #: cyberui/screens/log/week.lua
 msgid "STREAK"
-msgstr ""
+msgstr "ΣΕΙΡΑ"
 
 #: cyberui/screens/log/week.lua
 msgid "day, best %d"
 msgid_plural "days, best %d"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ημέρα, καλύτερο %d"
+msgstr[1] "ημέρες, καλύτερο %d"
 
 #: cyberui/screens/log/week.lua
 msgid "HEIGHT = PAGES // LIT WINDOWS = TIME"
-msgstr ""
+msgstr "ΥΨΟΣ = ΣΕΛΙΔΕΣ // ΑΝΑΜΜΕΝΑ ΠΑΡΑΘΥΡΑ = ΧΡΟΝΟΣ"
 
 #: cyberui/screens/log/week.lua
 msgid "SESSION LOG"
-msgstr ""
+msgstr "ΑΡΧΕΙΟ ΣΥΝΕΔΡΙΩΝ"
 
 #: cyberui/screens/log/week.lua
 msgid "%dM // %d PG"
-msgstr ""
+msgstr "%dΛΕΠ // %d ΣΕΛ"
 
 #: cyberui/screens/log/week.lua
 msgid "No reading recorded yet. Statistics must be on."
-msgstr ""
+msgstr "Δεν έχει καταγραφεί ακόμη ανάγνωση. Τα στατιστικά πρέπει να είναι ενεργά."
 
 #: cyberui/screens/photocrop.lua
 msgid "PICK // FRAME"
-msgstr ""
+msgstr "ΕΠΙΛΟΓΗ // ΚΑΔΡΑΡΙΣΜΑ"
 
 #: cyberui/screens/photocrop.lua
 msgid "Nothing to show"
-msgstr ""
+msgstr "Τίποτα προς εμφάνιση"
 
 #: cyberui/screens/photocrop.lua
 msgid "DRAG THE PICTURE TO MOVE IT"
-msgstr ""
+msgstr "ΣΥΡΕΤΕ ΤΗΝ ΕΙΚΟΝΑ ΓΙΑ ΝΑ ΤΗ ΜΕΤΑΚΙΝΗΣΕΤΕ"
 
 #: cyberui/screens/photocrop.lua
 msgid "ZOOM"
-msgstr ""
+msgstr "ΖΟΥΜ"
 
 #: cyberui/screens/photocrop.lua
 msgid "CENTRE"
-msgstr ""
+msgstr "ΚΕΝΤΡΑΡΙΣΜΑ"
 
 #: cyberui/screens/photocrop.lua
 msgid "USE THIS PHOTO"
-msgstr ""
+msgstr "ΧΡΗΣΗ ΑΥΤΗΣ ΤΗΣ ΦΩΤΟΓΡΑΦΙΑΣ"
 
 #: cyberui/screens/photocrop.lua
 msgid "Frame your photo"
-msgstr ""
+msgstr "Καδράρετε τη φωτογραφία σας"
 
 #: cyberui/screens/search.lua
 msgid "Search the library"
-msgstr ""
+msgstr "Αναζήτηση στη βιβλιοθήκη"
 
 #: cyberui/screens/search.lua
 msgid "title, author or file name"
-msgstr ""
+msgstr "τίτλος, συγγραφέας ή όνομα αρχείου"
 
 #: cyberui/screens/search.lua
 msgid "type to search"
-msgstr ""
+msgstr "πληκτρολογήστε για αναζήτηση"
 
 #: cyberui/screens/settings.lua
 msgid "Look"
-msgstr ""
+msgstr "Εμφάνιση"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
-msgstr ""
+msgstr "Εξώφυλλα"
 
 #: cyberui/screens/settings.lua
 msgid "Speed"
-msgstr ""
+msgstr "Ταχύτητα"
 
 #: cyberui/screens/settings.lua
 msgid "About"
-msgstr ""
+msgstr "Πληροφορίες"
 
 #: cyberui/screens/settings.lua
 msgid "COLOUR SCHEME"
-msgstr ""
+msgstr "ΧΡΩΜΑΤΙΚΟ ΣΧΕΔΙΟ"
 
 #: cyberui/screens/settings.lua
 msgid "Light"
-msgstr ""
+msgstr "Ανοιχτό"
 
 #: cyberui/screens/settings.lua
 msgid "Dark"
-msgstr ""
+msgstr "Σκούρο"
 
 #: cyberui/screens/settings.lua
 msgid "Accent"
-msgstr ""
+msgstr "Τόνος έμφασης"
 
 #: cyberui/screens/settings.lua
 msgid "Buttons, badges and the active tab"
-msgstr ""
+msgstr "Κουμπιά, σήματα και η ενεργή καρτέλα"
 
 #: cyberui/screens/settings.lua
 msgid "Second accent"
-msgstr ""
+msgstr "Δεύτερος τόνος έμφασης"
 
 #: cyberui/screens/settings.lua
 msgid "The date block and highlights"
-msgstr ""
+msgstr "Το μπλοκ ημερομηνίας και οι επισημάνσεις"
 
 #: cyberui/screens/settings.lua cyberui/ui/progress.lua cyberui/ui/statusbar.lua
 msgid "Book progress"
-msgstr ""
+msgstr "Πρόοδος βιβλίου"
 
 #: cyberui/screens/settings.lua
 msgid "On home and in a book's details; hold the bar on home to change it too"
-msgstr ""
+msgstr "Στην αρχική και στις λεπτομέρειες του βιβλίου· κρατήστε πατημένη τη γραμμή στην αρχική για να την αλλάξετε κι εκεί"
 
 #: cyberui/screens/settings.lua
 msgid "STYLE"
-msgstr ""
+msgstr "ΣΤΥΛ"
 
 #: cyberui/screens/settings.lua cyberui/ui/progress.lua
 msgid "ASCII"
-msgstr ""
+msgstr "ASCII"
 
 #: cyberui/screens/settings.lua
 msgid "Image"
-msgstr ""
+msgstr "Εικόνα"
 
 #: cyberui/screens/settings.lua
 msgid "Card"
-msgstr ""
+msgstr "Κάρτα"
 
 #: cyberui/screens/settings.lua
 msgid "Characters"
-msgstr ""
+msgstr "Χαρακτήρες"
 
 #: cyberui/screens/settings.lua
 msgid "What ASCII covers are drawn with"
-msgstr ""
+msgstr "Με τι σχεδιάζονται τα εξώφυλλα ASCII"
 
 #: cyberui/screens/settings.lua
 msgid "SIZE IN THE LIBRARY"
-msgstr ""
+msgstr "ΜΕΓΕΘΟΣ ΣΤΗ ΒΙΒΛΙΟΘΗΚΗ"
 
 #: cyberui/screens/settings.lua
 msgid "Stretch covers"
-msgstr ""
+msgstr "Έκταση εξώφυλλων"
 
 #: cyberui/screens/settings.lua
 msgid "Fill each cover frame, even if the proportions change"
-msgstr ""
+msgstr "Γέμισμα κάθε πλαισίου εξωφύλλου, ακόμη κι αν αλλάξουν οι αναλογίες"
 
 #: cyberui/screens/settings.lua
 msgid "ASCII SLEEP SCREEN"
-msgstr ""
+msgstr "ΟΘΟΝΗ ΑΝΑΜΟΝΗΣ ASCII"
 
 #: cyberui/screens/settings.lua
 msgid "All fonts"
-msgstr ""
+msgstr "Όλες οι γραμματοσειρές"
 
 #: cyberui/screens/settings.lua
 msgid "%d cyberpunk set, or any font installed on this device"
 msgid_plural "%d cyberpunk sets, or any font installed on this device"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d σετ cyberpunk ή οποιαδήποτε γραμματοσειρά είναι εγκατεστημένη σε αυτή τη συσκευή"
+msgstr[1] "%d σετ cyberpunk ή οποιαδήποτε γραμματοσειρά είναι εγκατεστημένη σε αυτή τη συσκευή"
 
 #: cyberui/screens/settings.lua
 msgid "Text size"
-msgstr ""
+msgstr "Μέγεθος κειμένου"
 
 #: cyberui/screens/settings.lua
 msgid "Makes every text in CyberUI larger or smaller"
-msgstr ""
+msgstr "Μεγαλώνει ή μικραίνει όλα τα κείμενα στο CyberUI"
 
 #: cyberui/screens/settings.lua
 msgid "Banner text"
-msgstr ""
+msgstr "Κείμενο πανό"
 
 #: cyberui/screens/settings.lua
 msgid "Banner"
-msgstr ""
+msgstr "Πανό"
 
 #: cyberui/screens/settings.lua
 msgid "Change handle"
-msgstr ""
+msgstr "Αλλαγή ψευδωνύμου"
 
 #: cyberui/screens/settings.lua
 msgid "Banner top line"
-msgstr ""
+msgstr "Επάνω γραμμή του πανό"
 
 #: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
-msgstr ""
+msgstr "Εκκίνηση με το CyberUI"
 
 #: cyberui/screens/settings.lua
 msgid "Open CyberUI when KOReader starts and after closing a book"
-msgstr ""
+msgstr "Άνοιγμα του CyberUI όταν ξεκινά το KOReader και μετά το κλείσιμο ενός βιβλίου"
 
 #: cyberui/screens/settings.lua
 msgid "Jack-in card"
-msgstr ""
+msgstr "Κάρτα jack-in"
 
 #: cyberui/screens/settings.lua
 msgid "A card with the book shown while it opens"
-msgstr ""
+msgstr "Μια κάρτα με το βιβλίο όσο ανοίγει"
 
 #: cyberui/screens/settings.lua cyberui/screens/shard.lua
 msgid "Data shard"
-msgstr ""
+msgstr "Θραύσμα δεδομένων"
 
 #: cyberui/screens/settings.lua
 msgid "A highlight from your books on home, on by default (tall screens only); hold it there for another"
-msgstr ""
+msgstr "Μια επισήμανση από τα βιβλία σας στην αρχική, ενεργή από προεπιλογή (μόνο ψηλές οθόνες)· κρατήστε πατημένο για άλλη"
 
 #: cyberui/screens/settings.lua
 msgid "Operator card"
-msgstr ""
+msgstr "Κάρτα χειριστή"
 
 #: cyberui/screens/settings.lua
 msgid "Your face, handle and rank in the banner on home; tap the face to open the card"
-msgstr ""
+msgstr "Το πρόσωπό σας, το ψευδώνυμο και ο βαθμός σας στο πανό της αρχικής· πατήστε το πρόσωπο για να ανοίξει η κάρτα"
 
 #: cyberui/screens/settings.lua
 msgid "The buttons on home: hide, reorder, replace or add your own that open anything in KOReader"
-msgstr ""
+msgstr "Τα κουμπιά της αρχικής: αποκρύψτε, αναδιατάξτε, αντικαταστήστε ή προσθέστε δικά σας που ανοίγουν οτιδήποτε στο KOReader"
 
 #: cyberui/screens/settings.lua
 msgid "The folder the Library tab starts in; KOReader's home folder stays the top of the library"
-msgstr ""
+msgstr "Ο φάκελος από τον οποίο ξεκινά η καρτέλα Βιβλιοθήκη· ο αρχικός φάκελος του KOReader παραμένει η κορυφή της βιβλιοθήκης"
 
 #: cyberui/screens/settings.lua
 msgid "Home folder"
-msgstr ""
+msgstr "Αρχικός φάκελος"
 
 #: cyberui/screens/settings.lua
 msgid "Pick a folder"
-msgstr ""
+msgstr "Επιλογή φακέλου"
 
 #: cyberui/screens/settings.lua
 msgid "Double tap to open"
-msgstr ""
+msgstr "Διπλό πάτημα για άνοιγμα"
 
 #: cyberui/screens/settings.lua
 msgid "In the library a book opens on its second tap, so a stray touch does not start it"
-msgstr ""
+msgstr "Στη βιβλιοθήκη ένα βιβλίο ανοίγει με το δεύτερο πάτημα, ώστε ένα τυχαίο άγγιγμα να μην το ξεκινά"
 
 #: cyberui/screens/settings.lua cyberui/screens/topbar.lua
 msgid "Top bar"
-msgstr ""
+msgstr "Επάνω γραμμή"
 
 #: cyberui/screens/settings.lua
 msgid "The tag and the readouts across the top of every screen"
-msgstr ""
+msgstr "Η ετικέτα και οι ενδείξεις στην κορυφή κάθε οθόνης"
 
 #: cyberui/screens/settings.lua
 msgid "Change"
-msgstr ""
+msgstr "Αλλαγή"
 
 #: cyberui/screens/settings.lua
 msgid "The small line above the banner, and your handle"
-msgstr ""
+msgstr "Η μικρή γραμμή πάνω από το πανό και το ψευδώνυμό σας"
 
 #: cyberui/screens/settings.lua
 msgid "The big line at the top of home; hold it there to change it too"
-msgstr ""
+msgstr "Η μεγάλη γραμμή στην κορυφή της αρχικής· κρατήστε την πατημένη εκεί για να την αλλάξετε κι αυτή"
 
 #: cyberui/screens/settings.lua
 msgid "Recent covers"
-msgstr ""
+msgstr "Πρόσφατα εξώφυλλα"
 
 #: cyberui/screens/settings.lua
 msgid "Cover size in the recent list on home"
-msgstr ""
+msgstr "Μέγεθος εξωφύλλου στη λίστα πρόσφατων της αρχικής"
 
 #: cyberui/screens/settings.lua
 msgid "Daily goal"
-msgstr ""
+msgstr "Ημερήσιος στόχος"
 
 #: cyberui/screens/settings.lua
 msgid "Minutes of reading a day, shown on home and in the log"
-msgstr ""
+msgstr "Λεπτά ανάγνωσης την ημέρα, εμφανίζονται στην αρχική και στο αρχείο"
 
 #: cyberui/screens/settings.lua
 msgid "%d MIN"
-msgstr ""
+msgstr "%d ΛΕΠ"
 
 #: cyberui/screens/settings.lua
 msgid "KOReader menu"
-msgstr ""
+msgstr "Μενού KOReader"
 
 #: cyberui/screens/settings.lua
 msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down from the top"
-msgstr ""
+msgstr "Στο στιλ του CyberUI (ανενεργό: το δικό του του KOReader)· ανοίγει και με σύρσιμο προς τα κάτω από την κορυφή"
 
 #: cyberui/screens/settings.lua cyberui/targetlist.lua
 msgid "File browser"
-msgstr ""
+msgstr "Περιηγητής αρχείων"
 
 #: cyberui/screens/settings.lua
 msgid "Leave CyberUI for KOReader's own file browser"
-msgstr ""
+msgstr "Έξοδος από το CyberUI στον δικό του περιηγητή αρχείων του KOReader"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"
-msgstr ""
+msgstr "Πλήρης ανανέωση κάθε"
 
 #: cyberui/screens/settings.lua
 msgid "Dark screens ghost more, so they flash sooner (0 never)"
-msgstr ""
+msgstr "Οι σκούρες οθόνες αφήνουν περισσότερα ίχνη, γι' αυτό αναβοσβήνουν νωρίτερα (0 ποτέ)"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh every"
-msgstr ""
+msgstr "Πλήρης ανανέωση σε σκούρα λειτουργία"
 
 #: cyberui/screens/settings.lua
 msgid "Screens between flashing refreshes that clear ghosting (0 never)"
-msgstr ""
+msgstr "Οθόνες ανάμεσα στις ανανεώσεις με αναλαμπή που καθαρίζουν τα ίχνη (0 ποτέ)"
 
 #: cyberui/screens/settings.lua
 msgid "Keep the book open on Home"
-msgstr ""
+msgstr "Να μένει το βιβλίο ανοιχτό στην αρχική"
 
 #: cyberui/screens/settings.lua
 msgid "Home shows at once and the same book opens again with no loading; the book is closed later"
-msgstr ""
+msgstr "Η αρχική εμφανίζεται αμέσως και το ίδιο βιβλίο ανοίγει ξανά χωρίς φόρτωση· το βιβλίο κλείνει αργότερα"
 
 #: cyberui/screens/settings.lua
 msgid "PARKING // WHAT IT COSTS"
-msgstr ""
+msgstr "ΠΑΡΚΑΡΙΣΜΑ // ΤΙ ΚΟΣΤΙΖΕΙ"
 
 #: cyberui/screens/settings.lua
 msgid "Going home puts the book away instead of closing it. KOReader closes it for real when you open a different book, after 30 seconds of not touching the screen, or when you open KOReader's menu or its file browser."
-msgstr ""
+msgstr "Η επιστροφή στην αρχική παρκάρει το βιβλίο αντί να το κλείνει. Το KOReader το κλείνει πραγματικά όταν ανοίξετε άλλο βιβλίο, μετά από 30 δευτερόλεπτα χωρίς άγγιγμα στην οθόνη ή όταν ανοίξετε το μενού του KOReader ή τον περιηγητή αρχείων του."
 
 #: cyberui/screens/settings.lua
 msgid "- A different book, KOReader's menu and the file browser take a moment longer, since the close happens then."
-msgstr ""
+msgstr "- Ένα άλλο βιβλίο, το μενού του KOReader και ο περιηγητής αρχείων αργούν λίγο περισσότερο, επειδή το κλείσιμο γίνεται τότε."
 
 #: cyberui/screens/settings.lua
 msgid "- The book stays in memory while it is put away."
-msgstr ""
+msgstr "- Το βιβλίο μένει στη μνήμη όσο είναι παρκαρισμένο."
 
 #: cyberui/screens/settings.lua
 msgid "- Sleeping soon after leaving a book shows that book's sleep screen."
-msgstr ""
+msgstr "- Αν η συσκευή κοιμηθεί λίγο μετά την έξοδο από ένα βιβλίο, εμφανίζει την οθόνη αναμονής εκείνου του βιβλίου."
 
 #: cyberui/screens/settings.lua
 msgid "- KOReader's own gestures (corner taps, edge swipes) do not work on Home until the book is closed."
-msgstr ""
+msgstr "- Οι δικές του κινήσεις του KOReader (πατήματα γωνιών, σύρσιμο από τις άκρες) δεν λειτουργούν στην αρχική μέχρι να κλείσει το βιβλίο."
 
 #: cyberui/screens/settings.lua
 msgid "- A book read in landscape is closed the normal way."
-msgstr ""
+msgstr "- Ένα βιβλίο που διαβάστηκε σε οριζόντιο προσανατολισμό κλείνει κανονικά."
 
 #: cyberui/screens/settings.lua
 msgid "Library index"
-msgstr ""
+msgstr "Ευρετήριο βιβλιοθήκης"
 
 #: cyberui/screens/settings.lua
 msgid "%d book indexed; rebuild after copying books over"
 msgid_plural "%d books indexed; rebuild after copying books over"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d βιβλίο ευρετηριάστηκε"
+msgstr[1] "%d βιβλία ευρετηριάστηκαν"
 
 #: cyberui/screens/settings.lua
 msgid "Rebuild"
-msgstr ""
+msgstr "Ανοικοδόμηση"
 
 #: cyberui/screens/settings.lua
 msgid "%d book indexed"
 msgid_plural "%d books indexed"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d βιβλίο ευρετηριάστηκε· ανοικοδομήστε μετά την αντιγραφή βιβλίων"
+msgstr[1] "%d βιβλία ευρετηριάστηκαν· ανοικοδομήστε μετά την αντιγραφή βιβλίων"
 
 #: cyberui/screens/settings.lua
 msgid "HOW CYBERUI STAYS FAST"
-msgstr ""
+msgstr "ΠΩΣ ΤΟ CYBERUI ΜΕΝΕΙ ΓΡΗΓΟΡΟ"
 
 #: cyberui/screens/settings.lua
 msgid "Home stays loaded while you read, so closing a book is a redraw, not a rebuild. Everything is drawn with flat shapes and refreshed only where it changed."
-msgstr ""
+msgstr "Η αρχική μένει φορτωμένη όσο διαβάζετε, οπότε το κλείσιμο ενός βιβλίου είναι επανασχεδίαση και όχι ανοικοδόμηση. Όλα σχεδιάζονται με επίπεδα σχήματα και ανανεώνονται μόνο εκεί που άλλαξαν."
 
 #: cyberui/screens/settings.lua
 msgid "Version"
-msgstr ""
+msgstr "Έκδοση"
 
 #: cyberui/screens/settings.lua cyberui/screens/updates.lua
 msgid "Updates"
-msgstr ""
+msgstr "Ενημερώσεις"
 
 #: cyberui/screens/settings.lua
 msgid "CyberUI %s is ready to install"
-msgstr ""
+msgstr "Το CyberUI %s είναι έτοιμο για εγκατάσταση"
 
 #: cyberui/screens/settings.lua
 msgid "New versions from GitHub, with their notes"
-msgstr ""
+msgstr "Νέες εκδόσεις από το GitHub, με τις σημειώσεις τους"
 
 #: cyberui/screens/settings.lua
 msgid "Oxanium, Chakra Petch, Tomorrow, Rajdhani, Orbitron, Exo 2, Turret Road, Michroma, Electrolize, Audiowide, Wallpoet, Russo One, Iceland, VT323, Press Start 2P, Share Tech, Share Tech Mono and JetBrains Mono, SIL Open Font License"
-msgstr ""
+msgstr "Oxanium, Chakra Petch, Tomorrow, Rajdhani, Orbitron, Exo 2, Turret Road, Michroma, Electrolize, Audiowide, Wallpoet, Russo One, Iceland, VT323, Press Start 2P, Share Tech, Share Tech Mono και JetBrains Mono, SIL Open Font License"
 
 #: cyberui/screens/settings.lua
 msgid "A fast cyberpunk home screen for KOReader."
-msgstr ""
+msgstr "Μια γρήγορη cyberpunk αρχική οθόνη για το KOReader."
 
 #: cyberui/screens/shard.lua
 msgid "YOUR NOTE"
-msgstr ""
+msgstr "Η ΣΗΜΕΙΩΣΗ ΣΑΣ"
 
 #: cyberui/screens/shards.lua
 msgid "%d SHARD"
 msgid_plural "%d SHARDS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΘΡΑΥΣΜΑ"
+msgstr[1] "%d ΘΡΑΥΣΜΑΤΑ"
 
 #: cyberui/screens/shards.lua
 msgid "BY BOOK"
-msgstr ""
+msgstr "ΑΝΑ ΒΙΒΛΙΟ"
 
 #: cyberui/screens/shards.lua
 msgid "NO SHARDS YET"
-msgstr ""
+msgstr "ΚΑΝΕΝΑ ΘΡΑΥΣΜΑ ΑΚΟΜΗ"
 
 #: cyberui/screens/shards.lua
 msgid "Highlight text while reading and each highlight is recovered here as a data shard. Books already highlighted are collected in the background."
-msgstr ""
+msgstr "Επισημάνετε κείμενο καθώς διαβάζετε και κάθε επισήμανση ανακτάται εδώ ως θραύσμα δεδομένων. Τα βιβλία που έχουν ήδη επισημάνσεις συλλέγονται στο παρασκήνιο."
 
 #: cyberui/screens/shards.lua cyberui/ui/launcher.lua
 msgid "SHARDS"
-msgstr ""
+msgstr "ΘΡΑΥΣΜΑΤΑ"
 
 #: cyberui/screens/shards.lua
 msgid "Data shards"
-msgstr ""
+msgstr "Θραύσματα δεδομένων"
 
 #: cyberui/screens/shards.lua
 msgid "RECOVERED // %d FRAGMENT"
 msgid_plural "RECOVERED // %d FRAGMENTS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ΑΝΑΚΤΗΘΗΚΑΝ // %d ΤΜΗΜΑ"
+msgstr[1] "ΑΝΑΚΤΗΘΗΚΑΝ // %d ΤΜΗΜΑΤΑ"
 
 #: cyberui/screens/targetpick.lua
 msgid "What it opens"
-msgstr ""
+msgstr "Τι ανοίγει"
 
 #: cyberui/screens/targetpick.lua
 msgid "Nothing here to pick."
-msgstr ""
+msgstr "Δεν υπάρχει τίποτα για επιλογή εδώ."
 
 #: cyberui/screens/targetpick.lua
 msgid "ITEMS"
-msgstr ""
+msgstr "ΣΤΟΙΧΕΙΑ"
 
 #: cyberui/screens/targetpick.lua
 msgid "PICK // TARGET"
-msgstr ""
+msgstr "ΕΠΙΛΟΓΗ // ΣΤΟΧΟΣ"
 
 #: cyberui/screens/topbar.lua
 msgid "NO SIGNAL"
-msgstr ""
+msgstr "ΧΩΡΙΣ ΣΗΜΑ"
 
 #: cyberui/screens/topbar.lua
 msgid "Tag"
-msgstr ""
+msgstr "Ετικέτα"
 
 #: cyberui/screens/topbar.lua
 msgid "Top bar tag"
-msgstr ""
+msgstr "Ετικέτα επάνω γραμμής"
 
 #: cyberui/screens/topbar.lua
 msgid "SHOWN %d/%d"
-msgstr ""
+msgstr "ΕΜΦΑΝΙΖΟΝΤΑΙ %d/%d"
 
 #: cyberui/screens/topbar.lua
 msgid "AVAILABLE"
-msgstr ""
+msgstr "ΔΙΑΘΕΣΙΜΑ"
 
 #: cyberui/screens/topbar.lua
 msgid "The top bar is full"
-msgstr ""
+msgstr "Η επάνω γραμμή είναι γεμάτη"
 
 #: cyberui/screens/topbar.lua
 msgid "ADD // MOVE // REMOVE"
-msgstr ""
+msgstr "ΠΡΟΣΘΗΚΗ // ΜΕΤΑΚΙΝΗΣΗ // ΑΦΑΙΡΕΣΗ"
 
 #: cyberui/screens/trash.lua
 msgid "From %s"
-msgstr ""
+msgstr "Από %s"
 
 #: cyberui/screens/trash.lua
 msgid "Put back"
-msgstr ""
+msgstr "Επαναφορά"
 
 #: cyberui/screens/trash.lua
 msgid "Delete for good"
-msgstr ""
+msgstr "Οριστική διαγραφή"
 
 #: cyberui/screens/trash.lua cyberui/ui/dialog.lua
 msgid "Attention"
-msgstr ""
+msgstr "Προσοχή"
 
 #: cyberui/screens/trash.lua
 msgid "Keep"
-msgstr ""
+msgstr "Διατήρηση"
 
 #: cyberui/screens/trash.lua
 msgid "It goes for good, with its reading data. This cannot be undone."
-msgstr ""
+msgstr "Διαγράφεται οριστικά, μαζί με τα δεδομένα ανάγνωσής του. Δεν μπορεί να αναιρεθεί."
 
 #: cyberui/screens/trash.lua
 msgid "The trash is empty. Deleted books and folders wait here for %d day."
 msgid_plural "The trash is empty. Deleted books and folders wait here for %d days."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ο κάδος είναι άδειος. Τα διαγραμμένα βιβλία και φάκελοι μένουν εδώ για %d ημέρα."
+msgstr[1] "Ο κάδος είναι άδειος. Τα διαγραμμένα βιβλία και φάκελοι μένουν εδώ για %d ημέρες."
 
 #: cyberui/screens/trash.lua
 msgid "BIN"
-msgstr ""
+msgstr "ΚΑΔΟΣ"
 
 #: cyberui/screens/trash.lua
 msgid "Empty"
-msgstr ""
+msgstr "Άδειασμα"
 
 #: cyberui/screens/trash.lua
 msgid "All %d item goes for good. This cannot be undone."
 msgid_plural "All %d items go for good. This cannot be undone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Το %d στοιχείο διαγράφεται οριστικά. Δεν μπορεί να αναιρεθεί."
+msgstr[1] "Όλα τα %d στοιχεία διαγράφονται οριστικά. Δεν μπορεί να αναιρεθεί."
 
 #: cyberui/screens/trash.lua
 msgid "KEPT %d DAY"
 msgid_plural "KEPT %d DAYS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ΦΥΛΑΣΣΕΤΑΙ %d ΗΜΕΡΑ"
+msgstr[1] "ΦΥΛΑΣΣΕΤΑΙ %d ΗΜΕΡΕΣ"
 
 #: cyberui/screens/updates.lua
 msgid "Installing CyberUI %s"
-msgstr ""
+msgstr "Εγκατάσταση του CyberUI %s"
 
 #: cyberui/screens/updates.lua
 msgid "CyberUI was not updated"
-msgstr ""
+msgstr "Το CyberUI δεν ενημερώθηκε"
 
 #: cyberui/screens/updates.lua
 msgid "PRERELEASE"
-msgstr ""
+msgstr "ΠΡΟΕΚΔΟΣΗ"
 
 #: cyberui/screens/updates.lua
 msgid "STABLE"
-msgstr ""
+msgstr "ΣΤΑΘΕΡΗ"
 
 #: cyberui/screens/updates.lua
 msgid "ASKING GITHUB..."
-msgstr ""
+msgstr "ΕΡΩΤΗΣΗ ΣΤΟ GITHUB..."
 
 #: cyberui/screens/updates.lua
 msgid "v%s INSTALLED // RESTART KOREADER"
-msgstr ""
+msgstr "ΕΓΚΑΤΑΣΤΑΘΗΚΕ ΤΟ v%s // ΕΠΑΝΕΚΚΙΝΗΣΤΕ ΤΟ KOREADER"
 
 #: cyberui/screens/updates.lua
 msgid "CHECK FAILED // %s"
-msgstr ""
+msgstr "Ο ΕΛΕΓΧΟΣ ΑΠΕΤΥΧΕ // %s"
 
 #: cyberui/screens/updates.lua
 msgid "UPDATE AVAILABLE"
-msgstr ""
+msgstr "ΔΙΑΘΕΣΙΜΗ ΕΝΗΜΕΡΩΣΗ"
 
 #: cyberui/screens/updates.lua
 msgid "UP TO DATE"
-msgstr ""
+msgstr "ΕΝΗΜΕΡΩΜΕΝΟ"
 
 #: cyberui/screens/updates.lua
 msgid "NOT CHECKED YET"
-msgstr ""
+msgstr "ΔΕΝ ΕΛΕΓΧΘΗΚΕ ΑΚΟΜΗ"
 
 #: cyberui/screens/updates.lua
 msgid "Check"
-msgstr ""
+msgstr "Έλεγχος"
 
 #: cyberui/screens/updates.lua
 msgid "Back to stable"
-msgstr ""
+msgstr "Επιστροφή στη σταθερή"
 
 #: cyberui/screens/updates.lua
 msgid "Installed"
-msgstr ""
+msgstr "Εγκατεστημένη"
 
 #: cyberui/screens/updates.lua
 msgid "Try prerelease"
-msgstr ""
+msgstr "Δοκιμή προέκδοσης"
 
 #: cyberui/screens/updates.lua
 msgid "NOTES // v%s"
-msgstr ""
+msgstr "ΣΗΜΕΙΩΣΕΙΣ // v%s"
 
 #: cyberui/screens/updates.lua
 msgid "Check once a day (on Wi-Fi that is already on)"
-msgstr ""
+msgstr "Έλεγχος μία φορά την ημέρα (σε Wi-Fi που είναι ήδη ενεργό)"
 
 #: cyberui/screens/updates.lua
 msgid "Tell me about prereleases (test builds, newer but less tried)"
-msgstr ""
+msgstr "Ειδοποίηση για προεκδόσεις (δοκιμαστικές εκδόσεις, νεότερες αλλά λιγότερο δοκιμασμένες)"
 
 #: cyberui/screens/updates.lua
 msgid "GITHUB // %s"
-msgstr ""
+msgstr "GITHUB // %s"
 
 #: cyberui/sleep.lua
 msgid "Book covers"
-msgstr ""
+msgstr "Εξώφυλλα βιβλίων"
 
 #: cyberui/sleep.lua
 msgid "Custom images"
-msgstr ""
+msgstr "Προσαρμοσμένες εικόνες"
 
 #: cyberui/sleep.lua
 msgid "Everything"
-msgstr ""
+msgstr "Όλα"
 
 #: cyberui/targetlist.lua
 msgid "General"
-msgstr ""
+msgstr "Γενικά"
 
 #: cyberui/targetlist.lua
 msgid "Screen and lights"
-msgstr ""
+msgstr "Οθόνη και φωτισμός"
 
 #: cyberui/targetlist.lua
 msgid "ACTION"
-msgstr ""
+msgstr "ΕΝΕΡΓΕΙΑ"
 
 #: cyberui/targetlist.lua
 msgid "MENU"
-msgstr ""
+msgstr "ΜΕΝΟΥ"
 
 #: cyberui/targetlist.lua
 msgid "MENU ENTRY"
-msgstr ""
+msgstr "ΕΓΓΡΑΦΗ ΜΕΝΟΥ"
 
 #: cyberui/targetlist.lua
 msgid "PLUGIN"
-msgstr ""
+msgstr "ΠΡΟΣΘΕΤΟ"
 
 #: cyberui/targetlist.lua
 msgid "Plugins"
-msgstr ""
+msgstr "Πρόσθετα"
 
 #: cyberui/targetlist.lua
 msgid "THEIR MENU ENTRIES"
-msgstr ""
+msgstr "ΟΙ ΕΓΓΡΑΦΕΣ ΜΕΝΟΥ ΤΟΥΣ"
 
 #: cyberui/targetlist.lua
 msgid "Plugin actions"
-msgstr ""
+msgstr "Ενέργειες προσθέτων"
 
 #: cyberui/targetlist.lua
 msgid "WHAT PLUGINS ADD TO GESTURES"
-msgstr ""
+msgstr "ΤΙ ΠΡΟΣΘΕΤΟΥΝ ΤΑ ΠΡΟΣΘΕΤΑ ΣΤΙΣ ΧΕΙΡΟΝΟΜΙΕΣ"
 
 #: cyberui/targetlist.lua
 msgid "KOREADER ACTIONS"
-msgstr ""
+msgstr "ΕΝΕΡΓΕΙΕΣ KOREADER"
 
 #: cyberui/targetlist.lua
 msgid "Whole KOReader menu"
-msgstr ""
+msgstr "Ολόκληρο το μενού του KOReader"
 
 #: cyberui/targetlist.lua
 msgid "EVERY TAB AND SUBMENU"
-msgstr ""
+msgstr "ΚΑΘΕ ΚΑΡΤΕΛΑ ΚΑΙ ΥΠΟΜΕΝΟΥ"
 
 #: cyberui/targets.lua
 msgid "KOREADER MENU"
-msgstr ""
+msgstr "ΜΕΝΟΥ KOREADER"
 
 #: cyberui/targets.lua
 msgid "That menu is gone"
-msgstr ""
+msgstr "Αυτό το μενού δεν υπάρχει πια"
 
 #: cyberui/targets.lua cyberui/ui/launcher.lua
 msgid "NOTHING YET"
-msgstr ""
+msgstr "ΤΙΠΟΤΑ ΑΚΟΜΗ"
 
 #: cyberui/targets.lua
 msgid "MENU // %s"
-msgstr ""
+msgstr "ΜΕΝΟΥ // %s"
 
 #: cyberui/targets.lua
 msgid "ACTION // %s"
-msgstr ""
+msgstr "ΕΝΕΡΓΕΙΑ // %s"
 
 #: cyberui/themes/fonts.lua
 msgid "Angular sci-fi face, the default"
-msgstr ""
+msgstr "Γωνιώδης γραμματοσειρά επιστημονικής φαντασίας, η προεπιλεγμένη"
 
 #: cyberui/themes/fonts.lua
 msgid "Squared-off techno face"
-msgstr ""
+msgstr "Τεχνο γραμματοσειρά με τετράγωνες γωνίες"
 
 #: cyberui/themes/fonts.lua
 msgid "Wide, clean console face"
-msgstr ""
+msgstr "Πλατιά, καθαρή γραμματοσειρά κονσόλας"
 
 #: cyberui/themes/fonts.lua
 msgid "Tall and narrow, fits more on a line"
-msgstr ""
+msgstr "Ψηλή και στενή, χωράει περισσότερα σε μια γραμμή"
 
 #: cyberui/themes/fonts.lua
 msgid "The classic sci-fi display face, with Exo 2 for reading"
-msgstr ""
+msgstr "Η κλασική γραμματοσειρά επιστημονικής φαντασίας για τίτλους, με Exo 2 για ανάγνωση"
 
 #: cyberui/themes/fonts.lua
 msgid "Low, wide and geometric"
-msgstr ""
+msgstr "Χαμηλή, πλατιά και γεωμετρική"
 
 #: cyberui/themes/fonts.lua
 msgid "Extended headings, Electrolize for reading"
-msgstr ""
+msgstr "Πλατιοί τίτλοι, Electrolize για ανάγνωση"
 
 #: cyberui/themes/fonts.lua
 msgid "Rounded racing headings over Share Tech"
-msgstr ""
+msgstr "Στρογγυλεμένοι αγωνιστικοί τίτλοι πάνω από Share Tech"
 
 #: cyberui/themes/fonts.lua
 msgid "Stencilled street headings over Share Tech"
-msgstr ""
+msgstr "Στένσιλ τίτλοι δρόμου πάνω από Share Tech"
 
 #: cyberui/themes/fonts.lua
 msgid "Heavy block headings over Share Tech"
-msgstr ""
+msgstr "Βαριοί τίτλοι μπλοκ πάνω από Share Tech"
 
 #: cyberui/themes/fonts.lua
 msgid "Narrow digital readout"
-msgstr ""
+msgstr "Στενή ψηφιακή ένδειξη"
 
 #: cyberui/themes/fonts.lua
 msgid "VT323, a 1980s video terminal, everywhere"
-msgstr ""
+msgstr "VT323, ένα τερματικό βίντεο της δεκαετίας του 1980, παντού"
 
 #: cyberui/themes/fonts.lua
 msgid "Press Start 2P pixel headings over VT323"
-msgstr ""
+msgstr "Τίτλοι pixel Press Start 2P πάνω από VT323"
 
 #: cyberui/themes/fonts.lua
 msgid "KOReader's own fonts, for the plainest reading"
-msgstr ""
+msgstr "Οι δικές του γραμματοσειρές του KOReader, για την πιο απλή ανάγνωση"
 
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
-msgstr ""
+msgstr "ΦΑΚΕΛΟΣ // %d"
 
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
-msgstr ""
+msgstr "Άκυρο"
 
 #: cyberui/ui/dialog.lua
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: cyberui/ui/idcard.lua
 msgid "RANK"
-msgstr ""
+msgstr "ΒΑΘΜΟΣ"
 
 #: cyberui/ui/idcard.lua
 msgid "LVL %d / %d"
-msgstr ""
+msgstr "ΕΠΙΠ %d / %d"
 
 #: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
-msgstr ""
+msgstr "ΕΠΟΜΕΝΟ: %s"
 
 #: cyberui/ui/idcard.lua
 msgid "%.0f / %d H"
-msgstr ""
+msgstr "%.0f / %d Ω"
 
 #: cyberui/ui/idcard.lua
 msgid "TOP RANK REACHED"
-msgstr ""
+msgstr "ΕΦΤΑΣΕΣ ΤΟΝ ΥΨΗΛΟΤΕΡΟ ΒΑΘΜΟ"
 
 #: cyberui/ui/idcard.lua
 msgid "%.0f H"
-msgstr ""
+msgstr "%.0f Ω"
 
 #: cyberui/ui/idcard.lua
 msgid "BOOKS"
-msgstr ""
+msgstr "ΒΙΒΛΙΑ"
 
 #: cyberui/ui/idcard.lua
 msgid "BEST RUN"
-msgstr ""
+msgstr "ΚΑΛΥΤΕΡΗ ΣΕΙΡΑ"
 
 #: cyberui/ui/idcard.lua
 msgid "%dD"
-msgstr ""
+msgstr "%dΗ"
 
 #: cyberui/ui/idcard.lua
 msgid "OPERATOR // ID-CARD"
-msgstr ""
+msgstr "ΧΕΙΡΙΣΤΗΣ // ΚΑΡΤΑ ID"
 
 #: cyberui/ui/idcard.lua
 msgid "AUTH OK"
-msgstr ""
+msgstr "ΕΞΟΥΣΙΟΔΟΤΗΣΗ OK"
 
 #: cyberui/ui/keyboard.lua
 msgid "space"
-msgstr ""
+msgstr "κενό"
 
 #: cyberui/ui/launcher.lua
 msgid "%d FILE // GRID"
 msgid_plural "%d FILES // GRID"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΑΡΧΕΙΟ // ΠΛΕΓΜΑ"
+msgstr[1] "%d ΑΡΧΕΙΑ // ΠΛΕΓΜΑ"
 
 #: cyberui/ui/launcher.lua
 msgid "FILES // GRID"
-msgstr ""
+msgstr "ΑΡΧΕΙΑ // ΠΛΕΓΜΑ"
 
 #: cyberui/ui/launcher.lua
 msgid "COLLECTIONS"
-msgstr ""
+msgstr "ΣΥΛΛΟΓΕΣ"
 
 #: cyberui/ui/launcher.lua
 msgid "%d CACHE"
 msgid_plural "%d CACHES"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΣΥΛΛΟΓΗ"
+msgstr[1] "%d ΣΥΛΛΟΓΕΣ"
 
 #: cyberui/ui/launcher.lua
 msgid "HISTORY"
-msgstr ""
+msgstr "ΙΣΤΟΡΙΚΟ"
 
 #: cyberui/ui/launcher.lua
 msgid "TELEMETRY.LOG"
-msgstr ""
+msgstr "TELEMETRY.LOG"
 
 #: cyberui/ui/launcher.lua
 msgid "BOUNTIES"
-msgstr ""
+msgstr "ΑΜΟΙΒΕΣ"
 
 #: cyberui/ui/launcher.lua
 msgid "%s // %d WANTED"
 msgid_plural "%s // %d WANTED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s // %d ΚΑΤΑΖΗΤΕΙΤΑΙ"
+msgstr[1] "%s // %d ΚΑΤΑΖΗΤΟΥΝΤΑΙ"
 
 #: cyberui/ui/launcher.lua
 msgid "BACKLOG CLEAR"
-msgstr ""
+msgstr "ΕΚΚΡΕΜΟΤΗΤΕΣ ΕΞΑΛΕΙΦΘΗΚΑΝ"
 
 #: cyberui/ui/launcher.lua
 msgid "%d RECOVERED"
 msgid_plural "%d RECOVERED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ΑΝΑΚΤΗΘΗΚΕ"
+msgstr[1] "%d ΑΝΑΚΤΗΘΗΚΑΝ"
 
 #: cyberui/ui/launcher.lua
 msgid "NO HIGHLIGHTS YET"
-msgstr ""
+msgstr "ΚΑΜΙΑ ΕΠΙΣΗΜΑΝΣΗ ΑΚΟΜΗ"
 
 #: cyberui/ui/launcher.lua
 msgid "GREP THE ARCHIVE"
-msgstr ""
+msgstr "ΑΝΑΖΗΤΗΣΗ ΣΤΟ ΑΡΧΕΙΟ"
 
 #: cyberui/ui/launcher.lua
 msgid "INK AWAY"
-msgstr ""
+msgstr "INK AWAY"
 
 #: cyberui/ui/launcher.lua
 msgid "SYSTEM"
-msgstr ""
+msgstr "ΣΥΣΤΗΜΑ"
 
 #: cyberui/ui/launcher.lua
 msgid "UPDATE v%s READY"
-msgstr ""
+msgstr "ΕΝΗΜΕΡΩΣΗ v%s ΕΤΟΙΜΗ"
 
 #: cyberui/ui/launcher.lua
 msgid "THEME // SETTINGS"
-msgstr ""
+msgstr "ΘΕΜΑ // ΡΥΘΜΙΣΕΙΣ"
 
 #: cyberui/ui/launcher.lua
 msgid "Pick what this button opens"
-msgstr ""
+msgstr "Επιλέξτε τι ανοίγει αυτό το κουμπί"
 
 #: cyberui/ui/launcher.lua
 msgid "This button always stays, so the settings stay reachable"
-msgstr ""
+msgstr "Αυτό το κουμπί μένει πάντα, ώστε οι ρυθμίσεις να είναι πάντα προσβάσιμες"
 
 #: cyberui/ui/launcher.lua
 msgid "Hide this button?"
-msgstr ""
+msgstr "Απόκρυψη αυτού του κουμπιού;"
 
 #: cyberui/ui/launcher.lua
 msgid "Delete this button?"
-msgstr ""
+msgstr "Διαγραφή αυτού του κουμπιού;"
 
 #: cyberui/ui/launcher.lua
 msgid "Hide"
-msgstr ""
+msgstr "Απόκρυψη"
 
 #: cyberui/ui/progress.lua
 msgid "Segments"
-msgstr ""
+msgstr "Τμήματα"
 
 #: cyberui/ui/progress.lua
 msgid "Heartbeat"
-msgstr ""
+msgstr "Καρδιακός παλμός"
 
 #: cyberui/ui/progress.lua
 msgid "Scanline"
-msgstr ""
+msgstr "Γραμμή σάρωσης"
 
 #: cyberui/ui/progress.lua
 msgid "Equalizer"
-msgstr ""
+msgstr "Ισοσταθμιστής"
 
 #: cyberui/ui/shardcard.lua
 msgid "FRAGMENT %d/%d // %s"
-msgstr ""
+msgstr "ΤΜΗΜΑ %d/%d // %s"
 
 #: cyberui/ui/shardcard.lua
 msgid "DATA SHARD // 0x%s"
-msgstr ""
+msgstr "ΘΡΑΥΣΜΑ ΔΕΔΟΜΕΝΩΝ // 0x%s"
 
 #: cyberui/ui/shardcard.lua
 msgid "RECOVERED"
-msgstr ""
+msgstr "ΑΝΑΚΤΗΘΗΚΕ"
 
 #: cyberui/ui/statusbar.lua
 msgid "Clock"
-msgstr ""
+msgstr "Ρολόι"
 
 #: cyberui/ui/statusbar.lua
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #: cyberui/ui/statusbar.lua
 msgid "Wi-Fi"
-msgstr ""
+msgstr "Wi-Fi"
 
 #: cyberui/ui/statusbar.lua
 msgid "WIFI"
-msgstr ""
+msgstr "WIFI"
 
 #: cyberui/ui/statusbar.lua
 msgid "Battery"
-msgstr ""
+msgstr "Μπαταρία"
 
 #: cyberui/ui/statusbar.lua
 msgid "Frontlight"
-msgstr ""
+msgstr "Εμπρόσθιος φωτισμός"
 
 #: cyberui/ui/statusbar.lua
 msgid "Processor load"
-msgstr ""
+msgstr "Φόρτος επεξεργαστή"
 
 #: cyberui/ui/statusbar.lua
 msgid "Memory"
-msgstr ""
+msgstr "Μνήμη"
 
 #: cyberui/ui/statusbar.lua
 msgid "Storage"
-msgstr ""
+msgstr "Αποθηκευτικός χώρος"
 
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
-msgstr ""
+msgstr "Χρόνος λειτουργίας"
 
 #: cyberui/ui/textinput.lua
 msgid "// INPUT"
-msgstr ""
+msgstr "// ΕΙΣΟΔΟΣ"
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"
-msgstr ""
+msgstr "ΛΗΨΗ %s (%.1f MB)"
 
 #: cyberui/update/updater.lua
 msgid "CHECKING AND UNPACKING"
-msgstr ""
+msgstr "ΕΛΕΓΧΟΣ ΚΑΙ ΑΠΟΣΥΜΠΙΕΣΗ"
 
 #: cyberui/update/updater.lua
 msgid "CyberUI %s is installed. Restart KOReader to use it."
-msgstr ""
+msgstr "Το CyberUI %s εγκαταστάθηκε. Επανεκκινήστε το KOReader για να το χρησιμοποιήσετε."
 
 #: main.lua
 msgid "Start with: %1"
-msgstr ""
+msgstr "Εκκίνηση με: %1"
 
 #: main.lua
 msgid "CyberUI home"
-msgstr ""
+msgstr "Αρχική CyberUI"
