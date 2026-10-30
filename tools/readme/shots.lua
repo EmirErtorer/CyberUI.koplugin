@@ -286,6 +286,22 @@ H.step(S, function()
     end
 end)
 
+-- the default jack-in card over home, as it shows while Neuromancer opens
+section("19-jackin")
+H.step(S, function()
+    local Shop, Library = require("cyberui/data/shop"), require("cyberui/data/library")
+    local worn = Shop.worn("jackin")
+    Shop.wear(Shop.category("jackin").styles[1])
+    H.app().go("home")
+    H.app().render("full")
+    local book
+    for _i, b in ipairs(Library.all()) do if b:find("Neuromancer", 1, true) then book = b end end
+    H.app().flash(require("cyberui/jackin").card(book))
+    shot("19-jackin")
+    Shop.wear(worn)
+    H.app().go("home")
+end)
+
 -- the gigs story: the gigs taken, the payouts, the dossier of a gig, a payout on home
 section("16a-gigs")
 H.step(S, function() H.app().go("home"); H.app().push("gigs") end)
