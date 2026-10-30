@@ -3274,3 +3274,7 @@ msgstr "Uruchamiaj z: %1"
 #: main.lua
 msgid "CyberUI home"
 msgstr "Ekran główny CyberUI"
+
+#: main.lua
+msgid "Annotate this book"
+msgstr "Adnotuj tę książkę"

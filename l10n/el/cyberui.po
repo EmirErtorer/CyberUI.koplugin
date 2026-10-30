@@ -3237,3 +3237,7 @@ msgstr "Εκκίνηση με: %1"
 #: main.lua
 msgid "CyberUI home"
 msgstr "Αρχική CyberUI"
+
+#: main.lua
+msgid "Annotate this book"
+msgstr "Σχολιασμός αυτού του βιβλίου"

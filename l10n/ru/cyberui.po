@@ -3274,3 +3274,7 @@ msgstr "Запуск с: %1"
 #: main.lua
 msgid "CyberUI home"
 msgstr "Главный экран CyberUI"
+
+#: main.lua
+msgid "Annotate this book"
+msgstr "Делать пометки в книге"

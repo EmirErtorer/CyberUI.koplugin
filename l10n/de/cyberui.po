@@ -3237,3 +3237,7 @@ msgstr "Starten mit: %1"
 #: main.lua
 msgid "CyberUI home"
 msgstr "CyberUI Home"
+
+#: main.lua
+msgid "Annotate this book"
+msgstr "Dieses Buch kommentieren"

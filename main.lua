@@ -165,6 +165,14 @@ function CyberUI:addToMainMenu(menu_items)
         sorting_hint = "tools",
         callback = function() self:onCyberUIHome() end,
     }
+    -- in a book, Ink Away's annotation mode is one tap away (when it is running)
+    if self.ui.document and require("cyberui/apps/addons").loadedIn(self.ui, require("cyberui/apps/inkaway")) then
+        menu_items.cyberui_annotate = {
+            text = _("Annotate this book"),
+            sorting_hint = "tools",
+            callback = function() self.ui:handleEvent(require("ui/event"):new("InkAwayAnnotate")) end,
+        }
+    end
 end
 
 return CyberUI

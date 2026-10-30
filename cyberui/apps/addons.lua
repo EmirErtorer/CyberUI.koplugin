@@ -40,11 +40,15 @@ function Addons.installedPath(addon)
     return nil
 end
 
+-- Is the plugin running in this KOReader UI (the file browser or the reader)?
+function Addons.loadedIn(ui, addon)
+    return ui ~= nil and ui[pluginId(addon)] ~= nil
+end
+
 -- "ready" (running), "disabled" (switched off), "restart" (installed, not
 -- running yet) or "missing".
 function Addons.status(addon)
-    local ui = require("cyberui/park").ui()   -- the file browser, or the book parked under home
-    if ui and ui[pluginId(addon)] then return "ready" end
+    if Addons.loadedIn(require("cyberui/park").ui(), addon) then return "ready" end   -- the file browser, or the book parked under home
     if not Addons.installedPath(addon) then return "missing" end
     local off = G_reader_settings and G_reader_settings:readSetting("plugins_disabled")
     if type(off) == "table" and off[pluginId(addon)] then return "disabled" end

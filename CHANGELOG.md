@@ -10,6 +10,7 @@ versions marked *Prerelease* are test builds.
 
 ### Added
 - Hold a collection to delete it (Favorites stays).
+- "Annotate this book" in the reader's Tools menu opens Ink Away's annotation mode.
 
 ## [1.1.0] - 2026-10-30
 

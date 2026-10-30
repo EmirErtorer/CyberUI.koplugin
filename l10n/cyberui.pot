@@ -3236,3 +3236,7 @@ msgstr ""
 #: main.lua
 msgid "CyberUI home"
 msgstr ""
+
+#: main.lua
+msgid "Annotate this book"
+msgstr ""
