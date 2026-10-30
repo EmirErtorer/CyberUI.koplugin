@@ -103,7 +103,7 @@ function Stats.totals(n)
     return cached("totals" .. n, function()
         return query(function(conn)
             local r = rows(conn, string.format(
-                "SELECT sum(duration), count(*) FROM page_stat_data WHERE start_time >= %d", midnight(n - 1)))[1]
+                "SELECT sum(duration), count(DISTINCT id_book || ':' || page) FROM page_stat_data WHERE start_time >= %d", midnight(n - 1)))[1]
             return { seconds = tonumber(r and r[1]) or 0, pages = tonumber(r and r[2]) or 0 }
         end)
     end) or { seconds = 0, pages = 0 }
@@ -128,7 +128,7 @@ function Stats.sessions(n)
         return query(function(conn)
             local out = {}
             for _i, r in ipairs(rows(conn, string.format(
-                "SELECT b.title, max(p.start_time), sum(p.duration), count(*) FROM page_stat_data p "
+                "SELECT b.title, max(p.start_time), sum(p.duration), count(DISTINCT p.page) FROM page_stat_data p "
                 .. "JOIN book b ON b.id = p.id_book GROUP BY p.id_book, date(p.start_time,'unixepoch','localtime') "
                 .. "ORDER BY 2 DESC LIMIT %d", n))) do
                 out[#out + 1] = { title = r[1], time = tonumber(r[2]), seconds = tonumber(r[3]) or 0, pages = tonumber(r[4]) or 0 }
