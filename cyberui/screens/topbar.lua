@@ -4,7 +4,7 @@
 
 local App = require("cyberui/app")
 local Button = require("cyberui/ui/button")
-local Deco = require("cyberui/ui/deco")
+local EditRow = require("cyberui/ui/editrow")
 local Frame = require("cyberui/screens/frame")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
@@ -32,23 +32,13 @@ end
 
 -- One readout: its name, what it reads now, then the buttons given.
 local function itemRow(it, buttons)
-    local th = Theme.get()
-    local kids = {
+    return EditRow.line({
         Label:new({ text = it.name, kind = "heading", grow = true }),
         Label:new({ text = it.read() or _("NO SIGNAL"), kind = "mono_small", color = "muted" }),
-    }
-    for _i, b in ipairs(buttons) do kids[#kids + 1] = b end
-    return Layout.Column:new({ children = {
-        Layout.Row:new({ gap = th.space.m, pad = { Theme.px(3), 0 }, children = kids }),
-        Deco.Divider:new({}),
-    } })
+    }, buttons)
 end
 
--- An icon button for a row.
-local function iconButton(icon, on_tap, enabled)
-    return Button:new({ icon = icon, variant = "icon", width = Theme.get().size.touch, height = Theme.px(40),
-        disabled = enabled == false, on_tap = enabled ~= false and on_tap or nil })
-end
+local iconButton = EditRow.button
 
 -- Build the editor.
 function TopBar:build()

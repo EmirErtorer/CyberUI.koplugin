@@ -219,6 +219,8 @@ function SettingsScreen:home()
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
                 App.update()
             end })),
+        row(_("Launcher"), _("The buttons on home: hide, reorder, replace or add your own that open anything in KOReader"),
+            Button:new({ label = _("Edit"), on_tap = function() App.push("launcher") end })),
         row(_("Library opens in"), _("The folder the Library tab starts in; KOReader's home folder stays the top of the library"),
             Button:new({ label = Settings.get("library_start_dir") and Files.name(Settings.get("library_start_dir")) or _("Home folder"), on_tap = function()
                 App.choose({ title = _("Library opens in"), options = {

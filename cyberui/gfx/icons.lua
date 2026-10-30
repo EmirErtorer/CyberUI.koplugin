@@ -4,6 +4,7 @@
 -- drawn on top in a second colour.
 
 local Blitbuffer = require("ffi/blitbuffer")
+local DataStorage = require("datastorage")
 local RenderImage = require("ui/renderimage")
 local Color = require("cyberui/theme/color")
 local Paths = require("cyberui/paths")
@@ -13,11 +14,25 @@ local Icons = {}
 
 local masks = {}   -- "name|size" -> BB8 coverage mask, or false when it failed
 
+-- The folder for icons the reader adds (they survive CyberUI updates).
+function Icons.userDir()
+    return DataStorage:getSettingsDir() .. "/cyberui-icons"
+end
+
+-- The file of an icon: a path as it is, else the reader's own icon of that
+-- name, else the plugin's.
+local function fileOf(name)
+    if name:find("/", 1, true) then return name end
+    local own = Icons.userDir() .. "/" .. name .. ".svg"
+    if lfs.attributes(own, "mode") == "file" then return own end
+    return Paths.file("icons/" .. name .. ".svg")
+end
+
 -- Rasterise an icon file into a mask: 255 where its lines are, 0 elsewhere;
 -- false when there is no such file. A name with a slash is a file path
 -- (another plugin's own icon).
 local function build(name, size)
-    local file = name:find("/", 1, true) and name or Paths.file("icons/" .. name .. ".svg")
+    local file = fileOf(name)
     if lfs.attributes(file, "mode") ~= "file" then return false end
     local raw, straight = RenderImage:renderSVGImageFile(file, size, size)
     if not raw then return false end
@@ -52,6 +67,26 @@ local function blit(bb, m, x, y, color)
     else
         bb:colorblitFrom(m, x, y, 0, 0, w, h, color)
     end
+end
+
+-- The names of the icons that can be chosen (the plugin's and the reader's),
+-- sorted; the accent layers are part of their icon.
+function Icons.list()
+    local seen, out = {}, {}
+    for _i, dir in ipairs({ Paths.file("icons"), Icons.userDir() }) do
+        local ok, iter, state = pcall(lfs.dir, dir)
+        if ok then
+            for file in iter, state do
+                local name = file:match("^(.+)%.svg$")
+                if name and not name:find(".accent", 1, true) and not seen[name] then
+                    seen[name] = true
+                    out[#out + 1] = name
+                end
+            end
+        end
+    end
+    table.sort(out)
+    return out
 end
 
 -- Draw icon `name` at size x size with its top-left at (x, y), its accent

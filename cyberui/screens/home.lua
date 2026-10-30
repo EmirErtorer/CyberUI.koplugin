@@ -2,21 +2,19 @@
 -- being read with Resume, recent books and the launcher to every section.
 
 local Actions = require("cyberui/actions")
-local Addons = require("cyberui/apps/addons")
 local App = require("cyberui/app")
 local Banner = require("cyberui/data/banner")
 local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
-local Collections = require("cyberui/data/collections")
 local Cover = require("cyberui/ui/cover")
 local Deco = require("cyberui/ui/deco")
 local Files = require("cyberui/data/files")
 local Format = require("cyberui/format")
 local History = require("cyberui/data/history")
-local InkAway = require("cyberui/apps/inkaway")
 local Icon = require("cyberui/ui/icon")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
+local Launcher = require("cyberui/ui/launcher")
 local Library = require("cyberui/data/library")
 local ListRow = require("cyberui/ui/listrow")
 local Panel = require("cyberui/ui/panel")
@@ -183,40 +181,6 @@ local function recentList(home, shown)
         child = Layout.Column:new({ gap = th.space.s, clip = true, children = kids }) })
 end
 
--- The launcher: one button per section, sharing the full height (in two
--- columns on a landscape screen).
-local function launcher()
-    local th = Theme.get()
-    local count = Library.count()
-    local items = {
-        { "library", _("LIBRARY"), count and string.format(_("%d FILES // GRID"), count) or _("FILES // GRID"), function() App.go("library") end },
-        { "collections", _("COLLECTIONS"), string.format(_("%d CACHES"), #Collections.list()), function() App.go("collections") end },
-        { "history", _("HISTORY"), _("TELEMETRY.LOG"), function() App.go("history") end },
-        { "search", _("SEARCH"), _("GREP THE ARCHIVE"), function() App.push("search") end },
-        { InkAway.icon, _("INK AWAY"), Addons.statusLine(InkAway), function() Addons.launch(InkAway) end },
-        { "settings", _("SYSTEM"), (function()
-                local v = require("cyberui/update/updater").available()
-                return v and string.format(_("UPDATE v%s READY"), v) or _("THEME // SETTINGS")
-            end)(), function() App.go("settings") end },
-    }
-    local buttons = {}
-    for i, it in ipairs(items) do
-        buttons[i] = Button:new({ icon = it[1], label = it[2], sub = it[3], align = "left", variant = "soft",
-            corners = "r", grow = true, on_tap = it[4] })
-    end
-    -- one column; on a wide, short (landscape) screen two, so each keeps
-    -- room for both of its lines
-    local screen = require("device").screen
-    local cols = screen:getWidth() > screen:getHeight() and 2 or 1
-    local rows = {}
-    for i = 1, #buttons, cols do
-        rows[#rows + 1] = cols == 1 and buttons[i]
-            or Layout.Row:new({ grow = true, gap = th.space.xs, valign = "stretch", children = { buttons[i], buttons[i + 1] } })
-    end
-    return Panel:new({ shape = "rail", side = "r", line = "accent", width = Theme.px(cols == 1 and 212 or 400),
-        pad = { 0, th.space.l, 0, 0 }, child = Layout.Column:new({ gap = th.space.xs, children = rows }) })
-end
-
 -- The footer: barcode, prompt and version.
 local function footer()
     local th = Theme.get()
@@ -239,7 +203,7 @@ function Home:build()
         indexStrip(),
         dateRow(self),
         activeFile(shown),
-        Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown), launcher() } }),
+        Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown), Launcher.build() } }),
         footer(),
     } })
 end
