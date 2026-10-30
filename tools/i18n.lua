@@ -341,7 +341,8 @@ local function checkLanguage(lang, list)
                     end
                     for _b, brand in ipairs(BRANDS) do
                         local plain, mine = t.id:lower(), e.str[f]:lower()
-                        if plain:find(brand:lower(), 1, true) and not mine:find(brand:lower(), 1, true) and not (Case.upper(brand, code) and mine:find(Case.upper(brand, code):lower(), 1, true)) then
+                        local alt = brand == "Wi-Fi" and code == "de" and mine:find("wlan", 1, true)   -- German says WLAN
+                        if plain:find(brand:lower(), 1, true) and not mine:find(brand:lower(), 1, true) and not alt then
                             bad(string.format("the name %s must stay as it is in: %s", brand, shown))
                         end
                     end

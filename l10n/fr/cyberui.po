@@ -9,2954 +9,2954 @@ msgstr ""
 
 #: _meta.lua main.lua
 msgid "CyberUI"
-msgstr ""
+msgstr "CyberUI"
 
 #: _meta.lua
 msgid "A fast, cyberpunk-styled home screen for KOReader with a library browser, collections, reading stats and switchable colour themes."
-msgstr ""
+msgstr "Un écran d'accueil rapide au style cyberpunk pour KOReader, avec navigateur de bibliothèque, collections, statistiques de lecture et thèmes de couleurs interchangeables."
 
 #: cyberui/actions.lua
 msgid "TAP AGAIN TO OPEN"
-msgstr ""
+msgstr "TOUCHEZ DE NOUVEAU POUR OUVRIR"
 
 #: cyberui/actions.lua
 msgid "Removed from history"
-msgstr ""
+msgstr "Retiré de l'historique"
 
 #: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
 msgid "Unread"
-msgstr ""
+msgstr "Non lu"
 
 #: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
 msgid "Reading"
-msgstr ""
+msgstr "Lecture"
 
 #: cyberui/actions.lua cyberui/data/libgroups.lua
 msgid "On hold"
-msgstr ""
+msgstr "En attente"
 
 #: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
 msgid "Done"
-msgstr ""
+msgstr "Terminé"
 
 #: cyberui/actions.lua cyberui/data/banner.lua cyberui/data/libgroups.lua
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "New collection"
-msgstr ""
+msgstr "Nouvelle collection"
 
 #: cyberui/actions.lua
 msgid "Added to %s"
-msgstr ""
+msgstr "Ajouté à %s"
 
 #: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Create"
-msgstr ""
+msgstr "Créer"
 
 #: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Collections"
-msgstr ""
+msgstr "Collections"
 
 #: cyberui/actions.lua cyberui/screens/trash.lua
 msgid "That did not work"
-msgstr ""
+msgstr "Ça n'a pas marché"
 
 #: cyberui/actions.lua cyberui/menu.lua cyberui/screens/trash.lua cyberui/screens/updates.lua ...
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: cyberui/actions.lua
 msgid "Rename"
-msgstr ""
+msgstr "Renommer"
 
 #: cyberui/actions.lua
 msgid "Renamed"
-msgstr ""
+msgstr "Renommé"
 
 #: cyberui/actions.lua
 msgid "Move to"
-msgstr ""
+msgstr "Déplacer vers"
 
 #: cyberui/actions.lua
 msgid "Moved to %s"
-msgstr ""
+msgstr "Déplacé vers %s"
 
 #: cyberui/actions.lua
 msgid "New folder"
-msgstr ""
+msgstr "Nouveau dossier"
 
 #: cyberui/actions.lua
 msgid "Folder created"
-msgstr ""
+msgstr "Dossier créé"
 
 #: cyberui/actions.lua
 msgid "folder name"
-msgstr ""
+msgstr "nom du dossier"
 
 #: cyberui/actions.lua
 msgid "Delete “%s”?"
-msgstr ""
+msgstr "Supprimer « %s » ?"
 
 #: cyberui/actions.lua
 msgid "The folder and everything in it go. It waits in the trash for %d day."
 msgid_plural "The folder and everything in it go. It waits in the trash for %d days."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Le dossier et tout son contenu sont supprimés. Il reste %d jour dans la corbeille."
+msgstr[1] "Le dossier et tout son contenu sont supprimés. Il reste %d jours dans la corbeille."
 
 #: cyberui/actions.lua
 msgid "It waits in the trash for %d day."
 msgid_plural "It waits in the trash for %d days."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Il reste %d jour dans la corbeille."
+msgstr[1] "Il reste %d jours dans la corbeille."
 
 #: cyberui/actions.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: cyberui/actions.lua
 msgid "Moved to the trash"
-msgstr ""
+msgstr "Déplacé dans la corbeille"
 
 #: cyberui/actions.lua
 msgid "Library home set"
-msgstr ""
+msgstr "Dossier d'accueil de la bibliothèque défini"
 
 #: cyberui/actions.lua
 msgid "Library opens in %s"
-msgstr ""
+msgstr "La bibliothèque s'ouvre dans %s"
 
 #: cyberui/actions.lua
 msgid "Library opens in the home folder"
-msgstr ""
+msgstr "La bibliothèque s'ouvre dans le dossier d'accueil"
 
 #: cyberui/actions.lua cyberui/screens/settings.lua
 msgid "Library opens in"
-msgstr ""
+msgstr "La bibliothèque s'ouvre dans"
 
 #: cyberui/actions.lua
 msgid "Open library here"
-msgstr ""
+msgstr "Ouvrir la bibliothèque ici"
 
 #: cyberui/actions.lua
 msgid "%d book marked %s"
 msgid_plural "%d books marked %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d livre marqué comme %s"
+msgstr[1] "%d livres marqués comme %s"
 
 #: cyberui/actions.lua
 msgid "Status of %d book"
 msgid_plural "Status of %d books"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Statut de %d livre"
+msgstr[1] "Statut de %d livres"
 
 #: cyberui/actions.lua
 msgid "%d book added to %s"
 msgid_plural "%d books added to %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d livre ajouté à %s"
+msgstr[1] "%d livres ajoutés à %s"
 
 #: cyberui/actions.lua
 msgid "Add %d book to"
 msgid_plural "Add %d books to"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ajouter %d livre à"
+msgstr[1] "Ajouter %d livres à"
 
 #: cyberui/actions.lua cyberui/screens/library.lua
 msgid "Move here"
-msgstr ""
+msgstr "Déplacer ici"
 
 #: cyberui/actions.lua
 msgid "%d book moved to %s"
 msgid_plural "%d books moved to %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d livre déplacé vers %s"
+msgstr[1] "%d livres déplacés vers %s"
 
 #: cyberui/actions.lua
 msgid "Delete %d book?"
 msgid_plural "Delete %d books?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Supprimer %d livre ?"
+msgstr[1] "Supprimer %d livres ?"
 
 #: cyberui/actions.lua
 msgid "They wait in the trash for %d day."
 msgid_plural "They wait in the trash for %d days."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ils restent %d jour dans la corbeille."
+msgstr[1] "Ils restent %d jours dans la corbeille."
 
 #: cyberui/actions.lua cyberui/screens/settings.lua
 msgid "Open"
-msgstr ""
+msgstr "Ouvrir"
 
 #: cyberui/actions.lua cyberui/screens/bounty.lua
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 #: cyberui/actions.lua
 msgid "Forget"
-msgstr ""
+msgstr "Oublier"
 
 #: cyberui/actions.lua
 msgid "Remove from history"
-msgstr ""
+msgstr "Retirer de l'historique"
 
 #: cyberui/actions.lua
 msgid "Make library home"
-msgstr ""
+msgstr "Définir comme dossier d'accueil de la bibliothèque"
 
 #: cyberui/app.lua cyberui/screens/settings.lua
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr ""
+msgstr "Bibliothèque"
 
 #: cyberui/app.lua
 msgid "Caches"
-msgstr ""
+msgstr "Collections"
 
 #: cyberui/app.lua cyberui/screens/history.lua
 msgid "Log"
-msgstr ""
+msgstr "Journal"
 
 #: cyberui/app.lua cyberui/screens/settings.lua
 msgid "System"
-msgstr ""
+msgstr "Système"
 
 #: cyberui/app.lua
 msgid "Something went wrong; see crash.log"
-msgstr ""
+msgstr "Un problème est survenu ; voir crash.log"
 
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
-msgstr ""
+msgstr "DÉSACTIVÉ // TOUCHEZ"
 
 #: cyberui/apps/addons.lua
 msgid "RESTART TO USE"
-msgstr ""
+msgstr "REDÉMARREZ POUR UTILISER"
 
 #: cyberui/apps/addons.lua
 msgid "GET IT // FREE"
-msgstr ""
+msgstr "OBTENIR // GRATUIT"
 
 #: cyberui/apps/addons.lua
 msgid "Installing %s"
-msgstr ""
+msgstr "Installation de %s"
 
 #: cyberui/apps/addons.lua
 msgid "%s was not installed"
-msgstr ""
+msgstr "%s n'a pas été installé"
 
 #: cyberui/apps/addons.lua
 msgid "Try again"
-msgstr ""
+msgstr "Réessayer"
 
 #: cyberui/apps/addons.lua
 msgid "1/3 // ASKING GITHUB"
-msgstr ""
+msgstr "1/3 // INTERROGATION DE GITHUB"
 
 #: cyberui/apps/addons.lua
 msgid "2/3 // DOWNLOADING %s %s (%.1f MB)"
-msgstr ""
+msgstr "2/3 // TÉLÉCHARGEMENT DE %s %s (%.1f MO)"
 
 #: cyberui/apps/addons.lua
 msgid "3/3 // CHECKING AND UNPACKING"
-msgstr ""
+msgstr "3/3 // VÉRIFICATION ET DÉCOMPRESSION"
 
 #: cyberui/apps/addons.lua
 msgid "%s %s is installed. Restart KOReader to use it."
-msgstr ""
+msgstr "%s %s est installé. Redémarrez KOReader pour l'utiliser."
 
 #: cyberui/apps/addons.lua
 msgid "%s is installed. Restart KOReader to use it."
-msgstr ""
+msgstr "%s est installé. Redémarrez KOReader pour l'utiliser."
 
 #: cyberui/apps/addons.lua
 msgid "Switch on"
-msgstr ""
+msgstr "Activer"
 
 #: cyberui/apps/addons.lua
 msgid "%s is installed but switched off in KOReader's plugins. Switch it on?"
-msgstr ""
+msgstr "%s est installé mais désactivé dans les extensions de KOReader. L'activer ?"
 
 #: cyberui/apps/addons.lua
 msgid "%s is switched on. Restart KOReader to use it."
-msgstr ""
+msgstr "%s est activé. Redémarrez KOReader pour l'utiliser."
 
 #: cyberui/apps/addons.lua cyberui/screens/updates.lua
 msgid "Install"
-msgstr ""
+msgstr "Installer"
 
 #: cyberui/apps/addons.lua
 msgid "Not now"
-msgstr ""
+msgstr "Pas maintenant"
 
 #: cyberui/apps/addons.lua
 msgid "Free, from github.com/%s. Needs Wi-Fi."
-msgstr ""
+msgstr "Gratuit, sur github.com/%s. Nécessite le Wi-Fi."
 
 #: cyberui/apps/inkaway.lua
 msgid "DRAW // NOTES // INK"
-msgstr ""
+msgstr "DESSINEZ // NOTEZ // ENCRE"
 
 #: cyberui/apps/inkaway.lua
 msgid "Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."
-msgstr ""
+msgstr "Dessinez, prenez des notes et écrivez sur vos livres au doigt ou au stylet : dessins à calques, carnets aux pages lignées, quadrillées et d'agenda, et encre sur n'importe quel livre qui suit le texte. Exportez un PNG transparent ou un PDF."
 
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
-msgstr ""
+msgstr "HABILITATION"
 
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE_%dH"
-msgstr ""
+msgstr "HABILITATION_%dH"
 
 #: cyberui/data/achievements.lua cyberui/screens/diagnostics.lua
 msgid "UPTIME"
-msgstr ""
+msgstr "UPTIME"
 
 #: cyberui/data/achievements.lua
 msgid "UPTIME_%dD"
-msgstr ""
+msgstr "UPTIME_%dJ"
 
 #: cyberui/data/achievements.lua cyberui/screens/diagnostics.lua
 msgid "ARCHIVE"
-msgstr ""
+msgstr "ARCHIVES"
 
 #: cyberui/data/achievements.lua cyberui/screens/log/goal.lua
 msgid "ARCHIVE_%d"
-msgstr ""
+msgstr "ARCHIVES_%d"
 
 #: cyberui/data/banner.lua
 msgid "READER // ONLINE"
-msgstr ""
+msgstr "LECTEUR // EN LIGNE"
 
 #: cyberui/data/banner.lua
 msgid "DECK ACTIVE"
-msgstr ""
+msgstr "DECK ACTIF"
 
 #: cyberui/data/banner.lua
 msgid "SYSTEMS NOMINAL"
-msgstr ""
+msgstr "SYSTÈMES NOMINAUX"
 
 #: cyberui/data/banner.lua
 msgid "BOOT COMPLETE"
-msgstr ""
+msgstr "DÉMARRAGE TERMINÉ"
 
 #: cyberui/data/banner.lua
 msgid "READY TO JACK IN"
-msgstr ""
+msgstr "PRÊT POUR LE JACK-IN"
 
 #: cyberui/data/banner.lua
 msgid "LINK ESTABLISHED"
-msgstr ""
+msgstr "LIEN ÉTABLI"
 
 #: cyberui/data/banner.lua
 msgid "Greeting"
-msgstr ""
+msgstr "Salutation"
 
 #: cyberui/data/banner.lua
 msgid "Time of day + handle"
-msgstr ""
+msgstr "Heure du jour + pseudo"
 
 #: cyberui/data/banner.lua
 msgid "Highlight"
-msgstr ""
+msgstr "Passage surligné"
 
 #: cyberui/data/banner.lua
 msgid "From your books"
-msgstr ""
+msgstr "De vos livres"
 
 #: cyberui/data/banner.lua
 msgid "Battery // Wi-Fi"
-msgstr ""
+msgstr "Batterie // Wi-Fi"
 
 #: cyberui/data/banner.lua
 msgid "Your own text"
-msgstr ""
+msgstr "Votre propre texte"
 
 #: cyberui/data/banner.lua
 msgid "Typed in"
-msgstr ""
+msgstr "Saisi à la main"
 
 #: cyberui/data/banner.lua cyberui/screens/fonts.lua cyberui/targetlist.lua
 msgid "Device"
-msgstr ""
+msgstr "Appareil"
 
 #: cyberui/data/banner.lua cyberui/profileflow.lua
 msgid "Your handle"
-msgstr ""
+msgstr "Votre pseudo"
 
 #: cyberui/data/banner.lua
 msgid "Book"
-msgstr ""
+msgstr "Livre"
 
 #: cyberui/data/banner.lua
 msgid "Highlight's or current"
-msgstr ""
+msgstr "Du passage surligné ou du livre en cours"
 
 #: cyberui/data/banner.lua
 msgid "Nothing"
-msgstr ""
+msgstr "Rien"
 
 #: cyberui/data/banner.lua
 msgid "NIGHT SHIFT, %s"
-msgstr ""
+msgstr "SERVICE DE NUIT, %s"
 
 #: cyberui/data/banner.lua
 msgid "GOOD MORNING, %s"
-msgstr ""
+msgstr "BONJOUR, %s"
 
 #: cyberui/data/banner.lua
 msgid "GOOD AFTERNOON, %s"
-msgstr ""
+msgstr "BON APRÈS-MIDI, %s"
 
 #: cyberui/data/banner.lua
 msgid "GOOD EVENING, %s"
-msgstr ""
+msgstr "BONSOIR, %s"
 
 #: cyberui/data/banner.lua
 msgid "CHARGING // %d%%"
-msgstr ""
+msgstr "EN CHARGE // %d%%"
 
 #: cyberui/data/banner.lua
 msgid "POWER LOW // PLUG IN"
-msgstr ""
+msgstr "BATTERIE FAIBLE // BRANCHEZ"
 
 #: cyberui/data/banner.lua
 msgid "UPLINK ACTIVE"
-msgstr ""
+msgstr "LIAISON ACTIVE"
 
 #: cyberui/data/banner.lua
 msgid "ID // %s"
-msgstr ""
+msgstr "ID // %s"
 
 #: cyberui/data/banner.lua
 msgid "FILE // %s"
-msgstr ""
+msgstr "FICHIER // %s"
 
 #: cyberui/data/banner.lua
 msgid "CYBERDECK // %s // OPERATOR ACCESS"
-msgstr ""
+msgstr "CYBERDECK // %s // ACCÈS OPÉRATEUR"
 
 #: cyberui/data/books.lua cyberui/screens/colourpick.lua cyberui/screens/dossier.lua
 msgid "NEW"
-msgstr ""
+msgstr "NOUVEAU"
 
 #: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DONE"
-msgstr ""
+msgstr "LU"
 
 #: cyberui/data/books.lua
 msgid "HOLD"
-msgstr ""
+msgstr "PAUSE"
 
 #: cyberui/data/collections.lua
 msgid "Favorites"
-msgstr ""
+msgstr "Favoris"
 
 #: cyberui/data/files.lua
 msgid "There is already something called “%s” there."
-msgstr ""
+msgstr "Il y a déjà quelque chose nommé « %s » là-bas."
 
 #: cyberui/data/files.lua
 msgid "It could not be moved."
-msgstr ""
+msgstr "Impossible de le déplacer."
 
 #: cyberui/data/files.lua
 msgid "That name cannot be used."
-msgstr ""
+msgstr "Ce nom ne peut pas être utilisé."
 
 #: cyberui/data/files.lua
 msgid "A folder cannot go inside itself."
-msgstr ""
+msgstr "Un dossier ne peut pas être placé dans lui-même."
 
 #: cyberui/data/files.lua
 msgid "There is already something called “%s” here."
-msgstr ""
+msgstr "Il y a déjà quelque chose nommé « %s » ici."
 
 #: cyberui/data/files.lua
 msgid "The folder could not be made."
-msgstr ""
+msgstr "Impossible de créer le dossier."
 
 #: cyberui/data/libgroups.lua
 msgid "Folders"
-msgstr ""
+msgstr "Dossiers"
 
 #: cyberui/data/libgroups.lua cyberui/screens/library.lua cyberui/screens/log/scope.lua
 msgid "All books"
-msgstr ""
+msgstr "Tous les livres"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Author"
-msgstr ""
+msgstr "Auteur"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Series"
-msgstr ""
+msgstr "Série"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Added"
-msgstr ""
+msgstr "Ajouté"
 
 #: cyberui/data/libgroups.lua cyberui/screens/dossier.lua
 msgid "Unknown author"
-msgstr ""
+msgstr "Auteur inconnu"
 
 #: cyberui/data/libgroups.lua
 msgid "No series"
-msgstr ""
+msgstr "Sans série"
 
 #: cyberui/data/metric.lua
 msgid "PG"
-msgstr ""
+msgstr "PAG"
 
 #: cyberui/data/metric.lua
 msgid "MIN"
-msgstr ""
+msgstr "MIN"
 
 #: cyberui/data/metric.lua
 msgid "PAGES READ // LAST 7 DAYS"
-msgstr ""
+msgstr "PAGES LUES // 7 DERNIERS JOURS"
 
 #: cyberui/data/metric.lua
 msgid "MINUTES READ // LAST 7 DAYS"
-msgstr ""
+msgstr "MINUTES LUES // 7 DERNIERS JOURS"
 
 #: cyberui/data/metric.lua
 msgid "PAGES READ // 12 WEEKS"
-msgstr ""
+msgstr "PAGES LUES // 12 SEMAINES"
 
 #: cyberui/data/metric.lua
 msgid "MINUTES READ // 12 WEEKS"
-msgstr ""
+msgstr "MINUTES LUES // 12 SEMAINES"
 
 #: cyberui/data/metric.lua cyberui/screens/log/period.lua
 msgid "PAGES READ"
-msgstr ""
+msgstr "PAGES LUES"
 
 #: cyberui/data/metric.lua cyberui/screens/log/period.lua
 msgid "MINUTES READ"
-msgstr ""
+msgstr "MINUTES LUES"
 
 #: cyberui/data/profile.lua
 msgid "SCRIPT KID"
-msgstr ""
+msgstr "SCRIPT KID"
 
 #: cyberui/data/profile.lua
 msgid "RUNNER"
-msgstr ""
+msgstr "RUNNER"
 
 #: cyberui/data/profile.lua
 msgid "FIXER"
-msgstr ""
+msgstr "FIXER"
 
 #: cyberui/data/profile.lua
 msgid "NETRUNNER"
-msgstr ""
+msgstr "NETRUNNER"
 
 #: cyberui/data/profile.lua
 msgid "LEGEND"
-msgstr ""
+msgstr "LÉGENDE"
 
 #: cyberui/data/profile.lua
 msgid "That file is not a picture KOReader can read"
-msgstr ""
+msgstr "Ce fichier n'est pas une image que KOReader sait lire"
 
 #: cyberui/data/profile.lua
 msgid "The photo could not be saved"
-msgstr ""
+msgstr "Impossible d'enregistrer la photo"
 
 #: cyberui/data/sysinfo.lua
 msgid "INTERNAL"
-msgstr ""
+msgstr "INTERNE"
 
 #: cyberui/data/sysinfo.lua cyberui/ui/launcher.lua
 msgid "LIBRARY"
-msgstr ""
+msgstr "BIBLIOTHÈQUE"
 
 #: cyberui/data/trash.lua
 msgid "The trash could not be written to."
-msgstr ""
+msgstr "Impossible d'écrire dans la corbeille."
 
 #: cyberui/data/trash.lua
 msgid "It is not in the trash any more."
-msgstr ""
+msgstr "Il n'est plus dans la corbeille."
 
 #: cyberui/data/trash.lua
 msgid "Its folder is gone. Restore that first."
-msgstr ""
+msgstr "Son dossier n'existe plus. Restaurez-le d'abord."
 
 #: cyberui/format.lua
 msgid "NEVER"
-msgstr ""
+msgstr "JAMAIS"
 
 #: cyberui/format.lua
 msgid "JUST NOW"
-msgstr ""
+msgstr "À L'INSTANT"
 
 #: cyberui/format.lua
 msgid "%dH AGO"
-msgstr ""
+msgstr "IL Y A %dH"
 
 #: cyberui/format.lua
 msgid "%dD AGO"
-msgstr ""
+msgstr "IL Y A %dJ"
 
 #: cyberui/format.lua
 msgid "%dW AGO"
-msgstr ""
+msgstr "IL Y A %dSEM"
 
 #: cyberui/format.lua
 msgid "%dM"
-msgstr ""
+msgstr "%dMIN"
 
 #: cyberui/gfx/ascii.lua
 msgid "Classic"
-msgstr ""
+msgstr "Classique"
 
 #: cyberui/gfx/ascii.lua
 msgid "Detailed"
-msgstr ""
+msgstr "Détaillé"
 
 #: cyberui/gfx/ascii.lua
 msgid "Braille"
-msgstr ""
+msgstr "Braille"
 
 #: cyberui/gfx/ascii.lua
 msgid "Blocks"
-msgstr ""
+msgstr "Blocs"
 
 #: cyberui/gfx/ascii.lua
 msgid "Binary"
-msgstr ""
+msgstr "Binaire"
 
 #: cyberui/gfx/ascii.lua
 msgid "Hex dump"
-msgstr ""
+msgstr "Dump hexa"
 
 #: cyberui/gfx/ascii.lua
 msgid "Glitch"
-msgstr ""
+msgstr "Glitch"
 
 #: cyberui/gfx/ascii.lua
 msgid "Book title"
-msgstr ""
+msgstr "Titre du livre"
 
 #: cyberui/gfx/icons.lua
 msgid "CYBERUI"
-msgstr ""
+msgstr "CYBERUI"
 
 #: cyberui/gfx/icons.lua
 msgid "READER"
-msgstr ""
+msgstr "LECTEUR"
 
 #: cyberui/gfx/icons.lua cyberui/screens/diagnostics.lua
 msgid "KOREADER"
-msgstr ""
+msgstr "KOREADER"
 
 #: cyberui/jackin.lua
 msgid "RESUMING AT %d%%"
-msgstr ""
+msgstr "REPRISE À %d%%"
 
 #: cyberui/jackin.lua
 msgid "FIRST OPEN"
-msgstr ""
+msgstr "PREMIÈRE OUVERTURE"
 
 #: cyberui/jackin.lua
 msgid "[OK] MOUNT FILE // [OK] READ INDEX"
-msgstr ""
+msgstr "[OK] FICHIER MONTÉ // [OK] INDEX LU"
 
 #: cyberui/jackin.lua
 msgid "[..] RENDERING PAGE"
-msgstr ""
+msgstr "[..] AFFICHAGE DE LA PAGE"
 
 #: cyberui/jackin.lua
 msgid "JACK-IN"
-msgstr ""
+msgstr "JACK-IN"
 
 #: cyberui/jackin.lua
 msgid "DECRYPTING..."
-msgstr ""
+msgstr "DÉCHIFFREMENT..."
 
 #: cyberui/menu.lua cyberui/screens/filepick.lua
 msgid "FILES"
-msgstr ""
+msgstr "FICHIERS"
 
 #: cyberui/menu.lua
 msgid "SETTINGS"
-msgstr ""
+msgstr "PARAMÈTRES"
 
 #: cyberui/menu.lua
 msgid "TOOLS"
-msgstr ""
+msgstr "OUTILS"
 
 #: cyberui/menu.lua cyberui/ui/launcher.lua
 msgid "SEARCH"
-msgstr ""
+msgstr "RECHERCHE"
 
 #: cyberui/menu.lua
 msgid "MAIN"
-msgstr ""
+msgstr "PRINCIPAL"
 
 #: cyberui/menu.lua
 msgid "NAVIGATION"
-msgstr ""
+msgstr "NAVIGATION"
 
 #: cyberui/menu.lua
 msgid "TYPESET"
-msgstr ""
+msgstr "MISE EN PAGE"
 
 #: cyberui/menu.lua
 msgid "VIEW"
-msgstr ""
+msgstr "AFFICHAGE"
 
 #: cyberui/menu.lua
 msgid "CONTROLS"
-msgstr ""
+msgstr "COMMANDES"
 
 #: cyberui/menu.lua
 msgid "LAUNCHER"
-msgstr ""
+msgstr "LANCEUR"
 
 #: cyberui/menu.lua
 msgid "DECK"
-msgstr ""
+msgstr "DECK"
 
 #: cyberui/menu.lua
 msgid "EXTRA"
-msgstr ""
+msgstr "EXTRA"
 
 #: cyberui/menu.lua
 msgid "HOME"
-msgstr ""
+msgstr "ACCUEIL"
 
 #: cyberui/menu.lua
 msgid "ZENOS"
-msgstr ""
+msgstr "ZENOS"
 
 #: cyberui/menu.lua
 msgid "THAT ONE CANNOT BE USED"
-msgstr ""
+msgstr "CELUI-CI NE PEUT PAS ÊTRE UTILISÉ"
 
 #: cyberui/menu.lua
 msgid "Button %d"
-msgstr ""
+msgstr "Bouton %d"
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "LUMEN"
-msgstr ""
+msgstr "LUMEN"
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "TINT"
-msgstr ""
+msgstr "TEINTE"
 
 #: cyberui/menu.lua
 msgid "Wi-Fi on"
-msgstr ""
+msgstr "Wi-Fi activé"
 
 #: cyberui/menu.lua
 msgid "Wi-Fi off"
-msgstr ""
+msgstr "Wi-Fi désactivé"
 
 #: cyberui/menu.lua
 msgid "Night mode"
-msgstr ""
+msgstr "Mode nuit"
 
 #: cyberui/menu.lua
 msgid "Rotate"
-msgstr ""
+msgstr "Pivoter"
 
 #: cyberui/menu.lua
 msgid "Restart"
-msgstr ""
+msgstr "Redémarrer"
 
 #: cyberui/menu.lua
 msgid "Restart KOReader?"
-msgstr ""
+msgstr "Redémarrer KOReader ?"
 
 #: cyberui/menu.lua
 msgid "Exit"
-msgstr ""
+msgstr "Quitter"
 
 #: cyberui/menu.lua
 msgid "Exit KOReader?"
-msgstr ""
+msgstr "Quitter KOReader ?"
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "UPLINK"
-msgstr ""
+msgstr "LIAISON"
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "NO CARRIER"
-msgstr ""
+msgstr "PAS DE SIGNAL"
 
 #: cyberui/menu.lua
 msgid "PICK // %s"
-msgstr ""
+msgstr "CHOISIR // %s"
 
 #: cyberui/menu.lua
 msgid "KOREADER // %s"
-msgstr ""
+msgstr "KOREADER // %s"
 
 #: cyberui/menu.lua
 msgid "TAP AN ENTRY TO USE IT. HOLD A SUBMENU TO USE THE MENU ITSELF."
-msgstr ""
+msgstr "TOUCHEZ UNE ENTRÉE POUR L'UTILISER. MAINTENEZ UN SOUS-MENU POUR UTILISER LE MENU LUI-MÊME."
 
 #: cyberui/menu.lua
 msgid "Nothing to show here yet."
-msgstr ""
+msgstr "Rien à afficher ici pour l'instant."
 
 #: cyberui/menu.lua cyberui/screens/launcher.lua cyberui/screens/settings.lua
 msgid "PAGE"
-msgstr ""
+msgstr "PAGE"
 
 #: cyberui/profileflow.lua cyberui/screens/photocrop.lua
 msgid "Photo"
-msgstr ""
+msgstr "Photo"
 
 #: cyberui/profileflow.lua
 msgid "Photo changed"
-msgstr ""
+msgstr "Photo modifiée"
 
 #: cyberui/profileflow.lua
 msgid "Choose a picture"
-msgstr ""
+msgstr "Choisir une image"
 
 #: cyberui/profileflow.lua
 msgid "From any folder on this device"
-msgstr ""
+msgstr "Depuis n'importe quel dossier de cet appareil"
 
 #: cyberui/profileflow.lua
 msgid "Remove photo"
-msgstr ""
+msgstr "Retirer la photo"
 
 #: cyberui/profileflow.lua
 msgid "Use the generated glyph"
-msgstr ""
+msgstr "Utiliser le glyphe généré"
 
 #: cyberui/profileflow.lua
 msgid "Photo removed"
-msgstr ""
+msgstr "Photo retirée"
 
 #: cyberui/profileflow.lua
 msgid "Your photo"
-msgstr ""
+msgstr "Votre photo"
 
 #: cyberui/profileflow.lua
 msgid "Shown on your ID card"
-msgstr ""
+msgstr "Affichée sur votre carte d'ID"
 
 #: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/settings.lua ...
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: cyberui/profileflow.lua cyberui/ui/idcard.lua
 msgid "PHOTO"
-msgstr ""
+msgstr "PHOTO"
 
 #: cyberui/profileflow.lua cyberui/ui/idcard.lua
 msgid "HANDLE"
-msgstr ""
+msgstr "PSEUDO"
 
 #: cyberui/profileflow.lua
 msgid "SAVE"
-msgstr ""
+msgstr "ENREGISTRER"
 
 #: cyberui/profileflow.lua
 msgid "Saved %s"
-msgstr ""
+msgstr "%s enregistré"
 
 #: cyberui/profileflow.lua
 msgid "The card could not be saved"
-msgstr ""
+msgstr "Impossible d'enregistrer la carte"
 
 #: cyberui/screens/bounty.lua
 msgid "%s ON ITS HEAD"
-msgstr ""
+msgstr "%s POUR SA TÊTE"
 
 #: cyberui/screens/bounty.lua
 msgid "Claim it"
-msgstr ""
+msgstr "Réclamer"
 
 #: cyberui/screens/bounty.lua
 msgid "Open the book"
-msgstr ""
+msgstr "Ouvrir le livre"
 
 #: cyberui/screens/bounty.lua
 msgid "Not wanted"
-msgstr ""
+msgstr "Pas recherché"
 
 #: cyberui/screens/bounty.lua
 msgid "Take it off the board"
-msgstr ""
+msgstr "Le retirer du tableau"
 
 #: cyberui/screens/bounty.lua
 msgid "MOST_WANTED"
-msgstr ""
+msgstr "LES_PLUS_RECHERCHÉS"
 
 #: cyberui/screens/bounty.lua
 msgid "WANTED"
-msgstr ""
+msgstr "RECHERCHÉ"
 
 #: cyberui/screens/bounty.lua
 msgid "AT LARGE %d DAY"
 msgid_plural "AT LARGE %d DAYS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "EN FUITE DEPUIS %d JOUR"
+msgstr[1] "EN FUITE DEPUIS %d JOURS"
 
 #: cyberui/screens/bounty.lua
 msgid "CLAIM"
-msgstr ""
+msgstr "RÉCLAMER"
 
 #: cyberui/screens/bounty.lua
 msgid "NO OUTSTANDING TARGETS"
-msgstr ""
+msgstr "AUCUNE CIBLE EN SUSPENS"
 
 #: cyberui/screens/bounty.lua
 msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week appear here with a bounty on them."
-msgstr ""
+msgstr "Chaque livre de la bibliothèque a été ouvert ou est encore neuf. Les livres qui restent une semaine sans être lus apparaissent ici avec une prime."
 
 #: cyberui/screens/bounty.lua
 msgid "Bounties"
-msgstr ""
+msgstr "Primes"
 
 #: cyberui/screens/bounty.lua
 msgid "MOST WANTED // %s ON THE BOARD"
-msgstr ""
+msgstr "LES PLUS RECHERCHÉS // %s AU TABLEAU"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
 msgid_plural "%d FILES"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d FICHIER"
+msgstr[1] "%d FICHIERS"
 
 #: cyberui/screens/collections.lua
 msgid "PINNED // QUEUE"
-msgstr ""
+msgstr "ÉPINGLÉS // FILE"
 
 #: cyberui/screens/collections.lua
 msgid "Collection created"
-msgstr ""
+msgstr "Collection créée"
 
 #: cyberui/screens/collections.lua
 msgid "No other collections yet. Make one with + New."
-msgstr ""
+msgstr "Pas d'autre collection pour l'instant. Créez-en une avec + Nouvelle."
 
 #: cyberui/screens/collections.lua
 msgid "CACHE"
-msgstr ""
+msgstr "COLLECTION"
 
 #: cyberui/screens/collections.lua cyberui/screens/library.lua
 msgid "+ New"
-msgstr ""
+msgstr "+ Nouvelle"
 
 #: cyberui/screens/colourpick.lua
 msgid "That is not a colour code"
-msgstr ""
+msgstr "Ce n'est pas un code couleur"
 
 #: cyberui/screens/colourpick.lua
 msgid "IN USE"
-msgstr ""
+msgstr "UTILISÉE"
 
 #: cyberui/screens/colourpick.lua
 msgid "IN GREY"
-msgstr ""
+msgstr "EN GRIS"
 
 #: cyberui/screens/colourpick.lua
 msgid "READS ON THE PAGE"
-msgstr ""
+msgstr "LISIBLE SUR LA PAGE"
 
 #: cyberui/screens/colourpick.lua
 msgid "TOO FAINT ON THE PAGE"
-msgstr ""
+msgstr "TROP PÂLE SUR LA PAGE"
 
 #: cyberui/screens/colourpick.lua
 msgid "HEX"
-msgstr ""
+msgstr "HEX"
 
 #: cyberui/screens/colourpick.lua
 msgid "Colour code"
-msgstr ""
+msgstr "Code couleur"
 
 #: cyberui/screens/colourpick.lua
 msgid "Use"
-msgstr ""
+msgstr "Utiliser"
 
 #: cyberui/screens/colourpick.lua
 msgid "HUE"
-msgstr ""
+msgstr "TEINTE"
 
 #: cyberui/screens/colourpick.lua
 msgid "CANCEL"
-msgstr ""
+msgstr "ANNULER"
 
 #: cyberui/screens/colourpick.lua
 msgid "USE COLOUR"
-msgstr ""
+msgstr "UTILISER LA COULEUR"
 
 #: cyberui/screens/colourpick.lua
 msgid "Colour"
-msgstr ""
+msgstr "Couleur"
 
 #: cyberui/screens/colourpick.lua
 msgid "PICK // HSV"
-msgstr ""
+msgstr "CHOISIR // HSV"
 
 #: cyberui/screens/diagnostics.lua
 msgid "NOT REPORTED BY THIS DEVICE"
-msgstr ""
+msgstr "NON INDIQUÉ PAR CET APPAREIL"
 
 #: cyberui/screens/diagnostics.lua
 msgid "POWER CELL"
-msgstr ""
+msgstr "BATTERIE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CHARGING"
-msgstr ""
+msgstr "EN CHARGE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "FULL"
-msgstr ""
+msgstr "PLEINE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DISCHARGING"
-msgstr ""
+msgstr "EN DÉCHARGE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "STATE"
-msgstr ""
+msgstr "ÉTAT"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DRAIN"
-msgstr ""
+msgstr "CONSOMMATION"
 
 #: cyberui/screens/diagnostics.lua
 msgid "%.1f%%/H // ~%dH LEFT"
-msgstr ""
+msgstr "%.1f%%/H // ~%dH RESTANTES"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CHARGED"
-msgstr ""
+msgstr "CHARGE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CYCLES"
-msgstr ""
+msgstr "CYCLES"
 
 #: cyberui/screens/diagnostics.lua
 msgid "AUX CELL"
-msgstr ""
+msgstr "BATTERIE AUX"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CORE"
-msgstr ""
+msgstr "CŒUR"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CLOCK"
-msgstr ""
+msgstr "HORLOGE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CORES"
-msgstr ""
+msgstr "CŒURS"
 
 #: cyberui/screens/diagnostics.lua
 msgid "LOAD"
-msgstr ""
+msgstr "CHARGE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "MEM"
-msgstr ""
+msgstr "MÉM"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PROC"
-msgstr ""
+msgstr "PROC"
 
 #: cyberui/screens/diagnostics.lua
 msgid "%s // %d THR"
-msgstr ""
+msgstr "%s // %d THR"
 
 #: cyberui/screens/diagnostics.lua
 msgid "%d FILE // %s"
 msgid_plural "%d FILES // %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d FICHIER // %s"
+msgstr[1] "%d FICHIERS // %s"
 
 #: cyberui/screens/diagnostics.lua
 msgid "STORAGE"
-msgstr ""
+msgstr "STOCKAGE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "ACTIVE"
-msgstr ""
+msgstr "ACTIF"
 
 #: cyberui/screens/diagnostics.lua
 msgid "SEARCHING"
-msgstr ""
+msgstr "RECHERCHE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "NODE"
-msgstr ""
+msgstr "NŒUD"
 
 #: cyberui/screens/diagnostics.lua
 msgid "ADDR"
-msgstr ""
+msgstr "ADRESSE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "WI-FI"
-msgstr ""
+msgstr "WI-FI"
 
 #: cyberui/screens/diagnostics.lua cyberui/ui/controls.lua
 msgid "ON"
-msgstr ""
+msgstr "ON"
 
 #: cyberui/screens/diagnostics.lua cyberui/ui/controls.lua
 msgid "OFF"
-msgstr ""
+msgstr "OFF"
 
 #: cyberui/screens/diagnostics.lua
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 #: cyberui/screens/diagnostics.lua
 msgid "OPEN :%s"
-msgstr ""
+msgstr "OUVERT :%s"
 
 #: cyberui/screens/diagnostics.lua
 msgid "CLOSED"
-msgstr ""
+msgstr "FERMÉ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "TOUCH"
-msgstr ""
+msgstr "TACTILE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PEN"
-msgstr ""
+msgstr "STYLET"
 
 #: cyberui/screens/diagnostics.lua
 msgid "KEYS"
-msgstr ""
+msgstr "TOUCHES"
 
 #: cyberui/screens/diagnostics.lua
 msgid "KEYBOARD"
-msgstr ""
+msgstr "CLAVIER"
 
 #: cyberui/screens/diagnostics.lua
 msgid "OPTICS"
-msgstr ""
+msgstr "OPTIQUE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PANEL"
-msgstr ""
+msgstr "ÉCRAN"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DEPTH"
-msgstr ""
+msgstr "PROFONDEUR"
 
 #: cyberui/screens/diagnostics.lua
 msgid "COLOUR"
-msgstr ""
+msgstr "COULEUR"
 
 #: cyberui/screens/diagnostics.lua
 msgid "MONO"
-msgstr ""
+msgstr "MONO"
 
 #: cyberui/screens/diagnostics.lua cyberui/screens/settings.lua
 msgid "MODE"
-msgstr ""
+msgstr "MODE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PORTRAIT"
-msgstr ""
+msgstr "PORTRAIT"
 
 #: cyberui/screens/diagnostics.lua
 msgid "LANDSCAPE"
-msgstr ""
+msgstr "PAYSAGE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT ON"
-msgstr ""
+msgstr "INVERSION ACTIVE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT OFF"
-msgstr ""
+msgstr "INVERSION INACTIVE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INPUT"
-msgstr ""
+msgstr "ENTRÉE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DEVICE"
-msgstr ""
+msgstr "APPAREIL"
 
 #: cyberui/screens/diagnostics.lua
 msgid "AWAKE"
-msgstr ""
+msgstr "ÉVEILLÉ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "SLEEP"
-msgstr ""
+msgstr "VEILLE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "WAKES"
-msgstr ""
+msgstr "RÉVEILS"
 
 #: cyberui/screens/diagnostics.lua
 msgid "SLEPT AT"
-msgstr ""
+msgstr "MIS EN VEILLE À"
 
 #: cyberui/screens/diagnostics.lua
 msgid "MODULES %d/%d"
-msgstr ""
+msgstr "MODULES %d/%d"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DICTS %d"
-msgstr ""
+msgstr "DICTIONNAIRES %d"
 
 #: cyberui/screens/diagnostics.lua
 msgid "FONTS %d"
-msgstr ""
+msgstr "POLICES %d"
 
 #: cyberui/screens/diagnostics.lua
 msgid "Diagnostics"
-msgstr ""
+msgstr "Diagnostic"
 
 #: cyberui/screens/diagnostics.lua
 msgid "RESCAN"
-msgstr ""
+msgstr "NOUVEAU SCAN"
 
 #: cyberui/screens/dossier.lua
 msgid "READING"
-msgstr ""
+msgstr "LECTURE"
 
 #: cyberui/screens/dossier.lua
 msgid "ON HOLD"
-msgstr ""
+msgstr "EN ATTENTE"
 
 #: cyberui/screens/dossier.lua
 msgid "FORMAT"
-msgstr ""
+msgstr "FORMAT"
 
 #: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
 msgid "PAGES"
-msgstr ""
+msgstr "PAGES"
 
 #: cyberui/screens/dossier.lua
 msgid "ADDED"
-msgstr ""
+msgstr "AJOUTÉ"
 
 #: cyberui/screens/dossier.lua
 msgid "OPENED"
-msgstr ""
+msgstr "OUVERT"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
-msgstr ""
+msgstr "COLLECTIONS"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
-msgstr ""
+msgstr "DÉCHIFFRÉ %d%%"
 
 #: cyberui/screens/dossier.lua
 msgid "READ %s // %dD // %d PG/H%s"
-msgstr ""
+msgstr "LU %s // %dJ // %d PAG/H%s"
 
 #: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
-msgstr ""
+msgstr " // %s RESTANTES"
 
 #: cyberui/screens/dossier.lua
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "RÉSUMÉ"
 
 #: cyberui/screens/dossier.lua
 msgid "No description in this book's details."
-msgstr ""
+msgstr "Pas de description dans les détails de ce livre."
 
 #: cyberui/screens/dossier.lua
 msgid "HIGHLIGHTS"
-msgstr ""
+msgstr "SURLIGNAGES"
 
 #: cyberui/screens/dossier.lua
 msgid "NOTES"
-msgstr ""
+msgstr "NOTES"
 
 #: cyberui/screens/dossier.lua
 msgid "BOOKMARKS"
-msgstr ""
+msgstr "SIGNETS"
 
 #: cyberui/screens/dossier.lua
 msgid "SHOW FOLDER"
-msgstr ""
+msgstr "AFFICHER LE DOSSIER"
 
 #: cyberui/screens/dossier.lua
 msgid "FORGET"
-msgstr ""
+msgstr "OUBLIER"
 
 #: cyberui/screens/dossier.lua
 msgid "remove from history"
-msgstr ""
+msgstr "retirer de l'historique"
 
 #: cyberui/screens/dossier.lua
 msgid "OPEN FILE"
-msgstr ""
+msgstr "OUVRIR LE FICHIER"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "STATUS"
-msgstr ""
+msgstr "STATUT"
 
 #: cyberui/screens/dossier.lua
 msgid "COLLECTION +"
-msgstr ""
+msgstr "COLLECTION +"
 
 #: cyberui/screens/dossier.lua
 msgid "RENAME"
-msgstr ""
+msgstr "RENOMMER"
 
 #: cyberui/screens/dossier.lua
 msgid "MOVE TO"
-msgstr ""
+msgstr "DÉPLACER VERS"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DELETE"
-msgstr ""
+msgstr "SUPPRIMER"
 
 #: cyberui/screens/dossier.lua
 msgid "File dossier"
-msgstr ""
+msgstr "Fiche du fichier"
 
 #: cyberui/screens/filepick.lua cyberui/screens/library.lua cyberui/ui/cover.lua
 msgid "FOLDER"
-msgstr ""
+msgstr "DOSSIER"
 
 #: cyberui/screens/filepick.lua
 msgid "No pictures or folders here."
-msgstr ""
+msgstr "Aucune image ni dossier ici."
 
 #: cyberui/screens/filepick.lua
 msgid "Choose a file"
-msgstr ""
+msgstr "Choisir un fichier"
 
 #: cyberui/screens/filepick.lua
 msgid "PICK // FILE"
-msgstr ""
+msgstr "CHOISIR // FICHIER"
 
 #: cyberui/screens/fonts.lua
 msgid "Cyberpunk"
-msgstr ""
+msgstr "Cyberpunk"
 
 #: cyberui/screens/fonts.lua
 msgid "No fonts found on this device."
-msgstr ""
+msgstr "Aucune police trouvée sur cet appareil."
 
 #: cyberui/screens/fonts.lua
 msgid "FONTS"
-msgstr ""
+msgstr "POLICES"
 
 #: cyberui/screens/fonts.lua
 msgid "SETS"
-msgstr ""
+msgstr "JEUX"
 
 #: cyberui/screens/fonts.lua cyberui/screens/settings.lua
 msgid "Fonts"
-msgstr ""
+msgstr "Polices"
 
 #: cyberui/screens/fonts.lua
 msgid "%d AVAILABLE"
 msgid_plural "%d AVAILABLE"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d DISPONIBLE"
+msgstr[1] "%d DISPONIBLES"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
-msgstr ""
+msgstr "Statistiques"
 
 #: cyberui/screens/history.lua
 msgid "Streaks"
-msgstr ""
+msgstr "Régularité"
 
 #: cyberui/screens/history.lua
 msgid "Calendar"
-msgstr ""
+msgstr "Calendrier"
 
 #: cyberui/screens/history.lua
 msgid "Goal"
-msgstr ""
+msgstr "Objectif"
 
 #: cyberui/screens/history.lua
 msgid "%d FOLDER"
 msgid_plural "%d FOLDERS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d DOSSIER"
+msgstr[1] "%d DOSSIERS"
 
 #: cyberui/screens/history.lua
 msgid "Telemetry.log"
-msgstr ""
+msgstr "Telemetry.log"
 
 #: cyberui/screens/home.lua
 msgid "INDEX OK ..."
-msgstr ""
+msgstr "INDEX OK ..."
 
 #: cyberui/screens/home.lua cyberui/screens/library.lua
 msgid "%d BOOK"
 msgid_plural "%d BOOKS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d LIVRE"
+msgstr[1] "%d LIVRES"
 
 #: cyberui/screens/home.lua
 msgid "SCANNING"
-msgstr ""
+msgstr "ANALYSE"
 
 #: cyberui/screens/home.lua
 msgid "STREAK %d DAY // %d MIN TODAY // GOAL %d"
 msgid_plural "STREAK %d DAYS // %d MIN TODAY // GOAL %d"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "RÉGULARITÉ %d JOUR // %d MIN AUJOURD'HUI // OBJECTIF %d"
+msgstr[1] "RÉGULARITÉ %d JOURS // %d MIN AUJOURD'HUI // OBJECTIF %d"
 
 #: cyberui/screens/home.lua
 msgid "SYS"
-msgstr ""
+msgstr "SYS"
 
 #: cyberui/screens/home.lua
 msgid "ACTIVE_FILE"
-msgstr ""
+msgstr "FICHIER_ACTIF"
 
 #: cyberui/screens/home.lua
 msgid "NO ACTIVE FILE"
-msgstr ""
+msgstr "AUCUN FICHIER ACTIF"
 
 #: cyberui/screens/home.lua
 msgid "Open a book from the library and it will wait for you here."
-msgstr ""
+msgstr "Ouvrez un livre de la bibliothèque et il vous attendra ici."
 
 #: cyberui/screens/home.lua
 msgid "OPEN LIBRARY"
-msgstr ""
+msgstr "OUVRIR LA BIBLIOTHÈQUE"
 
 #: cyberui/screens/home.lua
 msgid "PG %d/%d"
-msgstr ""
+msgstr "PAG %d/%d"
 
 #: cyberui/screens/home.lua
 msgid "%d%% DECRYPTED"
-msgstr ""
+msgstr "%d%% DÉCHIFFRÉ"
 
 #: cyberui/screens/home.lua
 msgid "LAST OPEN %s"
-msgstr ""
+msgstr "DERNIÈRE OUVERTURE %s"
 
 #: cyberui/screens/home.lua
 msgid "NEVER OPENED"
-msgstr ""
+msgstr "JAMAIS OUVERT"
 
 #: cyberui/screens/home.lua
 msgid "RESUME"
-msgstr ""
+msgstr "REPRENDRE"
 
 #: cyberui/screens/home.lua
 msgid "OPEN"
-msgstr ""
+msgstr "OUVRIR"
 
 #: cyberui/screens/home.lua
 msgid "RECENT_FILES"
-msgstr ""
+msgstr "FICHIERS_RÉCENTS"
 
 #: cyberui/screens/home.lua
 msgid "Books you open show up here."
-msgstr ""
+msgstr "Les livres que vous ouvrez apparaissent ici."
 
 #: cyberui/screens/iconpick.lua
 msgid "Add your own SVGs to the cyberui-icons folder in KOReader's settings folder."
-msgstr ""
+msgstr "Ajoutez vos propres SVG au dossier cyberui-icons dans le dossier de réglages de KOReader."
 
 #: cyberui/screens/iconpick.lua
 msgid "GLYPHS"
-msgstr ""
+msgstr "GLYPHES"
 
 #: cyberui/screens/iconpick.lua cyberui/screens/launchedit.lua
 msgid "Icon"
-msgstr ""
+msgstr "Icône"
 
 #: cyberui/screens/iconpick.lua
 msgid "PICK // GLYPH"
-msgstr ""
+msgstr "CHOISIR // GLYPHE"
 
 #: cyberui/screens/launchedit.lua
 msgid "Button"
-msgstr ""
+msgstr "Bouton"
 
 #: cyberui/screens/launchedit.lua
 msgid "Gone"
-msgstr ""
+msgstr "Disparu"
 
 #: cyberui/screens/launchedit.lua
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
 #: cyberui/screens/launchedit.lua
 msgid "Button name"
-msgstr ""
+msgstr "Nom du bouton"
 
 #: cyberui/screens/launchedit.lua
 msgid "NAME"
-msgstr ""
+msgstr "NOM"
 
 #: cyberui/screens/launchedit.lua cyberui/screens/settings.lua
 msgid "Choose"
-msgstr ""
+msgstr "Choisir"
 
 #: cyberui/screens/launchedit.lua
 msgid "Opens"
-msgstr ""
+msgstr "Ouvre"
 
 #: cyberui/screens/launchedit.lua cyberui/screens/settings.lua
 msgid "Pick"
-msgstr ""
+msgstr "Choisir"
 
 #: cyberui/screens/launchedit.lua
 msgid "RESTORE THE ORIGINAL"
-msgstr ""
+msgstr "RESTAURER L'ORIGINAL"
 
 #: cyberui/screens/launchedit.lua
 msgid "DELETE THIS BUTTON"
-msgstr ""
+msgstr "SUPPRIMER CE BOUTON"
 
 #: cyberui/screens/launchedit.lua
 msgid "BUILT-IN // REPLACE"
-msgstr ""
+msgstr "INTÉGRÉ // REMPLACER"
 
 #: cyberui/screens/launchedit.lua
 msgid "CUSTOM // BUTTON"
-msgstr ""
+msgstr "PERSONNALISÉ // BOUTON"
 
 #: cyberui/screens/launcher.lua
 msgid "HIDDEN"
-msgstr ""
+msgstr "MASQUÉ"
 
 #: cyberui/screens/launcher.lua
 msgid "+ ADD BUTTON"
-msgstr ""
+msgstr "+ AJOUTER UN BOUTON"
 
 #: cyberui/screens/launcher.lua
 msgid "The launcher is full"
-msgstr ""
+msgstr "Le lanceur est plein"
 
 #: cyberui/screens/launcher.lua cyberui/screens/settings.lua
 msgid "Launcher"
-msgstr ""
+msgstr "Lanceur"
 
 #: cyberui/screens/launcher.lua
 msgid "ADD // MOVE // HIDE // EDIT"
-msgstr ""
+msgstr "AJOUTER // DÉPLACER // MASQUER // MODIFIER"
 
 #: cyberui/screens/libmenu.lua
 msgid "Recent"
-msgstr ""
+msgstr "Récents"
 
 #: cyberui/screens/libmenu.lua
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: cyberui/screens/libmenu.lua
 msgid "Progress"
-msgstr ""
+msgstr "Progression"
 
 #: cyberui/screens/libmenu.lua
 msgid "Pages"
-msgstr ""
+msgstr "Pages"
 
 #: cyberui/screens/libmenu.lua
 msgid "Size"
-msgstr ""
+msgstr "Taille"
 
 #: cyberui/screens/libmenu.lua
 msgid "Reverse order"
-msgstr ""
+msgstr "Ordre inverse"
 
 #: cyberui/screens/libmenu.lua
 msgid "Sort"
-msgstr ""
+msgstr "Trier"
 
 #: cyberui/screens/libmenu.lua
 msgid "Group by"
-msgstr ""
+msgstr "Grouper par"
 
 #: cyberui/screens/libmenu.lua
 msgid "Any"
-msgstr ""
+msgstr "Tous"
 
 #: cyberui/screens/libmenu.lua
 msgid "Collection"
-msgstr ""
+msgstr "Collection"
 
 #: cyberui/screens/libmenu.lua
 msgid "With notes"
-msgstr ""
+msgstr "Avec notes"
 
 #: cyberui/screens/libmenu.lua
 msgid "Only books with highlights or notes"
-msgstr ""
+msgstr "Uniquement les livres avec surlignages ou notes"
 
 #: cyberui/screens/libmenu.lua
 msgid "Clear filters"
-msgstr ""
+msgstr "Effacer les filtres"
 
 #: cyberui/screens/libmenu.lua
 msgid "Filters"
-msgstr ""
+msgstr "Filtres"
 
 #: cyberui/screens/libmenu.lua
 msgid "Save this view"
-msgstr ""
+msgstr "Enregistrer cette vue"
 
 #: cyberui/screens/libmenu.lua
 msgid "Name this view"
-msgstr ""
+msgstr "Nommer cette vue"
 
 #: cyberui/screens/libmenu.lua
 msgid "View saved"
-msgstr ""
+msgstr "Vue enregistrée"
 
 #: cyberui/screens/libmenu.lua
 msgid "Delete a view"
-msgstr ""
+msgstr "Supprimer une vue"
 
 #: cyberui/screens/libmenu.lua
 msgid "View deleted"
-msgstr ""
+msgstr "Vue supprimée"
 
 #: cyberui/screens/libmenu.lua
 msgid "Saved views"
-msgstr ""
+msgstr "Vues enregistrées"
 
 #: cyberui/screens/libmenu.lua
 msgid "Jump to"
-msgstr ""
+msgstr "Aller à"
 
 #: cyberui/screens/libmenu.lua
 msgid "On"
-msgstr ""
+msgstr "Activé"
 
 #: cyberui/screens/libmenu.lua cyberui/sleep.lua
 msgid "Off"
-msgstr ""
+msgstr "Désactivé"
 
 #: cyberui/screens/libmenu.lua
 msgid "%d saved"
 msgid_plural "%d saved"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d enregistrée"
+msgstr[1] "%d enregistrées"
 
 #: cyberui/screens/libmenu.lua
 msgid "Jump to letter"
-msgstr ""
+msgstr "Aller à la lettre"
 
 #: cyberui/screens/libmenu.lua
 msgid "A to Z in the current order"
-msgstr ""
+msgstr "De A à Z dans l'ordre actuel"
 
 #: cyberui/screens/libmenu.lua
 msgid "Select books"
-msgstr ""
+msgstr "Sélectionner des livres"
 
 #: cyberui/screens/libmenu.lua
 msgid "Status, collections, move or delete many"
-msgstr ""
+msgstr "Statut, collections, déplacer ou supprimer plusieurs livres"
 
 #: cyberui/screens/libmenu.lua cyberui/screens/trash.lua
 msgid "Trash"
-msgstr ""
+msgstr "Corbeille"
 
 #: cyberui/screens/libmenu.lua
 msgid "%d waiting"
 msgid_plural "%d waiting"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d en attente"
+msgstr[1] "%d en attente"
 
 #: cyberui/screens/libmenu.lua
 msgid "KOReader browser"
-msgstr ""
+msgstr "Navigateur KOReader"
 
 #: cyberui/screens/libmenu.lua
 msgid "The stock file browser"
-msgstr ""
+msgstr "Le navigateur de fichiers d'origine"
 
 #: cyberui/screens/library.lua
 msgid "All"
-msgstr ""
+msgstr "Tous"
 
 #: cyberui/screens/library.lua cyberui/screens/search.lua
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #: cyberui/screens/library.lua
 msgid "New in %s"
-msgstr ""
+msgstr "Nouveaux dans %s"
 
 #: cyberui/screens/library.lua
 msgid "Folder"
-msgstr ""
+msgstr "Dossier"
 
 #: cyberui/screens/library.lua
 msgid "To keep books together"
-msgstr ""
+msgstr "Pour garder des livres ensemble"
 
 #: cyberui/screens/library.lua
 msgid "Nothing starts with %s here"
-msgstr ""
+msgstr "Rien ne commence par %s ici"
 
 #: cyberui/screens/library.lua
 msgid "Pick some books first"
-msgstr ""
+msgstr "Choisissez d'abord quelques livres"
 
 #: cyberui/screens/library.lua
 msgid "%d PICKED"
 msgid_plural "%d PICKED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d CHOISI"
+msgstr[1] "%d CHOISIS"
 
 #: cyberui/screens/library.lua cyberui/screens/shards.lua
 msgid "ALL"
-msgstr ""
+msgstr "TOUS"
 
 #: cyberui/screens/library.lua
 msgid "CACHE +"
-msgstr ""
+msgstr "COLLECTION +"
 
 #: cyberui/screens/library.lua
 msgid "MOVE"
-msgstr ""
+msgstr "DÉPLACER"
 
 #: cyberui/screens/library.lua
 msgid "[X]"
-msgstr ""
+msgstr "[X]"
 
 #: cyberui/screens/library.lua
 msgid "[ ]"
-msgstr ""
+msgstr "[ ]"
 
 #: cyberui/screens/library.lua
 msgid "PICKED"
-msgstr ""
+msgstr "CHOISIS"
 
 #: cyberui/screens/library.lua
 msgid "TAP"
-msgstr ""
+msgstr "TOUCHER"
 
 #: cyberui/screens/library.lua
 msgid "+ Folder"
-msgstr ""
+msgstr "+ Dossier"
 
 #: cyberui/screens/library.lua
 msgid "No folders here. Make one with + Folder, or move it here."
-msgstr ""
+msgstr "Pas de dossier ici. Créez-en un avec + Dossier, ou déplacez-en un ici."
 
 #: cyberui/screens/library.lua
 msgid "NO MATCHES"
-msgstr ""
+msgstr "AUCUN RÉSULTAT"
 
 #: cyberui/screens/library.lua
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
-msgstr ""
+msgstr "Rien ici pour l'instant. Copiez des livres ou créez un dossier avec + Nouvelle."
 
 #: cyberui/screens/library.lua
 msgid "SECTOR"
-msgstr ""
+msgstr "SECTEUR"
 
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
-msgstr ""
+msgstr "QUAND VOUS LISEZ // LUN-DIM PAR HEURE // %s"
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
 msgid "TIME"
-msgstr ""
+msgstr "TEMPS"
 
 #: cyberui/screens/log/calendar.lua
 msgid "GRID"
-msgstr ""
+msgstr "GRILLE"
 
 #: cyberui/screens/log/calendar.lua
 msgid "SKYLINE"
-msgstr ""
+msgstr "SKYLINE"
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua
 msgid "HEIGHT = PAGES // LIT WINDOWS = TIME READ"
-msgstr ""
+msgstr "HAUTEUR = PAGES // FENÊTRES ALLUMÉES = TEMPS DE LECTURE"
 
 #: cyberui/screens/log/calendar.lua
 msgid "%s // %d PAGE THIS MONTH"
 msgid_plural "%s // %d PAGES THIS MONTH"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s // %d PAGE CE MOIS-CI"
+msgstr[1] "%s // %d PAGES CE MOIS-CI"
 
 #: cyberui/screens/log/goal.lua
 msgid "FINISHED"
-msgstr ""
+msgstr "TERMINÉS"
 
 #: cyberui/screens/log/goal.lua
 msgid "%d%% OF THE GOAL"
-msgstr ""
+msgstr "%d%% DE L'OBJECTIF"
 
 #: cyberui/screens/log/goal.lua
 msgid "ACHIEVED"
-msgstr ""
+msgstr "OBTENUS"
 
 #: cyberui/screens/log/goal.lua
 msgid "NONE YET"
-msgstr ""
+msgstr "AUCUN POUR L'INSTANT"
 
 #: cyberui/screens/log/goal.lua
 msgid "YEAR GOAL"
-msgstr ""
+msgstr "OBJECTIF ANNUEL"
 
 #: cyberui/screens/log/goal.lua
 msgid "NO BOOKS FINISHED THIS YEAR. MARK A BOOK DONE AND IT SHELVES HERE."
-msgstr ""
+msgstr "AUCUN LIVRE TERMINÉ CETTE ANNÉE. MARQUEZ UN LIVRE COMME TERMINÉ ET IL SERA RANGÉ ICI, SUR L'ÉTAGÈRE."
 
 #: cyberui/screens/log/goal.lua
 msgid "SHELF"
-msgstr ""
+msgstr "ÉTAGÈRE"
 
 #: cyberui/screens/log/period.lua
 msgid "NOTHING BEFORE"
-msgstr ""
+msgstr "RIEN AVANT"
 
 #: cyberui/screens/log/period.lua
 msgid "+%d%% VS BEFORE"
-msgstr ""
+msgstr "+%d%% VS AVANT"
 
 #: cyberui/screens/log/period.lua
 msgid "%d%% VS BEFORE"
-msgstr ""
+msgstr "%d%% VS AVANT"
 
 #: cyberui/screens/log/period.lua
 msgid "Week"
-msgstr ""
+msgstr "Semaine"
 
 #: cyberui/screens/log/period.lua
 msgid "Month"
-msgstr ""
+msgstr "Mois"
 
 #: cyberui/screens/log/period.lua
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: cyberui/screens/log/period.lua
 msgid "%d DAY READ"
 msgid_plural "%d DAYS READ"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d JOUR LU"
+msgstr[1] "%d JOURS LUS"
 
 #: cyberui/screens/log/period.lua
 msgid "AVG / DAY"
-msgstr ""
+msgstr "MOY. / JOUR"
 
 #: cyberui/screens/log/period.lua
 msgid "OVER THE PERIOD"
-msgstr ""
+msgstr "SUR LA PÉRIODE"
 
 #: cyberui/screens/log/period.lua
 msgid "%s = %d MIN"
-msgstr ""
+msgstr "%s = %d MIN"
 
 #: cyberui/screens/log/period.lua
 msgid "BEST %s"
-msgstr ""
+msgstr "MEILLEUR %s"
 
 #: cyberui/screens/log/period.lua
 msgid "%s = %d PG"
-msgstr ""
+msgstr "%s = %d PAG"
 
 #: cyberui/screens/log/period.lua
 msgid "BEST %d PG"
-msgstr ""
+msgstr "MEILLEUR %d PAG"
 
 #: cyberui/screens/log/scope.lua
 msgid "Count the whole library"
-msgstr ""
+msgstr "Compter toute la bibliothèque"
 
 #: cyberui/screens/log/scope.lua
 msgid "Counting the whole library"
-msgstr ""
+msgstr "Comptage de toute la bibliothèque"
 
 #: cyberui/screens/log/scope.lua
 msgid "Tap to stop counting it"
-msgstr ""
+msgstr "Touchez pour arrêter de le compter"
 
 #: cyberui/screens/log/scope.lua
 msgid "Add a folder"
-msgstr ""
+msgstr "Ajouter un dossier"
 
 #: cyberui/screens/log/scope.lua
 msgid "Count only the books in chosen folders"
-msgstr ""
+msgstr "Ne compter que les livres des dossiers choisis"
 
 #: cyberui/screens/log/scope.lua
 msgid "Count this folder"
-msgstr ""
+msgstr "Compter ce dossier"
 
 #: cyberui/screens/log/scope.lua
 msgid "Statistics scope"
-msgstr ""
+msgstr "Périmètre des statistiques"
 
 #: cyberui/screens/log/streaks.lua
 msgid "DAY STREAK"
-msgstr ""
+msgstr "RÉGULARITÉ EN JOURS"
 
 #: cyberui/screens/log/streaks.lua
 msgid "BEST %d"
-msgstr ""
+msgstr "MEILLEUR %d"
 
 #: cyberui/screens/log/streaks.lua
 msgid "WEEK STREAK"
-msgstr ""
+msgstr "RÉGULARITÉ EN SEMAINES"
 
 #: cyberui/screens/log/streaks.lua cyberui/ui/idcard.lua
 msgid "HOURS"
-msgstr ""
+msgstr "HEURES"
 
 #: cyberui/screens/log/streaks.lua
 msgid "%d PAGE"
 msgid_plural "%d PAGES"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d PAGE"
+msgstr[1] "%d PAGES"
 
 #: cyberui/screens/log/streaks.lua
 msgid "RECORDS"
-msgstr ""
+msgstr "RECORDS"
 
 #: cyberui/screens/log/streaks.lua
 msgid "LONGEST DAY"
-msgstr ""
+msgstr "JOUR LE PLUS LONG"
 
 #: cyberui/screens/log/streaks.lua
 msgid "MOST PAGES"
-msgstr ""
+msgstr "LE PLUS DE PAGES"
 
 #: cyberui/screens/log/streaks.lua cyberui/ui/idcard.lua
 msgid "DAYS READ"
-msgstr ""
+msgstr "JOURS DE LECTURE"
 
 #: cyberui/screens/log/streaks.lua cyberui/ui/idcard.lua
 msgid "SINCE"
-msgstr ""
+msgstr "DEPUIS"
 
 #: cyberui/screens/log/streaks.lua
 msgid "CLEARANCE LEVEL %02d"
-msgstr ""
+msgstr "NIVEAU D'HABILITATION %02d"
 
 #: cyberui/screens/log/streaks.lua
 msgid "NEXT %dH // %dH LEFT"
-msgstr ""
+msgstr "PROCHAIN %dH // %dH RESTANTES"
 
 #: cyberui/screens/log/streaks.lua
 msgid "MAXED"
-msgstr ""
+msgstr "AU MAXIMUM"
 
 #: cyberui/screens/log/week.lua
 msgid "last 7 days"
-msgstr ""
+msgstr "7 derniers jours"
 
 #: cyberui/screens/log/week.lua
 msgid "STREAK"
-msgstr ""
+msgstr "RÉGULARITÉ"
 
 #: cyberui/screens/log/week.lua
 msgid "day, best %d"
 msgid_plural "days, best %d"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "jour, meilleur %d"
+msgstr[1] "jours, meilleur %d"
 
 #: cyberui/screens/log/week.lua
 msgid "HEIGHT = PAGES // LIT WINDOWS = TIME"
-msgstr ""
+msgstr "HAUTEUR = PAGES // FENÊTRES ALLUMÉES = TEMPS"
 
 #: cyberui/screens/log/week.lua
 msgid "SESSION LOG"
-msgstr ""
+msgstr "JOURNAL DES SESSIONS"
 
 #: cyberui/screens/log/week.lua
 msgid "%dM // %d PG"
-msgstr ""
+msgstr "%dMIN // %d PAG"
 
 #: cyberui/screens/log/week.lua
 msgid "No reading recorded yet. Statistics must be on."
-msgstr ""
+msgstr "Aucune lecture enregistrée. Les statistiques doivent être activées."
 
 #: cyberui/screens/photocrop.lua
 msgid "PICK // FRAME"
-msgstr ""
+msgstr "CHOISIR // CADRER"
 
 #: cyberui/screens/photocrop.lua
 msgid "Nothing to show"
-msgstr ""
+msgstr "Rien à afficher"
 
 #: cyberui/screens/photocrop.lua
 msgid "DRAG THE PICTURE TO MOVE IT"
-msgstr ""
+msgstr "FAITES GLISSER L'IMAGE POUR LA DÉPLACER"
 
 #: cyberui/screens/photocrop.lua
 msgid "ZOOM"
-msgstr ""
+msgstr "ZOOM"
 
 #: cyberui/screens/photocrop.lua
 msgid "CENTRE"
-msgstr ""
+msgstr "CENTRER"
 
 #: cyberui/screens/photocrop.lua
 msgid "USE THIS PHOTO"
-msgstr ""
+msgstr "UTILISER CETTE PHOTO"
 
 #: cyberui/screens/photocrop.lua
 msgid "Frame your photo"
-msgstr ""
+msgstr "Cadrez votre photo"
 
 #: cyberui/screens/search.lua
 msgid "Search the library"
-msgstr ""
+msgstr "Rechercher dans la bibliothèque"
 
 #: cyberui/screens/search.lua
 msgid "title, author or file name"
-msgstr ""
+msgstr "titre, auteur ou nom de fichier"
 
 #: cyberui/screens/search.lua
 msgid "type to search"
-msgstr ""
+msgstr "saisissez pour rechercher"
 
 #: cyberui/screens/settings.lua
 msgid "Look"
-msgstr ""
+msgstr "Apparence"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
-msgstr ""
+msgstr "Couvertures"
 
 #: cyberui/screens/settings.lua
 msgid "Speed"
-msgstr ""
+msgstr "Vitesse"
 
 #: cyberui/screens/settings.lua
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
 #: cyberui/screens/settings.lua
 msgid "COLOUR SCHEME"
-msgstr ""
+msgstr "SCHÉMA DE COULEURS"
 
 #: cyberui/screens/settings.lua
 msgid "Light"
-msgstr ""
+msgstr "Clair"
 
 #: cyberui/screens/settings.lua
 msgid "Dark"
-msgstr ""
+msgstr "Sombre"
 
 #: cyberui/screens/settings.lua
 msgid "Accent"
-msgstr ""
+msgstr "Accent"
 
 #: cyberui/screens/settings.lua
 msgid "Buttons, badges and the active tab"
-msgstr ""
+msgstr "Boutons, badges et onglet actif"
 
 #: cyberui/screens/settings.lua
 msgid "Second accent"
-msgstr ""
+msgstr "Second accent"
 
 #: cyberui/screens/settings.lua
 msgid "The date block and highlights"
-msgstr ""
+msgstr "Le bloc de date et les surlignages"
 
 #: cyberui/screens/settings.lua cyberui/ui/progress.lua cyberui/ui/statusbar.lua
 msgid "Book progress"
-msgstr ""
+msgstr "Progression du livre"
 
 #: cyberui/screens/settings.lua
 msgid "On home and in a book's details; hold the bar on home to change it too"
-msgstr ""
+msgstr "Sur l'accueil et dans les détails du livre ; maintenez la barre sur l'accueil pour la changer aussi"
 
 #: cyberui/screens/settings.lua
 msgid "STYLE"
-msgstr ""
+msgstr "STYLE"
 
 #: cyberui/screens/settings.lua cyberui/ui/progress.lua
 msgid "ASCII"
-msgstr ""
+msgstr "ASCII"
 
 #: cyberui/screens/settings.lua
 msgid "Image"
-msgstr ""
+msgstr "Image"
 
 #: cyberui/screens/settings.lua
 msgid "Card"
-msgstr ""
+msgstr "Carte"
 
 #: cyberui/screens/settings.lua
 msgid "Characters"
-msgstr ""
+msgstr "Caractères"
 
 #: cyberui/screens/settings.lua
 msgid "What ASCII covers are drawn with"
-msgstr ""
+msgstr "Avec quoi les couvertures ASCII sont dessinées"
 
 #: cyberui/screens/settings.lua
 msgid "SIZE IN THE LIBRARY"
-msgstr ""
+msgstr "TAILLE DANS LA BIBLIOTHÈQUE"
 
 #: cyberui/screens/settings.lua
 msgid "Stretch covers"
-msgstr ""
+msgstr "Étirer les couvertures"
 
 #: cyberui/screens/settings.lua
 msgid "Fill each cover frame, even if the proportions change"
-msgstr ""
+msgstr "Remplir chaque cadre de couverture, même si les proportions changent"
 
 #: cyberui/screens/settings.lua
 msgid "ASCII SLEEP SCREEN"
-msgstr ""
+msgstr "ÉCRAN DE VEILLE ASCII"
 
 #: cyberui/screens/settings.lua
 msgid "All fonts"
-msgstr ""
+msgstr "Toutes les polices"
 
 #: cyberui/screens/settings.lua
 msgid "%d cyberpunk set, or any font installed on this device"
 msgid_plural "%d cyberpunk sets, or any font installed on this device"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d jeu cyberpunk, ou toute police installée sur cet appareil"
+msgstr[1] "%d jeux cyberpunk, ou toute police installée sur cet appareil"
 
 #: cyberui/screens/settings.lua
 msgid "Text size"
-msgstr ""
+msgstr "Taille du texte"
 
 #: cyberui/screens/settings.lua
 msgid "Makes every text in CyberUI larger or smaller"
-msgstr ""
+msgstr "Agrandit ou réduit tout le texte de CyberUI"
 
 #: cyberui/screens/settings.lua
 msgid "Banner text"
-msgstr ""
+msgstr "Texte de la bannière"
 
 #: cyberui/screens/settings.lua
 msgid "Banner"
-msgstr ""
+msgstr "Bannière"
 
 #: cyberui/screens/settings.lua
 msgid "Change handle"
-msgstr ""
+msgstr "Changer de pseudo"
 
 #: cyberui/screens/settings.lua
 msgid "Banner top line"
-msgstr ""
+msgstr "Ligne supérieure de la bannière"
 
 #: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
-msgstr ""
+msgstr "Démarrer avec CyberUI"
 
 #: cyberui/screens/settings.lua
 msgid "Open CyberUI when KOReader starts and after closing a book"
-msgstr ""
+msgstr "Ouvrir CyberUI au démarrage de KOReader et après la fermeture d'un livre"
 
 #: cyberui/screens/settings.lua
 msgid "Jack-in card"
-msgstr ""
+msgstr "Carte de jack-in"
 
 #: cyberui/screens/settings.lua
 msgid "A card with the book shown while it opens"
-msgstr ""
+msgstr "Une carte avec le livre affichée pendant son ouverture"
 
 #: cyberui/screens/settings.lua cyberui/screens/shard.lua
 msgid "Data shard"
-msgstr ""
+msgstr "Éclat de données"
 
 #: cyberui/screens/settings.lua
 msgid "A highlight from your books on home, on by default (tall screens only); hold it there for another"
-msgstr ""
+msgstr "Un passage surligné de vos livres sur l'accueil, activé par défaut (grands écrans seulement) ; maintenez-le pour en voir un autre"
 
 #: cyberui/screens/settings.lua
 msgid "Operator card"
-msgstr ""
+msgstr "Carte d'opérateur"
 
 #: cyberui/screens/settings.lua
 msgid "Your face, handle and rank in the banner on home; tap the face to open the card"
-msgstr ""
+msgstr "Votre visage, pseudo et rang dans la bannière de l'accueil ; touchez le visage pour ouvrir la carte"
 
 #: cyberui/screens/settings.lua
 msgid "The buttons on home: hide, reorder, replace or add your own that open anything in KOReader"
-msgstr ""
+msgstr "Les boutons de l'accueil : masquez, réordonnez, remplacez ou ajoutez les vôtres qui ouvrent n'importe quoi dans KOReader"
 
 #: cyberui/screens/settings.lua
 msgid "The folder the Library tab starts in; KOReader's home folder stays the top of the library"
-msgstr ""
+msgstr "Le dossier où commence l'onglet Bibliothèque ; le dossier d'accueil de KOReader reste la racine de la bibliothèque"
 
 #: cyberui/screens/settings.lua
 msgid "Home folder"
-msgstr ""
+msgstr "Dossier d'accueil"
 
 #: cyberui/screens/settings.lua
 msgid "Pick a folder"
-msgstr ""
+msgstr "Choisir un dossier"
 
 #: cyberui/screens/settings.lua
 msgid "Double tap to open"
-msgstr ""
+msgstr "Double toucher pour ouvrir"
 
 #: cyberui/screens/settings.lua
 msgid "In the library a book opens on its second tap, so a stray touch does not start it"
-msgstr ""
+msgstr "Dans la bibliothèque, un livre s'ouvre au second toucher, pour qu'un contact accidentel ne le lance pas"
 
 #: cyberui/screens/settings.lua cyberui/screens/topbar.lua
 msgid "Top bar"
-msgstr ""
+msgstr "Barre supérieure"
 
 #: cyberui/screens/settings.lua
 msgid "The tag and the readouts across the top of every screen"
-msgstr ""
+msgstr "L'étiquette et les indicateurs en haut de chaque écran"
 
 #: cyberui/screens/settings.lua
 msgid "Change"
-msgstr ""
+msgstr "Changer"
 
 #: cyberui/screens/settings.lua
 msgid "The small line above the banner, and your handle"
-msgstr ""
+msgstr "La petite ligne au-dessus de la bannière, et votre pseudo"
 
 #: cyberui/screens/settings.lua
 msgid "The big line at the top of home; hold it there to change it too"
-msgstr ""
+msgstr "La grande ligne en haut de l'accueil ; maintenez-la pour la changer aussi"
 
 #: cyberui/screens/settings.lua
 msgid "Recent covers"
-msgstr ""
+msgstr "Couvertures récentes"
 
 #: cyberui/screens/settings.lua
 msgid "Cover size in the recent list on home"
-msgstr ""
+msgstr "Taille des couvertures dans la liste des récents de l'accueil"
 
 #: cyberui/screens/settings.lua
 msgid "Daily goal"
-msgstr ""
+msgstr "Objectif quotidien"
 
 #: cyberui/screens/settings.lua
 msgid "Minutes of reading a day, shown on home and in the log"
-msgstr ""
+msgstr "Minutes de lecture par jour, affichées sur l'accueil et dans le journal"
 
 #: cyberui/screens/settings.lua
 msgid "%d MIN"
-msgstr ""
+msgstr "%d MIN"
 
 #: cyberui/screens/settings.lua
 msgid "KOReader menu"
-msgstr ""
+msgstr "Menu KOReader"
 
 #: cyberui/screens/settings.lua
 msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down from the top"
-msgstr ""
+msgstr "Au style de CyberUI (désactivé : celui de KOReader) ; s'ouvre aussi en glissant vers le bas depuis le haut"
 
 #: cyberui/screens/settings.lua cyberui/targetlist.lua
 msgid "File browser"
-msgstr ""
+msgstr "Navigateur de fichiers"
 
 #: cyberui/screens/settings.lua
 msgid "Leave CyberUI for KOReader's own file browser"
-msgstr ""
+msgstr "Quitter CyberUI pour le navigateur de fichiers de KOReader"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"
-msgstr ""
+msgstr "Rafraîchissement complet tous les"
 
 #: cyberui/screens/settings.lua
 msgid "Dark screens ghost more, so they flash sooner (0 never)"
-msgstr ""
+msgstr "Les écrans sombres gardent plus de traces, donc clignotent plus tôt (0 jamais)"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh every"
-msgstr ""
+msgstr "Rafraîchissement complet en mode sombre"
 
 #: cyberui/screens/settings.lua
 msgid "Screens between flashing refreshes that clear ghosting (0 never)"
-msgstr ""
+msgstr "Écrans entre les rafraîchissements clignotants qui effacent les traces (0 jamais)"
 
 #: cyberui/screens/settings.lua
 msgid "Keep the book open on Home"
-msgstr ""
+msgstr "Garder le livre ouvert sur l'accueil"
 
 #: cyberui/screens/settings.lua
 msgid "Home shows at once and the same book opens again with no loading; the book is closed later"
-msgstr ""
+msgstr "L'accueil s'affiche aussitôt et le même livre se rouvre sans chargement ; le livre est fermé plus tard"
 
 #: cyberui/screens/settings.lua
 msgid "PARKING // WHAT IT COSTS"
-msgstr ""
+msgstr "MISE DE CÔTÉ // CE QUE ÇA COÛTE"
 
 #: cyberui/screens/settings.lua
 msgid "Going home puts the book away instead of closing it. KOReader closes it for real when you open a different book, after 30 seconds of not touching the screen, or when you open KOReader's menu or its file browser."
-msgstr ""
+msgstr "Aller à l'accueil met le livre de côté au lieu de le fermer. KOReader le ferme vraiment quand vous ouvrez un autre livre, après 30 secondes sans toucher l'écran, ou quand vous ouvrez le menu de KOReader ou son navigateur de fichiers."
 
 #: cyberui/screens/settings.lua
 msgid "- A different book, KOReader's menu and the file browser take a moment longer, since the close happens then."
-msgstr ""
+msgstr "- Un autre livre, le menu de KOReader et le navigateur de fichiers prennent un instant de plus, car la fermeture a lieu à ce moment-là."
 
 #: cyberui/screens/settings.lua
 msgid "- The book stays in memory while it is put away."
-msgstr ""
+msgstr "- Le livre reste en mémoire tant qu'il est mis de côté."
 
 #: cyberui/screens/settings.lua
 msgid "- Sleeping soon after leaving a book shows that book's sleep screen."
-msgstr ""
+msgstr "- Mettre en veille peu après avoir quitté un livre affiche l'écran de veille de ce livre."
 
 #: cyberui/screens/settings.lua
 msgid "- KOReader's own gestures (corner taps, edge swipes) do not work on Home until the book is closed."
-msgstr ""
+msgstr "- Les gestes propres à KOReader (touches dans les coins, glissements depuis les bords) ne fonctionnent pas sur l'accueil tant que le livre n'est pas fermé."
 
 #: cyberui/screens/settings.lua
 msgid "- A book read in landscape is closed the normal way."
-msgstr ""
+msgstr "- Un livre lu en paysage est fermé normalement."
 
 #: cyberui/screens/settings.lua
 msgid "Library index"
-msgstr ""
+msgstr "Index de la bibliothèque"
 
 #: cyberui/screens/settings.lua
 msgid "%d book indexed; rebuild after copying books over"
 msgid_plural "%d books indexed; rebuild after copying books over"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d livre indexé"
+msgstr[1] "%d livres indexés"
 
 #: cyberui/screens/settings.lua
 msgid "Rebuild"
-msgstr ""
+msgstr "Reconstruire"
 
 #: cyberui/screens/settings.lua
 msgid "%d book indexed"
 msgid_plural "%d books indexed"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d livre indexé ; reconstruisez après avoir copié des livres"
+msgstr[1] "%d livres indexés ; reconstruisez après avoir copié des livres"
 
 #: cyberui/screens/settings.lua
 msgid "HOW CYBERUI STAYS FAST"
-msgstr ""
+msgstr "COMMENT CYBERUI RESTE RAPIDE"
 
 #: cyberui/screens/settings.lua
 msgid "Home stays loaded while you read, so closing a book is a redraw, not a rebuild. Everything is drawn with flat shapes and refreshed only where it changed."
-msgstr ""
+msgstr "L'accueil reste chargé pendant que vous lisez, donc fermer un livre est un redessin, pas une reconstruction. Tout est dessiné avec des formes plates et rafraîchi uniquement là où ça a changé."
 
 #: cyberui/screens/settings.lua
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: cyberui/screens/settings.lua cyberui/screens/updates.lua
 msgid "Updates"
-msgstr ""
+msgstr "Mises à jour"
 
 #: cyberui/screens/settings.lua
 msgid "CyberUI %s is ready to install"
-msgstr ""
+msgstr "CyberUI %s est prêt à être installé"
 
 #: cyberui/screens/settings.lua
 msgid "New versions from GitHub, with their notes"
-msgstr ""
+msgstr "Nouvelles versions depuis GitHub, avec leurs notes"
 
 #: cyberui/screens/settings.lua
 msgid "Oxanium, Chakra Petch, Tomorrow, Rajdhani, Orbitron, Exo 2, Turret Road, Michroma, Electrolize, Audiowide, Wallpoet, Russo One, Iceland, VT323, Press Start 2P, Share Tech, Share Tech Mono and JetBrains Mono, SIL Open Font License"
-msgstr ""
+msgstr "Oxanium, Chakra Petch, Tomorrow, Rajdhani, Orbitron, Exo 2, Turret Road, Michroma, Electrolize, Audiowide, Wallpoet, Russo One, Iceland, VT323, Press Start 2P, Share Tech, Share Tech Mono et JetBrains Mono, SIL Open Font License"
 
 #: cyberui/screens/settings.lua
 msgid "A fast cyberpunk home screen for KOReader."
-msgstr ""
+msgstr "Un écran d'accueil cyberpunk rapide pour KOReader."
 
 #: cyberui/screens/shard.lua
 msgid "YOUR NOTE"
-msgstr ""
+msgstr "VOTRE NOTE"
 
 #: cyberui/screens/shards.lua
 msgid "%d SHARD"
 msgid_plural "%d SHARDS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ÉCLAT"
+msgstr[1] "%d ÉCLATS"
 
 #: cyberui/screens/shards.lua
 msgid "BY BOOK"
-msgstr ""
+msgstr "PAR LIVRE"
 
 #: cyberui/screens/shards.lua
 msgid "NO SHARDS YET"
-msgstr ""
+msgstr "PAS ENCORE D'ÉCLATS"
 
 #: cyberui/screens/shards.lua
 msgid "Highlight text while reading and each highlight is recovered here as a data shard. Books already highlighted are collected in the background."
-msgstr ""
+msgstr "Surlignez du texte en lisant et chaque surlignage est récupéré ici sous forme d'éclat de données. Les livres déjà surlignés sont collectés en arrière-plan."
 
 #: cyberui/screens/shards.lua cyberui/ui/launcher.lua
 msgid "SHARDS"
-msgstr ""
+msgstr "ÉCLATS"
 
 #: cyberui/screens/shards.lua
 msgid "Data shards"
-msgstr ""
+msgstr "Éclats de données"
 
 #: cyberui/screens/shards.lua
 msgid "RECOVERED // %d FRAGMENT"
 msgid_plural "RECOVERED // %d FRAGMENTS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "RÉCUPÉRÉS // %d FRAGMENT"
+msgstr[1] "RÉCUPÉRÉS // %d FRAGMENTS"
 
 #: cyberui/screens/targetpick.lua
 msgid "What it opens"
-msgstr ""
+msgstr "Ce qu'il ouvre"
 
 #: cyberui/screens/targetpick.lua
 msgid "Nothing here to pick."
-msgstr ""
+msgstr "Rien à choisir ici."
 
 #: cyberui/screens/targetpick.lua
 msgid "ITEMS"
-msgstr ""
+msgstr "ÉLÉMENTS"
 
 #: cyberui/screens/targetpick.lua
 msgid "PICK // TARGET"
-msgstr ""
+msgstr "CHOISIR // CIBLE"
 
 #: cyberui/screens/topbar.lua
 msgid "NO SIGNAL"
-msgstr ""
+msgstr "PAS DE SIGNAL"
 
 #: cyberui/screens/topbar.lua
 msgid "Tag"
-msgstr ""
+msgstr "Étiquette"
 
 #: cyberui/screens/topbar.lua
 msgid "Top bar tag"
-msgstr ""
+msgstr "Étiquette de la barre supérieure"
 
 #: cyberui/screens/topbar.lua
 msgid "SHOWN %d/%d"
-msgstr ""
+msgstr "AFFICHÉS %d/%d"
 
 #: cyberui/screens/topbar.lua
 msgid "AVAILABLE"
-msgstr ""
+msgstr "DISPONIBLE"
 
 #: cyberui/screens/topbar.lua
 msgid "The top bar is full"
-msgstr ""
+msgstr "La barre supérieure est pleine"
 
 #: cyberui/screens/topbar.lua
 msgid "ADD // MOVE // REMOVE"
-msgstr ""
+msgstr "AJOUTER // DÉPLACER // RETIRER"
 
 #: cyberui/screens/trash.lua
 msgid "From %s"
-msgstr ""
+msgstr "De %s"
 
 #: cyberui/screens/trash.lua
 msgid "Put back"
-msgstr ""
+msgstr "Remettre"
 
 #: cyberui/screens/trash.lua
 msgid "Delete for good"
-msgstr ""
+msgstr "Supprimer définitivement"
 
 #: cyberui/screens/trash.lua cyberui/ui/dialog.lua
 msgid "Attention"
-msgstr ""
+msgstr "Attention"
 
 #: cyberui/screens/trash.lua
 msgid "Keep"
-msgstr ""
+msgstr "Garder"
 
 #: cyberui/screens/trash.lua
 msgid "It goes for good, with its reading data. This cannot be undone."
-msgstr ""
+msgstr "Il disparaît pour toujours, avec ses données de lecture. Impossible d'annuler."
 
 #: cyberui/screens/trash.lua
 msgid "The trash is empty. Deleted books and folders wait here for %d day."
 msgid_plural "The trash is empty. Deleted books and folders wait here for %d days."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "La corbeille est vide. Les livres et dossiers supprimés y restent %d jour."
+msgstr[1] "La corbeille est vide. Les livres et dossiers supprimés y restent %d jours."
 
 #: cyberui/screens/trash.lua
 msgid "BIN"
-msgstr ""
+msgstr "BAC"
 
 #: cyberui/screens/trash.lua
 msgid "Empty"
-msgstr ""
+msgstr "Vider"
 
 #: cyberui/screens/trash.lua
 msgid "All %d item goes for good. This cannot be undone."
 msgid_plural "All %d items go for good. This cannot be undone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d élément disparaît pour toujours. Impossible d'annuler."
+msgstr[1] "Les %d éléments disparaissent pour toujours. Impossible d'annuler."
 
 #: cyberui/screens/trash.lua
 msgid "KEPT %d DAY"
 msgid_plural "KEPT %d DAYS"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "GARDÉ %d JOUR"
+msgstr[1] "GARDÉ %d JOURS"
 
 #: cyberui/screens/updates.lua
 msgid "Installing CyberUI %s"
-msgstr ""
+msgstr "Installation de CyberUI %s"
 
 #: cyberui/screens/updates.lua
 msgid "CyberUI was not updated"
-msgstr ""
+msgstr "CyberUI n'a pas été mis à jour"
 
 #: cyberui/screens/updates.lua
 msgid "PRERELEASE"
-msgstr ""
+msgstr "PRÉ-VERSION"
 
 #: cyberui/screens/updates.lua
 msgid "STABLE"
-msgstr ""
+msgstr "STABLE"
 
 #: cyberui/screens/updates.lua
 msgid "ASKING GITHUB..."
-msgstr ""
+msgstr "INTERROGATION DE GITHUB..."
 
 #: cyberui/screens/updates.lua
 msgid "v%s INSTALLED // RESTART KOREADER"
-msgstr ""
+msgstr "v%s INSTALLÉE // REDÉMARREZ KOREADER"
 
 #: cyberui/screens/updates.lua
 msgid "CHECK FAILED // %s"
-msgstr ""
+msgstr "VÉRIFICATION ÉCHOUÉE // %s"
 
 #: cyberui/screens/updates.lua
 msgid "UPDATE AVAILABLE"
-msgstr ""
+msgstr "MISE À JOUR DISPONIBLE"
 
 #: cyberui/screens/updates.lua
 msgid "UP TO DATE"
-msgstr ""
+msgstr "À JOUR"
 
 #: cyberui/screens/updates.lua
 msgid "NOT CHECKED YET"
-msgstr ""
+msgstr "PAS ENCORE VÉRIFIÉ"
 
 #: cyberui/screens/updates.lua
 msgid "Check"
-msgstr ""
+msgstr "Vérifier"
 
 #: cyberui/screens/updates.lua
 msgid "Back to stable"
-msgstr ""
+msgstr "Revenir à la stable"
 
 #: cyberui/screens/updates.lua
 msgid "Installed"
-msgstr ""
+msgstr "Installée"
 
 #: cyberui/screens/updates.lua
 msgid "Try prerelease"
-msgstr ""
+msgstr "Essayer la pré-version"
 
 #: cyberui/screens/updates.lua
 msgid "NOTES // v%s"
-msgstr ""
+msgstr "NOTES // v%s"
 
 #: cyberui/screens/updates.lua
 msgid "Check once a day (on Wi-Fi that is already on)"
-msgstr ""
+msgstr "Vérifier une fois par jour (sur le Wi-Fi déjà activé)"
 
 #: cyberui/screens/updates.lua
 msgid "Tell me about prereleases (test builds, newer but less tried)"
-msgstr ""
+msgstr "Me prévenir des pré-versions (versions de test, plus récentes mais moins éprouvées)"
 
 #: cyberui/screens/updates.lua
 msgid "GITHUB // %s"
-msgstr ""
+msgstr "GITHUB // %s"
 
 #: cyberui/sleep.lua
 msgid "Book covers"
-msgstr ""
+msgstr "Couvertures de livres"
 
 #: cyberui/sleep.lua
 msgid "Custom images"
-msgstr ""
+msgstr "Images personnalisées"
 
 #: cyberui/sleep.lua
 msgid "Everything"
-msgstr ""
+msgstr "Tout"
 
 #: cyberui/targetlist.lua
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: cyberui/targetlist.lua
 msgid "Screen and lights"
-msgstr ""
+msgstr "Écran et lumières"
 
 #: cyberui/targetlist.lua
 msgid "ACTION"
-msgstr ""
+msgstr "ACTION"
 
 #: cyberui/targetlist.lua
 msgid "MENU"
-msgstr ""
+msgstr "MENU"
 
 #: cyberui/targetlist.lua
 msgid "MENU ENTRY"
-msgstr ""
+msgstr "ENTRÉE DE MENU"
 
 #: cyberui/targetlist.lua
 msgid "PLUGIN"
-msgstr ""
+msgstr "EXTENSION"
 
 #: cyberui/targetlist.lua
 msgid "Plugins"
-msgstr ""
+msgstr "Extensions"
 
 #: cyberui/targetlist.lua
 msgid "THEIR MENU ENTRIES"
-msgstr ""
+msgstr "LEURS ENTRÉES DE MENU"
 
 #: cyberui/targetlist.lua
 msgid "Plugin actions"
-msgstr ""
+msgstr "Actions des extensions"
 
 #: cyberui/targetlist.lua
 msgid "WHAT PLUGINS ADD TO GESTURES"
-msgstr ""
+msgstr "CE QUE LES EXTENSIONS AJOUTENT AUX GESTES"
 
 #: cyberui/targetlist.lua
 msgid "KOREADER ACTIONS"
-msgstr ""
+msgstr "ACTIONS DE KOREADER"
 
 #: cyberui/targetlist.lua
 msgid "Whole KOReader menu"
-msgstr ""
+msgstr "Tout le menu de KOReader"
 
 #: cyberui/targetlist.lua
 msgid "EVERY TAB AND SUBMENU"
-msgstr ""
+msgstr "TOUS LES ONGLETS ET SOUS-MENUS"
 
 #: cyberui/targets.lua
 msgid "KOREADER MENU"
-msgstr ""
+msgstr "MENU KOREADER"
 
 #: cyberui/targets.lua
 msgid "That menu is gone"
-msgstr ""
+msgstr "Ce menu n'existe plus"
 
 #: cyberui/targets.lua cyberui/ui/launcher.lua
 msgid "NOTHING YET"
-msgstr ""
+msgstr "RIEN POUR L'INSTANT"
 
 #: cyberui/targets.lua
 msgid "MENU // %s"
-msgstr ""
+msgstr "MENU // %s"
 
 #: cyberui/targets.lua
 msgid "ACTION // %s"
-msgstr ""
+msgstr "ACTION // %s"
 
 #: cyberui/themes/fonts.lua
 msgid "Angular sci-fi face, the default"
-msgstr ""
+msgstr "Police science-fiction anguleuse, celle par défaut"
 
 #: cyberui/themes/fonts.lua
 msgid "Squared-off techno face"
-msgstr ""
+msgstr "Police techno aux angles droits"
 
 #: cyberui/themes/fonts.lua
 msgid "Wide, clean console face"
-msgstr ""
+msgstr "Police de console large et nette"
 
 #: cyberui/themes/fonts.lua
 msgid "Tall and narrow, fits more on a line"
-msgstr ""
+msgstr "Haute et étroite, plus de texte par ligne"
 
 #: cyberui/themes/fonts.lua
 msgid "The classic sci-fi display face, with Exo 2 for reading"
-msgstr ""
+msgstr "La police de science-fiction classique pour les titres, avec Exo 2 pour la lecture"
 
 #: cyberui/themes/fonts.lua
 msgid "Low, wide and geometric"
-msgstr ""
+msgstr "Basse, large et géométrique"
 
 #: cyberui/themes/fonts.lua
 msgid "Extended headings, Electrolize for reading"
-msgstr ""
+msgstr "Titres larges, Electrolize pour la lecture"
 
 #: cyberui/themes/fonts.lua
 msgid "Rounded racing headings over Share Tech"
-msgstr ""
+msgstr "Titres arrondis de course sur Share Tech"
 
 #: cyberui/themes/fonts.lua
 msgid "Stencilled street headings over Share Tech"
-msgstr ""
+msgstr "Titres de rue au pochoir sur Share Tech"
 
 #: cyberui/themes/fonts.lua
 msgid "Heavy block headings over Share Tech"
-msgstr ""
+msgstr "Titres en blocs épais sur Share Tech"
 
 #: cyberui/themes/fonts.lua
 msgid "Narrow digital readout"
-msgstr ""
+msgstr "Afficheur numérique étroit"
 
 #: cyberui/themes/fonts.lua
 msgid "VT323, a 1980s video terminal, everywhere"
-msgstr ""
+msgstr "VT323, un terminal vidéo des années 1980, partout"
 
 #: cyberui/themes/fonts.lua
 msgid "Press Start 2P pixel headings over VT323"
-msgstr ""
+msgstr "Titres pixel Press Start 2P sur VT323"
 
 #: cyberui/themes/fonts.lua
 msgid "KOReader's own fonts, for the plainest reading"
-msgstr ""
+msgstr "Les polices propres à KOReader, pour la lecture la plus simple"
 
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
-msgstr ""
+msgstr "DOSSIER // %d"
 
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: cyberui/ui/dialog.lua
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: cyberui/ui/idcard.lua
 msgid "RANK"
-msgstr ""
+msgstr "RANG"
 
 #: cyberui/ui/idcard.lua
 msgid "LVL %d / %d"
-msgstr ""
+msgstr "NIV %d / %d"
 
 #: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
-msgstr ""
+msgstr "SUIVANT : %s"
 
 #: cyberui/ui/idcard.lua
 msgid "%.0f / %d H"
-msgstr ""
+msgstr "%.0f / %d H"
 
 #: cyberui/ui/idcard.lua
 msgid "TOP RANK REACHED"
-msgstr ""
+msgstr "RANG MAXIMUM ATTEINT"
 
 #: cyberui/ui/idcard.lua
 msgid "%.0f H"
-msgstr ""
+msgstr "%.0f H"
 
 #: cyberui/ui/idcard.lua
 msgid "BOOKS"
-msgstr ""
+msgstr "LIVRES"
 
 #: cyberui/ui/idcard.lua
 msgid "BEST RUN"
-msgstr ""
+msgstr "MEILLEURE SÉRIE"
 
 #: cyberui/ui/idcard.lua
 msgid "%dD"
-msgstr ""
+msgstr "%dJ"
 
 #: cyberui/ui/idcard.lua
 msgid "OPERATOR // ID-CARD"
-msgstr ""
+msgstr "OPÉRATEUR // CARTE D'ID"
 
 #: cyberui/ui/idcard.lua
 msgid "AUTH OK"
-msgstr ""
+msgstr "AUTORISÉ"
 
 #: cyberui/ui/keyboard.lua
 msgid "space"
-msgstr ""
+msgstr "espace"
 
 #: cyberui/ui/launcher.lua
 msgid "%d FILE // GRID"
 msgid_plural "%d FILES // GRID"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d FICHIER // GRILLE"
+msgstr[1] "%d FICHIERS // GRILLE"
 
 #: cyberui/ui/launcher.lua
 msgid "FILES // GRID"
-msgstr ""
+msgstr "FICHIERS // GRILLE"
 
 #: cyberui/ui/launcher.lua
 msgid "COLLECTIONS"
-msgstr ""
+msgstr "COLLECTIONS"
 
 #: cyberui/ui/launcher.lua
 msgid "%d CACHE"
 msgid_plural "%d CACHES"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d COLLECTION"
+msgstr[1] "%d COLLECTIONS"
 
 #: cyberui/ui/launcher.lua
 msgid "HISTORY"
-msgstr ""
+msgstr "HISTORIQUE"
 
 #: cyberui/ui/launcher.lua
 msgid "TELEMETRY.LOG"
-msgstr ""
+msgstr "TELEMETRY.LOG"
 
 #: cyberui/ui/launcher.lua
 msgid "BOUNTIES"
-msgstr ""
+msgstr "PRIMES"
 
 #: cyberui/ui/launcher.lua
 msgid "%s // %d WANTED"
 msgid_plural "%s // %d WANTED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s // %d RECHERCHÉ"
+msgstr[1] "%s // %d RECHERCHÉS"
 
 #: cyberui/ui/launcher.lua
 msgid "BACKLOG CLEAR"
-msgstr ""
+msgstr "ARRIÉRÉ ÉPONGÉ"
 
 #: cyberui/ui/launcher.lua
 msgid "%d RECOVERED"
 msgid_plural "%d RECOVERED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d RÉCUPÉRÉ"
+msgstr[1] "%d RÉCUPÉRÉS"
 
 #: cyberui/ui/launcher.lua
 msgid "NO HIGHLIGHTS YET"
-msgstr ""
+msgstr "PAS ENCORE DE SURLIGNAGES"
 
 #: cyberui/ui/launcher.lua
 msgid "GREP THE ARCHIVE"
-msgstr ""
+msgstr "FOUILLEZ LES ARCHIVES"
 
 #: cyberui/ui/launcher.lua
 msgid "INK AWAY"
-msgstr ""
+msgstr "INK AWAY"
 
 #: cyberui/ui/launcher.lua
 msgid "SYSTEM"
-msgstr ""
+msgstr "SYSTÈME"
 
 #: cyberui/ui/launcher.lua
 msgid "UPDATE v%s READY"
-msgstr ""
+msgstr "MISE À JOUR v%s PRÊTE"
 
 #: cyberui/ui/launcher.lua
 msgid "THEME // SETTINGS"
-msgstr ""
+msgstr "THÈME // PARAMÈTRES"
 
 #: cyberui/ui/launcher.lua
 msgid "Pick what this button opens"
-msgstr ""
+msgstr "Choisissez ce que ce bouton ouvre"
 
 #: cyberui/ui/launcher.lua
 msgid "This button always stays, so the settings stay reachable"
-msgstr ""
+msgstr "Ce bouton reste toujours, pour que les paramètres restent accessibles"
 
 #: cyberui/ui/launcher.lua
 msgid "Hide this button?"
-msgstr ""
+msgstr "Masquer ce bouton ?"
 
 #: cyberui/ui/launcher.lua
 msgid "Delete this button?"
-msgstr ""
+msgstr "Supprimer ce bouton ?"
 
 #: cyberui/ui/launcher.lua
 msgid "Hide"
-msgstr ""
+msgstr "Masquer"
 
 #: cyberui/ui/progress.lua
 msgid "Segments"
-msgstr ""
+msgstr "Segments"
 
 #: cyberui/ui/progress.lua
 msgid "Heartbeat"
-msgstr ""
+msgstr "Battement"
 
 #: cyberui/ui/progress.lua
 msgid "Scanline"
-msgstr ""
+msgstr "Ligne de balayage"
 
 #: cyberui/ui/progress.lua
 msgid "Equalizer"
-msgstr ""
+msgstr "Égaliseur"
 
 #: cyberui/ui/shardcard.lua
 msgid "FRAGMENT %d/%d // %s"
-msgstr ""
+msgstr "FRAGMENT %d/%d // %s"
 
 #: cyberui/ui/shardcard.lua
 msgid "DATA SHARD // 0x%s"
-msgstr ""
+msgstr "ÉCLAT DE DONNÉES // 0x%s"
 
 #: cyberui/ui/shardcard.lua
 msgid "RECOVERED"
-msgstr ""
+msgstr "RÉCUPÉRÉ"
 
 #: cyberui/ui/statusbar.lua
 msgid "Clock"
-msgstr ""
+msgstr "Horloge"
 
 #: cyberui/ui/statusbar.lua
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: cyberui/ui/statusbar.lua
 msgid "Wi-Fi"
-msgstr ""
+msgstr "Wi-Fi"
 
 #: cyberui/ui/statusbar.lua
 msgid "WIFI"
-msgstr ""
+msgstr "WIFI"
 
 #: cyberui/ui/statusbar.lua
 msgid "Battery"
-msgstr ""
+msgstr "Batterie"
 
 #: cyberui/ui/statusbar.lua
 msgid "Frontlight"
-msgstr ""
+msgstr "Éclairage"
 
 #: cyberui/ui/statusbar.lua
 msgid "Processor load"
-msgstr ""
+msgstr "Charge du processeur"
 
 #: cyberui/ui/statusbar.lua
 msgid "Memory"
-msgstr ""
+msgstr "Mémoire"
 
 #: cyberui/ui/statusbar.lua
 msgid "Storage"
-msgstr ""
+msgstr "Stockage"
 
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
-msgstr ""
+msgstr "Temps de fonctionnement"
 
 #: cyberui/ui/textinput.lua
 msgid "// INPUT"
-msgstr ""
+msgstr "// ENTRÉE"
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"
-msgstr ""
+msgstr "TÉLÉCHARGEMENT DE %s (%.1f MO)"
 
 #: cyberui/update/updater.lua
 msgid "CHECKING AND UNPACKING"
-msgstr ""
+msgstr "VÉRIFICATION ET DÉCOMPRESSION"
 
 #: cyberui/update/updater.lua
 msgid "CyberUI %s is installed. Restart KOReader to use it."
-msgstr ""
+msgstr "CyberUI %s est installé. Redémarrez KOReader pour l'utiliser."
 
 #: main.lua
 msgid "Start with: %1"
-msgstr ""
+msgstr "Démarrer avec : %1"
 
 #: main.lua
 msgid "CyberUI home"
-msgstr ""
+msgstr "Accueil CyberUI"
