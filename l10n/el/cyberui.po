@@ -2355,6 +2355,14 @@ msgstr "Η αρχική μένει φορτωμένη όσο διαβάζετε,
 msgid "Version"
 msgstr "Έκδοση"
 
+#: cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Γλώσσα"
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."
+msgstr "Το CyberUI ακολουθεί τη γλώσσα του KOReader (ορίζεται στις ρυθμίσεις του ίδιου του KOReader). Τα κείμενα βρίσκονται στον φάκελο l10n και μπορούν να επεξεργαστούν εκεί."
+
 #: cyberui/screens/settings.lua cyberui/screens/updates.lua
 msgid "Updates"
 msgstr "Ενημερώσεις"

@@ -121,3 +121,10 @@ ships is credited in the changelog.
 
 CyberUI is released under the [MIT License](LICENSE). By sending a pull
 request you agree that your contribution is released under it too.
+
+## Translations
+
+Every text the reader sees is translated into all the shipped languages. After
+adding or changing one, run `luajit tools/i18n.lua sync`, fill the new entries in
+every `l10n/<language>/cyberui.po`, and `luajit tools/i18n.lua check` (the test
+suite runs it, so an untranslated text fails). See `l10n/README.md`.

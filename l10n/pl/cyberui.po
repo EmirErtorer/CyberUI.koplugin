@@ -2381,6 +2381,14 @@ msgstr "Ekran główny pozostaje załadowany, gdy czytasz, więc zamknięcie ksi
 msgid "Version"
 msgstr "Wersja"
 
+#: cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Język"
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."
+msgstr "CyberUI używa języka KOReadera (ustawianego w ustawieniach samego KOReadera). Teksty są w folderze l10n i można je tam edytować."
+
 #: cyberui/screens/settings.lua cyberui/screens/updates.lua
 msgid "Updates"
 msgstr "Aktualizacje"

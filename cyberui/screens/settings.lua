@@ -286,6 +286,8 @@ end
 function SettingsScreen:about()
     return {
         row(_("Version"), nil, Label:new({ text = Version, kind = "mono" })),
+        row(_("Language"), _("CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."),
+            Label:new({ text = require("cyberui/gettext").language():upper(), kind = "mono" })),
         row(_("Updates"), (function()
                 local v = require("cyberui/update/updater").available()
                 return v and string.format(_("CyberUI %s is ready to install"), v) or _("New versions from GitHub, with their notes")

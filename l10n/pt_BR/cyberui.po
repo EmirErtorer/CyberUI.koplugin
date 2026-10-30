@@ -2355,6 +2355,14 @@ msgstr "A tela inicial fica carregada enquanto você lê, então fechar um livro
 msgid "Version"
 msgstr "Versão"
 
+#: cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Idioma"
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."
+msgstr "O CyberUI segue o idioma do KOReader (definido nas configurações do próprio KOReader). Os textos estão na pasta l10n e podem ser editados lá."
+
 #: cyberui/screens/settings.lua cyberui/screens/updates.lua
 msgid "Updates"
 msgstr "Atualizações"

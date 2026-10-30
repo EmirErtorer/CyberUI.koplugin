@@ -2355,6 +2355,14 @@ msgstr "Home bleibt geladen, während du liest; ein Buch zu schließen ist also 
 msgid "Version"
 msgstr "Version"
 
+#: cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Sprache"
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."
+msgstr "CyberUI folgt der Sprache von KOReader (in den Einstellungen von KOReader festgelegt). Die Texte liegen im Ordner l10n und können dort bearbeitet werden."
+
 #: cyberui/screens/settings.lua cyberui/screens/updates.lua
 msgid "Updates"
 msgstr "Updates"

@@ -2355,6 +2355,14 @@ msgstr "Ana sayfa sen okurken yüklü kalır; bu yüzden bir kitabı kapatmak ye
 msgid "Version"
 msgstr "Sürüm"
 
+#: cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Dil"
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."
+msgstr "CyberUI, KOReader'ın dilini izler (KOReader'ın kendi ayarlarında seçilir). Metinler l10n klasöründedir ve orada düzenlenebilir."
+
 #: cyberui/screens/settings.lua cyberui/screens/updates.lua
 msgid "Updates"
 msgstr "Güncellemeler"

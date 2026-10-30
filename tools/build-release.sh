@@ -17,7 +17,7 @@ out="$repo/dist/CyberUI.koplugin"
 mkdir -p "$repo/dist"
 rm -rf "$out" "$repo/dist/$name"
 mkdir -p "$out"
-for item in main.lua _meta.lua LICENSE cyberui fonts icons; do
+for item in main.lua _meta.lua LICENSE cyberui fonts icons l10n; do
     rsync -a --exclude '.DS_Store' "$repo/$item" "$out/"
 done
 touch "$out"   # the build time, not the repo folder's

@@ -33,6 +33,11 @@ versions marked *Prerelease* are test builds.
   columns.
 
 ### Added
+- Ten languages: Turkish, Brazilian Portuguese, Portuguese, Spanish, Italian, French,
+  German, Russian, Polish and Greek. CyberUI follows KOReader's language; the texts
+  are `.po` files in `l10n/` that can be edited without touching the code (your
+  own edits go in `settings/cyberui-l10n/` and survive updates). A check in the test
+  suite fails when any text is untranslated, so new features arrive translated.
 - Keep the book open on Home (System > Speed, off by default): going home puts
   the book away instead of closing it, so the same book opens again in about a
   third of the time and nothing blocks after home is shown. KOReader closes it

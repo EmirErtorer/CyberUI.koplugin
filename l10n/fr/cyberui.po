@@ -2355,6 +2355,14 @@ msgstr "L'accueil reste chargé pendant que vous lisez, donc fermer un livre est
 msgid "Version"
 msgstr "Version"
 
+#: cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Langue"
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."
+msgstr "CyberUI suit la langue de KOReader (réglée dans les paramètres de KOReader). Les textes se trouvent dans le dossier l10n et peuvent y être modifiés."
+
 #: cyberui/screens/settings.lua cyberui/screens/updates.lua
 msgid "Updates"
 msgstr "Mises à jour"

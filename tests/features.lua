@@ -535,6 +535,36 @@ do
     I18n.use(nil)
     I18n.root = nil
     os.execute("rm -rf '" .. dir .. "'")
+
+    -- the shipped languages: each loads, translates and counts the way its language does
+    I18n.root = nil
+    local lfs = require("libs/libkoreader-lfs")
+    local shipped = 0
+    for name in lfs.dir(I18n.dir()) do
+        if name:match("^%a%a") and lfs.attributes(I18n.dir() .. "/" .. name, "mode") == "directory" then
+            shipped = shipped + 1
+            I18n.use(name)
+            Kit.ok(I18n.language() == name and I18n("Install") ~= "Install" or name == "tr" or name == "de",
+                name .. " loads and translates")
+        end
+    end
+    Kit.ok(shipped >= 10, "ten languages are shipped (" .. shipped .. ")")
+    I18n.use("ru")
+    Kit.ok(I18n.n("%d BOOK", "%d BOOKS", 1) == "%d КНИГА" and I18n.n("%d BOOK", "%d BOOKS", 21) == "%d КНИГА" and I18n.n("%d BOOK", "%d BOOKS", 3) == "%d КНИГИ"
+        and I18n.n("%d BOOK", "%d BOOKS", 5) == "%d КНИГ" and I18n.n("%d BOOK", "%d BOOKS", 11) == "%d КНИГ", "Russian counts books in three forms")
+    I18n.use("pl")
+    Kit.ok(I18n.n("%d BOOK", "%d BOOKS", 1) == "%d KSIĄŻKA" and I18n.n("%d BOOK", "%d BOOKS", 2) == "%d KSIĄŻKI" and I18n.n("%d BOOK", "%d BOOKS", 5) == "%d KSIĄŻEK",
+        "Polish counts books in three forms")
+    I18n.use("fr")
+    Kit.ok(I18n.n("%d BOOK", "%d BOOKS", 0) == "%d LIVRE" and I18n.n("%d BOOK", "%d BOOKS", 2) == "%d LIVRES", "French counts 0 as one")
+    I18n.use("pt_BR")
+    Kit.ok(I18n.n("%d BOOK", "%d BOOKS", 0) == "%d LIVRO", "Brazilian Portuguese counts 0 as one")
+    I18n.use("pt_PT")
+    Kit.ok(I18n.n("%d BOOK", "%d BOOKS", 0) == "%d LIVROS", "Portuguese from Portugal counts 0 as many")
+    I18n.use("tr")
+    local Format = require("cyberui/format")
+    Kit.ok(Format.upper("kitaplık") == "KİTAPLIK", "Turkish capitals through the format helper")
+    I18n.use(nil)
 end
 
 Kit.finish("features")
