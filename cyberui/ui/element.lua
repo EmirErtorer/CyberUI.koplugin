@@ -59,7 +59,7 @@ function Element:hit(px, py, handler)
             if found then return found end
         end
     end
-    if self[handler] and not self.disabled then return self end
+    if (self[handler] or self.swallow) and not self.disabled then return self end
     return nil
 end
 

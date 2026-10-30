@@ -125,6 +125,7 @@ Host.box = box
 -- Flash the element inverted at once, run its action, then repaint the area
 -- unless the action already redrew the screen.
 function Host:press(el, handler)
+    if not el[handler] then return end
     local d = box(el)
     Screen.bb:invertRect(d.x, d.y, d.w, d.h)
     UIManager:setDirty(nil, "fast", d)

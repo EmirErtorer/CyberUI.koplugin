@@ -19,7 +19,8 @@ function TabBar.build(tabs, current, on_select)
             on_tap = function() on_select(t.id) end,
         })
     end
-    return Layout.Column:new({ children = { Deco.Divider:new({ color = "ink", thick = "stroke" }), row } })
+    -- swallow: a tap between the tabs is not KOReader's corner gesture (frontlight...)
+    return Layout.Column:new({ swallow = true, children = { Deco.Divider:new({ color = "ink", thick = "stroke" }), row } })
 end
 
 return TabBar
