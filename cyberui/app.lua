@@ -471,7 +471,10 @@ function App.openBook(path, after_open)
     local JackIn = require("cyberui/jackin")
     local Park = require("cyberui/park")
     -- the book put away under home: bring it back, nothing to load
-    if Park.unpark(path, after_open) then return end
+    if Park.unpark(path, after_open) then
+        App.bookOpened()   -- the book is over the window again, with no ReaderReady to say so
+        return
+    end
     Park.noteOpen()
     if host and JackIn.wanted(path) then
         App.flash(JackIn.card(path))
