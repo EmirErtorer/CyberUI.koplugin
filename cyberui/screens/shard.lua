@@ -20,7 +20,7 @@ function ShardScreen:build()
     local th = Theme.get()
     local p = self.params
     local s = p.shard
-    local kids = { ShardCard:new({ shard = s, number = p.number, of = p.of, lines = 12, text_kind = "body" }) }
+    local kids = { ShardCard.build({ shard = s, number = p.number, of = p.of, lines = 12, text_kind = "body", icon = 56 }) }
     local facts = {}
     if s.chapter and s.chapter ~= "" then facts[#facts + 1] = s.chapter end
     if s.date then facts[#facts + 1] = s.date end

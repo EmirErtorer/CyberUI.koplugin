@@ -199,9 +199,9 @@ function SettingsScreen:home()
             end })),
         row(_("Jack-in card"), _("A card with the book shown while it opens"),
             Controls.Toggle:new({ on = Settings.get("jack_in", true), on_change = function(on) save("jack_in", on) end })),
-        row(_("Data shard"), _("A recovered highlight on home (tall screens only); hold it there for another"),
+        row(_("Data shard"), _("A highlight from your books on home, on by default (tall screens only); hold it there for another"),
             Controls.Toggle:new({ on = Settings.get("home_shard", true), on_change = function(on) save("home_shard", on) end })),
-        row(_("Operator card"), _("Your handle, rank and photo; the strip under the banner opens it"),
+        row(_("Operator card"), _("Your face, handle and rank in the banner on home; tap the face to open the card"),
             Layout.Row:new({ gap = Theme.get().space.s, children = {
                 Controls.Toggle:new({ on = Settings.get("home_card", true), on_change = function(on) save("home_card", on) end }),
                 Button:new({ label = _("Open"), on_tap = function() App.push("card") end }),

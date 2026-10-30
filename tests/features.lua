@@ -180,8 +180,9 @@ do
     Kit.ok(not Profile.hasPhoto() and Profile.photo(64) == nil, "the photo can be removed")
     os.remove(src)
     local IdCard = require("cyberui/ui/idcard")
+    local Masthead = require("cyberui/ui/masthead")
     local W, H = Kit.Screen:getWidth(), Kit.Screen:getHeight()
-    for _, build in ipairs({ function() return IdCard.full({}) end, function() return IdCard.strip({}) end }) do
+    for _, build in ipairs({ function() return IdCard.full({}) end, function() return Masthead.build({ operator = true }) end, function() return Masthead.build({}) end }) do
         local el = build()
         el:layout(W, nil)
         Kit.ok(el.h > 0 and el.h < H, "the card fits the screen")
@@ -223,7 +224,7 @@ do
     Kit.ok(pick and pick.of == 2 and pick.shard.path == book, "a random shard says which of how many it is")
     local ShardCard = require("cyberui/ui/shardcard")
     local W = Kit.Screen:getWidth()
-    local card = ShardCard:new({ shard = list[1], number = 1, of = 2 })
+    local card = ShardCard.build({ shard = list[1], number = 1, of = 2 })
     card:layout(W - 40, nil)
     local bb = Kit.canvas()
     card:paint(bb, 10, 10)

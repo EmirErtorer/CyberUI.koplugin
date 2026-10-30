@@ -1,6 +1,6 @@
--- The operator ID card: the full card (face, handle, rank with its progress,
--- the reading totals, a barcode made from the ID code) and the slim strip home
--- shows. Both are built from the same profile data.
+-- The operator ID card (face, handle, rank with its progress, the reading
+-- totals, a barcode made from the ID code), and the rank tag and barcode the
+-- home masthead borrows from it.
 
 local Avatar = require("cyberui/ui/avatar")
 local Button = require("cyberui/ui/button")
@@ -18,16 +18,17 @@ local _ = require("gettext")
 
 local IdCard = {}
 
--- The rank as a filled tag.
-local function rankTag(rank)
+-- The rank as a filled tag; `small` for a tag that sits in a line of text.
+function IdCard.rankTag(rank, small)
     local th = Theme.get()
     return Panel:new({ shape = "chamfer", corners = "l", cut = "cut_small", fill = "accent", line = false,
-        pad = { Theme.px(3), th.space.m }, child = Label:new({ text = rank.name, kind = "label", color = "on_accent" }) })
+        pad = { Theme.px(small and 1 or 3), small and th.space.s or th.space.m },
+        child = Label:new({ text = rank.name, kind = small and "micro" or "label", color = "on_accent" }) })
 end
 
 -- A barcode that belongs to the ID code, `height` base pixels tall (and
 -- `width` wide when given).
-local function codeBars(height, width)
+function IdCard.codeBars(height, width)
     return Deco.Barcode:new({ bars = Paint.barsFrom(Profile.rng(Profile.id())), height = Theme.px(height),
         width = width and Theme.px(width) or nil })
 end
@@ -52,7 +53,7 @@ function IdCard.full(o)
         Panel:new({ shape = "none", child = Label:new({ text = handle, kind = "display" }), on_tap = o.on_handle }),
         Label:new({ text = _("RANK"), kind = "micro", color = "muted" }),
         Layout.Row:new({ gap = th.space.m, children = {
-            rankTag(rank),
+            IdCard.rankTag(rank),
             Label:new({ text = string.format(_("LVL %d / %d"), rank.index, rank.count), kind = "mono_small", color = "muted" }),
         } }),
     } })
@@ -79,7 +80,7 @@ function IdCard.full(o)
         Progress:new({ value = rank.value }),
     } })
     local code = Layout.Row:new({ gap = th.space.m, children = {
-        Layout.Column:new({ width = Theme.px(150), children = { codeBars(26) } }),
+        Layout.Column:new({ width = Theme.px(150), children = { IdCard.codeBars(26) } }),
         Label:new({ text = "ID " .. Profile.id(), kind = "mono_small", grow = true, align = "right" }),
     } })
     -- a wide, short screen puts the totals beside the identity
@@ -95,29 +96,6 @@ function IdCard.full(o)
             Layout.Row:new({ gap = th.space.l, valign = "stretch", children = { face, who } }), progress, tiles, code } })
     end
     return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"), pad = th.space.l, child = body })
-end
-
--- The slim strip for home: face, handle and rank, progress to the next rank,
--- the barcode. o: { on_open (tap), on_photo (tap the face) }.
-function IdCard.strip(o)
-    local th = Theme.get()
-    local handle = Profile.handle()
-    local stats = Profile.stats()
-    local rank = Profile.rank(stats.hours)
-    local sub = rank.next and string.format(_("%.0f / %d H TO %s"), stats.hours, rank.need, rank.next) or _("TOP RANK")
-    return Panel:new({ shape = "chamfer", corners = "tb", cut = "cut_small", pad = { th.space.xs, th.space.m, th.space.xs, th.space.xs },
-        on_tap = o.on_open, on_hold = o.on_photo,
-        child = Layout.Row:new({ gap = th.space.m, valign = "center", children = {
-            Avatar:new({ seed = handle, size = 44 }),
-            Layout.Column:new({ grow = true, children = {
-                Layout.Row:new({ gap = th.space.m, children = {
-                    Label:new({ text = handle, kind = "label" }),
-                    rankTag(rank),
-                } }),
-                Label:new({ text = sub, kind = "mono_small", color = "muted" }),
-            } }),
-            codeBars(30, 54),
-        } }) })
 end
 
 return IdCard

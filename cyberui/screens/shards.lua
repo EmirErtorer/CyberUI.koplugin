@@ -50,7 +50,7 @@ function ShardsScreen:cell(item, h)
             meta = string.format(_("%d SHARDS"), item.count),
             on_tap = function() self.tab, self.book, self.page = "book", item.path, 1; App.update() end })
     end
-    return ShardCard:new({ shard = item.shard, number = item.number, of = item.of, height = h, lines = 3,
+    return ShardCard.build({ shard = item.shard, number = item.number, of = item.of, height = h, lines = 3,
         on_tap = function() App.push("shard", { shard = item.shard, number = item.number, of = item.of }) end })
 end
 

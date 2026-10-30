@@ -1,4 +1,4 @@
--- The home screen: identity strip, today's date and reading streak, the book
+-- The home screen: the masthead, today's date and reading streak, the book
 -- being read with Resume, recent books and the launcher to every section.
 
 local Actions = require("cyberui/actions")
@@ -11,13 +11,12 @@ local Deco = require("cyberui/ui/deco")
 local Files = require("cyberui/data/files")
 local Format = require("cyberui/format")
 local History = require("cyberui/data/history")
-local Icon = require("cyberui/ui/icon")
-local IdCard = require("cyberui/ui/idcard")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Launcher = require("cyberui/ui/launcher")
 local Library = require("cyberui/data/library")
 local ListRow = require("cyberui/ui/listrow")
+local Masthead = require("cyberui/ui/masthead")
 local Panel = require("cyberui/ui/panel")
 local ProfileFlow = require("cyberui/profileflow")
 local Progress = require("cyberui/ui/progress")
@@ -54,24 +53,6 @@ function Home:onRaise()
     self.picked = nil
 end
 
-
--- The identity strip: logo, the banner's lines and a barcode. Holding it
--- changes what the banner says.
-local function identity()
-    local th = Theme.get()
-    local top = Banner.top()
-    local title, quote = Banner.title()
-    local lines = {}
-    if top then lines[1] = Label:new({ text = top, kind = "micro", color = "muted" }) end
-    lines[#lines + 1] = quote and Label:new({ text = title, kind = "body", lines = 2 }) or Label:new({ text = title, kind = "title" })
-    return Panel:new({ shape = "chamfer", corners = "t", pad = { th.space.s, th.space.m, th.space.s, th.space.l },
-        on_hold = function() require("cyberui/screens/settings").pickBannerTitle() end,
-        child = Layout.Row:new({ gap = th.space.m, children = {
-            Icon:new({ name = "book", size = 28, color = "accent" }),
-            Layout.Column:new({ grow = true, children = lines }),
-            Deco.Barcode:new({ width = Theme.px(96), height = Theme.px(32) }),
-        } }) })
-end
 
 -- The index strip: a rule ending in a tag with the library size.
 local function indexStrip()
@@ -208,7 +189,7 @@ local function shardPanel(home)
         home.no_shard = true
         return nil
     end
-    return ShardCard:new({ shard = pick.shard, number = pick.number, of = pick.of, lines = 3,
+    return ShardCard.build({ shard = pick.shard, number = pick.number, of = pick.of, lines = 3,
         on_tap = function() App.push("shards") end,
         on_hold = function() Shards.another(); App.update() end })
 end
@@ -229,13 +210,14 @@ function Home:build()
     local status, clock = StatusBar.build()
     self.clock = clock
     local shown = self:shown()
+    local card = Settings.get("home_card", true)
     local kids = {
         status,
-        identity(),
-        Settings.get("home_card", true) and IdCard.strip({ on_open = function() App.push("card") end, on_photo = ProfileFlow.photo }) or indexStrip(),
-        dateRow(self),
-        activeFile(shown),
+        Masthead.build({ operator = card, on_open = function() App.push("card") end, on_photo = ProfileFlow.photo }),
     }
+    if not card then table.insert(kids, indexStrip()) end
+    table.insert(kids, dateRow(self))
+    table.insert(kids, activeFile(shown))
     kids[#kids + 1] = Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown, shardPanel(self)), Launcher.build() } })
     kids[#kids + 1] = footer()
     return Layout.Column:new({ pad = { th.space.s, th.space.xl, th.space.m, th.space.xl }, gap = th.space.m, children = kids })
