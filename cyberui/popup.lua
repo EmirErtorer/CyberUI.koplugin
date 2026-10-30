@@ -89,7 +89,15 @@ end
 function Popup:redraw(el)
     local before = self:box()
     self:setElement(el)
-    UIManager:setDirty(self, "ui", before:combine(self:box()))
+    local after = self:box()
+    if after.w < before.w or after.h < before.h then
+        -- the strip no longer covered belongs to what is under the popup, which
+        -- only a close repaints
+        UIManager:close(self, "ui", before)
+        UIManager:show(self, "ui", after)
+    else
+        UIManager:setDirty(self, "ui", after:combine(before))
+    end
 end
 
 -- Close it, repainting what it covered.
