@@ -2,51 +2,11 @@
 -- per day, the reading streak, totals and recent sessions. Results are cached
 -- until a book is closed, since only reading changes them.
 
-local DataStorage = require("datastorage")
-local lfs = require("libs/libkoreader-lfs")
+local Statsdb = require("cyberui/data/statsdb")
 
 local Stats = {}
 
-local cache = {}
-
--- Run fn(conn) on an open connection; nil when there is no database.
-local function query(fn)
-    local path = DataStorage:getSettingsDir() .. "/statistics.sqlite3"
-    if not lfs.attributes(path, "mode") then return nil end
-    local ok_lib, SQ3 = pcall(require, "lua-ljsqlite3/init")
-    if not ok_lib then return nil end
-    local ok_open, conn = pcall(SQ3.open, path)
-    if not ok_open or not conn then return nil end
-    local ok, result = pcall(fn, conn)
-    conn:close()
-    return ok and result or nil
-end
-
--- Rows of a query as a list of arrays (column order as in the SELECT).
-local function rows(conn, sql)
-    local res, n = conn:exec(sql)
-    local out = {}
-    if not res or not n or n == 0 then return out end
-    for i = 1, n do
-        local row = {}
-        for c = 1, #res do row[c] = res[c][i] end
-        out[i] = row
-    end
-    return out
-end
-
--- Remember a value until the next invalidate().
-local function cached(key, fn)
-    if cache[key] == nil then cache[key] = fn() or false end
-    return cache[key] or nil
-end
-
--- Midnight (local time) `days` days before today.
-local function midnight(days)
-    local t = os.date("*t")
-    t.hour, t.min, t.sec = 0, 0, 0
-    return os.time(t) - days * 86400
-end
+local query, rows, cached, midnight = Statsdb.query, Statsdb.rows, Statsdb.cached, Statsdb.midnight
 
 -- Seconds read on each of the last `n` days, oldest first: { date, seconds }.
 function Stats.daily(n)
@@ -56,7 +16,7 @@ function Stats.daily(n)
         query(function(conn)
             for _i, r in ipairs(rows(conn, string.format(
                 "SELECT date(start_time,'unixepoch','localtime'), sum(duration) FROM page_stat_data "
-                .. "WHERE start_time >= %d GROUP BY 1", since))) do
+                .. "WHERE start_time >= %d%s GROUP BY 1", since, Statsdb.scoped(conn)))) do
                 by_day[r[1]] = tonumber(r[2]) or 0
             end
         end)
@@ -103,7 +63,8 @@ function Stats.totals(n)
     return cached("totals" .. n, function()
         return query(function(conn)
             local r = rows(conn, string.format(
-                "SELECT sum(duration), count(DISTINCT id_book || ':' || page) FROM page_stat_data WHERE start_time >= %d", midnight(n - 1)))[1]
+                "SELECT sum(duration), count(DISTINCT id_book || ':' || page) FROM page_stat_data WHERE start_time >= %d%s",
+                midnight(n - 1), Statsdb.scoped(conn)))[1]
             return { seconds = tonumber(r and r[1]) or 0, pages = tonumber(r and r[2]) or 0 }
         end)
     end) or { seconds = 0, pages = 0 }
@@ -116,7 +77,7 @@ function Stats.booksThisYear()
         local start = os.time({ year = t.year, month = 1, day = 1, hour = 0 })
         return query(function(conn)
             local r = rows(conn, string.format(
-                "SELECT count(DISTINCT id_book) FROM page_stat_data WHERE start_time >= %d", start))[1]
+                "SELECT count(DISTINCT id_book) FROM page_stat_data WHERE start_time >= %d%s", start, Statsdb.scoped(conn)))[1]
             return tonumber(r and r[1]) or 0
         end)
     end) or 0
@@ -129,8 +90,8 @@ function Stats.sessions(n)
             local out = {}
             for _i, r in ipairs(rows(conn, string.format(
                 "SELECT b.title, max(p.start_time), sum(p.duration), count(DISTINCT p.page) FROM page_stat_data p "
-                .. "JOIN book b ON b.id = p.id_book GROUP BY p.id_book, date(p.start_time,'unixepoch','localtime') "
-                .. "ORDER BY 2 DESC LIMIT %d", n))) do
+                .. "JOIN book b ON b.id = p.id_book WHERE 1 = 1%s GROUP BY p.id_book, date(p.start_time,'unixepoch','localtime') "
+                .. "ORDER BY 2 DESC LIMIT %d", Statsdb.scoped(conn, "p.id_book"), n))) do
                 out[#out + 1] = { title = r[1], time = tonumber(r[2]), seconds = tonumber(r[3]) or 0, pages = tonumber(r[4]) or 0 }
             end
             return out
@@ -140,7 +101,7 @@ end
 
 -- Forget cached results (a book was read).
 function Stats.invalidate()
-    cache = {}
+    Statsdb.invalidate()
 end
 
 return Stats

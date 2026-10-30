@@ -185,15 +185,21 @@ function Actions.setLibraryStart(dir)
     App.update()
 end
 
--- Choose the folder the library opens in, from a picker that starts at the home.
-function Actions.pickLibraryStart()
+-- Choose a folder in a picker that starts at the home; o: { title, label (the
+-- button), icon, on_pick(dir) }.
+function Actions.pickFolder(o)
     App.push("library", { dir = Library.home(), pick = {
-        title = _("Library opens in"), label = _("Open library here"), icon = "library",
+        title = o.title, label = o.label, icon = o.icon,
         on_pick = function(dir)
             App.pop()
-            Actions.setLibraryStart(dir)
+            o.on_pick(dir)
         end,
     } })
+end
+
+-- Choose the folder the library opens in.
+function Actions.pickLibraryStart()
+    Actions.pickFolder({ title = _("Library opens in"), label = _("Open library here"), icon = "library", on_pick = Actions.setLibraryStart })
 end
 
 -- The hold sheet of a book.
