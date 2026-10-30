@@ -33,6 +33,12 @@ versions marked *Prerelease* are test builds.
   columns.
 
 ### Added
+- Keep the book open on Home (System > Speed, off by default): going home puts
+  the book away instead of closing it, so the same book opens again in about a
+  third of the time and nothing blocks after home is shown. KOReader closes it
+  when a different book is opened, after 30 seconds untouched, or when KOReader's
+  menu or file browser is opened. The setting lists what it costs.
+
 - Operator ID card: a handle, a rank earned from reading hours, an ID code with
   a barcode, your totals, and a photo chosen from any folder on the device
   (tap the face or PHOTO). Save the card as a picture. Your face, handle and

@@ -64,6 +64,16 @@ ReaderUI.onClose = function(self, ...)
     return a, b
 end
 
+-- And every rebuild of the file browser that follows a close.
+local rebuilds = {}
+local orig_show_fm = ReaderUI.showFileManager
+ReaderUI.showFileManager = function(self, ...)
+    local t0 = time.now()
+    local a, b = orig_show_fm(self, ...)
+    rebuilds[#rebuilds + 1] = { phase = phase, ms = time.to_ms(time.since(t0)) }
+    return a, b
+end
+
 -- Time the home widget's painting (wrapped once per widget instance).
 local function timePaint()
     local w = stackWidget(p.home)
@@ -77,24 +87,37 @@ local function timePaint()
     end
 end
 
--- Time from now until cond() holds and the screen is painted.
+-- Time from now until cond() holds and the screen is painted. Also the
+-- longest stall of the main loop (the gap between polls that are meant to
+-- run every 10 ms) from the start to the end; after a return home the watch
+-- goes on for a second, to catch the work that follows the painted home.
+local TAIL_S = 1
 local function measure(label, start_fn, cond)
     phase = label
     paint_ms = 0
     timePaint()
     local t0 = time.now()
+    local last, worst = t0, 0
+    local met_at, total
     start_fn()
+    local function finish()
+        local close = 0
+        for _i, c in ipairs(closes) do if c.phase == label then close = close + c.ms end end
+        results[#results + 1] = string.format("%-24s %5d ms   (book close inside %4d ms, home paint %3d ms, longest stall %4d ms)",
+            label, total, close, paint_ms, worst)
+        phase = label .. " (after)"
+    end
     local function poll()
-        if cond() then
+        local gap = time.to_ms(time.since(last))
+        last = time.now()
+        worst = math.max(worst, gap - 10)
+        if not met_at and cond() then
             UIManager:forceRePaint()
-            local total = time.to_ms(time.since(t0))
-            local close = 0
-            for _i, c in ipairs(closes) do if c.phase == label then close = close + c.ms end end
-            results[#results + 1] = string.format("%-24s %5d ms   (book close inside %4d ms, home paint %3d ms)",
-                label, total, close, paint_ms)
-            phase = label .. " (after)"
-            return
+            total = time.to_ms(time.since(t0))
+            met_at = time.now()
+            if not label:match("back home") then return finish() end
         end
+        if met_at and time.to_s(time.since(met_at)) >= TAIL_S then return finish() end
         if time.to_ms(time.since(t0)) > 20000 then results[#results + 1] = label .. " TIMEOUT"; return end
         UIManager:scheduleIn(0.01, poll)
     end
@@ -130,5 +153,6 @@ H.step(1, function()
     for _i, c in ipairs(closes) do
         if c.phase:match("%(after%)$") then H.say(string.format("book close later, %s: %d ms", c.phase, c.ms)) end
     end
+    for _i, r in ipairs(rebuilds) do H.say(string.format("file browser rebuild, %s: %d ms", r.phase, r.ms)) end
     H.check(#results == 16, "all rounds measured")
 end)
