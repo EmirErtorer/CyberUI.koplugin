@@ -31,10 +31,12 @@ go("Unread", nil, "library")
 H.step(S, function() H.check(H.app().current().filter == "unread", "filter chip switches the filter") end)
 go("All", nil, "library")
 H.step(S, function() H.tap(nil, "menu") end)
-H.step(S, function() H.check(H.find("Sort and more") ~= nil, "the menu opens"); H.shot("05-menu") end)
+H.step(S, function() H.check(H.find("Group by") ~= nil, "the menu opens"); H.shot("05-menu") end)
+H.step(S, function() H.tap("Sort") end)
 H.step(S, function() H.tap("Title") end)
 H.step(S, function() H.check(require("cyberui/settings").get("library_sort") == "title", "sort by title applied") end)
 H.step(S, function() H.tap(nil, "menu") end)
+H.step(S, function() H.tap("Sort") end)
 H.step(S, function() H.tap("Recent") end)
 
 -- the hold sheet of the first book, then its dossier

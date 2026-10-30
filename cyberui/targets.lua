@@ -34,7 +34,14 @@ function Targets.pickAction(done)
     local items = {}
     Dispatcher:addSubMenu({}, items, location, "actions")
     table.remove(items, 1)   -- "Nothing"
-    Menu.open({ km = { tab_item_table = { items } }, pickable = plainAction, pick = function(_target, item)
+    -- the groups of actions only: what follows them is for KOReader's profiles
+    for i, item in ipairs(items) do
+        if not item.sub_item_table then
+            for j = #items, i, -1 do items[j] = nil end
+            break
+        end
+    end
+    Menu.open({ km = { tab_item_table = { items } }, title = _("KOREADER ACTIONS"), pickable = plainAction, pick = function(_target, item)
         local target = actionOf(item, location)
         if target then done(target) end
     end })
@@ -42,7 +49,7 @@ end
 
 -- Choose an entry of KOReader's top menu; done(target) gets it.
 function Targets.pickMenu(done)
-    Menu.open({ pick = function(target)
+    Menu.open({ title = _("KOREADER MENU"), pick = function(target)
         target.kind = "menu"
         target.title = target.text
         done(target)

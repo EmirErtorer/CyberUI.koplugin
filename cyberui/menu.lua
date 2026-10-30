@@ -36,6 +36,7 @@ Menu.__index = Menu
 
 -- The panel's height as a share of the screen.
 local MIN_H, MAX_H = 0.3, 0.5
+local PICK_H = 0.9   -- a picker lists long things (every KOReader action), so it takes more room
 
 -- KOReader's (and ZenOS's) tab icons as CyberUI icons and names; tabs other
 -- plugins add with their own icons show as EXTRA.
@@ -131,7 +132,7 @@ end
 -- Drop the menu down. opts: { km = KOReader's menu object, reader = true
 -- inside a book, pick = function(target, item) to choose an entry instead of
 -- running it, pickable = function(item) to say which entries may be chosen,
--- quiet = true to draw nothing until `m.quiet` is cleared and `m:show()` runs }.
+-- title = the name shown for the list, quiet = true to draw nothing until `m.quiet` is cleared and `m:show()` runs }.
 function Menu.open(opts)
     opts = opts or {}
     local km = opts.km or fmMenu()
@@ -143,7 +144,7 @@ function Menu.open(opts)
     if deck then tabs[1] = { id = "cyberui_deck", deck = true } end
     local shift = #tabs
     for i, t in ipairs(km.tab_item_table) do tabs[i + shift] = t end
-    local m = setmetatable({ km = km, reader = opts.reader, pick = opts.pick, pickable = opts.pickable, tabs = tabs, shift = shift, stack = {}, trail = {}, page = 1 }, Menu)
+    local m = setmetatable({ km = km, reader = opts.reader, pick = opts.pick, pickable = opts.pickable, title = opts.title, tabs = tabs, shift = shift, stack = {}, trail = {}, page = 1 }, Menu)
     m.tab_key = opts.reader and "readermenu_tab_index" or "filemanagermenu_tab_index"
     local last = opts.pick and 1 or opts.reader and km.last_tab_index or G_reader_settings:readSetting(m.tab_key)
     m.tab = math.max(1, math.min((last or 1) + shift, #tabs))
@@ -549,6 +550,7 @@ function Menu:build(_close, screen_w)
     local gap, pad = th.space.s, th.space.m
     local tab = self.tabs[self.tab]
     local look = tabLook(tab)
+    if self.title then look = { look[1], self.title } end
 
     local tab_buttons = {}
     for i, t in ipairs(self.tabs) do
@@ -561,9 +563,11 @@ function Menu:build(_close, screen_w)
     local kids = {
         Header.build({ title = title, path = path, on_back = #self.trail > 0 and function() self:up() end or nil,
             actions = { Button:new({ icon = "close", variant = "icon", width = th.size.touch, on_tap = function() self:close() end }) } }),
-        Layout.Row:new({ gap = gap, children = tab_buttons }),
     }
-    local fixed = header_h + tabs_h + 2 * gap + 2 * pad + Theme.px(3)
+    -- a picker with one list needs no tab strip
+    local strip = not (self.pick and #self.tabs == 1)
+    if strip then kids[#kids + 1] = Layout.Row:new({ gap = gap, children = tab_buttons }) end
+    local fixed = header_h + (strip and tabs_h or 0) + 2 * gap + 2 * pad + Theme.px(3)
     if self.pick then
         kids[#kids + 1] = Label:new({ text = _("TAP AN ENTRY TO USE IT. HOLD A SUBMENU TO USE THE MENU ITSELF."), kind = "micro", color = "muted", lines = 2 })
         fixed = fixed + Theme.px(30)
@@ -592,7 +596,7 @@ function Menu:build(_close, screen_w)
             make = function(item, w, ch) return self:row(item, w, ch) end,
             on_layout = function(_c, pages, page) self.pages, self.page = pages, page end })
     end
-    local h = math.floor(math.max(screen_h * MIN_H, math.min(screen_h * MAX_H, want)))
+    local h = math.floor(math.max(screen_h * MIN_H, math.min(screen_h * (self.pick and PICK_H or MAX_H), want)))
     if want > h and not (tab.deck or tab.panel) then
         kids[#kids + 1] = Frame.pager(self, _("PAGE"), function(p)
             self.page = math.max(1, math.min(p, self.pages or 1))

@@ -291,7 +291,7 @@ function Actions.bookSheet(path)
         { icon = "trash", label = _("Delete"), danger = true, on_tap = function() Actions.delete(path) end },
     }
     if History.lastOpened(path) then
-        table.insert(actions, 5, { icon = "history", label = _("Remove from history"), on_tap = function() Actions.unhistory(path) end })
+        table.insert(actions, 5, { icon = "history", label = _("Forget"), sub = _("Remove from history"), on_tap = function() Actions.unhistory(path) end })
     end
     App.sheet({ title = info.title, sub = filemanagerutil.abbreviate(Files.parent(path)), actions = actions })
 end

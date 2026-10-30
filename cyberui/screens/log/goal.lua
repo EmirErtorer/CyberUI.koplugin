@@ -21,14 +21,22 @@ local _ = require("gettext")
 
 local GoalTab = {}
 
--- A ladder of achievements: its name and one chip per level, filled when earned.
+local PER_ROW = 6   -- chips to a row, so every level fits its chip
+
+-- A ladder of achievements: its name and one chip per level, filled when
+-- earned, six to a row.
 local function ladder(l)
     local th = Theme.get()
-    local chips = { Label:new({ text = l.name, kind = "micro", color = "muted", width = Theme.px(76) }) }
-    for _i, a in ipairs(l.items) do
-        chips[#chips + 1] = Button:new({ label = a.short, kind = "micro", variant = a.got and "chip_on" or "chip", grow = true, height = Theme.px(30) })
+    local rows = {}
+    for i = 1, #l.items, PER_ROW do
+        local kids = { Label:new({ text = i == 1 and l.name or "", kind = "micro", color = "muted", width = Theme.px(76) }) }
+        for j = i, math.min(#l.items, i + PER_ROW - 1) do
+            local a = l.items[j]
+            kids[#kids + 1] = Button:new({ label = a.short, kind = "micro", variant = a.got and "chip_on" or "chip", grow = true, height = Theme.px(30) })
+        end
+        rows[#rows + 1] = Layout.Row:new({ gap = th.space.xs, children = kids })
     end
-    return Layout.Row:new({ gap = th.space.xs, children = chips })
+    return Layout.Column:new({ gap = th.space.xs, children = rows })
 end
 
 -- Build the tab; `screen.goal_back` is how many years back from this one.

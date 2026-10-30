@@ -38,7 +38,7 @@ function ScopeSheet.open()
             apply(folders)
         end })
     end }
-    App.sheet({ title = _("Statistics scope"), actions = actions })
+    App.sheet({ title = _("Statistics scope"), cols = 1, actions = actions })
 end
 
 return ScopeSheet

@@ -97,7 +97,7 @@ function Dossier:build()
         local left = st.status == "complete" and 0 or math.max(0, t.total_pages - t.pages) * t.per_page
         progress.children[#progress.children + 1] = Label:new({ kind = "mono_small", color = "muted", lines = 2,
             text = string.format(_("READ %s // %dD // %d PG/H%s"), Format.duration(t.seconds), t.days, math.floor(3600 / t.per_page + 0.5),
-                left > 0 and string.format(_(" // ~%s LEFT"), Format.duration(left)) or "") })
+                left > 0 and string.format(_(" // %s LEFT"), Format.duration(left)) or "") })
     end
 
     local synopsis = Panel:new({ shape = "brackets", label = _("SYNOPSIS"), pad = th.space.l, grow = true,

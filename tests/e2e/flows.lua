@@ -20,19 +20,22 @@ H.step(1, function()
     H.say("timing at boot: " .. perf())
 end)
 
--- status: mark done and back
+-- status: choose another status from the sheet and back
+local before
 H.step(S, function() H.app().push("dossier", { path = BOOK }) end)
 H.step(S, function()
-    local before = require("cyberui/data/books").state(BOOK).status
+    before = require("cyberui/data/books").state(BOOK).status
     H.say("status before: " .. tostring(before))
-    H.tap(before == "complete" and "MARK READING" or "MARK DONE")
+    H.tap("STATUS")
 end)
+H.step(S, function() H.tap(before == "complete" and "Reading" or "Done") end)
 H.step(S, function()
     local st = require("cyberui/data/books").state(BOOK).status
-    H.check(st == "complete" or st == "reading", "status changed to " .. tostring(st))
+    H.check(st ~= before and (st == "complete" or st == "reading"), "status changed to " .. tostring(st))
     H.shot("f01-status")
-    H.tap(st == "complete" and "MARK READING" or "MARK DONE")
+    H.tap("STATUS")
 end)
+H.step(S, function() H.tap(before == "complete" and "Done" or "Reading") end)
 H.step(S, function() H.say("status after restore: " .. tostring(require("cyberui/data/books").state(BOOK).status)) end)
 
 -- collections: toggle Favorites from the picker, then make a new collection
