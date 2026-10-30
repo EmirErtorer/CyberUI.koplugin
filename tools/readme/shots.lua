@@ -1,10 +1,10 @@
 -- The README's screenshots, in the Neon scheme, dark: run with
---   tools/readme/shots.sh  (portrait and landscape, into assets/screenshots)
+--   tools/readme/shots.sh  (into assets/screenshots; montage.py makes the four collages)
 local H = ...
 local S = 1.5
 local Settings = require("cyberui/settings")
 local UIManager = require("ui/uimanager")
-local land = os.getenv("CYBERUI_SHOTS_LANDSCAPE") == "1"
+local OUT = os.getenv("CYBERUI_DRIVE_OUT")
 
 local function shot(name)
     UIManager:forceRePaint()
@@ -66,11 +66,12 @@ local function asOnAKindle()
     end
 end
 
--- the look the README shows, and a book well under way
+-- the look the README shows, a book well under way, a few gigs and shop styles
 H.step(1, function()
     asOnAKindle()
     for k, v in pairs({ scheme = "neon", mode = "dark", cover_style = "ascii", ascii_set = "braille",
-            progress_style = "heartbeat", fontset = "oxanium", banner_title = "online", banner_top = "device" }) do
+            progress_style = "heartbeat", fontset = "oxanium", banner_title = "online", banner_top = "device",
+            handle = "NOVA_7", park_reader = false }) do
         Settings.set(k, v)
     end
     require("cyberui/theme").refresh()
@@ -111,31 +112,74 @@ H.step(25, function()
     for _i, b in ipairs(require("cyberui/data/library").all()) do require("cyberui/data/books").forget(b) end
     require("cyberui/data/covers").forget()
     covers("image")
+    -- highlights for the data shard on home
+    local Library, Shards = require("cyberui/data/library"), require("cyberui/data/shards")
+    local DocSettings = require("docsettings")
+    local function find(pattern)
+        for _i, b in ipairs(Library.all()) do if b:find(pattern, 1, true) then return b end end
+    end
+    for _i, pattern in ipairs({ "Neuromancer", "Synners" }) do
+        local b = find(pattern)
+        if b then
+            local ds = DocSettings:open(b)
+            ds:saveSetting("annotations", { { text = "Read it slowly: the best parts hide between the lines.", chapter = "One",
+                datetime = "2026-10-20 21:10:00", page = 12 } })
+            ds:flush()
+            Shards.refresh(b)
+        end
+    end
+    -- gigs: three open, one half read, one finished; then eddies and four styles worn
+    local Gigs, Ledger, Shop = require("cyberui/data/gigs"), require("cyberui/data/ledger"), require("cyberui/data/shop")
+    local lfs = require("libs/libkoreader-lfs")
+    local now = os.time()
+    for pattern, days in pairs({ ["Ready Player"] = 120, ["Do Androids"] = 210, ["Synners"] = 64, ["Altered Carbon"] = 80, ["Gravity"] = 95 }) do
+        local b = find(pattern)
+        if b then lfs.touch(b, now - days * 86400, now - days * 86400) end
+    end
+    Settings.set("gigs", nil)
+    Gigs.reload()
+    for _i, b in ipairs(Library.all()) do require("cyberui/data/books").forget(b) end
+    local altered, gravity = find("Altered Carbon"), find("Gravity")
+    for _i, job in ipairs({ { altered, 45 }, { gravity, 100 } }) do
+        if job[1] then
+            Gigs.accept(job[1])
+            Gigs.follow(job[1])
+            for p = 1, job[2] do Gigs.page(p, 100) end
+            Gigs.settle()
+        end
+    end
+    Gigs.takeReceipt()
+    Ledger.add("g", "earlier", 0, 3000)   -- eddies from earlier gigs, so the shop has something to show
+    Ledger.save()
+    for _i, id in ipairs({ "frame.hazard", "background.skyline", "flair.bolt", "jackin.scanner" }) do
+        local style = Shop.style(id)
+        if Shop.buy(style) then Shop.wear(style) end
+    end
     H.app().go("home")
 end)
 
-if land then
-    H.step(3, function() covers("image"); H.app().render("full"); shot("12-landscape") end)
-    return
-end
-
 H.step(4, function() H.app().render("full"); shot("01-home") end)
+H.step(S, function() H.app().push("gigs") end)
+H.step(3, function() shot("02-gigs") end)
+H.step(S, function() H.app().go("home"); require("cyberui/profileflow").card() end)
+H.step(S, function() shot("03-card"); H.app().closeDialog() end)
 H.step(S, function() covers("ascii"); H.app().go("library") end)
-H.step(4, function() shot("02-library"); covers("image") end)
+H.step(4, function() shot("04-library"); covers("image") end)
 H.step(S, function()
     H.app().go("home")
     H.app().koreaderMenu()
     local m = require("cyberui/menu").current()
     for i, t in ipairs(m.tabs) do if t.deck then m:switchTab(i) end end
 end)
-H.step(S, function() shot("03-menu"); require("cyberui/menu").current():close() end)
-H.step(S, function() H.app().push("dossier", { path = require("cyberui/data/history").current().path }) end)
-H.step(3, function() shot("04-details") end)
-H.step(S, function() H.app().go("library"); H.app().push("search"); H.app().current():setQuery("e") end)
-H.step(4, function() H.app().closeDialog(); shot("05-search") end)
+H.step(S, function() shot("05-menu"); require("cyberui/menu").current():close() end)
 H.step(S, function() H.app().go("collections") end)
 H.step(3, function() shot("06-collections") end)
-H.step(S, function() H.app().go("history") end)
+H.step(S, function()
+    Settings.save("cal_view", "skyline")
+    H.app().go("history")
+    H.app().current().tab = "calendar"
+    H.app().update()
+end)
 H.step(S, function() shot("07-log") end)
 H.step(S, function() H.app().go("home"); H.app().push("diagnostics") end)
 H.step(S, function() shot("08-diagnostics") end)
@@ -165,3 +209,65 @@ H.step(S, function()
     Screensaver:show()
 end)
 H.step(3, function() shot("11-sleep"); require("ui/screensaver"):close() end)
+H.step(S, function() H.app().go("home"); H.app().push("shards") end)
+H.step(S, function() shot("12-shards") end)
+
+-- the shop: the frames tab alone, then every tab for the styles collage
+H.step(S, function() H.app().go("home"); H.app().push("shop") end)
+H.step(S, function() shot("13-shop"); shot("14a-styles") end)
+for i, cat in ipairs({ "background", "flair", "jackin" }) do
+    H.step(S, function() local s = H.app().current(); s.cat, s.page = cat, 1; H.app().update() end)
+    H.step(S, function() shot("14" .. string.char(97 + i) .. "-styles") end)
+end
+
+-- four jack-in cards, each drawn alone for the collage
+H.step(S, function()
+    local Shop, Library = require("cyberui/data/shop"), require("cyberui/data/library")
+    local Blitbuffer = require("ffi/blitbuffer")
+    local Paint = require("cyberui/gfx/paint")
+    local Theme = require("cyberui/theme")
+    local book
+    for _i, b in ipairs(Library.all()) do if b:find("Neuromancer", 1, true) then book = b end end
+    for i, id in ipairs({ "jackin.terminal", "jackin.poster", "jackin.ticket", "jackin.scanner" }) do
+        local el = Shop.style(id).build(book)
+        local th = Theme.get()
+        local pad = th.space.xl
+        local width = require("device").screen:getWidth() - 2 * th.space.xl
+        el:layout(math.min(width, Theme.px(560)), nil)
+        local bb = Blitbuffer.new(el.w + 2 * pad, el.h + 2 * pad, Blitbuffer.TYPE_BBRGB32)
+        Paint.fill(bb, 0, 0, bb:getWidth(), bb:getHeight(), Theme.color("bg"))
+        el:paint(bb, pad, pad)
+        bb:writePNG(string.format("%s/15%s-jackin.png", OUT, string.char(96 + i)))
+        bb:free()
+    end
+end)
+
+-- the gigs story: the gigs taken, the payouts, the dossier of a gig, a payout on home
+H.step(S, function() H.app().go("home"); H.app().push("gigs") end)
+H.step(S, function() H.app().current().tab = "active"; H.app().update() end)
+H.step(S, function() shot("16a-gigs") end)
+H.step(S, function() H.app().current().tab = "payouts"; H.app().update() end)
+H.step(S, function() shot("16b-gigs") end)
+H.step(S, function()
+    local Gigs = require("cyberui/data/gigs")
+    local board = Gigs.board()
+    H.app().push("dossier", { path = board[1].path })
+end)
+H.step(S, function() shot("16c-gigs") end)
+H.step(S, function()
+    H.app().go("home")
+    local Format = require("cyberui/format")
+    H.app().toast(string.format(require("gettext")("GIG PAYOUT +%s"), Format.credits(24)))
+end)
+H.step(1, function() shot("16d-gigs") end)
+
+-- home in four languages
+for i, lang in ipairs({ "de", "ru", "tr", "el" }) do
+    H.step(S, function()
+        require("gettext").changeLang(lang)
+        H.app().go("home")
+        H.app().update()
+    end)
+    H.step(2.5, function() shot("17" .. string.char(96 + i) .. "-languages") end)
+end
+H.step(S, function() require("gettext").changeLang("en") end)
