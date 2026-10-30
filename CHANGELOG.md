@@ -76,6 +76,7 @@ them on, data shards, ten languages, and a home that comes back much faster.
 - KOReader 2025.10 crashed at start with CyberUI installed.
 - Home flashed over the page when KOReader reloaded the open book in the
   background to apply a change.
+- Leaving a book read in landscape with the Home gesture left home sideways and its buttons dead.
 - Covers inverted along with the screen in night mode.
 - Session log page counts: each page is counted once.
 - Page-turn keys now page the screens and the menu.
