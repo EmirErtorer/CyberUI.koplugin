@@ -380,7 +380,7 @@ do
     local Mainboard = require("cyberui/ui/mainboard")
     local Paint = require("cyberui/gfx/paint")
     local WHITE = require("ffi/blitbuffer").COLOR_WHITE
-    for _, size in ipairs({ { 1128, 472 }, { 900, 380 }, { 600, 420 }, { 1100, 300 } }) do
+    for _, size in ipairs({ { 1128, 472 }, { 900, 380 }, { 600, 420 }, { 1100, 300 }, { 1000, 200 }, { 1128, 240 } }) do
         local bb = Kit.canvas(1200, 600)
         Paint.fill(bb, 0, 0, 1200, 600, WHITE)
         local ok = pcall(function()
@@ -390,6 +390,12 @@ do
         end)
         Kit.ok(ok, "the board draws in " .. size[1] .. " x " .. size[2])
         bb:free()
+    end
+    -- the label font: every glyph is 7 rows of 5 dots
+    for ch, rows in pairs(Mainboard.FONT) do
+        local ok = #rows == 7
+        for _, row in ipairs(rows) do ok = ok and #row == 5 end
+        Kit.ok(ok, "the glyph " .. ch .. " is 5 x 7")
     end
     local bb = Kit.canvas(400, 200)
     Paint.fill(bb, 0, 0, 400, 200, WHITE)

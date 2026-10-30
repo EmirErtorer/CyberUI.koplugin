@@ -168,11 +168,11 @@ end
 -- Build the readout: power across the top, two columns, uptime and identity.
 function Diagnostics:build()
     local th = Theme.get()
-    local body = Layout.Column:new({ gap = th.space.m, clip = true, children = {
+    local body = Layout.Column:new({ gap = th.space.s, clip = true, children = {
         powerPanel(),
-        Layout.Row:new({ gap = th.space.m, valign = "top", children = {
-            Layout.Column:new({ grow = true, gap = th.space.m, children = { corePanel(), storagePanel() } }),
-            Layout.Column:new({ grow = true, gap = th.space.m, children = { uplinkPanel(), opticsPanel() } }),
+        Layout.Row:new({ gap = th.space.s, valign = "top", children = {
+            Layout.Column:new({ grow = true, gap = th.space.s, children = { corePanel(), storagePanel() } }),
+            Layout.Column:new({ grow = true, gap = th.space.s, children = { uplinkPanel(), opticsPanel() } }),
         } }),
         uptimePanel(),
         identLines(),

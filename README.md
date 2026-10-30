@@ -33,25 +33,26 @@ Home comes back the moment you close a book, in a single screen refresh.
 <table>
   <tr>
     <td width="33%" valign="top"><a href="assets/screenshots/04-library.png"><img src="assets/screenshots/04-library.png" alt="Library"></a><br><sub>The library: ASCII covers, folders stacked under their first book, filters and sort.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/05-menu.png"><img src="assets/screenshots/05-menu.png" alt="KOReader's menu"></a><br><sub>KOReader's own menu, restyled: every setting and plugin, with the Deck tab first.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/05-menu.png"><img src="assets/screenshots/05-menu.png" alt="KOReader's menu"></a><br><sub>KOReader's own menu, restyled: every setting and plugin, with the controls in the Deck tab.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/18-idtab.png"><img src="assets/screenshots/18-idtab.png" alt="Operator ID in the menu"></a><br><sub>The Deck tab's other page: your operator ID with eddies and totals, a swipe from the controls.</sub></td>
+  </tr>
+  <tr>
     <td width="33%" valign="top"><a href="assets/screenshots/06-collections.png"><img src="assets/screenshots/06-collections.png" alt="Collections"></a><br><sub>Collections, each a fan of its books.</sub></td>
-  </tr>
-  <tr>
     <td width="33%" valign="top"><a href="assets/screenshots/07-log.png"><img src="assets/screenshots/07-log.png" alt="Reading log"></a><br><sub>The reading log: your week, streaks, a calendar that can be a city skyline, and your goal.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/08-diagnostics.png"><img src="assets/screenshots/08-diagnostics.png" alt="Diagnostics"></a><br><sub>Diagnostics: battery, processor, memory, storage, Wi-Fi, screen and uptime.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/09-look.png"><img src="assets/screenshots/09-look.png" alt="Colour schemes"></a><br><sub>Seven colour schemes and your own, in light and dark.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/08-diagnostics.png"><img src="assets/screenshots/08-diagnostics.png" alt="Diagnostics"></a><br><sub>Diagnostics: battery, processor, memory, storage, Wi-Fi and screen, over a see-through view of the board.</sub></td>
   </tr>
   <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/09-look.png"><img src="assets/screenshots/09-look.png" alt="Colour schemes"></a><br><sub>Seven colour schemes and your own, in light and dark.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/10-covers.png"><img src="assets/screenshots/10-covers.png" alt="ASCII cover settings"></a><br><sub>Covers as ASCII art in eight character sets, as pictures or as title cards.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/11-sleep.png"><img src="assets/screenshots/11-sleep.png" alt="ASCII sleep screen"></a><br><sub>The sleep screen in ASCII: your book's cover, a picture, or anything KOReader shows.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/12-shards.png"><img src="assets/screenshots/12-shards.png" alt="Data shards"></a><br><sub>Data shards: every highlight you made, recovered as a fragment.</sub></td>
   </tr>
   <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/12-shards.png"><img src="assets/screenshots/12-shards.png" alt="Data shards"></a><br><sub>Data shards: every highlight you made, recovered as a fragment.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/13-shop.png"><img src="assets/screenshots/13-shop.png" alt="Shop"></a><br><sub>The shop: five styles to a category, each shown as it really looks, with its price.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/14-styles.png"><img src="assets/screenshots/14-styles.png" alt="Shop styles"></a><br><sub>Twenty styles: card frames, backdrops, handle flairs and jack-in cards.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/15-jackin.png"><img src="assets/screenshots/15-jackin.png" alt="Jack-in cards"></a><br><sub>Jack-in cards, shown while a book opens.</sub></td>
   </tr>
   <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/15-jackin.png"><img src="assets/screenshots/15-jackin.png" alt="Jack-in cards"></a><br><sub>Jack-in cards, shown while a book opens.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/16-gigs.png"><img src="assets/screenshots/16-gigs.png" alt="Gigs story"></a><br><sub>Take a gig, read, get paid as you go, and see it on home.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/17-languages.png"><img src="assets/screenshots/17-languages.png" alt="Languages"></a><br><sub>Ten languages: Turkish, Portuguese (both), Spanish, Italian, French, German, Russian, Polish and Greek.</sub></td>
   </tr>

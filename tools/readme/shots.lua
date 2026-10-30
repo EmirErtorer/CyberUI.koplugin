@@ -158,6 +158,20 @@ H.step(25, function()
     H.app().go("home")
 end)
 
+-- CYBERUI_SHOTS_ONLY="08-diagnostics,18-idtab" takes only the sections that make those
+-- shots (the seeding above always runs); without it every section runs.
+local only_list = os.getenv("CYBERUI_SHOTS_ONLY")
+local add_step, active = H.step, true
+H.step = function(delay, fn) if active then add_step(delay, fn) end end
+local function section(...)
+    if not only_list then return end
+    active = false
+    for _i, name in ipairs({ ... }) do
+        if only_list:find(name, 1, true) then active = true end
+    end
+end
+
+section("01-home", "02-gigs", "03-card", "04-library")
 H.step(4, function() H.app().render("full"); shot("01-home") end)
 H.step(S, function() H.app().push("gigs") end)
 H.step(3, function() shot("02-gigs") end)
@@ -165,15 +179,35 @@ H.step(S, function() H.app().go("home"); require("cyberui/profileflow").card() e
 H.step(S, function() shot("03-card"); H.app().closeDialog() end)
 H.step(S, function() covers("ascii"); H.app().go("library") end)
 H.step(4, function() shot("04-library"); covers("image") end)
+section("05-menu", "18-idtab")
 H.step(S, function()
     H.app().go("home")
     H.app().koreaderMenu()
     local m = require("cyberui/menu").current()
     for i, t in ipairs(m.tabs) do if t.deck then m:switchTab(i) end end
+    m:turnDeck(1)   -- the controls page
 end)
-H.step(S, function() shot("05-menu"); require("cyberui/menu").current():close() end)
+H.step(S, function() shot("05-menu") end)
+-- the operator ID page, in the default card (the free frame, backdrop and flair), then the styles are put back
+local worn_before = {}
+H.step(S, function()
+    local Shop = require("cyberui/data/shop")
+    for _i, cat in ipairs({ "frame", "background", "flair" }) do
+        worn_before[cat] = Shop.worn(cat)
+        Shop.wear(Shop.category(cat).styles[1])
+    end
+    require("cyberui/menu").current():turnDeck(-1)
+end)
+H.step(S, function()
+    shot("18-idtab")
+    require("cyberui/menu").current():close()
+    local Shop = require("cyberui/data/shop")
+    for _cat, style in pairs(worn_before) do Shop.wear(style) end
+end)
+section("06-collections")
 H.step(S, function() H.app().go("collections") end)
 H.step(3, function() shot("06-collections") end)
+section("07-log")
 H.step(S, function()
     Settings.save("cal_view", "skyline")
     H.app().go("history")
@@ -181,8 +215,10 @@ H.step(S, function()
     H.app().update()
 end)
 H.step(S, function() shot("07-log") end)
+section("08-diagnostics")
 H.step(S, function() H.app().go("home"); H.app().push("diagnostics") end)
 H.step(S, function() shot("08-diagnostics") end)
+section("09-look", "10-covers", "11-sleep")
 H.step(S, function() H.app().go("settings") end)
 H.step(S, function() shot("09-look") end)
 H.step(S, function()
@@ -209,10 +245,12 @@ H.step(S, function()
     Screensaver:show()
 end)
 H.step(3, function() shot("11-sleep"); require("ui/screensaver"):close() end)
+section("12-shards")
 H.step(S, function() H.app().go("home"); H.app().push("shards") end)
 H.step(S, function() shot("12-shards") end)
 
 -- the shop: the frames tab alone, then every tab for the styles collage
+section("13-shop", "14a-styles")
 H.step(S, function() H.app().go("home"); H.app().push("shop") end)
 H.step(S, function() shot("13-shop"); shot("14a-styles") end)
 for i, cat in ipairs({ "background", "flair", "jackin" }) do
@@ -221,6 +259,7 @@ for i, cat in ipairs({ "background", "flair", "jackin" }) do
 end
 
 -- four jack-in cards, each drawn alone for the collage
+section("15a-jackin")
 H.step(S, function()
     local Shop, Library = require("cyberui/data/shop"), require("cyberui/data/library")
     local Blitbuffer = require("ffi/blitbuffer")
@@ -243,6 +282,7 @@ H.step(S, function()
 end)
 
 -- the gigs story: the gigs taken, the payouts, the dossier of a gig, a payout on home
+section("16a-gigs")
 H.step(S, function() H.app().go("home"); H.app().push("gigs") end)
 H.step(S, function() H.app().current().tab = "active"; H.app().update() end)
 H.step(S, function() shot("16a-gigs") end)
@@ -262,6 +302,7 @@ end)
 H.step(1, function() shot("16d-gigs") end)
 
 -- home in four languages
+section("17a-languages")
 for i, lang in ipairs({ "de", "ru", "tr", "el" }) do
     H.step(S, function()
         require("gettext").changeLang(lang)
