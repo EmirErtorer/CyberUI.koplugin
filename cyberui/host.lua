@@ -22,7 +22,15 @@ local Host = InputContainer:extend({
     toast = nil,       -- notice element at the top
 })
 
--- Full-screen gesture ranges and the Back key.
+-- The keys a CyberUI window answers: Back and the page turn keys.
+function Host.addKeys(widget)
+    if not Device:hasKeys() then return end
+    widget.key_events.Back = { { "Back" } }
+    widget.key_events.PageNext = { { "RPgFwd" }, { "LPgFwd" } }
+    widget.key_events.PagePrev = { { "RPgBack" }, { "LPgBack" } }
+end
+
+-- Full-screen gesture ranges and the keys.
 function Host:init()
     self.dimen = Geom:new({ x = 0, y = 0, w = Screen:getWidth(), h = Screen:getHeight() })
     local whole = function() return self.dimen end
@@ -31,7 +39,7 @@ function Host:init()
         Hold = { GestureRange:new({ ges = "hold", range = whole }) },
         Swipe = { GestureRange:new({ ges = "swipe", range = whole }) },
     }
-    if Device:hasKeys() then self.key_events.Back = { { "Back" } } end
+    Host.addKeys(self)
 end
 
 -- Lay out the tree and overlays for the current screen size.
@@ -204,6 +212,17 @@ end
 function Host:onSwipe(_, ges)
     if self.overlay then return true end
     return self.on_swipe ~= nil and self.on_swipe(ges.direction, ges.pos) == true
+end
+
+-- The page turn keys page the screen or the open dialog.
+function Host:onPageNext()
+    if self.on_page then self.on_page(1) end
+    return true
+end
+
+function Host:onPagePrev()
+    if self.on_page then self.on_page(-1) end
+    return true
 end
 
 -- The Back key goes back a screen.

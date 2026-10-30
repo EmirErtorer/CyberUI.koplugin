@@ -559,6 +559,12 @@ function Menu:build(_close, screen_w)
     } })
     panel.dock = "top"
     panel.on_back = function() return self:up() end
+    panel.on_page = function(delta)
+        if (self.pages or 1) < 2 then return false end
+        self.page = math.max(1, math.min(self.page + delta, self.pages))
+        self:show()
+        return true
+    end
     self.panel = panel
     return panel
 end

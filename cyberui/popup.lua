@@ -30,7 +30,7 @@ function Popup:init()
         Hold = { GestureRange:new({ ges = "hold", range = whole }) },
         Swipe = { GestureRange:new({ ges = "swipe", range = whole }) },
     }
-    if Device:hasKeys() then self.key_events.Back = { { "Back" } } end
+    Host.addKeys(self)
     self:setElement(self.element)
 end
 
@@ -69,6 +69,10 @@ end
 function Popup:onTap(_, ges) return touch(self, ges, "on_tap") end
 function Popup:onHold(_, ges) return touch(self, ges, "on_hold") end
 function Popup:onSwipe() return true end
+
+-- The page turn keys page the element when it pages.
+function Popup:onPageNext() local f = self.element.on_page; if f then f(1) end; return true end
+function Popup:onPagePrev() local f = self.element.on_page; if f then f(-1) end; return true end
 
 -- Back goes to on_back, else closes.
 function Popup:onBack()

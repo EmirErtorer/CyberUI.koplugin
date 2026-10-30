@@ -133,6 +133,7 @@ local function newHost()
     local h = Host:new({})
     h.on_swipe = function(dir, pos) App.swipe(dir, pos) end
     h.on_back = function() App.back() end
+    h.on_page = function(delta) App.page(delta) end
     h.on_outside = function() App.closeDialog() end
     h.on_resize = function() build() end
     h.on_error = function() App.toast(_("Something went wrong; see crash.log")) end
@@ -306,6 +307,16 @@ function App.back()
     local cur = App.current()
     if cur and cur:onBack() then return end
     App.pop()
+end
+
+-- The page turn keys: page the open dialog, else the screen. True when used.
+function App.page(delta)
+    if host and host.overlay then
+        local o = host.overlay
+        return o.on_page ~= nil and o.on_page(delta) == true
+    end
+    local s = App.current()
+    return (s and s.onSwipe and s:onSwipe(delta > 0 and "west" or "east")) == true
 end
 
 -- Swipes: down from the top edge opens KOReader's menu, a paging screen
