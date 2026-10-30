@@ -30,8 +30,8 @@ function InkAway.annotate()
     local path = require("cyberui/park").file()
     path = path or require("cyberui/data/history").lastFile()
     if not path then return require("cyberui/app").toast(_("Open a book first")) end
-    require("cyberui/app").openBook(path, function(ui)
-        require("ui/uimanager"):nextTick(function() ui:handleEvent(require("ui/event"):new("InkAwayAnnotate")) end)
+    require("cyberui/app").openBook(path, function(reader)
+        require("ui/uimanager"):nextTick(function() reader:handleEvent(require("ui/event"):new("InkAwayAnnotate")) end)
     end)
 end
 
