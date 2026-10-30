@@ -15,12 +15,13 @@ local Library = require("cyberui/data/library")
 
 local only = {}
 for i = 3, #arg do only[arg[i]] = true end
-local SCREENS = { "home", "library", "dossier", "collections", "history", "search", "settings", "trash", "fonts", "diagnostics", "topbar", "launcher", "launchedit", "iconpick", "card", "filepick", "bounty", "shards", "shard" }
+local SCREENS = { "home", "library", "dossier", "collections", "history", "search", "settings", "trash", "fonts", "diagnostics", "topbar", "launcher", "launchedit", "iconpick", "card", "filepick", "bounty", "shards", "shard", "colourpick" }
 local PARAMS = {
     dossier = function() return { path = Library.all()[1] } end,
     launchedit = function() return { id = "library" } end,
     iconpick = function() return { current = "pen", on_pick = function() end } end,
     shard = function() return { shard = { id = "3F2A91C0", text = "A test highlight that wraps over a few lines so the card can show its words.", path = Library.all()[1] }, number = 1, of = 1 } end,
+    colourpick = function() return { title = "Accent", current = "#2457D6", on_pick = function() end } end,
     filepick = function() return { dir = Library.home(), exts = { png = true }, on_pick = function() end } end,
 }
 

@@ -197,7 +197,10 @@ end
 -- A tap runs the innermost element's on_tap; false when nothing took it.
 function Host:onTap(_, ges)
     local el = self:target(ges.pos, "on_tap")
-    if el then self:press(el, "on_tap") end
+    if el then
+        el.tap_pos = ges.pos   -- for elements that need to know where (a colour dial)
+        self:press(el, "on_tap")
+    end
     return el ~= nil or self.overlay ~= nil
 end
 

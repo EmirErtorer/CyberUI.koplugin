@@ -74,6 +74,37 @@ function Color.toScreen(rgb, colour_screen)
     return RGB32(rgb[1], rgb[2], rgb[3], 0xFF)
 end
 
+-- Hue (0 to 360), saturation and value (0 to 1) to {r, g, b}.
+function Color.fromHSV(h, sat, v)
+    local sector = (h % 360) / 60
+    local i = math.floor(sector)
+    local f = sector - i
+    local p, q, t = v * (1 - sat), v * (1 - f * sat), v * (1 - (1 - f) * sat)
+    local r, g, b
+    if i == 0 then r, g, b = v, t, p
+    elseif i == 1 then r, g, b = q, v, p
+    elseif i == 2 then r, g, b = p, v, t
+    elseif i == 3 then r, g, b = p, q, v
+    elseif i == 4 then r, g, b = t, p, v
+    else r, g, b = v, p, q end
+    return { math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5) }
+end
+
+-- {r, g, b} to hue (0 to 360), saturation and value (0 to 1).
+function Color.toHSV(rgb)
+    local r, g, b = rgb[1] / 255, rgb[2] / 255, rgb[3] / 255
+    local max, min = math.max(r, g, b), math.min(r, g, b)
+    local d = max - min
+    local h = 0
+    if d > 0 then
+        if max == r then h = ((g - b) / d) % 6
+        elseif max == g then h = (b - r) / d + 2
+        else h = (r - g) / d + 4 end
+        h = h * 60
+    end
+    return h, max == 0 and 0 or d / max, max
+end
+
 -- Is a Blitbuffer colour an RGB one (needs the colour paint paths)?
 function Color.isRGB(c)
     return ffi.istype(RGB32, c)

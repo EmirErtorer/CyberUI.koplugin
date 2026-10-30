@@ -5,6 +5,7 @@
 
 local REPO = arg[1] or "."
 local Kit = dofile(REPO .. "/tests/kit.lua").boot(REPO)
+local Theme = require("cyberui/theme")
 G_reader_settings:saveSetting("home_dir", require("datastorage"):getDataDir() .. "/Books")
 
 local Settings = require("cyberui/settings")
@@ -287,6 +288,43 @@ do
         c:free()
     end)
     Kit.ok(ok, "the goal tab builds with its skyline: " .. tostring(err))
+end
+
+-- the colour dial
+do
+    local Color = require("cyberui/theme/color")
+    for _, hex in ipairs({ "#2457D6", "#C62828", "#0F8076", "#FFFFFF", "#000000", "#7BF0A8" }) do
+        local h, s_, v = Color.toHSV(Color.parse(hex))
+        Kit.ok(Color.hex(Color.fromHSV(h, s_, v)) == hex, "a colour survives hue, saturation and value: " .. hex)
+    end
+    local Dial = require("cyberui/ui/dial")
+    local got
+    local dial = Dial:new({ hue = 0, sat = 1, val = 1, size = 300, on_change = function(h, s_, v) got = { h, s_, v } end })
+    dial:layout(300, 300)
+    local bb = Kit.canvas()
+    dial:paint(bb, 20, 30)
+    Kit.ok(Kit.time(function() dial:paint(bb, 20, 30) end, 5) < 15, "the dial repaints in under 15 ms")
+    bb:free()
+    -- a tap on the right of the ring is a hue of about 90 degrees
+    local cx, cy = dial.x + dial.w / 2, dial.y + dial.h / 2
+    local ring_r = dial.w / 2 - Theme.px(9) - Theme.px(8)
+    dial.tap_pos = { x = cx + ring_r, y = cy }
+    dial:on_tap()
+    Kit.ok(got and math.abs(got[1] - 90) < 3, "a tap on the ring picks its hue: " .. tostring(got and got[1]))
+    got = nil
+    dial.tap_pos = { x = cx - 10, y = cy + 10 }
+    dial:on_tap()
+    Kit.ok(got and got[2] > 0 and got[2] < 1 and got[3] < 1, "a tap in the matrix picks saturation and brightness")
+    got = nil
+    dial.tap_pos = { x = dial.x + 2, y = dial.y + 2 }
+    dial:on_tap()
+    Kit.ok(got == nil, "a tap outside both changes nothing")
+    local Pick = require("cyberui/screens/colourpick")
+    local p = Pick:new({ current = "#2457D6", on_pick = function() end })
+    p:setHex("not a colour")
+    Kit.ok(Color.hex(p:rgb()) == "#2457D6", "a bad colour code leaves the colour as it was")
+    p:setHex("#C62828")
+    Kit.ok(Color.hex(p:rgb()) == "#C62828", "a typed colour code is taken")
 end
 
 -- the jack-in card

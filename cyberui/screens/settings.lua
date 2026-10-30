@@ -49,27 +49,10 @@ local function save(key, value)
     App.update()
 end
 
--- Pick one of the preset colours for a custom accent.
+-- Pick a colour for a custom accent with the colour dial.
 local function pickColour(key, title)
-    local th = Theme.get()
-    App.dialog(function(close, screen_w)
-        local cells = {}
-        for _i, hex in ipairs(Custom.PRESETS) do
-            cells[#cells + 1] = Panel:new({ shape = "frame", pad = Theme.px(4), on_tap = function()
-                close()
-                Theme.set(key, hex)
-            end, child = Swatch:new({ colors = { hex }, size = 40, height = Theme.px(40) }) })
-        end
-        local grid_rows = {}
-        for i = 1, #cells, 4 do
-            grid_rows[#grid_rows + 1] = Layout.Row:new({ gap = th.space.m, children = { cells[i], cells[i + 1], cells[i + 2], cells[i + 3] } })
-        end
-        table.insert(grid_rows, 1, Label:new({ text = title, kind = "title" }))
-        grid_rows[#grid_rows + 1] = Button:new({ label = _("Close"), variant = "ghost", on_tap = close })
-        return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl,
-            width = math.min(screen_w - 2 * th.space.xl, Theme.px(420)),
-            child = Layout.Column:new({ gap = th.space.m, align = "center", children = grid_rows }) })
-    end)
+    App.push("colourpick", { title = title, current = Settings.get(key) or Custom.DEFAULT_ACCENT,
+        on_pick = function(hex) Theme.set(key, hex) end })
 end
 
 -- The Look section.
