@@ -52,11 +52,12 @@ function ProfileFlow.editHandle(after)
     end, _("Save"), { placeholder = Profile.handle() })
 end
 
--- Save the card as a picture in KOReader's screenshots folder; `card` is the
+-- Save the card as a picture in KOReader's screenshots folder (`ProfileFlow.dir`
+-- when a test sets one); `card` is the
 -- full card element. Returns the file, or nil and a reason.
 function ProfileFlow.export(card)
     local th = Theme.get()
-    local dir = DataStorage:getDataDir() .. "/screenshots"
+    local dir = ProfileFlow.dir or (DataStorage:getDataDir() .. "/screenshots")
     lfs.mkdir(dir)
     local width = require("device").screen:getWidth() - 2 * th.space.xl
     card:layout(width, nil)

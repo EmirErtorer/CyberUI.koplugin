@@ -431,15 +431,15 @@ function App.input(title, value, on_done, ok_label, opts)
 end
 
 -- Open a book in the reader; CyberUI stays underneath to come back to.
-function App.openBook(path)
+function App.openBook(path, after_open)
     if clock_timer then UIManager:unschedule(clock_timer); clock_timer = nil end
     local ReaderUI = require("apps/reader/readerui")
     local JackIn = require("cyberui/jackin")
     if host and JackIn.wanted(path) then
         App.flash(JackIn.card(path))
-        JackIn.silenced(path, function() ReaderUI:showReader(path) end)
+        JackIn.silenced(path, function() ReaderUI:showReader(path, nil, nil, nil, after_open) end)
     else
-        ReaderUI:showReader(path)
+        ReaderUI:showReader(path, nil, nil, nil, after_open)
     end
 end
 
@@ -457,6 +457,7 @@ end
 -- A book was closed: what CyberUI knows about it is stale.
 function App.bookClosed(path)
     if path then
+        require("cyberui/data/shards").refresh(path)
         Books.forget(path)
         Covers.forget(path)
     end

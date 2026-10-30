@@ -9,6 +9,10 @@ local util = require("util")
 
 local Books = {}
 
+-- Counts the times a book's facts were dropped, so a cache of results built
+-- from them can tell it is out of date.
+Books.revision = 0
+
 local info_cache = {}     -- path -> facts
 local waiting = {}        -- path -> true while queued for extraction
 local on_extracted = {}   -- callbacks for when background extraction ends
@@ -87,6 +91,7 @@ end
 
 -- Forget what is known about a book (it was just read, moved or changed).
 function Books.forget(path)
+    Books.revision = Books.revision + 1
     info_cache[path] = nil
     BookList.resetBookInfoCache(path)
 end

@@ -7,6 +7,7 @@ local Device = require("device")
 local DeviceInfo = require("cyberui/data/device")
 local History = require("cyberui/data/history")
 local Profile = require("cyberui/data/profile")
+local Shards = require("cyberui/data/shards")
 local Books = require("cyberui/data/books")
 local Settings = require("cyberui/settings")
 local _ = require("gettext")
@@ -67,19 +68,10 @@ function Banner.device()
     return DeviceInfo.name()
 end
 
--- The highlights saved in a book's reading data, newest format first.
+-- The texts of the highlights saved in a book's reading data.
 local function highlightsOf(path)
-    local DocSettings = require("docsettings")
-    local ds = DocSettings:open(path)
     local out = {}
-    for _i, a in ipairs(ds:readSetting("annotations") or {}) do
-        if a.text and a.text ~= "" then out[#out + 1] = a.text end
-    end
-    for _page, list in pairs(ds:readSetting("highlight") or {}) do
-        for _i, a in ipairs(list) do
-            if a.text and a.text ~= "" then out[#out + 1] = a.text end
-        end
-    end
+    for _i, shard in ipairs(Shards.of(path)) do out[#out + 1] = shard.text end
     return out
 end
 

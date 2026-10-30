@@ -156,4 +156,56 @@ function Paint.ticks(bb, x, y, w, h, period, t, c)
     for xx = 0, w - 1, period do fill(bb, x + xx, y, t, h, c) end
 end
 
+-- A straight line `t` pixels thick between two points, drawn as runs of the
+-- C rectangle fill (one per row for a shallow line, one per column for a steep one).
+function Paint.line(bb, x0, y0, x1, y1, t, c)
+    x0, y0, x1, y1 = floor(x0 + 0.5), floor(y0 + 0.5), floor(x1 + 0.5), floor(y1 + 0.5)
+    local half = floor(t / 2)
+    local dx, dy = x1 - x0, y1 - y0
+    local shallow = math.abs(dx) >= math.abs(dy)
+    if not shallow then x0, y0, dx, dy = y0, x0, dy, dx end   -- work along x, swap back when drawing
+    if dx < 0 then x0, y0, dx, dy = x0 + dx, y0 + dy, -dx, -dy end
+    local sy = dy >= 0 and 1 or -1
+    local steps = math.abs(dy)
+    local function from(k) return k == 0 and x0 or x0 + floor(dx * (k - 0.5) / steps + 0.5) end
+    for k = 0, steps do
+        local xa = from(k)
+        local xb = k == steps and x0 + dx or from(k + 1)
+        local ya = y0 + k * sy - half
+        if shallow then fill(bb, xa, ya, xb - xa + 1, t, c) else fill(bb, ya, xa, t, xb - xa + 1, c) end
+    end
+end
+
+-- A closed outline through the points { {x, y}, ... }, `t` pixels thick.
+function Paint.outline(bb, pts, t, c)
+    for i, a in ipairs(pts) do
+        local b = pts[i % #pts + 1]
+        Paint.line(bb, a[1], a[2], b[1], b[2], t, c)
+    end
+end
+
+-- Fill the polygon through the points { {x, y}, ... } (any simple shape), a row
+-- at a time.
+function Paint.polygon(bb, pts, c)
+    local top, bottom = math.huge, -math.huge
+    for _i, p in ipairs(pts) do
+        top, bottom = math.min(top, p[2]), math.max(bottom, p[2])
+    end
+    local n = #pts
+    for y = floor(top), math.ceil(bottom) - 1 do
+        local yc, xs = y + 0.5, {}
+        for i = 1, n do
+            local a, b = pts[i], pts[i % n + 1]
+            if (a[2] <= yc and b[2] > yc) or (b[2] <= yc and a[2] > yc) then
+                xs[#xs + 1] = a[1] + (yc - a[2]) / (b[2] - a[2]) * (b[1] - a[1])
+            end
+        end
+        table.sort(xs)
+        for j = 1, #xs - 1, 2 do
+            local xa, xb = floor(xs[j] + 0.5), floor(xs[j + 1] + 0.5)
+            if xb > xa then fill(bb, xa, y, xb - xa, 1, c) end
+        end
+    end
+end
+
 return Paint

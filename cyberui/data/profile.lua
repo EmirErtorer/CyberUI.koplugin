@@ -106,9 +106,9 @@ end
 
 ---------------------------------------------------------------- photo
 
--- The file the chosen photo is kept in.
+-- The file the chosen photo is kept in (in `Profile.dir` when a test sets one).
 function Profile.photoFile()
-    return DataStorage:getSettingsDir() .. "/cyberui-photo.png"
+    return (Profile.dir or DataStorage:getSettingsDir()) .. "/cyberui-photo.png"
 end
 
 -- Free the scaled copies (the photo changed).

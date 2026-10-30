@@ -4,13 +4,16 @@
 
 local Addons = require("cyberui/apps/addons")
 local App = require("cyberui/app")
+local Bounty = require("cyberui/data/bounty")
 local Button = require("cyberui/ui/button")
 local Collections = require("cyberui/data/collections")
+local Format = require("cyberui/format")
 local InkAway = require("cyberui/apps/inkaway")
 local Layout = require("cyberui/ui/layout")
 local Library = require("cyberui/data/library")
 local LauncherData = require("cyberui/data/launcher")
 local Panel = require("cyberui/ui/panel")
+local Shards = require("cyberui/data/shards")
 local Targets = require("cyberui/targets")
 local Theme = require("cyberui/theme")
 local _ = require("gettext")
@@ -28,6 +31,15 @@ local BUILTIN = {
         return "collections", _("COLLECTIONS"), string.format(_("%d CACHES"), #Collections.list()), function() App.go("collections") end
     end,
     history = function() return "history", _("HISTORY"), _("TELEMETRY.LOG"), function() App.go("history") end end,
+    bounty = function()
+        local list = Bounty.list()
+        return "bounty", _("BOUNTIES"), #list > 0 and string.format(_("%s // %d WANTED"), Format.credits(Bounty.total()), #list) or _("BACKLOG CLEAR"),
+            function() App.push("bounty") end
+    end,
+    shards = function()
+        local n = Shards.count()
+        return "shard", _("SHARDS"), n > 0 and string.format(_("%d RECOVERED"), n) or _("NO HIGHLIGHTS YET"), function() App.push("shards") end
+    end,
     search = function() return "search", _("SEARCH"), _("GREP THE ARCHIVE"), function() App.push("search") end end,
     inkaway = function() return InkAway.icon, _("INK AWAY"), Addons.statusLine(InkAway), function() Addons.launch(InkAway) end end,
     settings = function()

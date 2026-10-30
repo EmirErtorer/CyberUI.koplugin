@@ -8,7 +8,10 @@ local Launcher = {}
 
 -- The built-in buttons, in their default order, and the one that always
 -- stays so the settings can always be reached.
-Launcher.BUILTIN = { "library", "collections", "history", "search", "inkaway", "settings" }
+Launcher.BUILTIN = { "library", "collections", "history", "search", "bounty", "shards", "inkaway", "settings" }
+
+-- Built-in buttons that start hidden (the reader can show them in the editor).
+Launcher.HIDDEN_AT_FIRST = { shards = true }
 Launcher.FIXED = "settings"
 
 local MAX = 12   -- buttons the home screen has room for
@@ -27,7 +30,7 @@ function Launcher.entries()
         end
     end
     for _i, id in ipairs(Launcher.BUILTIN) do
-        if not seen[id] then out[#out + 1] = { id = id } end
+        if not seen[id] then out[#out + 1] = { id = id, hidden = Launcher.HIDDEN_AT_FIRST[id] or nil } end
     end
     return out
 end

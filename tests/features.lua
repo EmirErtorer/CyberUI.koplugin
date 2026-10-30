@@ -18,7 +18,7 @@ do
     Launcher.move("library", 1)
     Kit.ok(Launcher.entries()[1].id == "collections" and Launcher.entries()[2].id == "library", "a button moves down")
     Launcher.setHidden("history", true)
-    Kit.ok(#Launcher.visible() == #Launcher.BUILTIN - 1, "a hidden button is not shown")
+    Kit.ok(#Launcher.visible() == #Launcher.BUILTIN - 2, "a hidden button is not shown (the shards button starts hidden)")
     Launcher.setHidden(Launcher.FIXED, true)
     Kit.ok(Launcher.get(Launcher.FIXED).hidden == nil, "the settings button cannot be hidden")
     local id = Launcher.add()
@@ -161,11 +161,15 @@ do
     Settings.set("handle", nil)
     -- a photo from a file: kept square and used by the face
     local BB = require("ffi/blitbuffer")
-    local src = require("datastorage"):getDataDir() .. "/cyberui-test-photo.png"
+    local src = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-photo.png"
     local big = BB.new(300, 200, BB.TYPE_BBRGB32)
     big:fill(BB.COLOR_BLACK)
     big:writePNG(src)
     big:free()
+    local tmp = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-profile"
+    os.execute("rm -rf '" .. tmp .. "'; mkdir -p '" .. tmp .. "'")
+    Profile.dir = tmp
+    require("cyberui/profileflow").dir = tmp
     Kit.ok(not Profile.hasPhoto(), "no photo at first")
     Kit.ok(Profile.setPhoto(src) and Profile.hasPhoto(), "a picture becomes the photo")
     local p = Profile.photo(64)
@@ -188,6 +192,63 @@ do
     local file = ProfileFlow.export(IdCard.full({}))
     Kit.ok(file and require("libs/libkoreader-lfs").attributes(file, "size") > 1000, "the card is saved as a picture")
     if file then os.remove(file) end
+end
+
+-- data shards and bounties
+do
+    local tmp = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-shards"
+    os.execute("rm -rf '" .. tmp .. "'; mkdir -p '" .. tmp .. "'")
+    local Shards = require("cyberui/data/shards")
+    Shards.reset()
+    Shards.file = tmp .. "/shards.lua"
+    local book = tmp .. "/Dune.epub"
+    io.open(book, "w"):close()
+    local DocSettings = require("docsettings")
+    local ds = DocSettings:open(book)
+    ds:saveSetting("annotations", {
+        { text = "  Fear is the   mind-killer. ", note = "litany", chapter = "Ch 1", datetime = "2026-10-01 10:00:00", page = 12 },
+        { text = "", page = 3 },
+        { text = "A beginning is the time for taking the most delicate care.", datetime = "2026-10-02 09:00:00", page = 40 },
+    })
+    ds:flush()
+    local list = Shards.of(book)
+    Kit.ok(#list == 2 and list[1].text == "Fear is the mind-killer." and list[1].note == "litany", "highlights become shards, blanks are left out")
+    Kit.ok(list[1].id:match("^%x%x%x%x%x%x%x%x$") ~= nil and list[1].id ~= list[2].id, "a shard has its own id")
+    Shards.refresh(book)
+    Kit.ok(Shards.count() == 1 + 1 and #Shards.ofBook(book) == 2, "a book read into the index adds its shards")
+    Kit.ok(Shards.all()[1].date == "2026-10-02 09:00:00", "the newest shard comes first")
+    Kit.ok(Shards.booksWith()[1].path == book and Shards.booksWith()[1].count == 2, "books with shards are listed")
+    local pick = Shards.another()
+    Kit.ok(pick and pick.of == 2 and pick.shard.path == book, "a random shard says which of how many it is")
+    local ShardCard = require("cyberui/ui/shardcard")
+    local W = Kit.Screen:getWidth()
+    local card = ShardCard:new({ shard = list[1], number = 1, of = 2 })
+    card:layout(W - 40, nil)
+    local bb = Kit.canvas()
+    card:paint(bb, 10, 10)
+    bb:free()
+    Kit.ok(card.h > 60 and card.h < 140, "a shard card is a few lines tall")
+    -- an unchanged book is not read again
+    local before = Shards.all()
+    Shards.refresh(book)
+    Kit.ok(Shards.all() == before, "an unchanged book is skipped")
+    Shards.reset()
+    Shards.file = nil
+
+    local Bounty = require("cyberui/data/bounty")
+    local list_b = Bounty.list()
+    local last = 1e9
+    for _, b in ipairs(list_b) do
+        Kit.ok(b.days >= Bounty.GRACE_DAYS and b.reward == b.days * Bounty.PER_DAY and b.days <= last, "a bounty grows with the days idle, oldest first")
+        last = b.days
+    end
+    Kit.ok(Bounty.total() == (function() local t = 0; for _, b in ipairs(list_b) do t = t + b.reward end; return t end)(), "the total adds the bounties")
+    if #list_b > 0 then
+        Bounty.skip(list_b[1].path)
+        Kit.ok(#Bounty.list() == #list_b - 1, "a book said to be not wanted leaves the board")
+        Bounty.reset()
+        Kit.ok(#Bounty.list() == #list_b, "and comes back")
+    end
 end
 
 -- the jack-in card

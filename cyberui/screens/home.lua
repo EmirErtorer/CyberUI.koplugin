@@ -23,6 +23,8 @@ local ProfileFlow = require("cyberui/profileflow")
 local Progress = require("cyberui/ui/progress")
 local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
+local ShardCard = require("cyberui/ui/shardcard")
+local Shards = require("cyberui/data/shards")
 local Stats = require("cyberui/data/stats")
 local StatusBar = require("cyberui/ui/statusbar")
 local Theme = require("cyberui/theme")
@@ -34,12 +36,21 @@ local Home = Screen:extend()
 -- A fresh highlight each time home is opened.
 function Home:init()
     Banner.shuffle()
+    Shards.shuffle()
+    -- highlights are collected while the device is idle; show the first one found
+    require("ui/uimanager"):scheduleIn(2, function()
+        Shards.collect(function()
+            local s = App.current()
+            if s and s.id == "home" and s.no_shard then App.update() end
+        end)
+    end)
 end
 
 -- Shown again after a book: a fresh highlight, and the book just read back
 -- in the active panel.
 function Home:onRaise()
     Banner.shuffle()
+    Shards.shuffle()
     self.picked = nil
 end
 
@@ -183,6 +194,23 @@ local function recentList(home, shown)
         child = Layout.Column:new({ gap = th.space.s, clip = true, children = kids }) })
 end
 
+-- A recovered highlight as a data shard, when there is one and the screen is
+-- tall enough to spare the room (not a wide, short one). Tapping opens all the
+-- shards, holding draws another.
+local function shardPanel(home)
+    local screen = require("device").screen
+    home.no_shard = false
+    if not Settings.get("home_shard", true) or screen:getWidth() > screen:getHeight() then return nil end
+    local pick = Shards.random()
+    if not pick then
+        home.no_shard = true
+        return nil
+    end
+    return ShardCard:new({ shard = pick.shard, number = pick.number, of = pick.of, lines = 2,
+        on_tap = function() App.push("shards") end,
+        on_hold = function() Shards.another(); App.update() end })
+end
+
 -- The footer: barcode, prompt and version.
 local function footer()
     local th = Theme.get()
@@ -199,15 +227,17 @@ function Home:build()
     local status, clock = StatusBar.build()
     self.clock = clock
     local shown = self:shown()
-    return Layout.Column:new({ pad = { th.space.s, th.space.xl, th.space.m, th.space.xl }, gap = th.space.m, children = {
+    local kids = {
         status,
         identity(),
         Settings.get("home_card", true) and IdCard.strip({ on_open = function() App.push("card") end, on_photo = ProfileFlow.photo }) or indexStrip(),
         dateRow(self),
         activeFile(shown),
-        Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown), Launcher.build() } }),
-        footer(),
-    } })
+    }
+    kids[#kids + 1] = shardPanel(self) or nil
+    kids[#kids + 1] = Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown), Launcher.build() } })
+    kids[#kids + 1] = footer()
+    return Layout.Column:new({ pad = { th.space.s, th.space.xl, th.space.m, th.space.xl }, gap = th.space.m, children = kids })
 end
 
 -- The library index is ready: show the real counts.

@@ -22,6 +22,16 @@ function Actions.open(path)
     App.openBook(path)
 end
 
+-- Open the book at a data shard (its highlight), when it can be found.
+function Actions.openAt(path, shard)
+    App.openBook(path, function(ui)
+        if shard.page then
+            local Event = require("ui/event")
+            ui:handleEvent(Event:new(ui.paging and "GotoPage" or "GotoXPointer", shard.page, shard.pos0))
+        end
+    end)
+end
+
 local TAP_AGAIN = 3   -- seconds a first tap waits for its second
 local armed            -- { path, at }: the book a first tap is waiting on
 
