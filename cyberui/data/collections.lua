@@ -72,4 +72,12 @@ function Collections.create(name)
     end
 end
 
+-- Delete a collection (its books stay in the library). Favorites cannot go.
+function Collections.remove(name)
+    if name == ReadCollection.default_collection_name or not ReadCollection.coll[name] then return false end
+    ReadCollection:removeCollection(name)
+    ReadCollection:write()
+    return true
+end
+
 return Collections

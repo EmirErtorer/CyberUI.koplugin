@@ -113,7 +113,7 @@ msgstr[0] "Пролежит в корзине %d день."
 msgstr[1] "Пролежит в корзине %d дня."
 msgstr[2] "Пролежит в корзине %d дней."
 
-#: cyberui/actions.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
 msgid "Delete"
 msgstr "Удалить"
 
@@ -889,6 +889,18 @@ msgstr "%s сохранено"
 #: cyberui/profileflow.lua
 msgid "The card could not be saved"
 msgstr "Не удалось сохранить карту"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Избранное остаётся всегда"
+
+#: cyberui/screens/collections.lua
+msgid "Delete this collection?"
+msgstr "Удалить эту коллекцию?"
+
+#: cyberui/screens/collections.lua
+msgid "Collection deleted"
+msgstr "Коллекция удалена"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"

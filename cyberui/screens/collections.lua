@@ -1,6 +1,6 @@
 -- Collections ("caches"): Favorites pinned as a large card over a paged grid
 -- of every other collection, each showing a few of its covers. Tap one to
--- browse it; "+ New" makes a new collection.
+-- browse it, hold one to delete it; "+ New" makes a new collection.
 
 local App = require("cyberui/app")
 local Button = require("cyberui/ui/button")
@@ -39,11 +39,25 @@ local function open(c)
     return function() App.push("library", { collection = c.name }) end
 end
 
+-- Hold a collection: ask, then delete it (Favorites stays).
+local function askRemove(c)
+    return function()
+        if c.name == require("readcollection").default_collection_name then
+            return App.toast(_("Favorites always stays"))
+        end
+        App.confirm({ title = _("Delete this collection?"), text = c.title, danger = true, ok = _("Delete"), on_ok = function()
+            Collections.remove(c.name)
+            App.toast(_("Collection deleted"))
+            App.update()
+        end })
+    end
+end
+
 -- One collection card.
 local function card(c, _w, h)
     local th = Theme.get()
     local inner_h = h - 2 * th.space.s
-    return Panel:new({ shape = "frame", pad = th.space.s, on_tap = open(c), child = Layout.Row:new({ gap = th.space.m, children = {
+    return Panel:new({ shape = "frame", pad = th.space.s, on_tap = open(c), on_hold = askRemove(c), child = Layout.Row:new({ gap = th.space.m, children = {
         mosaic(c.books, math.floor(inner_h * 0.75), inner_h),
         Layout.Column:new({ grow = true, gap = th.space.xs, children = {
             Label:new({ text = c.title, kind = "heading" }),
@@ -60,7 +74,7 @@ local function pinned(c)
         fan[i] = Cover:new({ path = c.books[i], width = Theme.px(70), height = Theme.px(100),
             place = "tl", dx = (i - 1) * Theme.px(22), dy = (i - 1) * Theme.px(3) })
     end
-    return Panel:new({ shape = "chamfer", corners = "tb", pad = th.space.l, on_tap = open(c), child = Layout.Row:new({ gap = th.space.l, children = {
+    return Panel:new({ shape = "chamfer", corners = "tb", pad = th.space.l, on_tap = open(c), on_hold = askRemove(c), child = Layout.Row:new({ gap = th.space.l, children = {
         Layout.Overlay:new({ width = Theme.px(140), height = Theme.px(112), children = fan }),
         Layout.Column:new({ grow = true, gap = th.space.xs, children = {
             Label:new({ text = _("PINNED // QUEUE"), kind = "micro", color = "muted" }),

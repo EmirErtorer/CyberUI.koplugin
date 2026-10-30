@@ -113,7 +113,7 @@ msgstr[0] "Poleży w koszu %d dzień."
 msgstr[1] "Poleży w koszu %d dni."
 msgstr[2] "Poleży w koszu %d dni."
 
-#: cyberui/actions.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
 msgid "Delete"
 msgstr "Usuń"
 
@@ -889,6 +889,18 @@ msgstr "Zapisano %s"
 #: cyberui/profileflow.lua
 msgid "The card could not be saved"
 msgstr "Nie udało się zapisać karty"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Ulubione zawsze zostają"
+
+#: cyberui/screens/collections.lua
+msgid "Delete this collection?"
+msgstr "Usunąć tę kolekcję?"
+
+#: cyberui/screens/collections.lua
+msgid "Collection deleted"
+msgstr "Kolekcja usunięta"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"

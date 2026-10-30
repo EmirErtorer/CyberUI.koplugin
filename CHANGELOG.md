@@ -8,6 +8,9 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Added
+- Hold a collection to delete it (Favorites stays).
+
 ## [1.1.0] - 2026-10-30
 
 Everything since 1.0.0, the 1.0.5 prerelease included. The big ones: an operator

@@ -111,7 +111,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] "Es bleibt %d Tag im Papierkorb."
 msgstr[1] "Es bleibt %d Tage im Papierkorb."
 
-#: cyberui/actions.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
 msgid "Delete"
 msgstr "Löschen"
 
@@ -880,6 +880,18 @@ msgstr "%s gespeichert"
 #: cyberui/profileflow.lua
 msgid "The card could not be saved"
 msgstr "Die Karte konnte nicht gespeichert werden"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Favoriten bleiben immer erhalten"
+
+#: cyberui/screens/collections.lua
+msgid "Delete this collection?"
+msgstr "Diese Sammlung löschen?"
+
+#: cyberui/screens/collections.lua
+msgid "Collection deleted"
+msgstr "Sammlung gelöscht"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"

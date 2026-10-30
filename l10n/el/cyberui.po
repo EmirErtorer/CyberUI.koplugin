@@ -111,7 +111,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] "Παραμένει στον κάδο για %d ημέρα."
 msgstr[1] "Παραμένει στον κάδο για %d ημέρες."
 
-#: cyberui/actions.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -880,6 +880,18 @@ msgstr "Αποθηκεύτηκε το %s"
 #: cyberui/profileflow.lua
 msgid "The card could not be saved"
 msgstr "Δεν ήταν δυνατή η αποθήκευση της κάρτας"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Τα Αγαπημένα παραμένουν πάντα"
+
+#: cyberui/screens/collections.lua
+msgid "Delete this collection?"
+msgstr "Διαγραφή αυτής της συλλογής;"
+
+#: cyberui/screens/collections.lua
+msgid "Collection deleted"
+msgstr "Η συλλογή διαγράφηκε"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"

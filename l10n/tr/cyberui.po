@@ -111,7 +111,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] "%d gün çöpte bekler."
 msgstr[1] "%d gün çöpte bekler."
 
-#: cyberui/actions.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
 msgid "Delete"
 msgstr "Sil"
 
@@ -880,6 +880,18 @@ msgstr "%s kaydedildi"
 #: cyberui/profileflow.lua
 msgid "The card could not be saved"
 msgstr "Kart kaydedilemedi"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Favoriler her zaman kalır"
+
+#: cyberui/screens/collections.lua
+msgid "Delete this collection?"
+msgstr "Bu koleksiyon silinsin mi?"
+
+#: cyberui/screens/collections.lua
+msgid "Collection deleted"
+msgstr "Koleksiyon silindi"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
