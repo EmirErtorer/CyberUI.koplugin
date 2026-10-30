@@ -32,6 +32,8 @@ versions marked *Prerelease* are test builds.
   after ZenOS's Controls and Launcher. Swipe sideways or tap a page name.
 
 ### Fixed
+- Home flashed over the page when KOReader reloaded the open book in the
+  background to apply a change.
 - A crash when a drag reached the photo crop window after it had closed.
 - The Traces backdrop no longer draws routes off the edge of the card.
 

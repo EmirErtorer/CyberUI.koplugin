@@ -103,8 +103,11 @@ function CyberUI:onShow()
     end
 end
 
--- The book is ready: if it is a gig taken, start following what is read.
+-- The book is ready: hide CyberUI's window under it (without loading CyberUI when
+-- it is unused), and if the book is a gig taken, start following what is read.
 function CyberUI:onReaderReady()
+    local App = _G.package.loaded["cyberui/app"]
+    if App then App.bookOpened() end
     require("cyberui/data/gigs").follow(self.ui.document and self.ui.document.file)
 end
 

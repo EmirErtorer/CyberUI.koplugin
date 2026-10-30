@@ -170,9 +170,27 @@ function App.open(id, params)
     end
 end
 
+-- A book is open over the window: hide it, so a book reload cannot flash home.
+function App.bookOpened()
+    if host then host.invisible = true end
+end
+
+-- Show the hidden window again if no book or file browser follows a closed book.
+local function revealIfLeft()
+    UIManager:scheduleIn(1, function()
+        if not (host and host.invisible and UIManager:isWidgetShown(host)) then return end
+        if require("apps/reader/readerui").instance then return end
+        if require("apps/filemanager/filemanager").instance then return end
+        local ws = UIManager._window_stack
+        if ws[#ws].widget ~= host then return revealIfLeft() end
+        App.raise()
+    end)
+end
+
 -- Bring the window back to the top with fresh data (after a book closes).
 function App.raise()
     if not host then return App.open() end
+    host.invisible = false
     if prepainted then
         -- home was painted before the book closed: put it back on top of the
         -- file browser KOReader just built, without painting it again
@@ -495,6 +513,7 @@ function App.bookClosed(path)
         Covers.forget(path)
     end
     Stats.invalidate()
+    if host and host.invisible then revealIfLeft() end
 end
 
 -- Open KOReader's drop-down menu: in CyberUI's style unless the reader chose
