@@ -275,14 +275,26 @@ end
 -- The placeholders of a text in order: "%d", "%s", "%.1f", "%02d", "%%".
 local function placeholders(s)
     local out = {}
-    for spec in s:gmatch("%%[%d%.]*[%%a-zA-Z]") do out[#out + 1] = spec end
+    local i = 1
+    while true do
+        local a, b = s:find("%%", i, true)
+        if not a then break end
+        local spec = s:match("^%%[%d%.]*[%%a-zA-Z]", a)
+        if spec then
+            out[#out + 1] = spec
+            i = a + #spec
+        else
+            local template = s:match("^%%%d+", a)   -- KOReader's %1 style
+            if template then out[#out + 1] = template; i = a + #template else i = a + 1 end
+        end
+    end
     return table.concat(out, " ")
 end
 
 -- Is the English all capitals (it has letters and no lower-case ones)?
 local function isShouting(s)
     local plain = s:gsub("%%[%d%.]*[%%a-zA-Z]", ""):gsub("\\[%a]", "")
-    return plain:find("%u%u") ~= nil and not plain:find("%l")
+    return plain:find("%u%u%u") ~= nil and not plain:find("%l")
 end
 
 -- Names that are never translated: a text that has one must keep it, as written
@@ -334,7 +346,7 @@ local function checkLanguage(lang, list)
                         end
                     end
                     if e.str[f]:find("%%%d+%$") then bad("positional placeholders are not used: " .. shown) end
-                    if isShouting(t.id) and not Case.isUpper(e.str[f], code) then
+                    if isShouting(t.id) and not Case.isUpper((e.str[f]:gsub("%%[%d%.]*[%%a-zA-Z]", "\1")), code) then
                         bad(string.format("capitals expected (the English is capitals): %s -> %q", shown, e.str[f]))
                     end
                     if e.str[f]:find("^%s") ~= t.id:find("^%s") or e.str[f]:find("%s$") ~= t.id:find("%s$") then
@@ -409,10 +421,20 @@ elseif command == "import" then
     local have = {}
     for _i, e in ipairs(parsed.entries) do have[keyOf(e)] = e end
     local nplurals = Po.pluralRule(parsed.header)
-    local done, bad = 0, 0
+    local done, bad, seen = 0, 0, {}
     for row in (read(file) or ""):gmatch("[^\n]+") do
-        local idx, rest = row:match("^(%d+)\t(.*)$")
-        local t = idx and list[tonumber(idx)]
+        local idx, prefix, rest = row:match("^(%d+)\t([^\t]*)\t(.*)$")
+        local n = tonumber(idx)
+        if prefix then prefix = prefix:sub(1, 10) end
+        -- the first ten letters of the English prove the line is for this text; a
+        -- number a few places off (texts were added or removed) is found by them
+        local t
+        if n then
+            for _i, d in ipairs({ 0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8 }) do
+                local cand = list[n + d]
+                if cand and (cand.id == prefix or (#prefix >= 8 and cand.id:sub(1, #prefix) == prefix)) and not seen[n + d] then t = cand; seen[n + d] = true; break end
+            end
+        end
         if t then
             local forms = {}
             for form in (rest .. "\t"):gmatch("(.-)\t") do forms[#forms + 1] = form end
@@ -422,9 +444,11 @@ elseif command == "import" then
                 e.flags.fuzzy = nil
                 done = done + 1
                 if t.plural and #forms ~= nplurals then bad = bad + 1; print("wrong number of forms at " .. idx) end
+                if not t.plural and #forms ~= 1 then bad = bad + 1; print("a tab inside the text at " .. idx) end
             end
         else
-            print("skipped: " .. row:sub(1, 60))
+            bad = bad + 1
+            print("no match: " .. row:sub(1, 60))
         end
     end
     local entries = {}

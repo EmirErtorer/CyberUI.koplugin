@@ -10,7 +10,7 @@ fail=0
 run() { local name="$1"; echo "== $name"; shift; "$@" || { fail=$((fail + 1)); echo "FAILED: $name"; }; }
 filter() { grep -v -e '^ffi\.' -e '^lib_' -e 'monolibtic' -e 'DEBUG' -e 'INFO' -e 'Started SDL' -e '^  [hw] =' -e '^}'; }
 run lint bash -c "cd '$repo' && luajit tests/lint.lua"
-run i18n bash -c "cd '$repo' && luajit tools/i18n.lua check | tail -25"
+run i18n bash -c "set -o pipefail; cd '$repo' && luajit tools/i18n.lua check | tail -25"
 if command -v luacheck >/dev/null; then
     run luacheck bash -c "cd '$repo' && luacheck -q cyberui main.lua _meta.lua"
 fi

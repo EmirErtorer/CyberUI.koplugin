@@ -17,12 +17,15 @@ local _ = require("cyberui/gettext")
 
 local Calendar = {}
 
-local INITIALS = { _("M"), _("T"), _("W"), _("T"), _("F"), _("S"), _("S") }
 
 -- A row of the weekday initials above the month's columns.
 local function weekdays()
     local kids = {}
-    for i, s in ipairs(INITIALS) do kids[i] = Label:new({ text = s, kind = "micro", color = "muted", align = "center", grow = true }) end
+    for i = 1, 7 do
+        -- 1 January 2001 was a Monday
+        local initial = Format.chars(Format.upper(Format.date("%a", os.time({ year = 2001, month = 1, day = i, hour = 12 }))), 1)
+        kids[i] = Label:new({ text = initial, kind = "micro", color = "muted", align = "center", grow = true })
+    end
     return Layout.Row:new({ children = kids })
 end
 

@@ -1773,26 +1773,6 @@ msgid "SECTOR"
 msgstr ""
 
 #: cyberui/screens/log/calendar.lua
-msgid "M"
-msgstr ""
-
-#: cyberui/screens/log/calendar.lua
-msgid "T"
-msgstr ""
-
-#: cyberui/screens/log/calendar.lua
-msgid "W"
-msgstr ""
-
-#: cyberui/screens/log/calendar.lua
-msgid "F"
-msgstr ""
-
-#: cyberui/screens/log/calendar.lua
-msgid "S"
-msgstr ""
-
-#: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr ""
 
