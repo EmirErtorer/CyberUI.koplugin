@@ -174,7 +174,9 @@ function GigsScreen:build()
         kids[#kids + 1] = Label:new({ text = string.format(_.n("%d LEDGER ENTRY FAILED THE CHECK", "%d LEDGER ENTRIES FAILED THE CHECK", bad), bad),
             kind = "micro", color = "muted" })
     end
-    return Frame.page({ screen = self, title = _("GIGS"), path = string.format(_("GIGS // BALANCE %s"), Format.credits(Ledger.balance())),
+    local shop = Button:new({ icon = "shop", label = _("SHOP"), variant = "secondary", height = th.size.touch,
+        on_tap = function() App.push("shop") end })
+    return Frame.page({ screen = self, title = _("GIGS"), actions = { shop }, path = string.format(_("GIGS // BALANCE %s"), Format.credits(Ledger.balance())),
         tab = "library", body = Layout.Column:new({ gap = th.space.m, children = kids }) })
 end
 

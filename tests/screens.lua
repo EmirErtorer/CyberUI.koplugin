@@ -30,7 +30,7 @@ local Library = require("cyberui/data/library")
 
 local only = {}
 for i = 3, #arg do only[arg[i]] = true end
-local SCREENS = { "home", "library", "dossier", "collections", "history", "search", "settings", "trash", "fonts", "diagnostics", "topbar", "launcher", "launchedit", "iconpick", "targetpick", "photocrop", "filepick", "gigs", "shards", "shard", "colourpick" }
+local SCREENS = { "home", "library", "dossier", "collections", "history", "search", "settings", "trash", "fonts", "diagnostics", "topbar", "launcher", "launchedit", "iconpick", "targetpick", "photocrop", "filepick", "gigs", "shop", "shards", "shard", "colourpick" }
 local PARAMS = {
     dossier = function() return { path = Library.all()[1] } end,
     launchedit = function() return { id = "library" } end,
@@ -84,6 +84,51 @@ for _, id in ipairs(SCREENS) do
                     if OUT and ok then Kit.png(bb, string.format("%s/%s-%s-%s.png", OUT, id, scheme, mode)) end
                     bb:free()
                 end
+            end
+        end
+    end
+end
+
+-- every style of the shop draws, in the colours and modes it is shown in, and
+-- no two styles of a category look the same
+if next(only) == nil or only.styles then
+    local Shop = require("cyberui/data/shop")
+    local IdCard = require("cyberui/ui/idcard")
+    local book = Library.all()[1]
+    local function render(cat, style)
+        local width = math.min(W - 40, Theme.px(560))
+        local el = cat.id == "jackin" and style.build(book) or IdCard.full({ width = width, styles = { [cat.id] = style } })
+        el:layout(width, nil)
+        local bb = Kit.canvas()
+        Paint.fill(bb, 0, 0, W, H, Theme.get().c.bg)
+        el:paint(bb, 20, 20)
+        return bb, el
+    end
+    for _, cat in ipairs(Shop.categories) do
+        local seen = {}
+        for _, style in ipairs(cat.styles) do
+            for _, variant in ipairs({ { "neon", "dark" }, { "mono", "light" } }) do
+                Settings.set("scheme", variant[1])
+                Settings.set("mode", variant[2])
+                Theme.refresh()
+                local ok, err = pcall(function()
+                    local ms = Kit.time(function() local bb = render(cat, style); bb:free() end, 5)
+                    Kit.ok(ms < 60, style.id .. " draws in under 60 ms")
+                    local bb, el = render(cat, style)
+                    Kit.ok(el.h > 40 and el.h < H, style.id .. " has a sensible size")
+                    local file = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-style.png"
+                    Kit.png(bb, file)
+                    if variant[1] == "neon" then
+                        local f = io.open(file, "rb")
+                        local bytes = f:read("*a")
+                        f:close()
+                        Kit.ok(not seen[bytes], style.id .. " looks different from the others of its kind")
+                        seen[bytes] = true
+                    end
+                    if OUT then Kit.png(bb, string.format("%s/style-%s-%s-%s.png", OUT, style.id, variant[1], variant[2])) end
+                    bb:free()
+                end)
+                Kit.ok(ok, style.id .. " " .. variant[1] .. "/" .. variant[2] .. ": " .. tostring(err))
             end
         end
     end

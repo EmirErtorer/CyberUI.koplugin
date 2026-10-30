@@ -39,3 +39,8 @@ the tab for the library is "Books" in most languages, and the second tab says
 Kept as they are in every language: **Gig / Gigs** (the paid reading jobs),
 **Eddies** (the currency, symbol €$) and **Ink Away**, **CyberUI**, **KOReader**.
 The check fails a translation that drops them.
+
+Shop: the shop's categories are Frames, Backdrops, Flairs (badges beside the
+handle) and Jack-ins; each language picks its own word for them and keeps
+"Jack-in". Style names are short, one or two words, and are in capitals where
+the English is.

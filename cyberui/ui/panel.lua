@@ -2,7 +2,9 @@
 -- corners), "frame" (plain outline), "brackets" (corner marks), "header" (an
 -- inverted title strip over a frame), "rail" (a bar down the left, or the
 -- right with side = "r") or "none".
--- A `label` sits on the border.
+-- A `label` sits on the border. `backdrop` and `trim` are optional functions
+-- (bb, x, y, w, h, top) that paint behind the content and over the border; top
+-- is the height of the title strip.
 
 local Element = require("cyberui/ui/element")
 local Layout = require("cyberui/ui/layout")
@@ -61,6 +63,7 @@ function Panel:draw(bb, x, y)
         Paint.chamferBox(bb, x, y, w, h, th.size[self.cut] or self.cut, self.corners, stroke, fill, line)
     else
         if fill then Paint.fill(bb, x, y, w, h, fill) end
+        if self.backdrop then self.backdrop(bb, x, y, w, h, shape == "header" and self:headerHeight() or 0) end
         if shape == "frame" or shape == "header" then
             Paint.frame(bb, x, y, w, h, stroke, line)
         elseif shape == "brackets" then
@@ -99,6 +102,7 @@ function Panel:paint(bb, x, y)
     self:draw(bb, x, y)
     local t, _r, _b, l = self:insets()
     self.child:paint(bb, x + l, y + t)
+    if self.trim then self.trim(bb, x, y, self.w, self.h, self.shape == "header" and self:headerHeight() or 0) end
 end
 
 return Panel

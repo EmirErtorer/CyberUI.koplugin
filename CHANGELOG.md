@@ -8,6 +8,15 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Added
+- Shop (from the Gigs screen): spend eddies on looks, never on anything else.
+  Twenty styles in four categories, one free in each: ID card frames, ID card
+  backdrops, handle flairs and jack-in cards. Every style is shown as it really
+  looks, a style you do not own opens a full preview with its price, and an
+  owned one is worn with a tap. Purchases are signed entries in the same ledger
+  as the payouts, so ownership and the balance cannot be edited in the
+  settings file.
+
 ### Changed
 - The skyline is redrawn as a city: towers of several styles with masts, lights
   and billboards over a pale far skyline; windows lit by time read.

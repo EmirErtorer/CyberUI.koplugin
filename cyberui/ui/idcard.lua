@@ -5,6 +5,7 @@
 local Avatar = require("cyberui/ui/avatar")
 local Button = require("cyberui/ui/button")
 local Deco = require("cyberui/ui/deco")
+local Flair = require("cyberui/ui/flair")
 local Format = require("cyberui/format")
 local Ledger = require("cyberui/data/ledger")
 local Label = require("cyberui/ui/label")
@@ -13,6 +14,7 @@ local Paint = require("cyberui/gfx/paint")
 local Panel = require("cyberui/ui/panel")
 local Profile = require("cyberui/data/profile")
 local Progress = require("cyberui/ui/progress")
+local Shop = require("cyberui/data/shop")
 local StatTile = require("cyberui/ui/stattile")
 local Theme = require("cyberui/theme")
 local _ = require("cyberui/gettext")
@@ -39,7 +41,38 @@ local function monthOf(t)
     return t and os.date("%Y-%m", t) or "-"
 end
 
--- The full card. o: { on_photo (tap the face), on_handle (tap the handle),
+-- The style of a category on a card: the one `o.styles` names, else the worn one.
+local function styleOf(o, cat)
+    return o.styles and o.styles[cat] or Shop.worn(cat)
+end
+
+-- The handle with the flair beside it.
+local function handleLine(handle, kind, flair)
+    local th = Theme.get()
+    return Layout.Row:new({ gap = th.space.m, valign = "center", children = {
+        Label:new({ text = handle, kind = kind }), Flair:new({ kind = kind, style = flair }),
+    } })
+end
+
+-- A small card for the shop: the face, the handle with its flair, the rank and the
+-- barcode, in the styles of o.styles (any left out are the plain ones).
+function IdCard.sample(o)
+    local th = Theme.get()
+    local handle = Profile.handle()
+    local rank = Profile.rank(Profile.stats().hours)
+    local plain = o.styles or {}
+    local function pick(cat) return plain[cat] or Shop.category(cat).styles[1] end
+    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"), pad = th.space.l + Theme.px(pick("frame").inset or 0),
+        fill = "bg", backdrop = pick("background").draw, trim = pick("frame").draw,
+        child = Layout.Row:new({ gap = th.space.m, valign = "center", children = {
+            Avatar:new({ seed = handle, size = 56 }),
+            Layout.Column:new({ grow = true, gap = th.space.xs, children = { handleLine(handle, "heading", pick("flair")),
+                Layout.Row:new({ children = { IdCard.rankTag(rank, true) } }) } }),
+            Layout.Column:new({ width = Theme.px(70), children = { IdCard.codeBars(28) } }),
+        } }) })
+end
+
+-- The full card. o: { styles (frame, background and flair to show instead of the worn ones), on_photo (tap the face), on_handle (tap the handle),
 -- width (floating: a narrow card, everything stacked), footer (an element
 -- under the rest) }.
 function IdCard.full(o)
@@ -53,7 +86,7 @@ function IdCard.full(o)
     } })
     local who = Layout.Column:new({ grow = true, gap = th.space.xs, children = {
         Label:new({ text = _("HANDLE"), kind = "micro", color = "muted" }),
-        Panel:new({ shape = "none", child = Label:new({ text = handle, kind = "display" }), on_tap = o.on_handle }),
+        Panel:new({ shape = "none", child = handleLine(handle, "display", styleOf(o, "flair")), on_tap = o.on_handle }),
         Label:new({ text = _("RANK"), kind = "micro", color = "muted" }),
         Layout.Row:new({ gap = th.space.m, children = {
             IdCard.rankTag(rank),
@@ -103,8 +136,8 @@ function IdCard.full(o)
             Layout.Row:new({ gap = th.space.l, valign = "stretch", children = { face, who } }), progress, tiles, code } })
     end
     if o.footer then table.insert(body.children, o.footer) end
-    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"), pad = th.space.l, width = o.width,
-        fill = o.width and "bg" or nil, child = body })
+    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"), pad = th.space.l + Theme.px(styleOf(o, "frame").inset or 0), width = o.width,
+        fill = o.width and "bg" or nil, backdrop = styleOf(o, "background").draw, trim = styleOf(o, "frame").draw, child = body })
 end
 
 return IdCard

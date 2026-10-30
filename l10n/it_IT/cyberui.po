@@ -461,6 +461,22 @@ msgstr "FINITO"
 msgid "HOLD"
 msgstr "PAUSA"
 
+#: cyberui/data/catalogue.lua
+msgid "Frames"
+msgstr "Cornici"
+
+#: cyberui/data/catalogue.lua
+msgid "Backdrops"
+msgstr "Sfondi"
+
+#: cyberui/data/catalogue.lua
+msgid "Flairs"
+msgstr "Distintivi"
+
+#: cyberui/data/catalogue.lua
+msgid "Jack-ins"
+msgstr "Jack-in"
+
 #: cyberui/data/collections.lua
 msgid "Favorites"
 msgstr "Preferiti"
@@ -668,30 +684,6 @@ msgstr "LETTORE"
 #: cyberui/gfx/icons.lua cyberui/screens/diagnostics.lua
 msgid "KOREADER"
 msgstr "KOREADER"
-
-#: cyberui/jackin.lua
-msgid "RESUMING AT %d%%"
-msgstr "RIPRESA AL %d%%"
-
-#: cyberui/jackin.lua
-msgid "FIRST OPEN"
-msgstr "PRIMA APERTURA"
-
-#: cyberui/jackin.lua
-msgid "[OK] MOUNT FILE // [OK] READ INDEX"
-msgstr "[OK] FILE MONTATO // [OK] INDICE LETTO"
-
-#: cyberui/jackin.lua
-msgid "[..] RENDERING PAGE"
-msgstr "[..] DISEGNO LA PAGINA"
-
-#: cyberui/jackin.lua
-msgid "JACK-IN"
-msgstr "JACK-IN"
-
-#: cyberui/jackin.lua
-msgid "DECRYPTING..."
-msgstr "DECIFRAZIONE..."
 
 #: cyberui/menu.lua cyberui/screens/filepick.lua
 msgid "FILES"
@@ -1454,6 +1446,10 @@ msgid_plural "%d LEDGER ENTRIES FAILED THE CHECK"
 msgstr[0] "%d VOCE DEL REGISTRO NON HA SUPERATO IL CONTROLLO"
 msgstr[1] "%d VOCI DEL REGISTRO NON HANNO SUPERATO IL CONTROLLO"
 
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+msgid "SHOP"
+msgstr "NEGOZIO"
+
 #: cyberui/screens/gigs.lua
 msgid "GIGS // BALANCE %s"
 msgstr "GIGS // SALDO %s"
@@ -1866,7 +1862,7 @@ msgstr "QUANDO LEGGI // LUN-DOM PER ORA // %s"
 msgid "TIME"
 msgstr "TEMPO"
 
-#: cyberui/screens/log/calendar.lua
+#: cyberui/screens/log/calendar.lua cyberui/styles/backgrounds.lua
 msgid "GRID"
 msgstr "GRIGLIA"
 
@@ -2504,6 +2500,50 @@ msgid_plural "RECOVERED // %d FRAGMENTS"
 msgstr[0] "RECUPERATI // %d FRAMMENTO"
 msgstr[1] "RECUPERATI // %d FRAMMENTI"
 
+#: cyberui/screens/shop.lua
+msgid "EQUIPPED"
+msgstr "INDOSSATO"
+
+#: cyberui/screens/shop.lua
+msgid "TAP TO EQUIP"
+msgstr "TOCCA PER INDOSSARE"
+
+#: cyberui/screens/shop.lua
+msgid "TAP TO BUY"
+msgstr "TOCCA PER ACQUISTARE"
+
+#: cyberui/screens/shop.lua
+msgid "NEED %s MORE"
+msgstr "MANCANO %s"
+
+#: cyberui/screens/shop.lua
+msgid "BUY %s"
+msgstr "ACQUISTA %s"
+
+#: cyberui/screens/shop.lua
+msgid "UNLOCKED // EQUIPPED"
+msgstr "SBLOCCATO // INDOSSATO"
+
+#: cyberui/screens/shop.lua
+msgid "FREE"
+msgstr "GRATIS"
+
+#: cyberui/screens/shop.lua
+msgid "OWNED"
+msgstr "POSSEDUTO"
+
+#: cyberui/screens/shop.lua
+msgid "NEXT: %s // NEED %s MORE"
+msgstr "PROSSIMO: %s // MANCANO %s"
+
+#: cyberui/screens/shop.lua
+msgid "NEXT: %s // READY TO BUY"
+msgstr "PROSSIMO: %s // PRONTO PER L'ACQUISTO"
+
+#: cyberui/screens/shop.lua
+msgid "SHOP // BALANCE %s"
+msgstr "NEGOZIO // SALDO %s"
+
 #: cyberui/screens/targetpick.lua
 msgid "What it opens"
 msgstr "Cosa apre"
@@ -2682,6 +2722,114 @@ msgstr "Immagini personalizzate"
 msgid "Everything"
 msgstr "Tutto"
 
+#: cyberui/styles/backgrounds.lua
+msgid "PLAIN"
+msgstr "SEMPLICE"
+
+#: cyberui/styles/backgrounds.lua
+msgid "SCANLINES"
+msgstr "LINEE DI SCANSIONE"
+
+#: cyberui/styles/backgrounds.lua
+msgid "TRACES"
+msgstr "TRACCE"
+
+#: cyberui/styles/backgrounds.lua
+msgid "NIGHT CITY"
+msgstr "CITTÀ NOTTURNA"
+
+#: cyberui/styles/flairs.lua
+msgid "PIP"
+msgstr "PUNTO"
+
+#: cyberui/styles/flairs.lua
+msgid "CHEVRONS"
+msgstr "CHEVRON"
+
+#: cyberui/styles/flairs.lua
+msgid "CROSSHAIR"
+msgstr "MIRINO"
+
+#: cyberui/styles/flairs.lua
+msgid "BOLT"
+msgstr "FULMINE"
+
+#: cyberui/styles/flairs.lua
+msgid "SCANNER EYE"
+msgstr "OCCHIO SCANNER"
+
+#: cyberui/styles/frames.lua cyberui/styles/jackins.lua
+msgid "STANDARD"
+msgstr "STANDARD"
+
+#: cyberui/styles/frames.lua
+msgid "NOTCH"
+msgstr "TACCA"
+
+#: cyberui/styles/frames.lua
+msgid "CIRCUIT"
+msgstr "CIRCUITO"
+
+#: cyberui/styles/frames.lua
+msgid "HAZARD"
+msgstr "PERICOLO"
+
+#: cyberui/styles/frames.lua
+msgid "GLITCH"
+msgstr "GLITCH"
+
+#: cyberui/styles/jackins.lua
+msgid "RESUMING AT %d%%"
+msgstr "RIPRESA AL %d%%"
+
+#: cyberui/styles/jackins.lua
+msgid "FIRST OPEN"
+msgstr "PRIMA APERTURA"
+
+#: cyberui/styles/jackins.lua
+msgid "JACK-IN"
+msgstr "JACK-IN"
+
+#: cyberui/styles/jackins.lua
+msgid "DECRYPTING..."
+msgstr "DECIFRAZIONE..."
+
+#: cyberui/styles/jackins.lua
+msgid "[OK] MOUNT FILE // [OK] READ INDEX"
+msgstr "[OK] FILE MONTATO // [OK] INDICE LETTO"
+
+#: cyberui/styles/jackins.lua
+msgid "[..] RENDERING PAGE"
+msgstr "[..] DISEGNO LA PAGINA"
+
+#: cyberui/styles/jackins.lua
+msgid "ADMIT ONE"
+msgstr "INGRESSO SINGOLO"
+
+#: cyberui/styles/jackins.lua
+msgid "TARGET_LOCKED"
+msgstr "BERSAGLIO_AGGANCIATO"
+
+#: cyberui/styles/jackins.lua
+msgid "SCANNING..."
+msgstr "SCANSIONE..."
+
+#: cyberui/styles/jackins.lua
+msgid "TERMINAL"
+msgstr "TERMINALE"
+
+#: cyberui/styles/jackins.lua
+msgid "POSTER"
+msgstr "POSTER"
+
+#: cyberui/styles/jackins.lua
+msgid "TICKET"
+msgstr "BIGLIETTO"
+
+#: cyberui/styles/jackins.lua
+msgid "SCANNER"
+msgstr "SCANNER"
+
 #: cyberui/targetlist.lua
 msgid "General"
 msgstr "Generale"
@@ -2823,6 +2971,14 @@ msgid "Close"
 msgstr "Chiudi"
 
 #: cyberui/ui/idcard.lua
+msgid "OPERATOR // ID-CARD"
+msgstr "OPERATORE // TESSERA ID"
+
+#: cyberui/ui/idcard.lua
+msgid "AUTH OK"
+msgstr "AUTORIZZATO"
+
+#: cyberui/ui/idcard.lua
 msgid "RANK"
 msgstr "GRADO"
 
@@ -2861,14 +3017,6 @@ msgstr "%dG"
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"
 msgstr "EDDIES"
-
-#: cyberui/ui/idcard.lua
-msgid "OPERATOR // ID-CARD"
-msgstr "OPERATORE // TESSERA ID"
-
-#: cyberui/ui/idcard.lua
-msgid "AUTH OK"
-msgstr "AUTORIZZATO"
 
 #: cyberui/ui/keyboard.lua
 msgid "space"

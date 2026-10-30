@@ -250,6 +250,8 @@ local function prewarm()
             require("apps/reader/readerui")
             local CreDocument = require("document/credocument")
             if CreDocument.engineInit then CreDocument:engineInit() end
+            require("cyberui/data/shop")
+            require("cyberui/data/ledger").verified()   -- checked now, so the first book opened does not pay for it
         end)
     end)
 end

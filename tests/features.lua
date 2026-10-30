@@ -309,6 +309,58 @@ do
     os.execute("rm -rf '" .. tmp .. "'")
 end
 
+-- the shop: the catalogue, signed purchases, wearing
+do
+    local Ledger = require("cyberui/data/ledger")
+    local Settings = require("cyberui/settings")
+    local Shop = require("cyberui/data/shop")
+    local ids = {}
+    for _, cat in ipairs(Shop.categories) do
+        local free, top = 0, 0
+        for _, st in ipairs(cat.styles) do
+            Kit.ok(not ids[st.id] and st.id:find("^" .. cat.id .. "%.") ~= nil, st.id .. " has an id of its own")
+            ids[st.id] = true
+            Kit.ok(st.price % 10 == 0 and st.price >= 0 and (st.draw or st.build or st.price == 0), st.id .. " has a price and a look")
+            if st.price == 0 then free = free + 1 end
+            top = math.max(top, st.price)
+        end
+        Kit.ok(#cat.styles >= 4 and #cat.styles <= 5, cat.id .. " has four or five styles")
+        Kit.ok(free == 1 and cat.styles[1].price == 0, cat.id .. " has one free style, the first")
+        Kit.ok(top >= 800 and top <= 1000, cat.id .. " tops out at 8 to 10 typical gigs")
+        Kit.ok(cat.styles[2].price <= 150, cat.id .. " starts at about one gig")
+    end
+    local saved = Settings.get("gigs")
+    Settings.set("gigs", nil)
+    Settings.set("style_frame", nil)
+    Ledger.reload()
+    local notch, circuit = Shop.style("frame.notch"), Shop.style("frame.circuit")
+    Kit.ok(not Shop.owned(notch) and Shop.worn("frame").id == "frame.standard", "nothing is owned but the free styles")
+    Kit.ok(select(2, Shop.buy(notch)) == "short" and Ledger.balance() == 0, "a purchase with no eddies is refused")
+    Ledger.add("m", "/book", 1, 150)
+    Ledger.save()
+    Kit.ok(Shop.status(circuit) == "short" and select(2, Shop.status(circuit)) == 100, "a style that costs more says how many eddies are missing")
+    Kit.ok(Shop.status(notch) == "buy", "an affordable one can be bought")
+    Kit.ok(Shop.buy(notch) and Ledger.balance() == 50 and Shop.owned(notch), "buying takes the price and the style is owned")
+    Kit.ok(select(2, Shop.buy(notch)) == "owned" and Ledger.balance() == 50, "and cannot be bought twice")
+    Kit.ok(select(2, Shop.buy(circuit)) == "short" and Ledger.balance() == 50, "an overspend is refused, the balance is kept")
+    Kit.ok(not Shop.wear(circuit) and Shop.wear(notch) and Shop.worn("frame") == notch, "an owned style is worn, an unowned one is not")
+    Ledger.reload()
+    Kit.ok(Settings.get("style_frame") == "frame.notch" and Shop.worn("frame") == notch and Shop.status(notch) == "worn", "what is worn is kept")
+    -- the settings file edited by hand
+    local d = Settings.get("gigs")
+    local forged = { k = "s", p = "frame.circuit", n = 0, a = -1, t = os.time(), sig = "0000" }
+    d.ledger[#d.ledger + 1] = forged
+    d.ledger[#d.ledger + 1] = { k = "m", p = "/book", n = 2, a = 99999, t = os.time(), sig = "0000" }
+    Ledger.reload()
+    Kit.ok(not Shop.owned(circuit) and Ledger.balance() == 50 and Ledger.rejected() == 2, "forged purchases and payouts do not count")
+    d.ledger[2].a = -1
+    Ledger.reload()
+    Kit.ok(not Shop.owned(notch) and Shop.worn("frame").id == "frame.standard", "a tampered purchase is not owned and the free style is worn")
+    Settings.set("gigs", saved)
+    Settings.set("style_frame", nil)
+    Ledger.reload()
+end
+
 -- opening a book at a shard
 do
     local App = require("cyberui/app")
