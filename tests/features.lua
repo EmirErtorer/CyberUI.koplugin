@@ -374,6 +374,17 @@ do
     Settings.set("jack_in", nil)
 end
 
+-- touches queued while a book closed are not pressed on home
+do
+    local Host = require("cyberui/host")
+    local time = require("ui/time")
+    local now = time.now()
+    local host = { ignore_before = now }
+    Kit.ok(Host.stale(host, { time = now - time.s(2) }), "a touch made before the close finished is dropped")
+    Kit.ok(not Host.stale(host, { time = now + time.s(2) }), "a touch made after it is kept")
+    Kit.ok(not Host.stale({}, { time = now }) and not Host.stale(host, {}), "with no close pending, or no time on the touch, nothing is dropped")
+end
+
 -- the photo window, a see-through picture, paging a long column, the log's metric
 do
     local BB = require("ffi/blitbuffer")

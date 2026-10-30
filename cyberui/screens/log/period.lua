@@ -130,7 +130,7 @@ function Period.build(screen)
     local body = { seg, nav, tiles }
     if Settings.get("chart_view", "bars") == "skyline" then
         body[#body + 1] = Layout.Column:new({ gap = th.space.s, children = {
-            Label:new({ text = _("HEIGHT = PAGES // LIT WINDOWS = 5 MIN EACH"), kind = "label" }),
+            Label:new({ text = _("HEIGHT = PAGES // LIT WINDOWS = TIME READ"), kind = "label" }),
             Skyline:new({ buildings = buildings, labels = skyline_labels, height = 210 }),
         } })
     else

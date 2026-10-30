@@ -9,6 +9,10 @@ versions marked *Prerelease* are test builds.
 ## [Unreleased]
 
 ### Changed
+- The skyline is redrawn as a city: towers of several styles with masts, lights
+  and billboards over a pale far skyline; windows lit by time read.
+- Touches made while KOReader is still closing a book are no longer pressed on
+  home afterwards.
 - The jack-in card floats over the screen the book was opened from instead of a
   blank one.
 - The operator card floats over home, with Photo, Handle and Save under it.

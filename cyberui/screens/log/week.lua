@@ -58,7 +58,7 @@ function Week.build(screen)
         tile(_("STREAK"), tostring(Stats.streak()), string.format(_("days, best %d"), Stats.bestStreak())),
     } })
 
-    local detail = skyline and _("HEIGHT = PAGES // WINDOWS = 5 MIN")
+    local detail = skyline and _("HEIGHT = PAGES // LIT WINDOWS = TIME")
         or string.format("%s = %s", os.date("%a", sel.time):upper(), Metric.text(Metric.value(sel)))
     local shown = skyline and Skyline:new({ buildings = buildings, labels = labels, height = 150 })
         or Charts.Bars:new({ values = values, labels = labels, goal = Metric.goal(goal), selected = screen.day, height = Theme.px(130),

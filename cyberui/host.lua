@@ -196,8 +196,20 @@ function Host:onGesture(ev)
     return true
 end
 
+-- Was this gesture made before `ignore_before` (a time set when KOReader
+-- finished closing a book)? Touches made while it was busy are queued and
+-- arrive afterwards still carrying their own time; they would press whatever
+-- is under the finger now.
+function Host:stale(ges)
+    local before = self.ignore_before
+    if not before or not ges.time then return false end
+    local ok, older = pcall(function() return ges.time < before end)
+    return ok and older
+end
+
 -- A tap runs the innermost element's on_tap; false when nothing took it.
 function Host:onTap(_, ges)
+    if self:stale(ges) then return true end
     local el = self:target(ges.pos, "on_tap")
     if el then
         el.tap_pos = ges.pos   -- for elements that need to know where (a colour dial)
@@ -208,6 +220,7 @@ end
 
 -- A hold runs on_hold; false when nothing took it.
 function Host:onHold(_, ges)
+    if self:stale(ges) then return true end
     local el = self:target(ges.pos, "on_hold")
     if el then self:press(el, "on_hold") end
     return el ~= nil or self.overlay ~= nil
@@ -217,6 +230,7 @@ end
 -- dx, dy are the distance from where the touch began; on_drag(0, 0, "end")
 -- follows the lift.
 function Host:onPan(_, ges)
+    if self:stale(ges) then return true end
     if not self.dragging then
         self.dragging = self:target(ges.start_pos or ges.pos, "on_drag")
         if self.dragging then self.dragging:on_drag(0, 0, "start") end
@@ -241,6 +255,7 @@ end
 -- Swipes go to the app (paging, the KOReader menu from the top edge);
 -- false when it did not use the swipe.
 function Host:onSwipe(_, ges)
+    if self:stale(ges) then return true end
     if self.swallow_swipe then self.swallow_swipe = nil; return true end
     if self.overlay then return true end
     return self.on_swipe ~= nil and self.on_swipe(ges.direction, ges.pos) == true

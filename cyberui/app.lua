@@ -223,6 +223,9 @@ function App.homeFromBook(ui)
     UIManager:nextTick(function()
         ui:onClose(false)
         ui:showFileManager(file)
+        -- the touches made while that blocked are not meant for home
+        local ok, now = pcall(function() return require("ui/time").now() end)
+        if ok and host then host.ignore_before = now end
     end)
 end
 

@@ -77,7 +77,7 @@ function Calendar.build(screen)
     } })
     local view = Controls.Segmented({ options = { { _("GRID"), "grid" }, { _("SKYLINE"), "skyline" } }, value = as_skyline and "skyline" or "grid",
         kind = "label", on_change = function(v) Settings.save("cal_view", v); App.update() end })
-    local note = as_skyline and _("HEIGHT = PAGES // LIT WINDOWS = 5 MIN EACH") or string.format(_("%s // %d PAGES THIS MONTH"), Format.duration(month_seconds), month_pages)
+    local note = as_skyline and _("HEIGHT = PAGES // LIT WINDOWS = TIME READ") or string.format(_("%s // %d PAGES THIS MONTH"), Format.duration(month_seconds), month_pages)
     local kids = { nav, view }
     if not as_skyline then kids[#kids + 1] = weekdays() end
     kids[#kids + 1] = month
