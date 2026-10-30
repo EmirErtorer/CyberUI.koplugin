@@ -87,8 +87,8 @@ def icon_paths(name):
 
 def launcher(ui_font):
     items = [("library", "LIBRARY"), ("collections", "COLLECTIONS"), ("history", "HISTORY"),
-             ("search", "SEARCH"), ("pen", "INK AWAY"), ("settings", "SYSTEM")]
-    cell, W, H = 150, 150 * 6, 92
+             ("search", "SEARCH"), ("gigs", "GIGS"), ("pen", "INK AWAY"), ("settings", "SYSTEM")]
+    cell, W, H = 128, 128 * 7, 92
     body = []
     for i, (icon, label) in enumerate(items):
         x = i * cell + cell / 2
@@ -104,7 +104,7 @@ def launcher(ui_font):
             body.append(f'<g transform="translate({x - 24} 8) scale(2)">{path}</g>')
         td, tw = text_path(ui_font, label, 15, 0, 0, 1.5)
         body.append(f'<path d="{td}" fill="{MUTED}" transform="translate({x - tw / 2} 84)"/>')
-    return svg(W, H, "".join(body), "The launcher: Library, Collections, History, Search, Ink Away and System")
+    return svg(W, H, "".join(body), "The launcher: Library, Collections, History, Search, Gigs, Ink Away and System")
 
 
 if __name__ == "__main__":

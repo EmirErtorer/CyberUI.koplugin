@@ -265,9 +265,10 @@ H.step(1, function() shot("16d-gigs") end)
 for i, lang in ipairs({ "de", "ru", "tr", "el" }) do
     H.step(S, function()
         require("gettext").changeLang(lang)
+        require("cyberui/gettext").use(lang)
         H.app().go("home")
         H.app().update()
     end)
     H.step(2.5, function() shot("17" .. string.char(96 + i) .. "-languages") end)
 end
-H.step(S, function() require("gettext").changeLang("en") end)
+H.step(S, function() require("gettext").changeLang("en"); require("cyberui/gettext").use("en") end)

@@ -13,7 +13,8 @@ CyberUI is a **cyberpunk home screen** for KOReader, built to be fast on e-ink.
 
 * **A home that feels like a deck**: the book you are reading, your recent books, your streak and a launcher, with a status bar of live readouts.
 * **A library you can work in**: folders, ASCII covers, search, collections, a reading log and a trash, with rename, move and delete that take your reading data along.
-* **Your look**: seven colour schemes and your own, fourteen cyberpunk font sets, ASCII covers and sleep screens, and KOReader's own menu restyled to match.
+* **A reason to read the backlog**: an operator ID card, Gigs that pay eddies for books you never opened, and a shop where eddies buy new looks.
+* **Your look**: seven colour schemes and your own, fourteen cyberpunk font sets, ASCII covers and sleep screens, KOReader's own menu restyled to match, and ten languages.
 
 Home comes back the moment you close a book, in a single screen refresh.
 
@@ -21,9 +22,9 @@ Home comes back the moment you close a book, in a single screen refresh.
 
 <table>
   <tr>
-    <td width="33%" valign="top"><a href="assets/screenshots/01-home.png"><img src="assets/screenshots/01-home.png" alt="Home"></a><br><sub>Home: the book you are reading with Resume, recent books and a launcher, in Neon.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/02-library.png"><img src="assets/screenshots/02-library.png" alt="Library"></a><br><sub>The library: ASCII covers, folders stacked under their first book, filters and sort.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/03-menu.png"><img src="assets/screenshots/03-menu.png" alt="KOReader's menu"></a><br><sub>KOReader's own menu, restyled: every setting and plugin, with the Deck tab first.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/01-home.png"><img src="assets/screenshots/01-home.png" alt="Home"></a><br><sub>Home: the book you are reading, a recovered highlight, recent books and a launcher, in Neon.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/02-gigs.png"><img src="assets/screenshots/02-gigs.png" alt="Gigs"></a><br><sub>Gigs: books you never opened become paid work, priced by length and how long they waited.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/03-card.png"><img src="assets/screenshots/03-card.png" alt="Operator ID card"></a><br><sub>Your operator ID card, with your eddies, in a frame, backdrop and flair from the shop.</sub></td>
   </tr>
 </table>
 
@@ -31,19 +32,28 @@ Home comes back the moment you close a book, in a single screen refresh.
 
 <table>
   <tr>
-    <td width="33%" valign="top"><a href="assets/screenshots/04-details.png"><img src="assets/screenshots/04-details.png" alt="Book details"></a><br><sub>A book's details: facts, progress, a paged synopsis, and every action in reach.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/05-search.png"><img src="assets/screenshots/05-search.png" alt="Search"></a><br><sub>Search as you type with CyberUI's own keyboard.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/04-library.png"><img src="assets/screenshots/04-library.png" alt="Library"></a><br><sub>The library: ASCII covers, folders stacked under their first book, filters and sort.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/05-menu.png"><img src="assets/screenshots/05-menu.png" alt="KOReader's menu"></a><br><sub>KOReader's own menu, restyled: every setting and plugin, with the Deck tab first.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/06-collections.png"><img src="assets/screenshots/06-collections.png" alt="Collections"></a><br><sub>Collections, each a fan of its books.</sub></td>
   </tr>
   <tr>
-    <td width="33%" valign="top"><a href="assets/screenshots/07-log.png"><img src="assets/screenshots/07-log.png" alt="Reading log"></a><br><sub>The reading log: your week, your streak and each session.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/07-log.png"><img src="assets/screenshots/07-log.png" alt="Reading log"></a><br><sub>The reading log: your week, streaks, a calendar that can be a city skyline, and your goal.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/08-diagnostics.png"><img src="assets/screenshots/08-diagnostics.png" alt="Diagnostics"></a><br><sub>Diagnostics: battery, processor, memory, storage, Wi-Fi, screen and uptime.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/09-look.png"><img src="assets/screenshots/09-look.png" alt="Colour schemes"></a><br><sub>Seven colour schemes and your own, in light and dark.</sub></td>
   </tr>
   <tr>
     <td width="33%" valign="top"><a href="assets/screenshots/10-covers.png"><img src="assets/screenshots/10-covers.png" alt="ASCII cover settings"></a><br><sub>Covers as ASCII art in eight character sets, as pictures or as title cards.</sub></td>
     <td width="33%" valign="top"><a href="assets/screenshots/11-sleep.png"><img src="assets/screenshots/11-sleep.png" alt="ASCII sleep screen"></a><br><sub>The sleep screen in ASCII: your book's cover, a picture, or anything KOReader shows.</sub></td>
-    <td width="33%" valign="top"><a href="assets/screenshots/12-landscape.png"><img src="assets/screenshots/12-landscape.png" alt="Landscape"></a><br><sub>Every screen works in landscape too.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/12-shards.png"><img src="assets/screenshots/12-shards.png" alt="Data shards"></a><br><sub>Data shards: every highlight you made, recovered as a fragment.</sub></td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/13-shop.png"><img src="assets/screenshots/13-shop.png" alt="Shop"></a><br><sub>The shop: five styles to a category, each shown as it really looks, with its price.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/14-styles.png"><img src="assets/screenshots/14-styles.png" alt="Shop styles"></a><br><sub>Twenty styles: card frames, backdrops, handle flairs and jack-in cards.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/15-jackin.png"><img src="assets/screenshots/15-jackin.png" alt="Jack-in cards"></a><br><sub>Jack-in cards, shown while a book opens.</sub></td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top"><a href="assets/screenshots/16-gigs.png"><img src="assets/screenshots/16-gigs.png" alt="Gigs story"></a><br><sub>Take a gig, read, get paid as you go, and see it on home.</sub></td>
+    <td width="33%" valign="top"><a href="assets/screenshots/17-languages.png"><img src="assets/screenshots/17-languages.png" alt="Languages"></a><br><sub>Ten languages: Turkish, Portuguese (both), Spanish, Italian, French, German, Russian, Polish and Greek.</sub></td>
   </tr>
 </table>
 
@@ -52,16 +62,26 @@ Home comes back the moment you close a book, in a single screen refresh.
 
 ### Home
 
-<img src="assets/readme-launcher.svg" alt="The launcher: Library, Collections, History, Search, Ink Away and System">
+<img src="assets/readme-launcher.svg" alt="The launcher: Library, Collections, History, Search, Gigs, Ink Away and System">
 
 | | |
 |---|---|
 | **Active file** | The book you are reading, with its cover, progress and Resume. Tap a recent book to bring it here; open it from the panel. |
-| **Back from a book** | Home shows first and KOReader closes the book behind it, so coming home is one quick refresh. KOReader's own Home action takes the same way while CyberUI is your home, and the "CyberUI home" action goes on any gesture. |
+| **Back from a book** | Home shows at once and the book stays open underneath, so coming home and resuming the same book are instant (System, Speed, on by default); KOReader closes it later. KOReader's own Home action takes the same way while CyberUI is your home, and the "CyberUI home" action goes on any gesture. |
 | **Banner** | A set line, a greeting with your handle, a random highlight from your books, the device's status or your own words, with a top line of its own. Hold it to change it. |
 | **Status bar** | Your tag, then up to six readouts in the order you choose: clock, date, battery, Wi-Fi, frontlight, processor, memory, storage, book progress, uptime. |
 | **Progress** | Segments, an ASCII bar, a heartbeat trace, a scan line or an equalizer, each marking exactly where you are. Hold the bar to switch. |
 | **Diagnostics** | Battery and drain, processor and memory, storage, Wi-Fi, screen and light, uptime and the device at a glance, behind the SYS button. |
+
+### Operator, gigs and shop
+
+| | |
+|---|---|
+| **Operator ID card** | A handle, a rank earned from your reading hours, an ID code and barcode, your totals and a photo from the device. Tap your face on home to open it; save it as a picture. |
+| **Gigs** | A book left unread for a week becomes a gig. Opening it takes the gig and fixes the price (about a fifth of an eddy per page, up to double for long waits). Every 10% you read pays a twentieth of it, and finishing pays the other half. Home tells you what each reading paid. |
+| **Eddies** | Earned only by reading gigs. They sit in a signed ledger, so editing the settings file does not add any, and your balance shows on the ID card. |
+| **Shop** | Spend eddies on looks, never anything else: card frames, backdrops, handle flairs and jack-in cards, five of each with one free. Every style is previewed before you buy. |
+| **Data shards** | Your highlights as recovered fragments on home and in their own screen; open the book at the highlight. |
 
 ### Library
 
@@ -83,6 +103,7 @@ Home comes back the moment you close a book, in a single screen refresh.
 | **ASCII covers** | Covers drawn as character art, in colour on colour screens, in Braille, Classic, Detailed, Blocks, Binary, Hex, Glitch or your book's own title. Image covers and title cards too, in four sizes. |
 | **ASCII sleep screen** | KOReader's sleep screen redrawn in ASCII: book covers by default, or custom images, or everything. Transparent pictures let your book or home show through, and KOReader's message stays crisp. |
 | **Icons** | A set of its own, drawn for CyberUI, with small lights in your accent colour. |
+| **Languages** | Turkish, Brazilian and European Portuguese, Spanish, Italian, French, German, Russian, Polish and Greek, following KOReader's language. Translations are plain `.po` files in `l10n`, so a fix needs no code. |
 
 ### KOReader's menu
 
