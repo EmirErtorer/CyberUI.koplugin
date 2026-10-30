@@ -434,7 +434,24 @@ end
 function App.openBook(path)
     if clock_timer then UIManager:unschedule(clock_timer); clock_timer = nil end
     local ReaderUI = require("apps/reader/readerui")
-    ReaderUI:showReader(path)
+    local JackIn = require("cyberui/jackin")
+    if host and JackIn.wanted(path) then
+        App.flash(JackIn.card(path))
+        JackIn.silenced(path, function() ReaderUI:showReader(path) end)
+    else
+        ReaderUI:showReader(path)
+    end
+end
+
+-- Paint a card on the screen at once, then put the real screen back into the
+-- window without painting it: the card stays up until whatever opens next
+-- paints over it.
+function App.flash(root)
+    host:setRoot(root)
+    host:markRepainted()
+    UIManager:setDirty(host, "ui")
+    UIManager:forceRePaint()
+    build()
 end
 
 -- A book was closed: what CyberUI knows about it is stale.

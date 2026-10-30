@@ -214,6 +214,8 @@ function SettingsScreen:home()
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
                 App.update()
             end })),
+        row(_("Jack-in card"), _("A card with the book shown while it opens"),
+            Controls.Toggle:new({ on = Settings.get("jack_in", true), on_change = function(on) save("jack_in", on) end })),
         row(_("Operator card"), _("Your handle, rank and photo; the strip under the banner opens it"),
             Layout.Row:new({ gap = Theme.get().space.s, children = {
                 Controls.Toggle:new({ on = Settings.get("home_card", true), on_change = function(on) save("home_card", on) end }),

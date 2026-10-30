@@ -144,4 +144,80 @@ do
     Kit.ok(s.pages and s.pages >= 1, "the picker pages the stock icons")
 end
 
+-- operator profile and ID card
+do
+    local Profile = require("cyberui/data/profile")
+    local r = Profile.rank(0)
+    Kit.ok(r.name == "SCRIPT KID" and r.next == "RUNNER" and r.value == 0, "no hours is the first rank")
+    r = Profile.rank(62.5)
+    Kit.ok(r.name == "RUNNER" and r.next == "FIXER" and math.abs(r.value - 0.5) < 0.01, "62.5 hours is halfway from runner to fixer")
+    r = Profile.rank(900)
+    Kit.ok(r.name == "LEGEND" and r.next == nil and r.value == 1, "the top rank has nothing after it")
+    local h1, id1 = Profile.handle(), Profile.id()
+    Kit.ok(h1:match("^%u+_%u+%.%d$") ~= nil, "a handle is made when none was chosen: " .. h1)
+    Kit.ok(id1:match("^%x%x%x%x%-%x%x%x%x%-%x%x%x%x$") ~= nil and Profile.id() == id1 and Profile.handle() == h1, "the ID and handle are stable")
+    Settings.set("handle", "SPARROW")
+    Kit.ok(Profile.handle() == "SPARROW" and Profile.id() == id1, "a chosen handle wins and keeps the ID")
+    Settings.set("handle", nil)
+    -- a photo from a file: kept square and used by the face
+    local BB = require("ffi/blitbuffer")
+    local src = require("datastorage"):getDataDir() .. "/cyberui-test-photo.png"
+    local big = BB.new(300, 200, BB.TYPE_BBRGB32)
+    big:fill(BB.COLOR_BLACK)
+    big:writePNG(src)
+    big:free()
+    Kit.ok(not Profile.hasPhoto(), "no photo at first")
+    Kit.ok(Profile.setPhoto(src) and Profile.hasPhoto(), "a picture becomes the photo")
+    local p = Profile.photo(64)
+    Kit.ok(p and p:getWidth() == 64 and p:getHeight() == 64, "the photo is square at any size asked")
+    Kit.ok(select(2, Profile.setPhoto("/no/such.png")) ~= nil, "a missing file is refused with a reason")
+    Profile.clearPhoto()
+    Kit.ok(not Profile.hasPhoto() and Profile.photo(64) == nil, "the photo can be removed")
+    os.remove(src)
+    local IdCard = require("cyberui/ui/idcard")
+    local W, H = Kit.Screen:getWidth(), Kit.Screen:getHeight()
+    for _, build in ipairs({ function() return IdCard.full({}) end, function() return IdCard.strip({}) end }) do
+        local el = build()
+        el:layout(W, nil)
+        Kit.ok(el.h > 0 and el.h < H, "the card fits the screen")
+        local bb = Kit.canvas()
+        el:paint(bb, 0, 0)
+        bb:free()
+    end
+    local ProfileFlow = require("cyberui/profileflow")
+    local file = ProfileFlow.export(IdCard.full({}))
+    Kit.ok(file and require("libs/libkoreader-lfs").attributes(file, "size") > 1000, "the card is saved as a picture")
+    if file then os.remove(file) end
+end
+
+-- the jack-in card
+do
+    local JackIn = require("cyberui/jackin")
+    local book = require("cyberui/data/library").all()[1]
+    local W, H = Kit.Screen:getWidth(), Kit.Screen:getHeight()
+    local card = JackIn.card(book)
+    card:layout(W, H)
+    local bb = Kit.canvas()
+    card:paint(bb, 0, 0)
+    bb:free()
+    Kit.ok(Kit.time(function() local c = JackIn.card(book); c:layout(W, H) end, 10) < 20, "the jack-in card is made in under 20 ms")
+    local UIManager = require("ui/uimanager")
+    local seen = {}
+    local real = UIManager.show
+    UIManager.show = function(_self, w) seen[#seen + 1] = w.tag end
+    local abbreviated = require("apps/filemanager/filemanagerutil").abbreviate(book)
+    JackIn.silenced(book, function()
+        UIManager:show({ tag = "opening", timeout = 0, text = "Opening file '" .. abbreviated .. "'." })
+        UIManager:show({ tag = "question", text = "Restore the notes?" })
+    end)
+    Kit.ok(#seen == 1 and seen[1] == "question", "only KOReader's own opening message is kept off the screen")
+    Kit.ok(UIManager.show ~= real and select(2, pcall(function() UIManager:show({ tag = "later" }) end)) == nil and seen[2] == "later",
+        "showing works as before afterwards")
+    UIManager.show = real
+    local Settings = require("cyberui/settings")
+    Settings.set("jack_in", false)
+    Kit.ok(not JackIn.wanted(book), "the card can be turned off")
+    Settings.set("jack_in", nil)
+end
+
 Kit.finish("features")
