@@ -185,7 +185,7 @@ function Library:cell(item, w, h, as_list)
         return tile
     end
     local p = item.path
-    local open, hold = function() Actions.open(p) end, function() Actions.bookSheet(p) end
+    local open, hold = function() Actions.tapBook(p) end, function() Actions.bookSheet(p) end
     if as_list then
         local info = Books.info(p)
         return ListRow.build({ path = p, title = info.title, meta = info.author, value = (Books.badge(p)),

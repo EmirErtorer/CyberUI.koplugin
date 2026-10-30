@@ -217,6 +217,8 @@ function SettingsScreen:home()
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
                 App.update()
             end })),
+        row(_("Double tap to open"), _("In the library a book opens on its second tap, so a stray touch does not start it"),
+            Controls.Toggle:new({ on = Settings.get("double_tap_open", false), on_change = function(on) save("double_tap_open", on) end })),
         row(_("Top bar"), _("The tag and the readouts across the top of every screen"),
             Button:new({ label = _("Change"), on_tap = function() App.push("topbar") end })),
         row(_("Banner top line"), _("The small line above the banner, and your handle"),

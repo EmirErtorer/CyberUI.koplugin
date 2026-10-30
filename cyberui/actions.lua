@@ -7,7 +7,9 @@ local App = require("cyberui/app")
 local Books = require("cyberui/data/books")
 local Collections = require("cyberui/data/collections")
 local Files = require("cyberui/data/files")
+local History = require("cyberui/data/history")
 local Library = require("cyberui/data/library")
+local Settings = require("cyberui/settings")
 local Trash = require("cyberui/data/trash")
 local filemanagerutil = require("apps/filemanager/filemanagerutil")
 local util = require("util")
@@ -20,12 +22,35 @@ function Actions.open(path)
     App.openBook(path)
 end
 
+local TAP_AGAIN = 3   -- seconds a first tap waits for its second
+local armed            -- { path, at }: the book a first tap is waiting on
+
+-- A tap on a book in a list: opens it, or with "double tap to open" on, the
+-- first tap arms it and the second one opens it.
+function Actions.tapBook(path)
+    if not Settings.get("double_tap_open", false) then return Actions.open(path) end
+    local now = os.time()
+    if armed and armed.path == path and now - armed.at <= TAP_AGAIN then
+        armed = nil
+        return Actions.open(path)
+    end
+    armed = { path = path, at = now }
+    App.toast(_("TAP AGAIN TO OPEN"))
+end
+
+-- Take the book out of the reading history (the file stays).
+function Actions.unhistory(path)
+    require("readhistory"):removeItemByPath(path)
+    App.toast(_("Removed from history"))
+    App.update()
+end
+
 -- Show the book's dossier.
 function Actions.details(path)
     App.push("dossier", { path = path })
 end
 
--- Set the reading status ("reading", "complete", "abandoned").
+-- Set the reading status ("new" for unread, "reading", "complete", "abandoned").
 function Actions.setStatus(path, status)
     local DocSettings = require("docsettings")
     local ds = DocSettings:open(path)
@@ -34,6 +59,29 @@ function Actions.setStatus(path, status)
     filemanagerutil.saveSummary(ds, summary)
     Books.forget(path)
     App.update()
+end
+
+-- The four statuses a book can be given, with their names.
+Actions.STATUSES = {
+    { "new", _("Unread") }, { "reading", _("Reading") }, { "abandoned", _("On hold") }, { "complete", _("Done") },
+}
+
+-- The name of a status as the status sheet shows it.
+function Actions.statusName(status)
+    for _i, s in ipairs(Actions.STATUSES) do
+        if s[1] == status then return s[2] end
+    end
+    return status
+end
+
+-- Let the reader choose any status for the book.
+function Actions.statusSheet(path)
+    local current = Books.state(path).status
+    local options = {}
+    for _i, s in ipairs(Actions.STATUSES) do
+        options[#options + 1] = { label = s[2], checked = s[1] == current, on_tap = function() Actions.setStatus(path, s[1]) end }
+    end
+    App.choose({ title = _("Status"), options = options })
 end
 
 -- Pick the collections the book is in, or make a new one for it.
@@ -133,17 +181,19 @@ end
 -- The hold sheet of a book.
 function Actions.bookSheet(path)
     local info, st = Books.info(path), Books.state(path)
-    local done = st.status == "complete"
-    App.sheet({ title = info.title, sub = filemanagerutil.abbreviate(Files.parent(path)), actions = {
+    local actions = {
         { icon = "forward", label = _("Open"), on_tap = function() Actions.open(path) end },
         { icon = "eye", label = _("Details"), on_tap = function() Actions.details(path) end },
-        { icon = "check", label = done and _("Mark reading") or _("Mark done"),
-            on_tap = function() Actions.setStatus(path, done and "reading" or "complete") end },
+        { icon = "check", label = _("Status"), sub = Actions.statusName(st.status), on_tap = function() Actions.statusSheet(path) end },
         { icon = "collections", label = _("Collections"), on_tap = function() Actions.collect(path) end },
         { icon = "edit", label = _("Rename"), on_tap = function() Actions.rename(path) end },
         { icon = "move", label = _("Move to"), on_tap = function() Actions.move(path) end },
         { icon = "trash", label = _("Delete"), danger = true, on_tap = function() Actions.delete(path) end },
-    } })
+    }
+    if History.lastOpened(path) then
+        table.insert(actions, 5, { icon = "history", label = _("Remove from history"), on_tap = function() Actions.unhistory(path) end })
+    end
+    App.sheet({ title = info.title, sub = filemanagerutil.abbreviate(Files.parent(path)), actions = actions })
 end
 
 -- The hold sheet of a folder; `open` goes into it.
