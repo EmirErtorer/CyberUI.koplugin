@@ -17,6 +17,12 @@ function History.recent(n)
     return out
 end
 
+-- The file of the book opened last, or nil.
+function History.lastFile()
+    local last = History.current()
+    return last and last.path
+end
+
 -- The book being read now: the last one opened, or nil.
 function History.current()
     local r = History.recent(1)

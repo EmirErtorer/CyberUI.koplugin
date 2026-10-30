@@ -23,10 +23,7 @@ function InkAway.annotate()
     local Addons = require("cyberui/apps/addons")
     if Addons.status(InkAway) ~= "ready" then return Addons.launch(InkAway) end
     local path = require("cyberui/park").file()
-    if not path then
-        local last = require("cyberui/data/history").current()
-        path = last and last.path
-    end
+    path = path or require("cyberui/data/history").lastFile()
     if not path then return require("cyberui/app").toast(_("Open a book first")) end
     require("cyberui/app").openBook(path, function(ui)
         require("ui/uimanager"):nextTick(function() ui:handleEvent(require("ui/event"):new("InkAwayAnnotate")) end)
