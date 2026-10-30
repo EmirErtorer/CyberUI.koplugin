@@ -8,100 +8,84 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-30
+
+Everything since 1.0.0, the 1.0.5 prerelease included. The big ones: an operator
+ID card, Gigs that pay eddies for reading your backlog, a shop of looks to spend
+them on, data shards, ten languages, and a home that comes back much faster.
+
 ### Added
-- Shop (from the Gigs screen): spend eddies on looks, never on anything else.
-  Twenty styles in four categories, one free in each: ID card frames, ID card
-  backdrops, handle flairs and jack-in cards. Every style is shown as it really
-  looks, a style you do not own opens a full preview with its price, and an
-  owned one is worn with a tap. Purchases are signed entries in the same ledger
-  as the payouts, so ownership and the balance cannot be edited in the
-  settings file.
-
-### Added (about)
-- A small support note at the end of System > About: a QR code and the link to
-  buy me a coffee, in a few humble words. It shows nowhere else.
-
-### Added (diagnostics)
-- A see-through view of an e-reader's main board fills the empty space under
-  the Diagnostics readouts: SoC and memory in ball-grid packages, flash, power
-  chip with inductors, frontlight driver, touch controller, Wi-Fi module under
-  its shield can, display and touch flex connectors, USB-C, battery connector,
-  crystals and test points, joined by straight traces. It scales to the room
-  and leaves the screen alone when there is too little.
-
-### Added (menu)
-- CyberUI's tab in KOReader's menu now has two pages, the operator ID card
-  (face, handle, rank, eddies) and the controls, with the order your choice
-  (System > Home > Menu tab opens on). With ZenOS running the tab sits right
-  after ZenOS's Controls and Launcher. Swipe sideways or tap a page name.
-
-### Fixed
-- Home flashed over the page when KOReader reloaded the open book in the
-  background to apply a change.
-- A crash when a drag reached the photo crop window after it had closed.
-- The Traces backdrop no longer draws routes off the edge of the card.
+- **Operator ID card**: a handle, a rank earned from your reading hours, an ID
+  code with a barcode, your totals, eddies and a photo from the device (drag and
+  zoom it into a square). Tap your face on home to open it; save it as a picture.
+- **Gigs**: a book you never opened becomes paid work after a week, priced by its
+  length and how long it waited. Opening it takes the gig; every 10% you read pays
+  a twentieth of the price and finishing pays the other half, with a notice on
+  home. Open, active and payout lists, and a Take gig button on the book's details.
+- **Eddies and the Shop**: eddies come only from reading gigs and buy only looks:
+  twenty styles in four categories (ID card frames, backdrops, handle flairs and
+  jack-in cards), one free in each. Every style is previewed before you buy. The
+  ledger is signed, so editing the settings file adds no eddies and unlocks nothing.
+- **Data shards**: every highlight in your books as a recovered fragment, one on
+  home, a Shards screen, and a way to open the book at the highlight.
+- **Jack-in card**: a card with the book shown while it opens, in place of
+  KOReader's small opening message (System > Home > Jack-in card).
+- **Ten languages**: Turkish, Brazilian Portuguese, Portuguese, Spanish, Italian,
+  French, German, Russian, Polish and Greek, following KOReader's language. The
+  texts are `.po` files in `l10n/` you can edit without touching code (your edits
+  go in `settings/cyberui-l10n/` and survive updates).
+- **Keep the book open on Home** (System > Speed, on by default): going home puts
+  the book away instead of closing it, so the same book opens again in about a
+  third of the time and nothing blocks after home is shown.
+- **Operator ID in KOReader's menu**: CyberUI's tab has two pages, the ID card and
+  the controls, in the order you choose (System > Home > Menu tab opens on). With
+  ZenOS running it sits right after ZenOS's Controls and Launcher.
+- **Diagnostics**: a see-through view of an e-reader's main board in the empty
+  space under the readouts (SoC, memory, flash, power chip, radio, display and
+  touch connectors, USB-C, battery and more), scaled to the room.
+- **Editable home launcher**: hide, reorder, replace and add buttons, each with its
+  own name, icon and target picked from lists of plugins, plugin actions and
+  KOReader's own actions. The icon picker also offers KOReader's icons.
+- **Library menu**: sort orders, grouping (author, series, status, format, date
+  added), more filters, saved views, jump to a letter and selecting many books at
+  once. An All books view lists every book of every folder, and you choose the
+  folder the Library opens in.
+- **Double tap to open** books in the library, and a way to remove a book from
+  the history.
+- **Any status on a book**, unread included.
+- **A setting to stretch covers** to their frame, and a size for the covers in the
+  recent list on home.
+- **Telemetry tabs**: stats by week, month and year, streaks and records, a
+  calendar, a yearly goal, a book's own reading facts, and a folder scope. Bars
+  can be a night-city skyline, and the log counts minutes or pages.
+- **Colour dial** for the custom scheme: hue ring, saturation and brightness
+  matrix, a grey preview and a note on whether the colour reads on the page.
+- **A quiet support note** at the end of System > About.
 
 ### Changed
-- Keeping the book open on Home is on by default.
-- The recent list on home shares its room between its rows, so no gap a row
-  could have filled is left (a fourth or fifth row fits where it used to stop at three).
-- The shop shows two styles to a row, with compact jack-in previews, so a tab
-  fits on one page.
-- A gig's dossier has a Take gig button with its price.
-- The skyline is redrawn as a city: towers of several styles with masts, lights
-  and billboards over a pale far skyline; windows lit by time read.
+- The recent list on home shares its room between its rows, so a fourth or fifth
+  row fits where it used to stop at three.
+- Telemetry numbers come from one set of daily totals, so every tab agrees.
 - Touches made while KOReader is still closing a book are no longer pressed on
   home afterwards.
-- The jack-in card floats over the screen the book was opened from instead of a
-  blank one.
-- The operator card floats over home, with Photo, Handle and Save under it.
-- Choosing a photo opens the picture in a square window you drag and zoom
-  before using it; see-through PNGs no longer turn black.
-- A launcher button's target is picked from lists: plugins, plugin actions and
-  KOReader's actions by kind, with the whole menu as the last way in.
-- Holding a launcher button (on home or in the editor) asks before deleting it
-  (built-in buttons are hidden instead).
-- Long settings pages and the launcher editor page instead of being cut off.
-- The log counts minutes or pages (button in its header), the log and stats
-  tabs can draw their bars as a skyline, and the stats tab shows minutes and
-  pages together.
-- Telemetry numbers now come from one set of daily totals, so every tab agrees;
-  "last 7 days" is named as such, the twelve-week grid lines up Monday to
-  Sunday, the best streak is all-time, and a week in progress is compared with
-  the same stretch of the week before. The hour axis is labelled at the right
-  columns.
+- Holding a launcher button asks before deleting it (built-in buttons are hidden
+  instead). Long settings pages and the launcher editor page instead of being cut off.
 
-### Added
-- Ten languages: Turkish, Brazilian Portuguese, Portuguese, Spanish, Italian, French,
-  German, Russian, Polish and Greek. CyberUI follows KOReader's language; the texts
-  are `.po` files in `l10n/` that can be edited without touching the code (your
-  own edits go in `settings/cyberui-l10n/` and survive updates). A check in the test
-  suite fails when any text is untranslated, so new features arrive translated.
-- Keep the book open on Home (System > Speed, on by default): going home puts
-  the book away instead of closing it, so the same book opens again in about a
-  third of the time and nothing blocks after home is shown. KOReader closes it
-  when a different book is opened, after 30 seconds untouched, or when KOReader's
-  menu or file browser is opened. The setting lists what it costs.
-
-- Operator ID card: a handle, a rank earned from reading hours, an ID code with
-  a barcode, your totals, and a photo chosen from any folder on the device
-  (tap the face or PHOTO). Save the card as a picture. Your face, handle and
-  rank sit in the banner on home; tap the face to open the card.
-- Jack-in card: a card with the book shown while it opens, in place of
-  KOReader's small opening message (System > Home > Jack-in card).
-- Gigs: books you never opened become paid work after a week, priced by
-  length and how long they waited (€$20 steps, up to double). Opening one takes
-  the gig; every 10% you read pays a twentieth of the price and finishing pays
-  the other half. Your eddies balance sits on the ID card; the ledger is
-  signed, so editing the settings file does not add money. A Gigs button on
-  home, with open, active and payout lists.
-- Data shards: every highlight in your books as a recovered fragment, with a
-  shard on home (on by default, System > Home > Data shard turns it off), a Shards screen, and a way to open the book at the highlight.
-- Skyline chart: a month of reading as a night city on the calendar tab, and
-  the year by week on the goal tab.
-- Colour dial for the custom scheme: hue ring, saturation and brightness
-  matrix, a grey preview and a note on whether the colour reads on the page.
-- The icon picker also offers KOReader's own icons.
+### Fixed
+- Exit left KOReader running behind a frozen screen when CyberUI was open.
+- KOReader 2025.10 crashed at start with CyberUI installed.
+- Home flashed over the page when KOReader reloaded the open book in the
+  background to apply a change.
+- Covers inverted along with the screen in night mode.
+- Session log page counts: each page is counted once.
+- Page-turn keys now page the screens and the menu.
+- The drop-down menu left the page half painted after it closed.
+- Taps inside the bottom bar no longer reach what is under it.
+- The warmth stepper uses KOReader's 0 to 100 scale.
+- Arabic and Hebrew text is shaped and set right to left.
+- With Project: Title installed, the menu over home was missing every plugin's entries.
+- Toggling the frontlight inside a book opened from CyberUI turned it on and straight off.
+- A crash when a drag reached the photo window after it had closed.
 
 ## [1.0.5] - 2026-10-27 *Prerelease*
 
@@ -189,6 +173,7 @@ The first release.
   checking the download. Once a day, only on Wi-Fi that is already on, it
   looks by itself and says so on home.
 
-[Unreleased]: https://github.com/EmirErtorer/CyberUI.koplugin/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/EmirErtorer/CyberUI.koplugin/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.1.0
 [1.0.5]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.0.5
 [1.0.0]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.0.0
