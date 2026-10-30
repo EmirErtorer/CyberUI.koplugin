@@ -233,6 +233,12 @@ function App.realClose(ui, file)
     prepainted = true
     ui:onClose(false)
     ui:showFileManager(file)
+    -- the file browser turned the screen back upright (a book read sideways):
+    -- home was painted in the old shape, so lay it out and paint it again
+    if host and (host.laid_w ~= Screen:getWidth() or host.laid_h ~= Screen:getHeight()) then
+        prepainted = false
+        App.raise()
+    end
     local ok, now = pcall(function() return require("ui/time").now() end)
     if ok and host then host.ignore_before = now end
 end
