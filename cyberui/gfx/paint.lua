@@ -130,16 +130,25 @@ end
 -- Bar widths of the decorative barcode, repeated across its width.
 local BARS = { 3, 2, 1, 3, 4, 1, 1, 3, 2, 2, 1, 4, 3, 1 }
 
--- A decorative barcode filling the box.
-function Paint.barcode(bb, x, y, w, h, unit, c)
+-- A decorative barcode filling the box, in `bars` widths when given (see
+-- Paint.barsFrom) else the usual pattern.
+function Paint.barcode(bb, x, y, w, h, unit, c, bars)
+    bars = bars or BARS
     local pos, i = 0, 1
     while pos < w do
-        local bar = BARS[i] * unit
-        local gap = BARS[(i % #BARS) + 1] * unit
+        local bar = bars[i] * unit
+        local gap = bars[(i % #bars) + 1] * unit
         fill(bb, x + pos, y, math.min(bar, w - pos), h, c)
         pos = pos + bar + gap
-        i = (i + 1) % #BARS + 1
+        i = (i + 1) % #bars + 1
     end
+end
+
+-- Fourteen bar widths (1 to 4) from a number stream, so a code gets its own barcode.
+function Paint.barsFrom(rnd)
+    local bars = {}
+    for i = 1, #BARS do bars[i] = 1 + math.floor(rnd() * 4) end
+    return bars
 end
 
 -- Ruler ticks along a line: a tick `t` wide every `period` pixels.

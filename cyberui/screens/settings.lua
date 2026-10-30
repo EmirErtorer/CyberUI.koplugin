@@ -20,6 +20,7 @@ local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Library = require("cyberui/data/library")
 local Panel = require("cyberui/ui/panel")
+local ProfileFlow = require("cyberui/profileflow")
 local Progress = require("cyberui/ui/progress")
 local Registry = require("cyberui/theme/registry")
 local Screen = require("cyberui/screens/screen")
@@ -161,13 +162,7 @@ function SettingsScreen:fonts()
 end
 
 -- Ask for the reader's handle, then call after().
-local function askHandle(after)
-    App.input(_("Your handle"), Settings.get("handle", ""), function(text)
-        Settings.save("handle", util.trim(text or ""))
-        if after then after() end
-        App.update()
-    end, _("Save"), { placeholder = _("OPERATOR") })
-end
+local askHandle = ProfileFlow.editHandle
 
 -- Pick what the banner's big line says. Shared with home's long-press.
 function SettingsScreen.pickBannerTitle()
@@ -219,6 +214,11 @@ function SettingsScreen:home()
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
                 App.update()
             end })),
+        row(_("Operator card"), _("Your handle, rank and photo; the strip under the banner opens it"),
+            Layout.Row:new({ gap = Theme.get().space.s, children = {
+                Controls.Toggle:new({ on = Settings.get("home_card", true), on_change = function(on) save("home_card", on) end }),
+                Button:new({ label = _("Open"), on_tap = function() App.push("card") end }),
+            } })),
         row(_("Launcher"), _("The buttons on home: hide, reorder, replace or add your own that open anything in KOReader"),
             Button:new({ label = _("Edit"), on_tap = function() App.push("launcher") end })),
         row(_("Library opens in"), _("The folder the Library tab starts in; KOReader's home folder stays the top of the library"),

@@ -6,6 +6,7 @@
 local Device = require("device")
 local DeviceInfo = require("cyberui/data/device")
 local History = require("cyberui/data/history")
+local Profile = require("cyberui/data/profile")
 local Books = require("cyberui/data/books")
 local Settings = require("cyberui/settings")
 local _ = require("gettext")
@@ -44,10 +45,9 @@ local HIGHLIGHT_BOOKS = 8
 -- The highlight on show until home opens again: { text, path } or false.
 local shown
 
--- The reader's handle, or "OPERATOR" (the theme sets the capitals).
+-- The reader's handle (see Profile.handle).
 function Banner.handle()
-    local h = Settings.get("handle")
-    return (h and h ~= "") and h or _("OPERATOR")
+    return Profile.handle()
 end
 
 -- The device family, e.g. "KOBO", "KINDLE" or "BOOX".

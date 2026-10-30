@@ -13,11 +13,11 @@ local function on(name)
     return Theme.get().decor[name] ~= false
 end
 
--- A barcode strip.
+-- A barcode strip, with its own bar widths when `bars` is given.
 Deco.Barcode = Element:extend({ color = "ink", unit = 1 })
 function Deco.Barcode:naturalHeight() return self.height or Theme.px(20) end
 function Deco.Barcode:draw(bb, x, y)
-    if on("barcode") then Paint.barcode(bb, x, y, self.w, self.h, Theme.px(self.unit), Theme.color(self.color)) end
+    if on("barcode") then Paint.barcode(bb, x, y, self.w, self.h, Theme.px(self.unit), Theme.color(self.color), self.bars) end
 end
 
 -- Ruler ticks across the box.

@@ -12,12 +12,14 @@ local Files = require("cyberui/data/files")
 local Format = require("cyberui/format")
 local History = require("cyberui/data/history")
 local Icon = require("cyberui/ui/icon")
+local IdCard = require("cyberui/ui/idcard")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Launcher = require("cyberui/ui/launcher")
 local Library = require("cyberui/data/library")
 local ListRow = require("cyberui/ui/listrow")
 local Panel = require("cyberui/ui/panel")
+local ProfileFlow = require("cyberui/profileflow")
 local Progress = require("cyberui/ui/progress")
 local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
@@ -200,7 +202,7 @@ function Home:build()
     return Layout.Column:new({ pad = { th.space.s, th.space.xl, th.space.m, th.space.xl }, gap = th.space.m, children = {
         status,
         identity(),
-        indexStrip(),
+        Settings.get("home_card", true) and IdCard.strip({ on_open = function() App.push("card") end, on_photo = ProfileFlow.photo }) or indexStrip(),
         dateRow(self),
         activeFile(shown),
         Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown), Launcher.build() } }),

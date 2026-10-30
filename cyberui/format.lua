@@ -27,6 +27,12 @@ function Format.duration(s)
     return string.format("%d:%02d", math.floor(s / 3600), math.floor(s % 3600 / 60))
 end
 
+-- A whole number with a space between thousands: "18 430".
+function Format.number(n)
+    local s = string.format("%d", math.floor((n or 0) + 0.5))
+    return (s:reverse():gsub("(%d%d%d)", "%1 "):reverse():gsub("^ ", ""))
+end
+
 -- "3.1 GB", "1.2 MB", "640 KB" for a size in bytes.
 function Format.size(bytes)
     if not bytes then return "?" end
