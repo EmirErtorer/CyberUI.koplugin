@@ -69,9 +69,9 @@ function Format.number(n)
     return (s:reverse():gsub("(%d%d%d)", "%1 "):reverse():gsub("^ ", ""))
 end
 
--- An amount of the in-game money, "¥1 430".
+-- An amount of the in-game money (eddies, euro-dollars), "€$1 430".
 function Format.credits(n)
-    return "\u{00A5}" .. Format.number(n)
+    return "\u{20AC}$" .. Format.number(n)
 end
 
 -- "3.1 GB", "1.2 MB", "640 KB" for a size in bytes.
