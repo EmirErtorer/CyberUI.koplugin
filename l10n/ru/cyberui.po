@@ -2297,7 +2297,7 @@ msgstr "Выйти из CyberUI в файловый менеджер KOReader"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"
-msgstr "Полное обновление каждые"
+msgstr "Полное обновление в тёмном режиме"
 
 #: cyberui/screens/settings.lua
 msgid "Dark screens ghost more, so they flash sooner (0 never)"
@@ -2305,7 +2305,7 @@ msgstr "Тёмные экраны оставляют больше следов, 
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh every"
-msgstr "Полное обновление в тёмном режиме"
+msgstr "Полное обновление каждые"
 
 #: cyberui/screens/settings.lua
 msgid "Screens between flashing refreshes that clear ghosting (0 never)"
@@ -2354,9 +2354,9 @@ msgstr "Индекс библиотеки"
 #: cyberui/screens/settings.lua
 msgid "%d book indexed; rebuild after copying books over"
 msgid_plural "%d books indexed; rebuild after copying books over"
-msgstr[0] "%d книга проиндексирована"
-msgstr[1] "%d книги проиндексированы"
-msgstr[2] "%d книг проиндексировано"
+msgstr[0] "%d книга проиндексирована; пересоберите после копирования книг"
+msgstr[1] "%d книги проиндексированы; пересоберите после копирования книг"
+msgstr[2] "%d книг проиндексировано; пересоберите после копирования книг"
 
 #: cyberui/screens/settings.lua
 msgid "Rebuild"
@@ -2365,9 +2365,9 @@ msgstr "Пересобрать"
 #: cyberui/screens/settings.lua
 msgid "%d book indexed"
 msgid_plural "%d books indexed"
-msgstr[0] "%d книга проиндексирована; пересоберите после копирования книг"
-msgstr[1] "%d книги проиндексированы; пересоберите после копирования книг"
-msgstr[2] "%d книг проиндексировано; пересоберите после копирования книг"
+msgstr[0] "%d книга проиндексирована"
+msgstr[1] "%d книги проиндексированы"
+msgstr[2] "%d книг проиндексировано"
 
 #: cyberui/screens/settings.lua
 msgid "HOW CYBERUI STAYS FAST"

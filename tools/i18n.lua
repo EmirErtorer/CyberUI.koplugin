@@ -427,14 +427,15 @@ elseif command == "import" then
         local idx, prefix, rest = row:match("^(%d+)\t([^\t]*)\t(.*)$")
         local n = tonumber(idx)
         if prefix then prefix = prefix:sub(1, 10) end
-        -- the first ten letters of the English prove the line is for this text; a
-        -- number a few places off (texts were added or removed) is found by them
+        -- the first letters of the English prove the line is for this text; I18N_SHIFT
+        -- ("from:minus") maps numbers of an older listing onto this one
+        local from, minus = (os.getenv("I18N_SHIFT") or ""):match("^(%d+):(%d+)$")
+        if n and from and n >= tonumber(from) then n = n - tonumber(minus) end
         local t
-        if n then
-            for _i, d in ipairs({ 0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8 }) do
-                local cand = list[n + d]
-                if cand and (cand.id == prefix or (#prefix >= 8 and cand.id:sub(1, #prefix) == prefix)) and not seen[n + d] then t = cand; seen[n + d] = true; break end
-            end
+        local cand = n and list[n]
+        if cand and not seen[n] and (cand.id == prefix or (#prefix >= 8 and cand.id:sub(1, #prefix) == prefix)) then
+            t = cand
+            seen[n] = true
         end
         if t then
             local forms = {}

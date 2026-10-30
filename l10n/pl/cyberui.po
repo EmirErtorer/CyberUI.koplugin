@@ -2297,7 +2297,7 @@ msgstr "Opuść CyberUI na rzecz własnej przeglądarki plików KOReadera"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"
-msgstr "Pełne odświeżanie co"
+msgstr "Pełne odświeżanie w trybie ciemnym"
 
 #: cyberui/screens/settings.lua
 msgid "Dark screens ghost more, so they flash sooner (0 never)"
@@ -2305,7 +2305,7 @@ msgstr "Ciemne ekrany zostawiają więcej śladów, więc migają wcześniej (0 
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh every"
-msgstr "Pełne odświeżanie w trybie ciemnym"
+msgstr "Pełne odświeżanie co"
 
 #: cyberui/screens/settings.lua
 msgid "Screens between flashing refreshes that clear ghosting (0 never)"
@@ -2354,9 +2354,9 @@ msgstr "Indeks biblioteki"
 #: cyberui/screens/settings.lua
 msgid "%d book indexed; rebuild after copying books over"
 msgid_plural "%d books indexed; rebuild after copying books over"
-msgstr[0] "%d książka zaindeksowana"
-msgstr[1] "%d książki zaindeksowane"
-msgstr[2] "%d książek zaindeksowanych"
+msgstr[0] "%d książka zaindeksowana; odbuduj po skopiowaniu książek"
+msgstr[1] "%d książki zaindeksowane; odbuduj po skopiowaniu książek"
+msgstr[2] "%d książek zaindeksowanych; odbuduj po skopiowaniu książek"
 
 #: cyberui/screens/settings.lua
 msgid "Rebuild"
@@ -2365,9 +2365,9 @@ msgstr "Odbuduj"
 #: cyberui/screens/settings.lua
 msgid "%d book indexed"
 msgid_plural "%d books indexed"
-msgstr[0] "%d książka zaindeksowana; odbuduj po skopiowaniu książek"
-msgstr[1] "%d książki zaindeksowane; odbuduj po skopiowaniu książek"
-msgstr[2] "%d książek zaindeksowanych; odbuduj po skopiowaniu książek"
+msgstr[0] "%d książka zaindeksowana"
+msgstr[1] "%d książki zaindeksowane"
+msgstr[2] "%d książek zaindeksowanych"
 
 #: cyberui/screens/settings.lua
 msgid "HOW CYBERUI STAYS FAST"

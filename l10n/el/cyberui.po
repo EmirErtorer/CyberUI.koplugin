@@ -2273,7 +2273,7 @@ msgstr "Έξοδος από το CyberUI στον δικό του περιηγη
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"
-msgstr "Πλήρης ανανέωση κάθε"
+msgstr "Πλήρης ανανέωση σε σκούρα λειτουργία"
 
 #: cyberui/screens/settings.lua
 msgid "Dark screens ghost more, so they flash sooner (0 never)"
@@ -2281,7 +2281,7 @@ msgstr "Οι σκούρες οθόνες αφήνουν περισσότερα �
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh every"
-msgstr "Πλήρης ανανέωση σε σκούρα λειτουργία"
+msgstr "Πλήρης ανανέωση κάθε"
 
 #: cyberui/screens/settings.lua
 msgid "Screens between flashing refreshes that clear ghosting (0 never)"
@@ -2330,8 +2330,8 @@ msgstr "Ευρετήριο βιβλιοθήκης"
 #: cyberui/screens/settings.lua
 msgid "%d book indexed; rebuild after copying books over"
 msgid_plural "%d books indexed; rebuild after copying books over"
-msgstr[0] "%d βιβλίο ευρετηριάστηκε"
-msgstr[1] "%d βιβλία ευρετηριάστηκαν"
+msgstr[0] "%d βιβλίο ευρετηριάστηκε· ανοικοδομήστε μετά την αντιγραφή βιβλίων"
+msgstr[1] "%d βιβλία ευρετηριάστηκαν· ανοικοδομήστε μετά την αντιγραφή βιβλίων"
 
 #: cyberui/screens/settings.lua
 msgid "Rebuild"
@@ -2340,8 +2340,8 @@ msgstr "Ανοικοδόμηση"
 #: cyberui/screens/settings.lua
 msgid "%d book indexed"
 msgid_plural "%d books indexed"
-msgstr[0] "%d βιβλίο ευρετηριάστηκε· ανοικοδομήστε μετά την αντιγραφή βιβλίων"
-msgstr[1] "%d βιβλία ευρετηριάστηκαν· ανοικοδομήστε μετά την αντιγραφή βιβλίων"
+msgstr[0] "%d βιβλίο ευρετηριάστηκε"
+msgstr[1] "%d βιβλία ευρετηριάστηκαν"
 
 #: cyberui/screens/settings.lua
 msgid "HOW CYBERUI STAYS FAST"
