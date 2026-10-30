@@ -10,8 +10,8 @@ local Banner = require("cyberui/data/banner")
 local Button = require("cyberui/ui/button")
 local Controls = require("cyberui/ui/controls")
 local Cover = require("cyberui/ui/cover")
+local Covers = require("cyberui/data/covers")
 local Custom = require("cyberui/themes/custom")
-local Deco = require("cyberui/ui/deco")
 local Fonts = require("cyberui/screens/fonts")
 local Frame = require("cyberui/screens/frame")
 local Label = require("cyberui/ui/label")
@@ -22,6 +22,7 @@ local Progress = require("cyberui/ui/progress")
 local Registry = require("cyberui/theme/registry")
 local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
+local row = require("cyberui/ui/settingrow")
 local Sleep = require("cyberui/sleep")
 local Swatch = require("cyberui/ui/swatch")
 local Theme = require("cyberui/theme")
@@ -37,19 +38,6 @@ local SECTIONS = { { _("Look"), "look" }, { _("Covers"), "covers" }, { _("Fonts"
 -- Open on the Look section.
 function SettingsScreen:init()
     self.section = "look"
-end
-
--- A setting: its name and explanation on the left, a control on the right.
-local function row(label, sub, control)
-    local th = Theme.get()
-    local text = { Label:new({ text = label, kind = "heading" }) }
-    if sub then text[2] = Label:new({ text = sub, kind = "small", color = "muted", lines = 2 }) end
-    return Layout.Column:new({ children = {
-        Layout.Row:new({ gap = th.space.m, pad = { th.space.s, 0 }, children = {
-            Layout.Column:new({ grow = true, children = text }), control,
-        } }),
-        Deco.Divider:new({}),
-    } })
 end
 
 -- Save a plain setting and redraw.
@@ -144,6 +132,8 @@ function SettingsScreen:covers()
         Label:new({ text = _("SIZE IN THE LIBRARY"), kind = "label" }),
         Controls.Segmented({ options = { { "S", "s" }, { "M", "m" }, { "L", "l" }, { "XL", "xl" } },
             value = Settings.get("cover_size", "m"), kind = "label", on_change = function(v) save("cover_size", v) end }),
+        row(_("Stretch covers"), _("Fill each cover frame, even if the proportions change"),
+            Controls.Toggle:new({ on = Covers.stretch(), on_change = function(on) save("cover_stretch", on) end })),
         Label:new({ text = _("ASCII SLEEP SCREEN"), kind = "label" }),
         Controls.Segmented({ options = (function()
                 local o = {}

@@ -3,6 +3,7 @@
 -- without decoding or scaling again.
 
 local RenderImage = require("ui/renderimage")
+local Settings = require("cyberui/settings")
 
 local Covers = {}
 
@@ -30,9 +31,16 @@ local function evict()
     end
 end
 
--- The cover of `path` scaled to fit w x h, or nil when there is none.
+-- Does a cover fill its frame, whatever its proportions? Off by default.
+function Covers.stretch()
+    return Settings.get("cover_stretch", false)
+end
+
+-- The cover of `path` scaled to fit w x h (to exactly w x h when stretching),
+-- or nil when there is none.
 function Covers.get(path, w, h)
-    local key = path .. "|" .. w .. "|" .. h
+    local stretch = Covers.stretch()
+    local key = path .. "|" .. w .. "|" .. h .. (stretch and "|stretch" or "")
     tick = tick + 1
     local e = cache[key]
     if e then e.used = tick; return e.bb end
@@ -41,8 +49,12 @@ function Covers.get(path, w, h)
     local bb
     if bi and bi.cover_bb then
         local cw, ch = bi.cover_bb:getWidth(), bi.cover_bb:getHeight()
-        local scale = math.min(w / cw, h / ch)
-        bb = RenderImage:scaleBlitBuffer(bi.cover_bb, math.max(1, math.floor(cw * scale)), math.max(1, math.floor(ch * scale)), true)
+        local nw, nh = w, h
+        if not stretch then
+            local scale = math.min(w / cw, h / ch)
+            nw, nh = math.max(1, math.floor(cw * scale)), math.max(1, math.floor(ch * scale))
+        end
+        bb = RenderImage:scaleBlitBuffer(bi.cover_bb, nw, nh, true)
     end
     if count >= MAX then evict() end
     cache[key] = { bb = bb or false, used = tick }
