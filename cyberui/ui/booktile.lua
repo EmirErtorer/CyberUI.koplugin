@@ -10,10 +10,12 @@ local Theme = require("cyberui/theme")
 
 local BookTile = {}
 
--- Build a tile w x h for `path`; o: { on_tap, on_hold }.
+-- Build a tile w x h for `path`; o: { on_tap, on_hold, badge, badge_on } (a
+-- badge given replaces the status one, to mark a selection).
 function BookTile.build(path, _w, h, o)
     local th = Theme.get()
     local badge, badge_on = Books.badge(path)
+    if o.badge then badge, badge_on = o.badge, o.badge_on end
     local title_h = th.space.xs + Theme.text("small").height
     local bar_h = Theme.px(4)
     local cover_h = h - title_h - bar_h - th.space.xs

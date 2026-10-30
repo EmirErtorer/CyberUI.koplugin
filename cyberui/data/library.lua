@@ -121,11 +121,16 @@ local SORTS = {
     title = function(p) return Books.info(p).title:lower(), 0 end,
     author = function(p) return (Books.info(p).author or "~"):lower(), 0 end,
     added = function(p) return -(lfs.attributes(p, "modification") or 0), 0 end,
+    series = function(p) local i = Books.info(p); return (i.series or "~"):lower(), tonumber(i.series_index) or 0 end,
+    progress = function(p) return -Books.state(p).percent, 0 end,
+    pages = function(p) return -(Books.info(p).pages or 0), 0 end,
+    size = function(p) return -(lfs.attributes(p, "size") or 0), 0 end,
 }
-Library.SORTS = { "recent", "title", "author", "added" }
+Library.SORTS = { "recent", "title", "author", "series", "added", "progress", "pages", "size" }
 
--- A sorted copy of `books` ("recent", "title", "author" or "added").
-function Library.sort(books, order)
+-- A sorted copy of `books` by an order of Library.SORTS; `reverse` turns the
+-- order round.
+function Library.sort(books, order, reverse)
     local key = SORTS[order] or SORTS.recent
     local keyed = {}
     for i, p in ipairs(books) do
@@ -133,8 +138,8 @@ function Library.sort(books, order)
         keyed[i] = { p = p, a = a, b = b }
     end
     table.sort(keyed, function(x, y)
-        if x.a ~= y.a then return x.a < y.a end
-        if x.b ~= y.b then return x.b < y.b end
+        if x.a ~= y.a then return (x.a < y.a) ~= (reverse == true) end
+        if x.b ~= y.b then return (x.b < y.b) ~= (reverse == true) end
         return x.p < y.p
     end)
     local out = {}

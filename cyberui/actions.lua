@@ -52,13 +52,18 @@ end
 
 -- Set the reading status ("new" for unread, "reading", "complete", "abandoned").
 function Actions.setStatus(path, status)
+    Actions.writeStatus(path, status)
+    App.update()
+end
+
+-- Save a status in the book's details without redrawing.
+function Actions.writeStatus(path, status)
     local DocSettings = require("docsettings")
     local ds = DocSettings:open(path)
     local summary = ds:readSetting("summary") or {}
     summary.status = status
     filemanagerutil.saveSummary(ds, summary)
     Books.forget(path)
-    App.update()
 end
 
 -- The four statuses a book can be given, with their names.
@@ -200,6 +205,77 @@ end
 -- Choose the folder the library opens in.
 function Actions.pickLibraryStart()
     Actions.pickFolder({ title = _("Library opens in"), label = _("Open library here"), icon = "library", on_pick = Actions.setLibraryStart })
+end
+
+---------------------------------------------------------------- many books at once
+
+-- Give every book of `paths` a status; after() runs once all have it.
+function Actions.setStatusMany(paths, status, after)
+    for _i, p in ipairs(paths) do Actions.writeStatus(p, status) end
+    App.toast(string.format(_("%d books marked %s"), #paths, Actions.statusName(status):lower()))
+    if after then after() end
+end
+
+-- Choose the status for every book of `paths`.
+function Actions.statusSheetMany(paths, after)
+    local options = {}
+    for _i, s in ipairs(Actions.STATUSES) do
+        options[#options + 1] = { label = s[2], on_tap = function() Actions.setStatusMany(paths, s[1], after) end }
+    end
+    App.choose({ title = string.format(_("Status of %d books"), #paths), options = options })
+end
+
+-- Put every book of `paths` in a collection (one chosen, or a new one).
+function Actions.collectMany(paths, after)
+    local function add(name)
+        for _i, p in ipairs(paths) do
+            if not Collections.has(p, name) then Collections.toggle(p, name) end
+        end
+        App.toast(string.format(_("%d books added to %s"), #paths, Collections.title(name)))
+        if after then after() end
+    end
+    local options = {}
+    for _i, c in ipairs(Collections.list()) do
+        options[#options + 1] = { label = c.title, on_tap = function() add(c.name) end }
+    end
+    options[#options + 1] = { label = _("New collection"), icon = "plus", on_tap = function()
+        App.input(_("New collection"), "", function(name)
+            name = util.trim(name or "")
+            if name == "" then return end
+            Collections.create(name)
+            add(name)
+        end, _("Create"))
+    end }
+    App.choose({ title = string.format(_("Add %d books to"), #paths), options = options })
+end
+
+-- Move every book of `paths` into a folder chosen in the picker.
+function Actions.moveMany(paths, after)
+    Actions.pickFolder({ title = _("Move to"), label = _("Move here"), icon = "move", on_pick = function(dir)
+        for _i, p in ipairs(paths) do
+            local _to, err = Files.moveInto(p, dir)
+            if err then return failed(err) end
+        end
+        App.toast(string.format(_("%d books moved to %s"), #paths, Files.name(dir)))
+        if after then after() end
+    end })
+end
+
+-- Send every book of `paths` to the trash after asking once.
+function Actions.deleteMany(paths, after)
+    App.confirm({
+        title = string.format(_("Delete %d books?"), #paths),
+        text = string.format(_("They wait in the trash for %d days."), Trash.KEEP_DAYS),
+        ok = _("Delete"),
+        on_ok = function()
+            for _i, p in ipairs(paths) do
+                local ok, err = Trash.put(p)
+                if not ok then return failed(err) end
+            end
+            App.toast(_("Moved to the trash"))
+            if after then after() end
+        end,
+    })
 end
 
 -- The hold sheet of a book.
