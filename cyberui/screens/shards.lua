@@ -14,7 +14,7 @@ local Screen = require("cyberui/screens/screen")
 local ShardCard = require("cyberui/ui/shardcard")
 local Shards = require("cyberui/data/shards")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local ShardsScreen = Screen:extend()
 
@@ -47,7 +47,7 @@ end
 function ShardsScreen:cell(item, h)
     if self.tab == "books" then
         return ListRow.build({ path = item.path, title = Books.info(item.path).title, title_kind = "body",
-            meta = string.format(_("%d SHARDS"), item.count),
+            meta = string.format(_.n("%d SHARD", "%d SHARDS", item.count), item.count),
             on_tap = function() self.tab, self.book, self.page = "book", item.path, 1; App.update() end })
     end
     return ShardCard.build({ shard = item.shard, number = item.number, of = item.of, height = h, lines = 3,
@@ -79,7 +79,7 @@ function ShardsScreen:build()
         local pick = Shards.another()
         if pick then App.push("shard", { shard = pick.shard, number = pick.number, of = pick.of }) end
     end })
-    return Frame.page({ screen = self, title = _("Data shards"), path = string.format(_("RECOVERED // %d FRAGMENTS"), Shards.count()),
+    return Frame.page({ screen = self, title = _("Data shards"), path = string.format(_.n("RECOVERED // %d FRAGMENT", "RECOVERED // %d FRAGMENTS", Shards.count()), Shards.count()),
         tab = "history", actions = { random }, body = Layout.Column:new({ gap = th.space.m, children = body }) })
 end
 

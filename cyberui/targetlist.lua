@@ -6,7 +6,7 @@
 local Dispatcher = require("dispatcher")
 local Menu = require("cyberui/menu")
 local PluginLoader = require("pluginloader")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local TargetList = {}
 

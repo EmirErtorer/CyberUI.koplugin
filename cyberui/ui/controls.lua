@@ -10,7 +10,7 @@ local Panel = require("cyberui/ui/panel")
 local Text = require("cyberui/gfx/text")
 local Theme = require("cyberui/theme")
 
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Controls = {}
 

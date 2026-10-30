@@ -15,7 +15,7 @@ local Theme = require("cyberui/theme")
 local UIManager = require("ui/uimanager")
 local filemanagerutil = require("apps/filemanager/filemanagerutil")
 local lfs = require("libs/libkoreader-lfs")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local JackIn = {}
 

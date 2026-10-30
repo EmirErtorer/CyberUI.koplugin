@@ -2,7 +2,7 @@
 -- books and making new ones.
 
 local ReadCollection = require("readcollection")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Collections = {}
 

@@ -8,6 +8,7 @@ local DataStorage = require("datastorage")
 local Settings = require("cyberui/settings")
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
+local _ = require("cyberui/gettext")
 
 local Sysinfo = {}
 
@@ -146,8 +147,8 @@ function Sysinfo.storage(library_dir)
             out[#out + 1] = { name = name, total = u.total, used = u.total - (u.available or 0) }
         end
     end
-    add("INTERNAL", DataStorage:getDataDir())
-    add("LIBRARY", library_dir)
+    add(_("INTERNAL"), DataStorage:getDataDir())
+    add(_("LIBRARY"), library_dir)
     if Device:hasExternalSD() then add("SD", "/mnt/sd") end
     return out
 end

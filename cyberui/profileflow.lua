@@ -15,7 +15,7 @@ local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local ProfileFlow = {}
 

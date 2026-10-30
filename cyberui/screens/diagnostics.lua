@@ -17,7 +17,7 @@ local Progress = require("cyberui/ui/progress")
 local Screen = require("cyberui/screens/screen")
 local Sysinfo = require("cyberui/data/sysinfo")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Diagnostics = Screen:extend()
 
@@ -96,7 +96,7 @@ local function storagePanel()
         rows[#rows + 1] = gauge(d.used / d.total, 16)
     end
     local all = Library.all()
-    rows[#rows + 1] = kv(_("ARCHIVE"), string.format(_("%d FILES // %s"), #all, Format.size(Sysinfo.archiveSize(all))))
+    rows[#rows + 1] = kv(_("ARCHIVE"), string.format(_.n("%d FILE // %s", "%d FILES // %s", #all), #all, Format.size(Sysinfo.archiveSize(all))))
     return panel(_("STORAGE"), nil, rows)
 end
 
@@ -176,7 +176,7 @@ function Diagnostics:build()
         uptimePanel(),
         identLines(),
     } })
-    return Frame.page({ screen = self, title = _("Diagnostics"), path = "ROOT@" .. Banner.device() .. " // SYS.MONITOR",
+    return Frame.page({ screen = self, title = _("Diagnostics"), path = "ROOT@" .. Banner.device() .. " // SYS.MONITOR", -- i18n: keep
         tab = "home", body = body,
         actions = { Button:new({ label = _("RESCAN"), on_tap = function() App.update() end }) } })
 end

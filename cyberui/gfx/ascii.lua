@@ -15,7 +15,7 @@ local Paths = require("cyberui/paths")
 local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
 local Text = require("cyberui/gfx/text")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Ascii = {}
 

@@ -14,7 +14,7 @@ local Profile = require("cyberui/data/profile")
 local Progress = require("cyberui/ui/progress")
 local StatTile = require("cyberui/ui/stattile")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local IdCard = {}
 
@@ -83,7 +83,7 @@ function IdCard.full(o)
     } })
     local code = Layout.Row:new({ gap = th.space.m, children = {
         Layout.Column:new({ width = Theme.px(150), children = { IdCard.codeBars(26) } }),
-        Label:new({ text = "ID " .. Profile.id(), kind = "mono_small", grow = true, align = "right" }),
+        Label:new({ text = "ID " .. Profile.id(), kind = "mono_small", grow = true, align = "right" }), -- i18n: keep
     } })
     -- a wide, short screen puts the totals beside the identity
     local screen = require("device").screen

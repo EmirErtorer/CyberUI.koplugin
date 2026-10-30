@@ -31,7 +31,7 @@ local Swatch = require("cyberui/ui/swatch")
 local Theme = require("cyberui/theme")
 local Version = require("cyberui/version")
 local util = require("util")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local SettingsScreen = Screen:extend()
 
@@ -134,7 +134,7 @@ end
 function SettingsScreen:fonts()
     local kids = {
         Fonts.card(Registry.fontSet(Settings.get("fontset", "oxanium")), true),
-        row(_("All fonts"), string.format(_("%d cyberpunk sets, or any font installed on this device"), #Registry.fontSets()),
+        row(_("All fonts"), string.format(_.n("%d cyberpunk set, or any font installed on this device", "%d cyberpunk sets, or any font installed on this device", #Registry.fontSets()), #Registry.fontSets()),
             Button:new({ label = _("Choose"), on_tap = function() App.push("fonts") end })),
     }
     kids[#kids + 1] = row(_("Text size"), _("Makes every text in CyberUI larger or smaller"),
@@ -229,7 +229,7 @@ function SettingsScreen:home()
                 on_change = function(v) save("recent_cover_size", v) end })),
         row(_("Daily goal"), _("Minutes of reading a day, shown on home and in the log"),
             Controls.Stepper({ value = Settings.get("daily_goal", 30), min = 5, max = 240, step = 5,
-                format = function(v) return v .. " MIN" end, value_w = 76, on_change = function(v) save("daily_goal", v) end })),
+                format = function(v) return string.format(_("%d MIN"), v) end, value_w = 76, on_change = function(v) save("daily_goal", v) end })),
         row(_("KOReader menu"), _("In CyberUI's style (off: KOReader's own); also opens with a swipe down from the top"),
             Layout.Row:new({ gap = Theme.get().space.s, children = {
                 Controls.Toggle:new({ on = Settings.get("styled_menu", true), on_change = function(on) save("styled_menu", on) end }),
@@ -267,11 +267,11 @@ function SettingsScreen:speed()
                 kind = "small", lines = 4 }),
             Label:new({ text = _("- A book read in landscape is closed the normal way."), kind = "small", lines = 2 }),
         } }) }),
-        row(_("Library index"), string.format(_("%d books indexed; rebuild after copying books over"), Library.count() or 0),
+        row(_("Library index"), string.format(_.n("%d book indexed; rebuild after copying books over", "%d books indexed; rebuild after copying books over", Library.count() or 0), Library.count() or 0),
             Button:new({ label = _("Rebuild"), on_tap = function()
                 Library.reset()
                 Library.all()
-                App.toast(string.format(_("%d books indexed"), Library.count() or 0))
+                App.toast(string.format(_.n("%d book indexed", "%d books indexed", Library.count() or 0), Library.count() or 0))
                 App.update()
             end })),
         Panel:new({ shape = "frame", pad = th.space.m, child = Layout.Column:new({ gap = th.space.xs, children = {

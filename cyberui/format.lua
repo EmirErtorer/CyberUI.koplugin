@@ -1,9 +1,45 @@
 -- Short text forms shared by every screen: how long ago, durations, minutes
 -- and file sizes, in the style's terse capitals.
 
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
+
+local Case = require("cyberui/i18n/case")
 
 local Format = {}
+
+-- `s` in capitals for the language in use (Turkish i, Greek without accents...).
+function Format.upper(s)
+    return Case.upper(s, _.language())
+end
+
+-- The first `n` characters of `s` (whole UTF-8 characters, not bytes).
+function Format.chars(s, n)
+    local out, count = {}, 0
+    for c in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+        count = count + 1
+        out[#out + 1] = c
+        if count == n then break end
+    end
+    return table.concat(out)
+end
+
+-- os.date with the names of days and months in the reader's language (KOReader
+-- has them translated): %a %A %b %B give those names, the rest is as os.date.
+function Format.date(fmt, t)
+    local ok, datetime = pcall(require, "datetime")
+    if ok then
+        fmt = fmt:gsub("%%([aAbB])", function(c)
+            local short = os.date("%a", t)
+            local name
+            if c == "a" then name = datetime.shortDayOfWeekTranslation[short]
+            elseif c == "A" then name = datetime.shortDayOfWeekToLongTranslation[short]
+            elseif c == "b" then name = datetime.shortMonthTranslation[os.date("%b", t)]
+            else name = datetime.longMonthTranslation[os.date("%B", t)] end
+            return (name or os.date("%" .. c, t)):gsub("%%", "%%%%")
+        end)
+    end
+    return os.date(fmt, t)
+end
 
 -- "JUST NOW", "5H AGO", "3D AGO", "2W AGO" for a time in the past.
 function Format.ago(t)

@@ -18,7 +18,7 @@ local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
 local Updater = require("cyberui/update/updater")
 local Version = require("cyberui/version")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Updates = Screen:extend()
 
@@ -81,7 +81,7 @@ function Updates:build()
     local body = {
         Layout.Row:new({ gap = th.space.m, children = {
             Layout.Column:new({ grow = true, children = {
-                Label:new({ text = "CYBERUI v" .. Version, kind = "title" }),
+                Label:new({ text = "CYBERUI v" .. Version, kind = "title" }), -- i18n: keep
                 Label:new({ text = status, kind = "mono_small", color = "muted", lines = 2 }),
             } }),
             Button:new({ label = _("Check"), on_tap = function() self:check(); App.update() end }),
@@ -114,7 +114,7 @@ function Updates:build()
         Label:new({ text = _("Tell me about prereleases (test builds, newer but less tried)"), kind = "small", grow = true, lines = 2 }),
         Controls.Toggle:new({ on = Updater.preOn(), on_change = function(on) Settings.save("update_pre", on); App.update() end }),
     } })
-    return Frame.page({ screen = self, title = _("Updates"), path = "GITHUB // " .. Policy.SELF.repo:upper(), tab = "settings",
+    return Frame.page({ screen = self, title = _("Updates"), path = string.format(_("GITHUB // %s"), Policy.SELF.repo:upper()), tab = "settings",
         body = Layout.Column:new({ gap = th.space.m, children = body }) })
 end
 

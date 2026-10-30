@@ -14,7 +14,7 @@ local Panel = require("cyberui/ui/panel")
 local Screen = require("cyberui/screens/screen")
 local Theme = require("cyberui/theme")
 local util = require("util")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local CollectionsScreen = Screen:extend()
 
@@ -47,7 +47,7 @@ local function card(c, _w, h)
         mosaic(c.books, math.floor(inner_h * 0.75), inner_h),
         Layout.Column:new({ grow = true, gap = th.space.xs, children = {
             Label:new({ text = c.title, kind = "heading" }),
-            Label:new({ text = string.format(_("%d FILES"), #c.books), kind = "mono_small" }),
+            Label:new({ text = string.format(_.n("%d FILE", "%d FILES", #c.books), #c.books), kind = "mono_small" }),
         } }),
     } }) })
 end
@@ -65,7 +65,7 @@ local function pinned(c)
         Layout.Column:new({ grow = true, gap = th.space.xs, children = {
             Label:new({ text = _("PINNED // QUEUE"), kind = "micro", color = "muted" }),
             Label:new({ text = c.title, kind = "display" }),
-            Label:new({ text = string.format(_("%d FILES"), #c.books), kind = "mono" }),
+            Label:new({ text = string.format(_.n("%d FILE", "%d FILES", #c.books), #c.books), kind = "mono" }),
         } }),
     } }) })
 end

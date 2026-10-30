@@ -14,7 +14,7 @@ local lfs = require("libs/libkoreader-lfs")
 local Collections = require("cyberui/data/collections")
 local Files = require("cyberui/data/files")
 local Library = require("cyberui/data/library")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Trash = {}
 

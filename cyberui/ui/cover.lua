@@ -14,6 +14,7 @@ local Paint = require("cyberui/gfx/paint")
 local Settings = require("cyberui/settings")
 local Text = require("cyberui/gfx/text")
 local Theme = require("cyberui/theme")
+local _ = require("cyberui/gettext")
 
 local Cover = Element:extend({})
 
@@ -106,7 +107,7 @@ function Cover:drawFolderStrip(bb, x, y, th)
     Paint.fill(bb, x, sy, self.w, sh, th.c.ink)
     local isz = sh - Theme.px(6)
     Icons.draw(bb, "folder", x + Theme.px(4), sy + Theme.px(3), isz, th.c.on_ink, th.c.on_ink)
-    local text = self.count and string.format("FOLDER // %d", self.count) or "FOLDER"
+    local text = self.count and string.format(_("FOLDER // %d"), self.count) or _("FOLDER")
     Text.draw(bb, x + Theme.px(8) + isz, sy + Theme.px(3), kind, Text.fit(kind, text, self.w - isz - Theme.px(12)), th.c.on_ink)
 end
 

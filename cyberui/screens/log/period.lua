@@ -14,7 +14,7 @@ local Statsdb = require("cyberui/data/statsdb")
 local Theme = require("cyberui/theme")
 local navrow = require("cyberui/ui/navrow")
 local tile = require("cyberui/ui/stattile")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Period = {}
 
@@ -33,22 +33,22 @@ local function range(kind, back)
         local monday = Statsdb.midnight((now.wday + 5) % 7 + 7 * back)
         local last = monday + 6 * DAY
         return { from = monday, to = monday + 7 * DAY - 1, count = 7, span = DAY,
-            caption = os.date("%d %b", monday):upper() .. " - " .. os.date("%d %b", last):upper(),
-            label = function(i) return os.date("%a", monday + (i - 1) * DAY + 43200):upper():sub(1, 3) end,
+            caption = Format.upper(Format.date("%d %b", monday)) .. " - " .. Format.upper(Format.date("%d %b", last)),
+            label = function(i) return Format.upper(Format.date("%a", monday + (i - 1) * DAY + 43200)) end,
             start = function(i) return monday + (i - 1) * DAY end }
     elseif kind == "month" then
         local first = at(now.year, now.month - back, 1)
         local t = os.date("*t", first)
         local days = tonumber(os.date("%d", at(t.year, t.month + 1, 0)))
         return { from = first, to = first + days * DAY - 1, count = days, span = DAY,
-            caption = os.date("%B %Y", first):upper(),
+            caption = Format.upper(Format.date("%B %Y", first)),
             label = function(i) return (i == 1 or i % 5 == 0) and tostring(i) or "" end,
             start = function(i) return first + (i - 1) * DAY end }
     end
     local year = now.year - back
     return { from = at(year, 1, 1), to = at(year + 1, 1, 1) - 1, count = 12, month = true, year = year,
         caption = tostring(year),
-        label = function(i) return os.date("%b", at(year, i, 1)):upper():sub(1, 1) end,
+        label = function(i) return Format.chars(Format.upper(Format.date("%b", at(year, i, 1))), 1) end,
         start = function(i) return at(year, i, 1) end }
 end
 
@@ -115,7 +115,7 @@ function Period.build(screen)
         best_s, best_p = math.max(best_s, s), math.max(best_p, pages[i])
     end
     local pick = screen.bar and secs[screen.bar] and screen.bar or nil
-    local when = pick and os.date("%d %b", r.start(pick) + 43200):upper()
+    local when = pick and Format.upper(Format.date("%d %b", r.start(pick) + 43200))
 
     local seg = Controls.Segmented({ options = { { _("Week"), "week" }, { _("Month"), "month" }, { _("Year"), "year" } },
         value = kind, kind = "label", on_change = function(v) screen.period, screen.back, screen.bar = v, 0, nil; App.update() end })
@@ -124,7 +124,7 @@ function Period.build(screen)
         on_next = function() screen.back, screen.bar = back - 1, nil; App.update() end })
     local tiles = Layout.Row:new({ gap = th.space.m, children = {
         tile(_("TIME"), Format.duration(total.seconds), versus(total.seconds, prev.seconds)),
-        tile(_("PAGES"), tostring(total.pages), string.format(_("%d DAYS READ"), total.days)),
+        tile(_("PAGES"), tostring(total.pages), string.format(_.n("%d DAY READ", "%d DAYS READ", total.days), total.days)),
         tile(_("AVG / DAY"), Format.duration(math.floor(total.seconds / elapsed(r))), _("OVER THE PERIOD")),
     } })
     local body = { seg, nav, tiles }
@@ -134,9 +134,9 @@ function Period.build(screen)
             Skyline:new({ buildings = buildings, labels = skyline_labels, height = 210 }),
         } })
     else
-        body[#body + 1] = barChart(screen, _("MINUTES READ"), pick and string.format("%s = %d MIN", when, Format.minutes(secs[pick]))
+        body[#body + 1] = barChart(screen, _("MINUTES READ"), pick and string.format(_("%s = %d MIN"), when, Format.minutes(secs[pick]))
             or string.format(_("BEST %s"), Format.duration(best_s)), mins, labels, pick, 120)
-        body[#body + 1] = barChart(screen, _("PAGES READ"), pick and string.format("%s = %d PG", when, pages[pick])
+        body[#body + 1] = barChart(screen, _("PAGES READ"), pick and string.format(_("%s = %d PG"), when, pages[pick])
             or string.format(_("BEST %d PG"), best_p), pages, labels, pick, 100)
     end
     return Layout.Column:new({ grow = true, gap = th.space.l, children = body })

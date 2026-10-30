@@ -7,7 +7,7 @@
 -- messages stay crisp text, and it is still a single screen refresh.
 
 local Settings = require("cyberui/settings")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Sleep = {}
 

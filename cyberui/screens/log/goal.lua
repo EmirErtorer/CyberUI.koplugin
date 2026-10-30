@@ -18,7 +18,7 @@ local Skyline = require("cyberui/ui/skyline")
 local Theme = require("cyberui/theme")
 local navrow = require("cyberui/ui/navrow")
 local tile = require("cyberui/ui/stattile")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local GoalTab = {}
 
@@ -76,7 +76,7 @@ function GoalTab.build(screen)
     local ladders = Achievements.ladders(numbers)
     local got, latest = Achievements.summary(ladders)
 
-    local nav = navrow({ label = string.format("ARCHIVE_%d", year), can_next = screen.goal_back > 0,
+    local nav = navrow({ label = string.format(_("ARCHIVE_%d"), year), can_next = screen.goal_back > 0,
         on_prev = function() screen.goal_back, screen.page = screen.goal_back + 1, 1; App.update() end,
         on_next = function() screen.goal_back, screen.page = screen.goal_back - 1, 1; App.update() end })
     local goal = Layout.Column:new({ gap = th.space.s, children = {

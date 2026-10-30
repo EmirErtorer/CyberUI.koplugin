@@ -15,7 +15,7 @@ local Targets = require("cyberui/targets")
 local Theme = require("cyberui/theme")
 local row = require("cyberui/ui/settingrow")
 local util = require("util")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local LaunchEdit = Screen:extend()
 

@@ -8,7 +8,7 @@ local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Panel = require("cyberui/ui/panel")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Dialog = {}
 

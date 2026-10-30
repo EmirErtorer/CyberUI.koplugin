@@ -13,7 +13,7 @@ local Settings = require("cyberui/settings")
 local Trash = require("cyberui/data/trash")
 local filemanagerutil = require("apps/filemanager/filemanagerutil")
 local util = require("util")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Actions = {}
 
@@ -114,7 +114,7 @@ function Actions.collect(path)
             if name == "" then return end
             Collections.create(name)
             Collections.toggle(path, name)
-            App.toast(_("Added to ") .. name)
+            App.toast(string.format(_("Added to %s"), name))
             App.update()
         end, _("Create"))
     end }
@@ -171,10 +171,12 @@ end
 -- Send a book or folder to the trash after asking.
 function Actions.delete(path, after)
     local is_dir = Files.isDir(path)
-    local days = string.format(_("It waits in the trash for %d days."), Trash.KEEP_DAYS)
+    local keep = Trash.KEEP_DAYS
     App.confirm({
         title = string.format(_("Delete \u{201C}%s\u{201D}?"), Files.name(path)),
-        text = is_dir and (_("The folder and everything in it go.") .. " " .. days) or days,
+        text = is_dir and string.format(_.n("The folder and everything in it go. It waits in the trash for %d day.",
+            "The folder and everything in it go. It waits in the trash for %d days.", keep), keep)
+            or string.format(_.n("It waits in the trash for %d day.", "It waits in the trash for %d days.", keep), keep),
         ok = _("Delete"),
         on_ok = function()
             local ok, err = Trash.put(path)
@@ -222,7 +224,7 @@ end
 -- Give every book of `paths` a status; after() runs once all have it.
 function Actions.setStatusMany(paths, status, after)
     for _i, p in ipairs(paths) do Actions.writeStatus(p, status) end
-    App.toast(string.format(_("%d books marked %s"), #paths, Actions.statusName(status):lower()))
+    App.toast(string.format(_.n("%d book marked %s", "%d books marked %s", #paths), #paths, Actions.statusName(status)))
     if after then after() end
 end
 
@@ -232,7 +234,7 @@ function Actions.statusSheetMany(paths, after)
     for _i, s in ipairs(Actions.STATUSES) do
         options[#options + 1] = { label = s[2], on_tap = function() Actions.setStatusMany(paths, s[1], after) end }
     end
-    App.choose({ title = string.format(_("Status of %d books"), #paths), options = options })
+    App.choose({ title = string.format(_.n("Status of %d book", "Status of %d books", #paths), #paths), options = options })
 end
 
 -- Put every book of `paths` in a collection (one chosen, or a new one).
@@ -241,7 +243,7 @@ function Actions.collectMany(paths, after)
         for _i, p in ipairs(paths) do
             if not Collections.has(p, name) then Collections.toggle(p, name) end
         end
-        App.toast(string.format(_("%d books added to %s"), #paths, Collections.title(name)))
+        App.toast(string.format(_.n("%d book added to %s", "%d books added to %s", #paths), #paths, Collections.title(name)))
         if after then after() end
     end
     local options = {}
@@ -256,7 +258,7 @@ function Actions.collectMany(paths, after)
             add(name)
         end, _("Create"))
     end }
-    App.choose({ title = string.format(_("Add %d books to"), #paths), options = options })
+    App.choose({ title = string.format(_.n("Add %d book to", "Add %d books to", #paths), #paths), options = options })
 end
 
 -- Move every book of `paths` into a folder chosen in the picker.
@@ -266,7 +268,7 @@ function Actions.moveMany(paths, after)
             local _to, err = Files.moveInto(p, dir)
             if err then return failed(err) end
         end
-        App.toast(string.format(_("%d books moved to %s"), #paths, Files.name(dir)))
+        App.toast(string.format(_.n("%d book moved to %s", "%d books moved to %s", #paths), #paths, Files.name(dir)))
         if after then after() end
     end })
 end
@@ -274,8 +276,8 @@ end
 -- Send every book of `paths` to the trash after asking once.
 function Actions.deleteMany(paths, after)
     App.confirm({
-        title = string.format(_("Delete %d books?"), #paths),
-        text = string.format(_("They wait in the trash for %d days."), Trash.KEEP_DAYS),
+        title = string.format(_.n("Delete %d book?", "Delete %d books?", #paths), #paths),
+        text = string.format(_.n("They wait in the trash for %d day.", "They wait in the trash for %d days.", Trash.KEEP_DAYS), Trash.KEEP_DAYS),
         ok = _("Delete"),
         on_ok = function()
             for _i, p in ipairs(paths) do

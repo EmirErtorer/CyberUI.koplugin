@@ -13,7 +13,7 @@ local Settings = require("cyberui/settings")
 local StatusBar = require("cyberui/ui/statusbar")
 local Theme = require("cyberui/theme")
 local util = require("util")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local TopBar = Screen:extend()
 

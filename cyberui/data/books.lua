@@ -6,6 +6,7 @@ local BookList = require("ui/widget/booklist")
 local DocumentRegistry = require("document/documentregistry")
 local UIManager = require("ui/uimanager")
 local util = require("util")
+local _ = require("cyberui/gettext")
 
 local Books = {}
 
@@ -83,9 +84,9 @@ end
 -- The small badge for a book's tile: text and whether it stands out.
 function Books.badge(path)
     local st = Books.state(path)
-    if st.status == "new" then return "NEW", true end
-    if st.status == "complete" then return "DONE", false end
-    if st.status == "abandoned" then return "HOLD", false end
+    if st.status == "new" then return _("NEW"), true end
+    if st.status == "complete" then return _("DONE"), false end
+    if st.status == "abandoned" then return _("HOLD"), false end
     return string.format("%d%%", math.floor(st.percent * 100 + 0.5)), false
 end
 

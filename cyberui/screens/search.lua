@@ -5,7 +5,7 @@ local App = require("cyberui/app")
 local Button = require("cyberui/ui/button")
 local Library = require("cyberui/screens/library")
 local UIManager = require("ui/uimanager")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Search = Library:extend()
 

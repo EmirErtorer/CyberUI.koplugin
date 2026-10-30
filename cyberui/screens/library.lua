@@ -27,7 +27,7 @@ local Panel = require("cyberui/ui/panel")
 local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Library = Screen:extend()
 
@@ -268,7 +268,7 @@ function Library:selectBar()
     end
     return Layout.Column:new({ gap = th.space.xs, children = {
         Layout.Row:new({ gap = th.space.s, children = {
-            Label:new({ text = string.format(_("%d PICKED"), #picked), kind = "mono", grow = true }),
+            Label:new({ text = string.format(_.n("%d PICKED", "%d PICKED", #picked), #picked), kind = "mono", grow = true }),
             Button:new({ label = _("ALL"), variant = "chip", height = Theme.px(36), on_tap = function() self:toggleAll() end }),
             Button:new({ label = _("DONE"), variant = "chip_on", height = Theme.px(36), on_tap = function() self:endSelect() end }),
         } }),
@@ -299,7 +299,7 @@ function Library:cell(item, w, h, as_list)
         local open = function() self:go(path) end
         local hold = not (self.params.pick or f.virtual) and function() Actions.folderSheet(path, open) end or nil
         if as_list then
-            return ListRow.build({ icon = "folder", title = f.name, meta = f.virtual and string.format(_("%d BOOKS"), f.count) or _("FOLDER"),
+            return ListRow.build({ icon = "folder", title = f.name, meta = f.virtual and string.format(_.n("%d BOOK", "%d BOOKS", f.count), f.count) or _("FOLDER"),
                 height = h, on_tap = open, on_hold = hold })
         end
         local inside = not f.virtual and Data.list(path).books

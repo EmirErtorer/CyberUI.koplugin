@@ -11,7 +11,7 @@ local Layout = require("cyberui/ui/layout")
 local Launcher = require("cyberui/data/launcher")
 local LauncherUI = require("cyberui/ui/launcher")
 local Screen = require("cyberui/screens/screen")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local LauncherScreen = Screen:extend()
 

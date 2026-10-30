@@ -19,6 +19,7 @@ local App = require("cyberui/app")
 local Button = require("cyberui/ui/button")
 local Deco = require("cyberui/ui/deco")
 local DeviceInfo = require("cyberui/data/device")
+local Format = require("cyberui/format")
 local Frame = require("cyberui/screens/frame")
 local Grid = require("cyberui/ui/grid")
 local Header = require("cyberui/ui/header")
@@ -27,7 +28,7 @@ local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Panel = require("cyberui/ui/panel")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Screen = Device.screen
 
@@ -501,7 +502,7 @@ local function glance()
     local Sysinfo = require("cyberui/data/sysinfo")
     local pct = DeviceInfo.battery()
     local first = { DeviceInfo.clock(), pct and ((DeviceInfo.charging() and "BAT+ " or "BAT ") .. pct .. "%") or nil,
-        DeviceInfo.wifi() and "UPLINK" or "NO CARRIER" }
+        DeviceInfo.wifi() and _("UPLINK") or _("NO CARRIER") }
     local drives = Sysinfo.storage()
     local d = drives[1]
     local used, total = Sysinfo.memory()
@@ -559,8 +560,8 @@ function Menu:build(_close, screen_w)
         tab_buttons[i] = Button:new({ icon = tabLook(t)[1], variant = i == self.tab and "chip_on" or "chip", grow = true,
             height = tabs_h, on_tap = function() self:switchTab(i) end })
     end
-    local path = (self.pick and "PICK // " or "KOREADER // ") .. look[2]
-    for _i, t in ipairs(self.trail) do path = path .. " > " .. t:upper() end
+    local path = string.format(self.pick and _("PICK // %s") or _("KOREADER // %s"), look[2])
+    for _i, t in ipairs(self.trail) do path = path .. " > " .. Format.upper(t) end
     local title = #self.trail > 0 and self.trail[#self.trail] or look[2]
     local kids = {
         Header.build({ title = title, path = path, on_back = #self.trail > 0 and function() self:up() end or nil,

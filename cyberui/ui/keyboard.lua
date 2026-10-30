@@ -6,7 +6,7 @@ local Button = require("cyberui/ui/button")
 local Layout = require("cyberui/ui/layout")
 local Theme = require("cyberui/theme")
 local Utf8Proc = require("ffi/utf8proc")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Keyboard = {}
 

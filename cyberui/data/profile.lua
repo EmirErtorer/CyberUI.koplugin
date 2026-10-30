@@ -12,7 +12,7 @@ local RenderImage = require("ui/renderimage")
 local Settings = require("cyberui/settings")
 local bit = require("bit")
 local lfs = require("libs/libkoreader-lfs")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Profile = {}
 

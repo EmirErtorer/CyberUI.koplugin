@@ -14,7 +14,7 @@ local Screen = require("cyberui/screens/screen")
 local Theme = require("cyberui/theme")
 local Trash = require("cyberui/data/trash")
 local filemanagerutil = require("apps/filemanager/filemanagerutil")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local TrashScreen = Screen:extend()
 
@@ -47,8 +47,8 @@ function TrashScreen:build()
     local items = Trash.list()
     local body = {}
     if #items == 0 then
-        body[1] = Label:new({ grow = true, text = string.format(_("The trash is empty. Deleted books and folders wait here for %d days."),
-            Trash.KEEP_DAYS), kind = "body", color = "muted", align = "center", lines = 3 })
+        body[1] = Label:new({ grow = true, text = string.format(_.n("The trash is empty. Deleted books and folders wait here for %d day.",
+            "The trash is empty. Deleted books and folders wait here for %d days.", Trash.KEEP_DAYS), Trash.KEEP_DAYS), kind = "body", color = "muted", align = "center", lines = 3 })
     else
         body[1] = Grid:new({ grow = true, items = items, page = self.page, cols = 1, cell_h = Theme.px(58), row_gap = 0,
             make = function(it)
@@ -62,11 +62,11 @@ function TrashScreen:build()
     if #items > 0 then
         actions[1] = Button:new({ label = _("Empty"), variant = "danger", on_tap = function()
             App.confirm({ danger = true, title = _("Attention"), ok = _("Empty"), cancel = _("Keep"),
-                text = string.format(_("All %d items go for good. This cannot be undone."), #items),
+                text = string.format(_.n("All %d item goes for good. This cannot be undone.", "All %d items go for good. This cannot be undone.", #items), #items),
                 on_ok = function() Trash.empty(); App.update() end })
         end })
     end
-    return Frame.page({ screen = self, title = _("Trash"), path = string.format(_("KEPT %d DAYS"), Trash.KEEP_DAYS),
+    return Frame.page({ screen = self, title = _("Trash"), path = string.format(_.n("KEPT %d DAY", "KEPT %d DAYS", Trash.KEEP_DAYS), Trash.KEEP_DAYS),
         tab = "library", actions = actions, body = Layout.Column:new({ gap = th.space.m, children = body }) })
 end
 

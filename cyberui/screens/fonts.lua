@@ -14,7 +14,7 @@ local Registry = require("cyberui/theme/registry")
 local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local FontsScreen = Screen:extend()
 
@@ -69,7 +69,7 @@ function FontsScreen:build()
             on_layout = function(_c, pages, page) self.pages, self.page = pages, page end })
         body[#body + 1] = Frame.pager(self, self.tab == "device" and _("FONTS") or _("SETS"), function(p) self:setPage(p) end)
     end
-    return Frame.page({ screen = self, title = _("Fonts"), path = string.format(_("%d AVAILABLE"), #sets), tab = "settings",
+    return Frame.page({ screen = self, title = _("Fonts"), path = string.format(_.n("%d AVAILABLE", "%d AVAILABLE", #sets), #sets), tab = "settings",
         body = Layout.Column:new({ gap = th.space.m, children = body }) })
 end
 

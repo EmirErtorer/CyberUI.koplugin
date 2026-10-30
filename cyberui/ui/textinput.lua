@@ -11,7 +11,7 @@ local Paint = require("cyberui/gfx/paint")
 local Panel = require("cyberui/ui/panel")
 local Text = require("cyberui/gfx/text")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local TextInput = {}
 
@@ -63,7 +63,7 @@ function TextInput.build(o)
         on_char = o.on_char, on_back = o.on_back, on_enter = o.on_enter,
         on_layer = o.on_layer, on_shift = o.on_shift,
     })
-    local panel = Panel:new({ shape = "header", title = "// INPUT", title_right = o.state.layer == "acc" and "ÄÖÇ" or nil,
+    local panel = Panel:new({ shape = "header", title = _("// INPUT"), title_right = o.state.layer == "acc" and "ÄÖÇ" or nil,
         fill = "bg", width = o.screen_w, pad = { th.space.m, th.space.m, th.space.s, th.space.m },
         child = Layout.Column:new({ gap = th.space.m, children = { header, field, keyboard } }) })
     panel.dock = "bottom"

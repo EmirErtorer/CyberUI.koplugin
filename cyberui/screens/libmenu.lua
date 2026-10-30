@@ -9,7 +9,7 @@ local Data = require("cyberui/data/library")
 local Groups = require("cyberui/data/libgroups")
 local Settings = require("cyberui/settings")
 local Trash = require("cyberui/data/trash")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local LibMenu = {}
 
@@ -174,11 +174,11 @@ function LibMenu.open(lib)
             on_tap = function() sortSheet(lib) end },
         { icon = "grid", label = _("Group by"), sub = LibMenu.groupName(LibMenu.group()), on_tap = function() groupSheet(lib) end },
         { icon = "controls", label = _("Filters"), sub = Groups.filtering(f) and _("On") or _("Off"), on_tap = function() filterSheet(lib) end },
-        { icon = "bookmark", label = _("Saved views"), sub = string.format(_("%d saved"), #Settings.get("library_views", {})),
+        { icon = "bookmark", label = _("Saved views"), sub = string.format(_.n("%d saved", "%d saved", #Settings.get("library_views", {})), #Settings.get("library_views", {})),
             on_tap = function() viewsSheet(lib) end },
         { icon = "search", label = _("Jump to letter"), sub = _("A to Z in the current order"), on_tap = function() jumpSheet(lib) end },
         { icon = "check", label = _("Select books"), sub = _("Status, collections, move or delete many"), on_tap = function() lib:startSelect() end },
-        { icon = "trash", label = _("Trash"), sub = string.format(_("%d waiting"), Trash.count()), on_tap = function() App.push("trash") end },
+        { icon = "trash", label = _("Trash"), sub = string.format(_.n("%d waiting", "%d waiting", Trash.count()), Trash.count()), on_tap = function() App.push("trash") end },
     }
     local dir = lib:dir()
     actions[#actions + 1] = { icon = "files", label = _("KOReader browser"), sub = _("The stock file browser"), on_tap = function()

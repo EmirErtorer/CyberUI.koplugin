@@ -1,7 +1,7 @@
 -- Ink Away, offered on the home screen to everyone: opened when it is
 -- installed, otherwise described and installable from its GitHub releases.
 
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 return {
     id = "inkaway",

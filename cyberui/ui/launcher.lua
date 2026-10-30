@@ -16,7 +16,7 @@ local Panel = require("cyberui/ui/panel")
 local Shards = require("cyberui/data/shards")
 local Targets = require("cyberui/targets")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Launcher = {}
 
@@ -24,21 +24,21 @@ local Launcher = {}
 local BUILTIN = {
     library = function()
         local count = Library.count()
-        return "library", _("LIBRARY"), count and string.format(_("%d FILES // GRID"), count) or _("FILES // GRID"),
+        return "library", _("LIBRARY"), count and string.format(_.n("%d FILE // GRID", "%d FILES // GRID", count), count) or _("FILES // GRID"),
             function() App.go("library") end
     end,
     collections = function()
-        return "collections", _("COLLECTIONS"), string.format(_("%d CACHES"), #Collections.list()), function() App.go("collections") end
+        return "collections", _("COLLECTIONS"), string.format(_.n("%d CACHE", "%d CACHES", #Collections.list()), #Collections.list()), function() App.go("collections") end
     end,
     history = function() return "history", _("HISTORY"), _("TELEMETRY.LOG"), function() App.go("history") end end,
     bounty = function()
         local list = Bounty.list()
-        return "bounty", _("BOUNTIES"), #list > 0 and string.format(_("%s // %d WANTED"), Format.credits(Bounty.total()), #list) or _("BACKLOG CLEAR"),
+        return "bounty", _("BOUNTIES"), #list > 0 and string.format(_.n("%s // %d WANTED", "%s // %d WANTED", #list), Format.credits(Bounty.total()), #list) or _("BACKLOG CLEAR"),
             function() App.push("bounty") end
     end,
     shards = function()
         local n = Shards.count()
-        return "shard", _("SHARDS"), n > 0 and string.format(_("%d RECOVERED"), n) or _("NO HIGHLIGHTS YET"), function() App.push("shards") end
+        return "shard", _("SHARDS"), n > 0 and string.format(_.n("%d RECOVERED", "%d RECOVERED", n), n) or _("NO HIGHLIGHTS YET"), function() App.push("shards") end
     end,
     search = function() return "search", _("SEARCH"), _("GREP THE ARCHIVE"), function() App.push("search") end end,
     inkaway = function() return InkAway.icon, _("INK AWAY"), Addons.statusLine(InkAway), function() Addons.launch(InkAway) end end,
@@ -54,7 +54,7 @@ local BUILTIN = {
 function Launcher.describe(entry)
     local c = entry.custom
     if c then
-        return c.icon, (c.name or ""):upper(), c.target and Targets.describe(c.target) or _("NOTHING YET"),
+        return c.icon, Format.upper(c.name or ""), c.target and Targets.describe(c.target) or _("NOTHING YET"),
             function() if c.target then Targets.run(c.target) else App.toast(_("Pick what this button opens")) end end
     end
     return BUILTIN[entry.id]()

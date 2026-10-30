@@ -2,18 +2,19 @@
 -- the longest daily streak and books finished, each a ladder of levels.
 
 local Insights = require("cyberui/data/insights")
+local _ = require("cyberui/gettext")
 
 local Achievements = {}
 
 -- Each ladder: its name, the levels with their short labels, and where its
 -- number comes from.
 local LADDERS = {
-    { name = "CLEARANCE", levels = Insights.MILESTONES, of = function(n) return n.hours end,
-        short = function(v) return v >= 1000 and (v / 1000) .. "K" or tostring(v) end, unit = "H" },
-    { name = "UPTIME", levels = { 3, 7, 14, 30, 100, 365 }, of = function(n) return n.streak end,
-        short = tostring, unit = "D" },
-    { name = "ARCHIVE", levels = { 1, 5, 10, 25, 50, 100 }, of = function(n) return n.finished end,
-        short = tostring, unit = "" },
+    { name = _("CLEARANCE"), item = _("CLEARANCE_%dH"), levels = Insights.MILESTONES, of = function(n) return n.hours end,
+        short = function(v) return v >= 1000 and (v / 1000) .. "K" or tostring(v) end },
+    { name = _("UPTIME"), item = _("UPTIME_%dD"), levels = { 3, 7, 14, 30, 100, 365 }, of = function(n) return n.streak end,
+        short = tostring },
+    { name = _("ARCHIVE"), item = _("ARCHIVE_%d"), levels = { 1, 5, 10, 25, 50, 100 }, of = function(n) return n.finished end,
+        short = tostring },
 }
 
 -- The ladders for the numbers { hours, streak, finished }: each as
@@ -24,7 +25,7 @@ function Achievements.ladders(numbers)
         local value = ladder.of(numbers)
         local items = {}
         for _j, level in ipairs(ladder.levels) do
-            items[#items + 1] = { name = string.format("%s_%d%s", ladder.name, level, ladder.unit),
+            items[#items + 1] = { name = string.format(ladder.item, level),
                 short = ladder.short(level), got = value >= level }
         end
         out[#out + 1] = { name = ladder.name, items = items }

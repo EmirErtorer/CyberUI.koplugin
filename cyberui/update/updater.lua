@@ -18,7 +18,7 @@ local Policy = require("cyberui/update/policy")
 local Settings = require("cyberui/settings")
 local Unpack = require("cyberui/install/unpack")
 local Version = require("cyberui/version")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Updater = {
     busy = nil,       -- "checking" or "installing" while one runs

@@ -465,4 +465,76 @@ do
     Settings.set("log_metric", nil)
 end
 
+-- translations: the .po reader, plural rules, capitals, the wrapper with a made-up language
+do
+    local Po = require("cyberui/i18n/po")
+    local Plural = require("cyberui/i18n/plural")
+    local Case = require("cyberui/i18n/case")
+    local I18n = require("cyberui/gettext")
+    local Format = require("cyberui/format")
+
+    local parsed = Po.parse('msgid ""\nmsgstr ""\n"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\\n"\n\n'
+        .. '#: a.lua\nmsgid "Hello"\nmsgstr "Privet"\n\n#, fuzzy\nmsgid "Maybe"\nmsgstr "Mozhet"\n\n'
+        .. 'msgctxt "verb"\nmsgid "Open"\nmsgstr "Otkryt"\n\nmsgid "%d book"\nmsgid_plural "%d books"\nmsgstr[0] "%d kniga"\nmsgstr[1] "%d knigi"\nmsgstr[2] "%d knig"\n\n'
+        .. 'msgid "Line"\nmsgstr ""\n"one "\n"two\\n"\n')
+    Kit.ok(#parsed.entries == 5 and parsed.entries[1].refs == "a.lua" and parsed.entries[2].flags.fuzzy, "a .po file is read: entries, references, flags")
+    Kit.ok(parsed.entries[5].str[1] == "one two\n", "a string split over lines is joined, escapes undone")
+    local n, rule = Po.pluralRule(parsed.header)
+    Kit.ok(n == 3, "the plural rule's form count is read")
+    local ru = Plural.compile(rule)
+    Kit.ok(ru(1) == 0 and ru(21) == 0 and ru(2) == 1 and ru(24) == 1 and ru(5) == 2 and ru(11) == 2 and ru(12) == 2 and ru(0) == 2 and ru(100) == 2 and ru(101) == 0,
+        "the Russian plural rule picks its forms")
+    local pl = Plural.compile("n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2")
+    Kit.ok(pl(1) == 0 and pl(3) == 1 and pl(5) == 2 and pl(22) == 1 and pl(12) == 2, "the Polish rule works")
+    local fr = Plural.compile("n > 1")
+    Kit.ok(fr(0) == 0 and fr(1) == 0 and fr(2) == 1, "the French rule counts 0 and 1 alike")
+    Kit.ok(Plural.compile("os.execute('x')")(1) == 0 and Plural.compile("n != 1")(1) == 0, "an expression with anything but arithmetic is not run")
+
+    Kit.ok(Case.upper("istanbul", "tr") == "İSTANBUL" and Case.upper("ığdır", "tr") == "IĞDIR", "Turkish capitals: i becomes İ, ı becomes I")
+    Kit.ok(Case.upper("straße") == "STRASSE" and Case.upper("élève") == "ÉLÈVE", "German and French capitals")
+    Kit.ok(Case.upper("άνθρωπος", "el") == "ΑΝΘΡΩΠΟΣ" and Case.upper("ΣΤΑΤΙΣΤΙΚΆ", "el") == "ΣΤΑΤΙΣΤΙΚΑ", "Greek capitals carry no accent")
+    Kit.ok(Case.upper("привет") == "ПРИВЕТ" and Case.upper("łódź") == "ŁÓDŹ", "Cyrillic and Polish capitals")
+    Kit.ok(Format.chars("Мар", 1) == "М" and Format.chars("Ocak", 2) == "Oc", "the first characters are whole characters")
+
+    local dir = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-l10n"
+    os.execute("rm -rf '" .. dir .. "'; mkdir -p '" .. dir .. "/zz'")
+    local f = io.open(dir .. "/zz/cyberui.po", "w")
+    f:write('msgid ""\nmsgstr ""\n"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\\n"\n\n'
+        .. 'msgid "Hello"\nmsgstr "Privet"\n\nmsgctxt "verb"\nmsgid "Open"\nmsgstr "Otkryt"\n\n#, fuzzy\nmsgid "Maybe"\nmsgstr "Mozhet"\n\n'
+        .. 'msgid "%d book"\nmsgid_plural "%d books"\nmsgstr[0] "%d kniga"\nmsgstr[1] "%d knigi"\nmsgstr[2] "%d knig"\n')
+    f:close()
+    I18n.root = dir
+    Kit.ok(I18n.use("zz_ZZ") == "zz", "a regional code finds its language's folder")
+    Kit.ok(I18n("Hello") == "Privet" and I18n("Nothing here") == "Nothing here", "a translated text, and the English for one that is not")
+    Kit.ok(I18n("Maybe") == "Maybe", "a fuzzy translation is not used")
+    Kit.ok(I18n.c("verb", "Open") == "Otkryt" and I18n.c("noun", "Open") == "Open", "a context tells two meanings apart")
+    Kit.ok(I18n.n("%d book", "%d books", 1) == "%d kniga" and I18n.n("%d book", "%d books", 3) == "%d knigi" and I18n.n("%d book", "%d books", 7) == "%d knig",
+        "a count picks its plural form")
+    Kit.ok(I18n.n("%d file", "%d files", 1) == "%d file" and I18n.n("%d file", "%d files", 2) == "%d files", "an untranslated count is English")
+    local cache = require("datastorage"):getSettingsDir() .. "/cyberui-l10n-zz.lua"
+    Kit.ok(io.open(cache, "r") ~= nil, "the language is kept compiled for the next start")
+    os.remove(dir .. "/zz/cyberui.po")
+    local g = io.open(dir .. "/zz/cyberui.po", "w")
+    g:write('msgid ""\nmsgstr ""\n\nmsgid "Hello"\nmsgstr "Zdravo"\n')
+    g:close()
+    Kit.ok(I18n.use("zz") == "zz" and I18n("Hello") == "Zdravo", "an edited .po is read again, not the old compiled copy")
+    local user = require("datastorage"):getSettingsDir() .. "/cyberui-l10n"
+    os.execute("mkdir -p '" .. user .. "'")
+    local h = io.open(user .. "/zz.po", "w")
+    h:write('msgid ""\nmsgstr ""\n\nmsgid "Hello"\nmsgstr "Mine"\n')
+    h:close()
+    I18n.use("zz")
+    Kit.ok(I18n("Hello") == "Mine", "a reader's own .po wins over the shipped one")
+    os.remove(user .. "/zz.po")
+    os.remove(cache)
+    I18n.use("de_XX")
+    Kit.ok(I18n.language() == "en" and I18n("Anything") == "Anything", "a language with no file is English")
+    I18n.use("en_XA")
+    Kit.ok(I18n("Hello %d") == "[Héllô %d~~]" or I18n("Hello %d"):find("^%[") ~= nil, "the pseudo-language marks texts and keeps placeholders")
+    Kit.ok(I18n("Hello %d"):find("%%d") ~= nil, "and keeps the placeholder")
+    I18n.use(nil)
+    I18n.root = nil
+    os.execute("rm -rf '" .. dir .. "'")
+end
+
 Kit.finish("features")

@@ -12,7 +12,7 @@ local GitHub = require("cyberui/install/github")
 local Net = require("cyberui/install/net")
 local Paths = require("cyberui/paths")
 local Unpack = require("cyberui/install/unpack")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Addons = {}
 

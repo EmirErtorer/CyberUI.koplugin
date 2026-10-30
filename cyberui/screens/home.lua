@@ -28,7 +28,7 @@ local Stats = require("cyberui/data/stats")
 local StatusBar = require("cyberui/ui/statusbar")
 local Theme = require("cyberui/theme")
 local Version = require("cyberui/version")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Home = Screen:extend()
 
@@ -67,7 +67,7 @@ local function indexStrip()
             pad = { Theme.px(3), th.space.m, Theme.px(3), th.space.xl },
             child = Layout.Row:new({ gap = th.space.xl, children = {
                 Label:new({ text = _("INDEX OK ..."), kind = "mono", color = "on_accent" }),
-                Label:new({ text = count and string.format(_("%d BOOKS"), count) or _("SCANNING"), kind = "mono", color = "on_accent" }),
+                Label:new({ text = count and string.format(_.n("%d BOOK", "%d BOOKS", count), count) or _("SCANNING"), kind = "mono", color = "on_accent" }),
             } }) }),
     } })
 end
@@ -76,7 +76,7 @@ end
 -- The streak line under the date.
 local function streakLine()
     local goal = Settings.get("daily_goal", 30)
-    return string.format(_("STREAK %d DAYS // %d MIN TODAY // GOAL %d"), Stats.streak(), Format.minutes(Stats.today()), goal)
+    return string.format(_.n("STREAK %d DAY // %d MIN TODAY // GOAL %d", "STREAK %d DAYS // %d MIN TODAY // GOAL %d", Stats.streak()), Stats.streak(), Format.minutes(Stats.today()), goal)
 end
 
 local function dateRow(home)
@@ -87,7 +87,7 @@ local function dateRow(home)
             width = Theme.px(64), height = Theme.px(64),
             child = Label:new({ text = os.date("%d"), kind = "hero", color = "on_accent2", align = "center" }) }),
         Layout.Column:new({ grow = true, children = {
-            Label:new({ text = os.date("%A, %B %d"), kind = "title" }),
+            Label:new({ text = Format.date("%A, %B %d"), kind = "title" }),
             home.streak,
         } }),
         Button:new({ icon = "stats", label = _("SYS"), variant = "secondary", on_tap = function() App.push("diagnostics") end }),
@@ -143,7 +143,7 @@ local function activeFile(cur)
                     Label:new({ text = string.format(_("%d%% DECRYPTED"), pct), kind = "mono", grow = true }),
                     Label:new({ text = pages, kind = "mono", color = "muted" }),
                 } }),
-                Label:new({ text = cur.time and (_("LAST OPEN ") .. Format.ago(cur.time)) or _("NEVER OPENED"), kind = "mono_small", color = "muted" }),
+                Label:new({ text = cur.time and string.format(_("LAST OPEN %s"), Format.ago(cur.time)) or _("NEVER OPENED"), kind = "mono_small", color = "muted" }),
                 Layout.Spacer:new({ grow = true }),
                 Button:new({ label = st.percent > 0 and _("RESUME") or _("OPEN"), icon = "forward", variant = "primary", width = Theme.px(160),
                     on_tap = function() Actions.open(path) end }),
@@ -199,8 +199,8 @@ local function footer()
     local th = Theme.get()
     return Layout.Row:new({ gap = th.space.m, children = {
         Deco.Barcode:new({ width = Theme.px(84), height = Theme.px(18) }),
-        Label:new({ text = "ROOT@" .. Banner.device() .. ":~#", kind = "mono_small", grow = true }),
-        Label:new({ text = "CYBERUI " .. Version, kind = "micro", color = "muted" }),
+        Label:new({ text = "ROOT@" .. Banner.device() .. ":~#", kind = "mono_small", grow = true }), -- i18n: keep
+        Label:new({ text = "CYBERUI " .. Version, kind = "micro", color = "muted" }), -- i18n: keep
     } })
 end
 

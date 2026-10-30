@@ -12,7 +12,7 @@ local PhotoWindow = require("cyberui/ui/photowindow")
 local Profile = require("cyberui/data/profile")
 local Screen = require("cyberui/screens/screen")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local PhotoCrop = Screen:extend()
 
@@ -57,7 +57,7 @@ end
 function PhotoCrop:build()
     local th = Theme.get()
     if not self.img then
-        return Frame.page({ screen = self, title = _("Photo"), path = "PICK // FRAME", tab = "settings",
+        return Frame.page({ screen = self, title = _("Photo"), path = _("PICK // FRAME"), tab = "settings",
             body = Label:new({ text = self.err or _("Nothing to show"), kind = "body", lines = 3 }) })
     end
     if not self.win then
@@ -87,7 +87,7 @@ function PhotoCrop:build()
         body = Layout.Column:new({ gap = th.space.m, children = {
             Layout.Row:new({ children = { Layout.Spacer:new({ grow = true }), win, Layout.Spacer:new({ grow = true }) } }), controls } })
     end
-    return Frame.page({ screen = self, title = _("Frame your photo"), path = "PICK // FRAME", tab = "settings", body = body })
+    return Frame.page({ screen = self, title = _("Frame your photo"), path = _("PICK // FRAME"), tab = "settings", body = body })
 end
 
 return PhotoCrop

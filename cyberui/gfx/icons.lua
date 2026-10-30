@@ -11,7 +11,7 @@ local RenderImage = require("ui/renderimage")
 local Color = require("cyberui/theme/color")
 local Paths = require("cyberui/paths")
 local lfs = require("libs/libkoreader-lfs")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Icons = {}
 

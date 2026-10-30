@@ -17,7 +17,7 @@ local ListRow = require("cyberui/ui/listrow")
 local Panel = require("cyberui/ui/panel")
 local Screen = require("cyberui/screens/screen")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local BountyScreen = Screen:extend()
 
@@ -50,7 +50,7 @@ local function poster(b)
                 Label:new({ text = _("WANTED"), kind = "micro", color = "muted" }),
                 Label:new({ text = info.title, kind = "display", lines = 2 }),
                 Label:new({ text = info.author or "", kind = "body", color = "muted" }),
-                Label:new({ text = string.format(_("AT LARGE %d DAYS"), b.days), kind = "mono_small", color = "muted" }),
+                Label:new({ text = string.format(_.n("AT LARGE %d DAY", "AT LARGE %d DAYS", b.days), b.days), kind = "mono_small", color = "muted" }),
                 Layout.Row:new({ valign = "center", children = {
                     Label:new({ text = Format.credits(b.reward), kind = "hero", grow = true }),
                     Button:new({ label = _("CLAIM"), icon = "forward", variant = "primary", on_tap = function() Actions.open(b.path) end }),
@@ -77,7 +77,7 @@ function BountyScreen:build()
             grow = true, items = rest, page = self.page, cols = 1, cell_h = Theme.px(56), gap = 0, row_gap = 0,
             make = function(b)
                 return ListRow.build({ path = b.path, title = Books.info(b.path).title, title_kind = "body",
-                    meta = string.format(_("AT LARGE %d DAYS"), b.days), value = Format.credits(b.reward),
+                    meta = string.format(_.n("AT LARGE %d DAY", "AT LARGE %d DAYS", b.days), b.days), value = Format.credits(b.reward),
                     on_tap = function() Actions.details(b.path) end, on_hold = function() holdSheet(b) end })
             end,
             on_layout = function(_cap, pages, page) self.pages, self.page = pages, page end,

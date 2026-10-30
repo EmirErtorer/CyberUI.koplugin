@@ -10,7 +10,7 @@ local Profile = require("cyberui/data/profile")
 local Shards = require("cyberui/data/shards")
 local Books = require("cyberui/data/books")
 local Settings = require("cyberui/settings")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Banner = {}
 
@@ -150,13 +150,13 @@ end
 function Banner.top()
     local id = Settings.get("banner_top", "device")
     if id == "off" then return nil end
-    if id == "handle" then return "ID // " .. Banner.handle() end
+    if id == "handle" then return string.format(_("ID // %s"), Banner.handle()) end
     if id == "book" then
         local h = Settings.get("banner_title") == "highlight" and highlight()
         local cur = h and h.path or (History.current() or {}).path
-        if cur then return "FILE // " .. Books.info(cur).title end
+        if cur then return string.format(_("FILE // %s"), Books.info(cur).title) end
     end
-    return "CYBERDECK // " .. Banner.device() .. " // " .. _("OPERATOR ACCESS")
+    return string.format(_("CYBERDECK // %s // OPERATOR ACCESS"), Banner.device())
 end
 
 return Banner

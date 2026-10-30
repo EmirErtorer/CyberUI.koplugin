@@ -8,7 +8,7 @@ local Paint = require("cyberui/gfx/paint")
 local Settings = require("cyberui/settings")
 local Text = require("cyberui/gfx/text")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Progress = Element:extend({ value = 0, segments = 20, cell_h = 12, color = "ink" })
 

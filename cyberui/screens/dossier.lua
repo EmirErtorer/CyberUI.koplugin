@@ -21,7 +21,7 @@ local Theme = require("cyberui/theme")
 local filemanagerutil = require("apps/filemanager/filemanagerutil")
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Dossier = Screen:extend()
 

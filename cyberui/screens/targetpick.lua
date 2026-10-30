@@ -13,7 +13,7 @@ local Screen = require("cyberui/screens/screen")
 local TargetList = require("cyberui/targetlist")
 local Targets = require("cyberui/targets")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local TargetPick = Screen:extend()
 
@@ -73,7 +73,7 @@ function TargetPick:build()
         })
         body[2] = Frame.pager(self, _("ITEMS"), function(p) self:setPage(p) end)
     end
-    return Frame.page({ screen = self, title = level.title, path = "PICK // TARGET", tab = "settings",
+    return Frame.page({ screen = self, title = level.title, path = _("PICK // TARGET"), tab = "settings",
         body = Layout.Column:new({ gap = th.space.m, children = body }) })
 end
 

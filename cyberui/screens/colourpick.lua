@@ -19,7 +19,7 @@ local Screen = require("cyberui/screens/screen")
 local Swatch = require("cyberui/ui/swatch")
 local Theme = require("cyberui/theme")
 local util = require("util")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local ColourPick = Screen:extend()
 
@@ -122,7 +122,7 @@ function ColourPick:build()
         local centred = Layout.Row:new({ grow = true, valign = "stretch", children = { Layout.Spacer:new({ grow = true }), dial, Layout.Spacer:new({ grow = true }) } })
         body = Layout.Column:new({ gap = th.space.m, children = { centred, controls } })
     end
-    return Frame.page({ screen = self, title = params.title or _("Colour"), path = "PICK // HSV", tab = "settings", body = body })
+    return Frame.page({ screen = self, title = params.title or _("Colour"), path = _("PICK // HSV"), tab = "settings", body = body })
 end
 
 return ColourPick

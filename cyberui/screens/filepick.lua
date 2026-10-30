@@ -14,7 +14,7 @@ local ListRow = require("cyberui/ui/listrow")
 local Screen = require("cyberui/screens/screen")
 local Theme = require("cyberui/theme")
 local lfs = require("libs/libkoreader-lfs")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local FilePick = Screen:extend()
 
@@ -87,7 +87,7 @@ function FilePick:build()
     if #items == 0 then
         table.insert(body, 2, Label:new({ text = _("No pictures or folders here."), kind = "small", color = "muted" }))
     end
-    return Frame.page({ screen = self, title = params.title or _("Choose a file"), path = "PICK // FILE", tab = "settings",
+    return Frame.page({ screen = self, title = params.title or _("Choose a file"), path = _("PICK // FILE"), tab = "settings",
         actions = { up }, body = Layout.Column:new({ gap = th.space.m, children = body }) })
 end
 

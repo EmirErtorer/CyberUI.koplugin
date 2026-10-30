@@ -7,7 +7,9 @@
 local RenderText = require("ui/rendertext")
 local TextWidget = require("ui/widget/textwidget")
 local Utf8Proc = require("ffi/utf8proc")
+local Case = require("cyberui/i18n/case")
 local Color = require("cyberui/theme/color")
+local I18n = require("cyberui/gettext")
 local Theme = require("cyberui/theme")
 
 local Text = {}
@@ -65,7 +67,10 @@ end
 -- The string as it is shown for this kind of text (capitals when the style asks).
 function Text.shown(kind, s)
     s = tostring(s or "")
-    if specOf(kind).caps then s = Utf8Proc.uppercase_dumb(s) end
+    if specOf(kind).caps then
+        local lang = I18n.language()
+        s = (lang == "tr" or lang == "el") and Case.upper(s, lang) or Utf8Proc.uppercase_dumb(s)
+    end
     -- composed form, so accents are part of their letter and not drawn apart
     return Utf8Proc.normalize_NFC(s)
 end

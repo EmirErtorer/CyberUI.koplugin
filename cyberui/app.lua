@@ -16,7 +16,7 @@ local Theme = require("cyberui/theme")
 local Dialog = require("cyberui/ui/dialog")
 local TextInput = require("cyberui/ui/textinput")
 local StatusBar = require("cyberui/ui/statusbar")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Screen = Device.screen
 

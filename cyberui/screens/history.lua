@@ -20,7 +20,7 @@ local Stats = require("cyberui/data/stats")
 local Streaks = require("cyberui/screens/log/streaks")
 local Theme = require("cyberui/theme")
 local Week = require("cyberui/screens/log/week")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local History = Screen:extend()
 
@@ -61,7 +61,8 @@ function History:build()
         actions[#actions + 1] = Button:new({ icon = "skyline", variant = skyline and "icon_on" or "icon", width = th.size.touch,
             on_tap = function() Settings.save("chart_view", skyline and "bars" or "skyline"); App.update() end })
     end
-    local path = "/VAR/LOG/" .. (Scope.active() and string.format(" // %d FOLDERS", #Scope.folders()) or "")
+    local n = #Scope.folders()
+    local path = "/VAR/LOG/" .. (Scope.active() and (" // " .. string.format(_.n("%d FOLDER", "%d FOLDERS", n), n)) or "") -- i18n: keep
     return Frame.page({
         screen = self, title = _("Telemetry.log"), path = path, tab = "history", actions = actions,
         body = Layout.Column:new({ gap = th.space.m, children = { tabs, module.build(self) } }),

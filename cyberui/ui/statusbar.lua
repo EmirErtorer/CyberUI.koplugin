@@ -11,7 +11,7 @@ local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local StatusBar = {}
 

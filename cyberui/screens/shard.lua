@@ -11,7 +11,7 @@ local Screen = require("cyberui/screens/screen")
 local ShardCard = require("cyberui/ui/shardcard")
 local Shards = require("cyberui/data/shards")
 local Theme = require("cyberui/theme")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local ShardScreen = Screen:extend()
 

@@ -6,7 +6,7 @@ local App = require("cyberui/app")
 local Files = require("cyberui/data/files")
 local Scope = require("cyberui/data/statsscope")
 local Stats = require("cyberui/data/stats")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local ScopeSheet = {}
 

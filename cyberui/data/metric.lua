@@ -3,7 +3,7 @@
 
 local Charts = require("cyberui/ui/charts")
 local Settings = require("cyberui/settings")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Metric = {}
 
@@ -22,8 +22,10 @@ function Metric.unit()
     return Metric.pages() and _("PG") or _("MIN")
 end
 
--- The chart title for what is counted.
-function Metric.title()
+-- The chart title for what is counted, over `span` ("week", "weeks", or nothing for the bare title).
+function Metric.title(span)
+    if span == "week" then return Metric.pages() and _("PAGES READ // LAST 7 DAYS") or _("MINUTES READ // LAST 7 DAYS") end
+    if span == "weeks" then return Metric.pages() and _("PAGES READ // 12 WEEKS") or _("MINUTES READ // 12 WEEKS") end
     return Metric.pages() and _("PAGES READ") or _("MINUTES READ")
 end
 

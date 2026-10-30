@@ -13,7 +13,7 @@ local Settings = require("cyberui/settings")
 local Skyline = require("cyberui/ui/skyline")
 local Theme = require("cyberui/theme")
 local navrow = require("cyberui/ui/navrow")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Calendar = {}
 
@@ -48,7 +48,7 @@ function Calendar.build(screen)
         end
     end
     for day, d in pairs(month_days) do levels[day] = Metric.level(Metric.value(d), goal, top) end
-    local nav = navrow({ label = os.date("%B %Y", first):upper(), can_next = screen.cal_back > 0,
+    local nav = navrow({ label = Format.upper(Format.date("%B %Y", first)), can_next = screen.cal_back > 0,
         on_prev = function() screen.cal_back = screen.cal_back + 1; App.update() end,
         on_next = function() screen.cal_back = screen.cal_back - 1; App.update() end })
     local as_skyline = Settings.get("cal_view", "grid") == "skyline"
@@ -77,7 +77,7 @@ function Calendar.build(screen)
     } })
     local view = Controls.Segmented({ options = { { _("GRID"), "grid" }, { _("SKYLINE"), "skyline" } }, value = as_skyline and "skyline" or "grid",
         kind = "label", on_change = function(v) Settings.save("cal_view", v); App.update() end })
-    local note = as_skyline and _("HEIGHT = PAGES // LIT WINDOWS = TIME READ") or string.format(_("%s // %d PAGES THIS MONTH"), Format.duration(month_seconds), month_pages)
+    local note = as_skyline and _("HEIGHT = PAGES // LIT WINDOWS = TIME READ") or string.format(_.n("%s // %d PAGE THIS MONTH", "%s // %d PAGES THIS MONTH", month_pages), Format.duration(month_seconds), month_pages)
     local kids = { nav, view }
     if not as_skyline then kids[#kids + 1] = weekdays() end
     kids[#kids + 1] = month

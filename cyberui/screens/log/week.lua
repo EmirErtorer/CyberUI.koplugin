@@ -15,7 +15,7 @@ local Statsdb = require("cyberui/data/statsdb")
 local Stats = require("cyberui/data/stats")
 local Theme = require("cyberui/theme")
 local tile = require("cyberui/ui/stattile")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Week = {}
 
@@ -46,7 +46,7 @@ function Week.build(screen)
     local values, labels, buildings = {}, {}, {}
     for i, d in ipairs(week) do
         values[i] = Metric.value(d)
-        labels[i] = os.date("%a", d.time):upper():sub(1, 3)
+        labels[i] = Format.upper(Format.date("%a", d.time))
         buildings[i] = { pages = d.pages, minutes = d.seconds / 60, current = i == #week }
     end
     local sel = week[screen.day] or week[#week]
@@ -55,31 +55,31 @@ function Week.build(screen)
     local tiles = Layout.Row:new({ gap = th.space.m, children = {
         tile(_("TIME"), Format.duration(totals.seconds), _("last 7 days")),
         tile(_("PAGES"), tostring(totals.pages), _("last 7 days")),
-        tile(_("STREAK"), tostring(Stats.streak()), string.format(_("days, best %d"), Stats.bestStreak())),
+        tile(_("STREAK"), tostring(Stats.streak()), string.format(_.n("day, best %d", "days, best %d", Stats.streak()), Stats.bestStreak())),
     } })
 
     local detail = skyline and _("HEIGHT = PAGES // LIT WINDOWS = TIME")
-        or string.format("%s = %s", os.date("%a", sel.time):upper(), Metric.text(Metric.value(sel)))
+        or string.format("%s = %s", Format.upper(Format.date("%a", sel.time)), Metric.text(Metric.value(sel)))
     local shown = skyline and Skyline:new({ buildings = buildings, labels = labels, height = 150 })
         or Charts.Bars:new({ values = values, labels = labels, goal = Metric.goal(goal), selected = screen.day, height = Theme.px(130),
             on_select = function(i) screen.day = i; App.update() end })
     local chart = Layout.Column:new({ gap = th.space.s, children = {
         Layout.Row:new({ children = {
-            Label:new({ text = Metric.title() .. _(" // LAST 7 DAYS"), kind = "label", grow = true }),
+            Label:new({ text = Metric.title("week"), kind = "label", grow = true }),
             Label:new({ text = detail, kind = "mono_small" }),
         } }),
         shown,
     } })
 
     local heat = Layout.Column:new({ gap = th.space.s, children = {
-        Label:new({ text = Metric.title() .. _(" // 12 WEEKS"), kind = "label" }),
+        Label:new({ text = Metric.title("weeks"), kind = "label" }),
         Charts.Heatmap:new({ levels = activity(goal) }),
     } })
 
     local log = { Label:new({ text = _("SESSION LOG"), kind = "label" }) }
     for _i, s in ipairs(Stats.sessions(6)) do
         log[#log + 1] = ListRow.build({ thumb = false, title = s.title or "?", title_kind = "body",
-            meta = os.date("%a %d %b %H:%M", s.time):upper(), value = string.format(_("%dM // %d PG"), Format.minutes(s.seconds), s.pages),
+            meta = Format.upper(Format.date("%a %d %b %H:%M", s.time)), value = string.format(_("%dM // %d PG"), Format.minutes(s.seconds), s.pages),
             height = Theme.px(46) })
     end
     if #log == 1 then log[2] = Label:new({ text = _("No reading recorded yet. Statistics must be on."), kind = "small", color = "muted" }) end

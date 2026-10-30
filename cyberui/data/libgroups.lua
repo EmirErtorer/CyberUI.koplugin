@@ -6,7 +6,7 @@ local Books = require("cyberui/data/books")
 local Collections = require("cyberui/data/collections")
 local Library = require("cyberui/data/library")
 local lfs = require("libs/libkoreader-lfs")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Groups = {}
 

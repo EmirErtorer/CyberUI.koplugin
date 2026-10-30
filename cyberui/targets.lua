@@ -7,7 +7,7 @@
 local Dispatcher = require("dispatcher")
 local App = require("cyberui/app")
 local Menu = require("cyberui/menu")
-local _ = require("gettext")
+local _ = require("cyberui/gettext")
 
 local Targets = {}
 
@@ -51,9 +51,9 @@ end
 function Targets.describe(target)
     if not target then return _("NOTHING YET") end
     if target.kind == "menu" then
-        return "MENU // " .. table.concat(target.trail, " > ") .. (#target.trail > 0 and " > " or "") .. (target.text or "")
+        return string.format(_("MENU // %s"), table.concat(target.trail, " > ") .. (#target.trail > 0 and " > " or "") .. (target.text or ""))
     end
-    return "ACTION // " .. tostring(target.title or target.id)
+    return string.format(_("ACTION // %s"), tostring(target.title or target.id))
 end
 
 return Targets
