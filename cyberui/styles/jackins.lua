@@ -1,5 +1,5 @@
 -- Jack-in cards: what the screen shows while a book opens. Each style is
--- { id, name, price, build(path) -> element }. The load blocks, so nothing on
+-- { id, name, price, build(path, o) -> element }, o = { width, compact }. The load blocks, so nothing on
 -- a card can move and none shows made-up progress; a card is the book (cover,
 -- title, where reading resumes) in some arrangement, painted once just before
 -- the load starts, so a style costs one small paint and nothing else.
@@ -17,9 +17,15 @@ local _ = require("cyberui/gettext")
 
 local px = Theme.px
 
--- The width of a card: the screen less its margins, at most 560.
-local function cardWidth()
-    return math.min(require("device").screen:getWidth() - 2 * Theme.get().space.xl, px(560))
+-- The width of a card: the one asked for (`o.width`), else the screen less its
+-- margins, at most 560.
+local function cardWidth(o)
+    return o and o.width or math.min(require("device").screen:getWidth() - 2 * Theme.get().space.xl, px(560))
+end
+
+-- A size in base pixels, smaller on a compact card (the shop's list of previews).
+local function size(o, n)
+    return px(n * (o and o.compact and 0.6 or 1))
 end
 
 -- Where reading resumes, as a line.
@@ -36,12 +42,12 @@ local function bookLines(path, kind)
 end
 
 -- The plain card: cover left, the facts and a striped working bar right.
-local function standard(path)
+local function standard(path, o)
     local th = Theme.get()
     local title, author = bookLines(path)
-    return Panel:new({ shape = "header", title = _("JACK-IN"), title_right = _("DECRYPTING..."), pad = th.space.l, fill = "bg", width = cardWidth(),
+    return Panel:new({ shape = "header", title = _("JACK-IN"), title_right = _("DECRYPTING..."), pad = th.space.l, fill = "bg", width = cardWidth(o),
         child = Layout.Row:new({ gap = th.space.l, valign = "stretch", children = {
-            Cover:new({ path = path, width = px(112), height = px(164) }),
+            Cover:new({ path = path, width = size(o, 112), height = size(o, 164) }),
             Layout.Column:new({ grow = true, gap = th.space.xs, children = {
                 title, author, Layout.Spacer:new({ height = th.space.s }),
                 Label:new({ text = resumeLine(path), kind = "mono" }),
@@ -54,11 +60,11 @@ local function standard(path)
 end
 
 -- All text on an inverted screen, like a terminal session.
-local function terminal(path)
+local function terminal(path, o)
     local th = Theme.get()
     local info = Books.info(path)
     local function line(text, color) return Label:new({ text = text, kind = "mono", color = color or "on_ink", lines = 2 }) end
-    return Panel:new({ shape = "frame", pad = th.space.l, fill = "ink", line = "ink", width = cardWidth(),
+    return Panel:new({ shape = "frame", pad = th.space.l, fill = "ink", line = "ink", width = cardWidth(o),
         child = Layout.Column:new({ gap = th.space.s, children = {
             Label:new({ text = _("JACK-IN"), kind = "micro", color = "on_ink" }),
             Deco.Stripes:new({ dir = "h", height = px(6), period = px(3), thick = px(1), color = "on_ink" }),
@@ -72,12 +78,12 @@ local function terminal(path)
 end
 
 -- A big cover with the title on a filled band under it.
-local function poster(path)
+local function poster(path, o)
     local th = Theme.get()
     local info = Books.info(path)
-    return Panel:new({ shape = "brackets", pad = th.space.l, fill = "bg", width = cardWidth(),
+    return Panel:new({ shape = "brackets", pad = th.space.l, fill = "bg", width = cardWidth(o),
         child = Layout.Column:new({ gap = th.space.m, children = {
-            Layout.Row:new({ children = { Layout.Spacer:new({ grow = true }), Cover:new({ path = path, width = px(210), height = px(310) }),
+            Layout.Row:new({ children = { Layout.Spacer:new({ grow = true }), Cover:new({ path = path, width = size(o, 210), height = size(o, 310) }),
                 Layout.Spacer:new({ grow = true }) } }),
             Panel:new({ shape = "chamfer", corners = "tb", cut = "cut_small", fill = "accent", line = false, pad = th.space.m,
                 child = Layout.Column:new({ gap = th.space.xs, children = {
@@ -88,11 +94,11 @@ local function poster(path)
 end
 
 -- A pass: the facts on the left, a barcode stub on the right, punched between them.
-local function ticket(path)
+local function ticket(path, o)
     local th = Theme.get()
     local title, author = bookLines(path)
     local rnd = Profile.rng(path)
-    return Panel:new({ shape = "chamfer", corners = "tb", cut = "cut", pad = th.space.l, fill = "bg", width = cardWidth(),
+    return Panel:new({ shape = "chamfer", corners = "tb", cut = "cut", pad = th.space.l, fill = "bg", width = cardWidth(o),
         child = Layout.Row:new({ gap = th.space.l, valign = "stretch", children = {
             Layout.Column:new({ grow = true, gap = th.space.xs, children = {
                 Label:new({ text = _("ADMIT ONE"), kind = "micro", color = "accent" }),
@@ -102,23 +108,23 @@ local function ticket(path)
             } }),
             Deco.Stripes:new({ dir = "v", width = px(4), period = px(8), thick = px(3), color = "accent" }),
             Layout.Column:new({ width = px(110), gap = th.space.s, children = {
-                Deco.Barcode:new({ bars = Paint.barsFrom(rnd), height = px(150) }),
+                Deco.Barcode:new({ bars = Paint.barsFrom(rnd), height = size(o, 150) }),
                 Label:new({ text = string.format("%04X", math.floor(rnd() * 65535)), kind = "mono", align = "center" }), -- i18n: keep
             } }),
         } }) })
 end
 
 -- A cover under sights with a scan beam across it, read out like a target lock.
-local function scanner(path)
+local function scanner(path, o)
     local th = Theme.get()
     local title, author = bookLines(path, "heading")
     local rnd = Profile.rng(path)
-    local cover = Layout.Overlay:new({ width = px(130), height = px(190), children = {
-        Cover:new({ path = path, width = px(130), height = px(190) }),
-        Layout.Column:new({ children = { Layout.Spacer:new({ height = px(70) }),
+    local cover = Layout.Overlay:new({ width = size(o, 130), height = size(o, 190), children = {
+        Cover:new({ path = path, width = size(o, 130), height = size(o, 190) }),
+        Layout.Column:new({ children = { Layout.Spacer:new({ height = size(o, 70) }),
             Deco.Stripes:new({ dir = "h", height = px(22), period = px(3), thick = px(2), color = "accent" }) } }),
     } })
-    return Panel:new({ shape = "brackets", label = _("TARGET_LOCKED"), pad = th.space.l, fill = "bg", width = cardWidth(),
+    return Panel:new({ shape = "brackets", label = _("TARGET_LOCKED"), pad = th.space.l, fill = "bg", width = cardWidth(o),
         child = Layout.Row:new({ gap = th.space.l, valign = "stretch", children = {
             Panel:new({ shape = "brackets", pad = th.space.s, child = cover }),
             Layout.Column:new({ grow = true, gap = th.space.xs, children = {

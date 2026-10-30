@@ -54,21 +54,21 @@ local function handleLine(handle, kind, flair)
     } })
 end
 
--- A small card for the shop: the face, the handle with its flair, the rank and the
--- barcode, in the styles of o.styles (any left out are the plain ones).
+-- A small card for the shop: the face, the handle with its flair and the rank,
+-- in the styles of o.styles (any left out are the plain ones).
 function IdCard.sample(o)
     local th = Theme.get()
     local handle = Profile.handle()
     local rank = Profile.rank(Profile.stats().hours)
     local plain = o.styles or {}
     local function pick(cat) return plain[cat] or Shop.category(cat).styles[1] end
-    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"), pad = th.space.l + Theme.px(pick("frame").inset or 0),
+    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"),
+        pad = th.space.m + Theme.px((pick("frame").inset or 0) * 0.6),
         fill = "bg", backdrop = pick("background").draw, trim = pick("frame").draw,
         child = Layout.Row:new({ gap = th.space.m, valign = "center", children = {
-            Avatar:new({ seed = handle, size = 56 }),
-            Layout.Column:new({ grow = true, gap = th.space.xs, children = { handleLine(handle, "heading", pick("flair")),
+            Avatar:new({ seed = handle, size = 52 }),
+            Layout.Column:new({ grow = true, gap = th.space.xs, children = { handleLine(handle, "body", pick("flair")),
                 Layout.Row:new({ children = { IdCard.rankTag(rank, true) } }) } }),
-            Layout.Column:new({ width = Theme.px(70), children = { IdCard.codeBars(28) } }),
         } }) })
 end
 

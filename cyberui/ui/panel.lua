@@ -3,8 +3,8 @@
 -- inverted title strip over a frame), "rail" (a bar down the left, or the
 -- right with side = "r") or "none".
 -- A `label` sits on the border. `backdrop` and `trim` are optional functions
--- (bb, x, y, w, h, top) that paint behind the content and over the border; top
--- is the height of the title strip.
+-- (bb, x, y, w, h, top, pad) that paint behind the content and over the border;
+-- top is the height of the title strip, pad the padding on the left.
 
 local Element = require("cyberui/ui/element")
 local Layout = require("cyberui/ui/layout")
@@ -102,7 +102,7 @@ function Panel:paint(bb, x, y)
     self:draw(bb, x, y)
     local t, _r, _b, l = self:insets()
     self.child:paint(bb, x + l, y + t)
-    if self.trim then self.trim(bb, x, y, self.w, self.h, self.shape == "header" and self:headerHeight() or 0) end
+    if self.trim then self.trim(bb, x, y, self.w, self.h, self.shape == "header" and self:headerHeight() or 0, l) end
 end
 
 return Panel

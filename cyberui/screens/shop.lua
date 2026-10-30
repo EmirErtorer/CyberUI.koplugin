@@ -31,9 +31,10 @@ local function sampleBook()
     return Library.all()[1] or "/Sample Book.epub"
 end
 
--- The style on its own, as it looks: a small card, or the jack-in card.
-local function preview(cat, style)
-    if cat == "jackin" then return style.build(sampleBook()) end
+-- The style on its own, as it looks: a small card, or the jack-in card made
+-- small to share the page.
+local function preview(cat, style, width)
+    if cat == "jackin" then return style.build(sampleBook(), { compact = true, width = width }) end
     return IdCard.sample({ styles = { [cat] = style } })
 end
 
@@ -73,7 +74,7 @@ local function buyDialog(cat, style)
 end
 
 -- One style: its name and price (or state), the preview and a hint line.
-local function entry(cat, style)
+local function entry(cat, style, width)
     local th = Theme.get()
     local owned = Shop.owned(style)
     local note, colour = hint(style)
@@ -92,7 +93,7 @@ local function entry(cat, style)
                 Label:new({ text = style.name, kind = "heading", grow = true }),
                 Label:new({ text = owned and (style.price == 0 and _("FREE") or _("OWNED")) or Format.credits(style.price), kind = "mono", color = owned and "muted" or "accent" }),
             } }),
-            preview(cat, style),
+            preview(cat, style, width),
             Label:new({ text = note, kind = "mono_small", color = colour }),
         } }) })
 end
@@ -118,8 +119,28 @@ function ShopScreen:build()
     for i, cat in ipairs(Shop.categories) do options[i] = { cat.name, cat.id } end
     local tabs = Controls.Segmented({ options = options, value = self.cat, kind = "label",
         on_change = function(v) self.cat, self.page = v, 1; App.update() end })
-    local items = {}
-    for _i, style in ipairs(Shop.category(self.cat).styles) do items[#items + 1] = entry(self.cat, style) end
+    -- two styles to a row (the jack-in cards are wide, one to a row), so a page holds them all
+    local items, row = {}, {}
+    local wide = self.cat == "jackin"
+    local full = require("device").screen:getWidth() - 2 * th.space.xl
+    local width = wide and full or math.floor((full - th.space.m) / 2)
+    for _i, style in ipairs(Shop.category(self.cat).styles) do
+        local e = entry(self.cat, style, width)
+        if wide then
+            items[#items + 1] = e
+        else
+            e.grow = true
+            row[#row + 1] = e
+            if #row == 2 then
+                items[#items + 1] = Layout.Row:new({ gap = th.space.m, valign = "top", children = row })
+                row = {}
+            end
+        end
+    end
+    if #row > 0 then
+        row[2] = Layout.Spacer:new({ grow = true })   -- a lone style keeps its half of the row
+        items[#items + 1] = Layout.Row:new({ gap = th.space.m, valign = "top", children = row })
+    end
     local kids = { tabs }
     local line = nextLine()
     if line then kids[#kids + 1] = Label:new({ text = line, kind = "mono_small", color = "muted" }) end

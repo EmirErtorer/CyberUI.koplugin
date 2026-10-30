@@ -59,6 +59,9 @@ local function board(bb, x, y, w, h, top)
         local dir, run = rnd() > 0.5 and 1 or -1, px(30) + math.floor(rnd() * px(110))
         local ex = math.max(x + pad, math.min(x + w - pad, sx + dir * run))
         local drop = (rnd() > 0.5 and 1 or -1) * (px(14) + math.floor(rnd() * px(30)))
+        if sy + drop < gy + pad or sy + drop > gy + gh - pad then drop = -drop end   -- stay on the card
+        sy = math.max(gy + pad, math.min(gy + gh - pad, sy))
+        if sy + drop < gy + pad or sy + drop > gy + gh - pad then drop = 0 end
         local mx = ex + dir * math.abs(drop)
         mx = math.max(x + pad, math.min(x + w - pad, mx))
         Paint.line(bb, sx, sy, ex, sy, t, th.c.line)
@@ -67,7 +70,8 @@ local function board(bb, x, y, w, h, top)
         Paint.frame(bb, mx - pad, sy + drop - math.floor(pad / 2), pad, pad, t, th.c.muted)
     end
     for _i, at in ipairs({ { 0.5, 0.04 }, { 0.74, 0.14 } }) do
-        local cx, cy = x + math.floor(w * at[1]), gy + math.floor(gh * at[2])
+        local cx, cy = x + math.floor(w * at[1]), math.min(gy + math.floor(gh * at[2]), gy + gh - px(60))
+        cy = math.max(cy, gy + px(10))
         Paint.fill(bb, cx, cy, px(70), px(44), th.c.bg)
         Paint.frame(bb, cx, cy, px(70), px(44), t, th.c.muted)
         for k = 0, 5 do

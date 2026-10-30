@@ -1,8 +1,9 @@
 -- ID card frames: a whole new border for the card, drawn over its edge in
 -- the room the style asks for (`inset`, base pixels added to the card's
 -- padding, so nothing drawn ever touches the contents). Each style is { id,
--- name, price, inset, draw(bb, x, y, w, h, top) }; `top` is the height of the
--- title strip, which is left alone. A style without draw is the plain card.
+-- name, price, inset, draw(bb, x, y, w, h, top, pad) }; `top` is the height of
+-- the title strip, which is left alone, and `pad` the padding the card has (a
+-- frame draws within pad less a little). A style without draw is the plain card.
 
 local Paint = require("cyberui/gfx/paint")
 local Profile = require("cyberui/data/profile")
@@ -12,14 +13,14 @@ local _ = require("cyberui/gettext")
 local px = Theme.px
 
 -- The width of the band the frame has to draw in, between the edge and the contents.
-local function band(inset)
-    return px(inset) + Theme.get().space.l - px(4)
+local function band(pad)
+    return pad - px(4)
 end
 
 -- Cut corners, heavy accent edges and a double line: a plated panel.
-local function notch(bb, x, y, w, h, top)
+local function notch(bb, x, y, w, h, top, pad)
     local th = Theme.get()
-    local cut, t, b = px(30), px(4), band(10)
+    local cut, t, b = px(30), px(4), band(pad)
     Paint.frame(bb, x + px(2), y + top, w - px(4), h - top - px(2), t, th.c.accent)
     Paint.frame(bb, x + b - px(2), y + top + b - px(2), w - 2 * b + px(4), h - top - 2 * b + px(4), th.size.hair, th.c.ink)
     local corners = { { x, y + h, 1, -1 }, { x + w, y + h, -1, -1 } }
@@ -31,10 +32,10 @@ local function notch(bb, x, y, w, h, top)
 end
 
 -- A circuit board border: buses down both sides with pads, a chip and traces along the bottom.
-local function circuit(bb, x, y, w, h, top)
+local function circuit(bb, x, y, w, h, top, pad)
     local th = Theme.get()
-    local c, hair, b = th.c.accent2, th.size.hair * 3, band(14)
-    local pad = px(6)
+    local c, hair, b = th.c.accent2, th.size.hair * 3, band(pad)
+    local dot = px(6)
     for _i, bx in ipairs({ x + math.floor(b / 2) - px(4), x + w - math.floor(b / 2) + px(4) }) do
         Paint.fill(bb, bx - px(3), y + top + px(8), hair, h - top - px(16), c)
         Paint.fill(bb, bx + px(3), y + top + px(8), hair, h - top - px(16), c)
@@ -43,9 +44,9 @@ local function circuit(bb, x, y, w, h, top)
     for yy = y + top + px(24), y + h - px(40), px(36) do
         local stub = px(6) + math.floor(rnd() * px(8))
         Paint.fill(bb, x + px(2), yy, math.floor(b / 2) - px(6), hair, c)
-        Paint.fill(bb, x + px(2) - 1, yy - 3, pad, pad, c)
+        Paint.fill(bb, x + px(2) - 1, yy - 3, dot, dot, c)
         Paint.fill(bb, x + w - math.floor(b / 2) + px(6), yy + px(14), math.floor(b / 2) - px(6) - stub + px(2), hair, c)
-        Paint.fill(bb, x + w - px(2) - pad, yy + px(11), pad, pad, c)
+        Paint.fill(bb, x + w - px(2) - dot, yy + px(11), dot, dot, c)
     end
     -- a chip with legs, bottom left, and a trace to its right
     local cx, cy = x + b + px(8), y + h - b + px(2)
@@ -58,14 +59,14 @@ local function circuit(bb, x, y, w, h, top)
     Paint.line(bb, cx + px(46), ty, cx + px(90), ty, hair, c)
     Paint.line(bb, cx + px(90), ty, cx + px(104), ty - px(8), hair, c)
     Paint.line(bb, cx + px(104), ty - px(8), x + w - b - px(10), ty - px(8), hair, c)
-    Paint.fill(bb, x + w - b - px(10), ty - px(8) - px(3), pad, pad, c)
+    Paint.fill(bb, x + w - b - px(10), ty - px(8) - px(3), dot, dot, c)
     Paint.frame(bb, x + b - px(2), y + top + b - px(2) - px(6), w - 2 * b + px(4), h - top - 2 * b + px(10), th.size.hair, th.c.line)
 end
 
 -- A full border of caution stripes, framed in lines.
-local function hazard(bb, x, y, w, h, top)
+local function hazard(bb, x, y, w, h, top, pad)
     local th = Theme.get()
-    local b, edge = band(12), th.size.stroke
+    local b, edge = band(pad), th.size.stroke
     local s = b - px(5)
     Paint.stripes(bb, x + edge, y + top, w - 2 * edge, s, "d", px(12), px(6), th.c.accent)
     Paint.stripes(bb, x + edge, y + h - edge - s, w - 2 * edge, s, "d", px(12), px(6), th.c.accent)
@@ -75,9 +76,9 @@ local function hazard(bb, x, y, w, h, top)
 end
 
 -- The border shifted and split in two colours, broken here and there, with slices torn out of it.
-local function glitch(bb, x, y, w, h, top)
+local function glitch(bb, x, y, w, h, top, pad)
     local th = Theme.get()
-    local b = band(14)
+    local b = band(pad)
     local rnd = Profile.rng("cyberui-frame-glitch")
     local t = px(3)
     Paint.frame(bb, x + px(8), y + top + px(7), w - px(16), h - top - px(14), t, th.c.accent)
