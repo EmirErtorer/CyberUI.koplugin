@@ -259,6 +259,7 @@ end
 -- gigs: taking one, reading it, the payouts and the signed ledger
 do
     local Gigs = require("cyberui/data/gigs")
+    local Ledger = require("cyberui/data/ledger")
     local Settings = require("cyberui/settings")
     local lfs = require("libs/libkoreader-lfs")
     local saved = Settings.get("gigs")
@@ -279,13 +280,13 @@ do
     Gigs.follow(book)
     for p = 1, 100 do Gigs.page(p, 300) end
     local paid_now = Gigs.settle()
-    Kit.ok(paid_now == 18 and Gigs.balance() == 18, "a third of the book pays three steps")
+    Kit.ok(paid_now == 18 and Ledger.balance() == 18, "a third of the book pays three steps")
     Kit.ok(Gigs.settle() == 0, "and nothing twice")
     Gigs.follow(book)
     Kit.ok(Gigs.active()[1].milestones == 3 and Gigs.active()[1].price == 120, "the gig is active with its payouts so far")
     for p = 101, 300 do Gigs.page(p, 300) end
-    Kit.ok(Gigs.settle() == 102 and Gigs.balance() == 120, "reading to the end pays the rest and the finish")
-    local earned, done = Gigs.totals()
+    Kit.ok(Gigs.settle() == 102 and Ledger.balance() == 120, "reading to the end pays the rest and the finish")
+    local earned, done = Ledger.totals()
     Kit.ok(earned == 120 and done == 1 and #Gigs.active() == 0, "the gig is done")
     Kit.ok(Gigs.recent(1)[1].kind == "f" and Gigs.takeReceipt().finished, "the finish is the latest payout and a notice is waiting")
     -- skipping to the end pays nothing
@@ -301,7 +302,7 @@ do
     d.ledger[1].a = 999
     d.quotes[skim].price = 9000
     Gigs.reload()
-    Kit.ok(Gigs.balance() == 120 - 6 and Gigs.rejected() == 1, "an edited ledger entry stops counting")
+    Kit.ok(Ledger.balance() == 120 - 6 and Ledger.rejected() == 1, "an edited ledger entry stops counting")
     Kit.ok(Gigs.quote(skim) == nil, "an edited price is not trusted")
     Settings.set("gigs", saved)
     Gigs.reload()

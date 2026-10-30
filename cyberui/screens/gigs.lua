@@ -12,6 +12,7 @@ local Cover = require("cyberui/ui/cover")
 local Format = require("cyberui/format")
 local Frame = require("cyberui/screens/frame")
 local Gigs = require("cyberui/data/gigs")
+local Ledger = require("cyberui/data/ledger")
 local Grid = require("cyberui/ui/grid")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
@@ -144,9 +145,9 @@ end
 -- The payouts so far, newest first, under the totals.
 function GigsScreen:payoutsTab()
     local th = Theme.get()
-    local earned, done = Gigs.totals()
+    local earned, done = Ledger.totals()
     local tiles = Layout.Row:new({ gap = th.space.s, children = {
-        StatTile(_("BALANCE"), Format.credits(Gigs.balance())), StatTile(_("EARNED"), Format.credits(earned)),
+        StatTile(_("BALANCE"), Format.credits(Ledger.balance())), StatTile(_("EARNED"), Format.credits(earned)),
         StatTile(_("GIGS DONE"), tostring(done)),
     } })
     local list = Gigs.recent(60)
@@ -168,12 +169,12 @@ function GigsScreen:build()
     local tabs = Controls.Segmented({ options = { { _.c("gigs tab", "Open"), "open" }, { _("Active"), "active" }, { _("Payouts"), "payouts" } },
         value = self.tab, kind = "label", on_change = function(v) self.tab, self.page = v, 1; App.update() end })
     local kids = { tabs, self[self.tab .. "Tab"](self) }
-    local bad = Gigs.rejected()
+    local bad = Ledger.rejected()
     if bad > 0 then
         kids[#kids + 1] = Label:new({ text = string.format(_.n("%d LEDGER ENTRY FAILED THE CHECK", "%d LEDGER ENTRIES FAILED THE CHECK", bad), bad),
             kind = "micro", color = "muted" })
     end
-    return Frame.page({ screen = self, title = _("GIGS"), path = string.format(_("GIGS // BALANCE %s"), Format.credits(Gigs.balance())),
+    return Frame.page({ screen = self, title = _("GIGS"), path = string.format(_("GIGS // BALANCE %s"), Format.credits(Ledger.balance())),
         tab = "library", body = Layout.Column:new({ gap = th.space.m, children = kids }) })
 end
 

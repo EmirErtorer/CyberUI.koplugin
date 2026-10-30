@@ -1,23 +1,16 @@
 -- Gigs: the backlog as paid work. A book that has sat unopened for a week is
 -- a gig with a price; opening it takes the gig and fixes the price, reading
 -- pays out as you go (a tenth of the half for every 10% of the book, the other
--- half when it is finished). Eddies earned are kept as a ledger of signed
--- entries, and the balance is only ever worked out from the entries that still
--- check, so editing the settings file cannot make money. (The code is open, so
--- this stops casual edits, not a determined one.) Spending is meant to be one
--- more kind of entry later; nothing here changes for that.
---
--- Stored under one setting "gigs": { quotes = { path -> { price, days, t, sig } },
--- seen = { path -> { bits, sig } }, ledger = { { k, p, n, a, t, sig } } },
--- k being "m" (a milestone), "f" (the finish) or later "s" (spent).
+-- half when it is finished). Payouts go in the signed ledger (see Ledger),
+-- and so do the quotes and what has been seen of each book, kept here:
+-- quotes = { path -> { price, days, t, sig } }, seen = { path -> { bits, sig } }.
 
 local Books = require("cyberui/data/books")
 local BookList = require("ui/widget/booklist")
 local Library = require("cyberui/data/library")
-local Profile = require("cyberui/data/profile")
 local Settings = require("cyberui/settings")
+local Ledger = require("cyberui/data/ledger")
 local lfs = require("libs/libkoreader-lfs")
-local sha2 = require("ffi/sha2")
 
 local Gigs = {}
 
@@ -27,105 +20,32 @@ Gigs.MAX_FACTOR = 2     -- ...up to this many times the base price
 Gigs.PAGE_RATE = 0.2    -- eddies per page before the age bonus
 Gigs.STEP = 20          -- prices are whole multiples of this, so a tenth of the half is whole
 Gigs.NEEDED = 0.7       -- the share of a stretch of book that must have been seen to count as read
-local SALT = "cyberui-gigs-1"   -- part of every signature: never change it, or earned eddies stop checking
 
 -- Rough kilobytes of file per page, by kind of file, for books never opened.
 local KB_PER_PAGE = { pdf = 60, djvu = 60, djv = 60, cbz = 300, cbr = 300 }
 local TEXT_KB_PER_PAGE = 2
 
 local cache         -- { all, revision, list }: the board
-local state         -- the verified ledger: { balance, paid (key -> true), earned, done, bad }
 local cur           -- the book being read: { path, bits (table of 100), total, quote }
 local receipt       -- what was paid since the reader last looked: { total, finished }
 
 ---------------------------------------------------------------- storage
 
--- The stored data, made on first use.
-local function data()
-    local d = Settings.get("gigs")
-    if not d then
-        d = { quotes = {}, seen = {}, ledger = {} }
-        Settings.set("gigs", d)
-    end
-    return d
-end
+local data, sign = Ledger.data, Ledger.sign
 
--- The signature of a payload: tied to this device's seed.
-local function sign(payload)
-    return sha2.sha256(SALT .. Profile.seed() .. payload):sub(1, 24)
-end
-
--- The payload each kind of record is signed over.
-local function entryText(e) return table.concat({ e.k, e.p, e.n or 0, e.a, e.t }, "|") end
+-- The payloads the quote and seen records are signed over.
 local function quoteText(path, q) return table.concat({ "q", path, q.price, q.days, q.t }, "|") end
 local function seenText(path, s) return "v|" .. path .. "|" .. s.bits end
 
----------------------------------------------------------------- ledger
-
--- Go through the ledger once and keep what checks: the balance, which
--- payouts were made, the lifetime total and how many gigs were finished.
-local function verified()
-    if state then return state end
-    local d = data()
-    state = { balance = 0, earned = 0, done = 0, paid = {}, bad = 0 }
-    for _i, e in ipairs(d.ledger) do
-        local key = e.k .. "|" .. e.p .. "|" .. (e.n or 0)
-        if type(e.a) == "number" and e.sig == sign(entryText(e)) and not state.paid[key] then
-            state.paid[key] = true
-            state.balance = state.balance + e.a
-            if e.a > 0 then state.earned = state.earned + e.a end
-            if e.k == "f" then state.done = state.done + 1 end
-        else
-            state.bad = state.bad + 1
-        end
-    end
-    return state
-end
-
 -- Forget everything worked out (the stored data changed behind our back).
 function Gigs.reload()
-    cache, state, cur, receipt = nil, nil, nil, nil
+    cache, cur, receipt = nil, nil, nil
+    Ledger.reload()
 end
 
--- The eddies the reader has now.
-function Gigs.balance()
-    return verified().balance
-end
-
--- All eddies ever earned, and the number of gigs finished.
-function Gigs.totals()
-    local s = verified()
-    return s.earned, s.done
-end
-
--- How many ledger entries did not check (the file was edited).
-function Gigs.rejected()
-    return verified().bad
-end
-
--- Add a signed entry to the ledger.
-local function pay(kind, path, n, amount)
-    local e = { k = kind, p = path, n = n, a = amount, t = os.time() }
-    e.sig = sign(entryText(e))
-    local d = data()
-    d.ledger[#d.ledger + 1] = e
-    state = nil
-    return e
-end
-
--- The latest payouts, newest first: { { kind, path, n, amount, t } }, at most `count`.
+-- The latest payouts (not purchases), newest first.
 function Gigs.recent(count)
-    local out = {}
-    local ledger = data().ledger
-    verified()
-    for i = #ledger, 1, -1 do
-        local e = ledger[i]
-        if e.sig == sign(entryText(e)) then
-            out[#out + 1] = { kind = e.k, path = e.p, n = e.n, amount = e.a, t = e.t }
-            if #out >= count then break end
-        end
-    end
-    return out
+    return Ledger.recent(count, "mf")
 end
 
 ---------------------------------------------------------------- price
@@ -270,19 +190,19 @@ end
 function Gigs.settle()
     if not cur then return 0 end
     local d = data()
-    local paid = verified().paid
+    local paid = Ledger.verified().paid
     local milestone, finish = Gigs.split(cur.quote.price)
     local total, finished = 0, false
     for k = 1, 10 do
         if not paid["m|" .. cur.path .. "|" .. k] and read(cur.bits, k * 10) then
-            pay("m", cur.path, k, milestone)
+            Ledger.add("m", cur.path, k, milestone)
             total = total + milestone
             paid["m|" .. cur.path .. "|" .. k] = true
         end
     end
     local complete = Books.state(cur.path).status == "complete" or cur.bits[100] or cur.bits[99]
     if not paid["f|" .. cur.path .. "|0"] and paid["m|" .. cur.path .. "|10"] and complete then
-        pay("f", cur.path, 0, finish)
+        Ledger.add("f", cur.path, 0, finish)
         total, finished = total + finish, true
     end
     local chars = {}
@@ -309,7 +229,7 @@ end
 -- { path, price, milestones (paid), percent }.
 function Gigs.active()
     local d = data()
-    local paid = verified().paid
+    local paid = Ledger.verified().paid
     local list = {}
     for path in pairs(d.quotes) do
         local q = Gigs.quote(path)
