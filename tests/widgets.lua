@@ -95,4 +95,30 @@ do
     bb:free()
 end
 
+-- a tap between the tabs is swallowed (it must not reach KOReader's corner gestures)
+do
+    local bar = require("cyberui/ui/tabbar").build({ { id = "a", label = "A" }, { id = "b", label = "B" } }, "a", function() end)
+    bar:layout(W, nil)
+    bar:paint(Kit.canvas(), 0, 0)
+    local gap = bar:hit(W / 2, 2, "on_tap")
+    Kit.ok(gap ~= nil and gap.on_tap == nil, "the tab bar swallows taps that miss a tab")
+end
+
+-- Arabic is shaped and measured as joined text, and paints
+do
+    local Text = require("cyberui/gfx/text")
+    local ar = "مرحبا بالعالم"
+    local w = Text.width("body", ar)
+    Kit.ok(w > 0, "Arabic text has a width")
+    local bb = Kit.canvas()
+    local drawn = Text.draw(bb, 10, 10, "body", ar, Theme.color("ink"))
+    Kit.ok(drawn == w, "and is drawn as wide as it is measured")
+    local plain = 0
+    for _i, cp in ipairs(Text.codepoints(ar)) do
+        plain = plain + require("ui/rendertext"):getGlyph(Theme.text("body").face, cp, false).ax
+    end
+    Kit.ok(w ~= plain, "joined letters measure differently from isolated ones")
+    bb:free()
+end
+
 Kit.finish("widgets")

@@ -5,6 +5,7 @@
 -- { kind, font_set_id } pair to show another set (the Fonts page does).
 
 local RenderText = require("ui/rendertext")
+local TextWidget = require("ui/widget/textwidget")
 local Utf8Proc = require("ffi/utf8proc")
 local Color = require("cyberui/theme/color")
 local Theme = require("cyberui/theme")
@@ -34,6 +35,27 @@ local function codepoints(s)
 end
 Text.codepoints = codepoints
 
+-- Does the string hold Hebrew or Arabic letters? Those need joining and right
+-- to left order, which KOReader's shaping does and the glyph by glyph path
+-- below does not.
+local function isRTL(s)
+    return s:find("[\214-\219]") ~= nil or s:find("\239[\172-\187]") ~= nil
+end
+
+local shaped = setmetatable({}, { __mode = "k" })   -- face -> { str -> shaped line }
+
+-- The shaped line for a right to left string, kept for reuse.
+local function shapedLine(face, s)
+    local cache = shaped[face]
+    if not cache then cache = {}; shaped[face] = cache end
+    local tw = cache[s]
+    if not tw then
+        tw = TextWidget:new({ text = s, face = face, auto_para_direction = true })
+        cache[s] = tw
+    end
+    return tw
+end
+
 -- The face spec for a kind (see the note at the top).
 local function specOf(kind)
     if type(kind) == "table" then return Theme.text(kind[1], kind[2]) end
@@ -55,6 +77,11 @@ local function measure(spec, s)
     local w = cache[s]
     if w then return w end
     local face, track = spec.face, spec.tracking
+    if isRTL(s) then
+        w = shapedLine(face, s):getWidth()
+        cache[s] = w
+        return w
+    end
     w = 0
     local prev = 0
     local cps = codepoints(s)
@@ -141,6 +168,12 @@ function Text.draw(bb, x, y, kind, s, color)
     local face, track = spec.face, spec.tracking
     local baseline = y + spec.ascent
     color = color or Theme.color("ink")
+    if isRTL(s) then
+        local tw = shapedLine(face, s)
+        tw.fgcolor = color
+        tw:paintTo(bb, x, baseline - tw:getBaseline())
+        return tw:getWidth()
+    end
     local rgb = Color.isRGB(color)
     local pen = 0
     local prev = 0
