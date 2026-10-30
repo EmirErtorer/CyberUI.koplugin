@@ -4,6 +4,7 @@
 -- lines, top bar, daily goal, KOReader menu), Speed (refresh, library index)
 -- and About.
 
+local Actions = require("cyberui/actions")
 local App = require("cyberui/app")
 local Ascii = require("cyberui/gfx/ascii")
 local Banner = require("cyberui/data/banner")
@@ -12,6 +13,7 @@ local Controls = require("cyberui/ui/controls")
 local Cover = require("cyberui/ui/cover")
 local Covers = require("cyberui/data/covers")
 local Custom = require("cyberui/themes/custom")
+local Files = require("cyberui/data/files")
 local Fonts = require("cyberui/screens/fonts")
 local Frame = require("cyberui/screens/frame")
 local Label = require("cyberui/ui/label")
@@ -216,6 +218,13 @@ function SettingsScreen:home()
             Controls.Toggle:new({ on = is_home, on_change = function(on)
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
                 App.update()
+            end })),
+        row(_("Library opens in"), _("The folder the Library tab starts in; KOReader's home folder stays the top of the library"),
+            Button:new({ label = Settings.get("library_start_dir") and Files.name(Settings.get("library_start_dir")) or _("Home folder"), on_tap = function()
+                App.choose({ title = _("Library opens in"), options = {
+                    { label = _("Home folder"), checked = not Settings.get("library_start_dir"), on_tap = function() Actions.setLibraryStart(nil) end },
+                    { label = _("Pick a folder"), icon = "folder", on_tap = Actions.pickLibraryStart },
+                } })
             end })),
         row(_("Double tap to open"), _("In the library a book opens on its second tap, so a stray touch does not start it"),
             Controls.Toggle:new({ on = Settings.get("double_tap_open", false), on_change = function(on) save("double_tap_open", on) end })),

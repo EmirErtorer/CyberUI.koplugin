@@ -5,6 +5,7 @@
 local lfs = require("libs/libkoreader-lfs")
 local Books = require("cyberui/data/books")
 local History = require("cyberui/data/history")
+local Settings = require("cyberui/settings")
 local filemanagerutil = require("apps/filemanager/filemanagerutil")
 
 local Library = {}
@@ -27,6 +28,29 @@ function Library.home()
     local home = homeFolder():gsub("(.)/+$", "%1")
     if home:sub(1, 1) ~= "/" then home = require("ffi/util").realpath(home) or home end
     return home
+end
+
+-- The folders from the library home down to `dir` (just `dir` when it lies
+-- outside the home), so Back goes up one folder at a time.
+function Library.trailTo(dir)
+    local home = Library.home()
+    local trail = { home }
+    if dir == home then return trail end
+    if dir:sub(1, #home + 1) ~= home .. "/" then return { dir } end
+    local path = home
+    for name in dir:sub(#home + 2):gmatch("[^/]+") do
+        path = path .. "/" .. name
+        trail[#trail + 1] = path
+    end
+    return trail
+end
+
+-- Where the library opens: the folder the reader chose (if it is still
+-- there), else the home. A trail as `trailTo` makes it.
+function Library.startTrail()
+    local dir = Settings.get("library_start_dir")
+    if dir and lfs.attributes(dir, "mode") == "directory" then return Library.trailTo(dir) end
+    return { Library.home() }
 end
 
 -- Books and subfolders directly inside `dir`, names sorted.

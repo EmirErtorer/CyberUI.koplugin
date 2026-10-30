@@ -43,7 +43,7 @@ function Library:init(params)
     self.page = 1
     self.filter = "all"
     if not (params.collection or params.query) then
-        self.trail = { ((params.dir or home()):gsub("(.)/+$", "%1")) }
+        self.trail = params.dir and { ((params.dir):gsub("(.)/+$", "%1")) } or Data.startTrail()
     end
 end
 
@@ -251,7 +251,7 @@ function Library:build()
     end
     body_kids[#body_kids + 1] = Frame.pager(self, _("SECTOR"), function(p) self:setPage(p) end)
     if pick then
-        body_kids[#body_kids + 1] = Button:new({ label = _("Move here"), icon = "move", variant = "primary", corners = "tb",
+        body_kids[#body_kids + 1] = Button:new({ label = pick.label or _("Move here"), icon = pick.icon or "move", variant = "primary", corners = "tb",
             on_tap = function() pick.on_pick(self:dir()) end })
     end
     return Frame.page({

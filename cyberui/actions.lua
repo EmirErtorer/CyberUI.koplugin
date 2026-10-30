@@ -178,6 +178,24 @@ function Actions.makeHome(dir)
     App.update()
 end
 
+-- Make the library open in this folder (nil: back to the home folder).
+function Actions.setLibraryStart(dir)
+    Settings.save("library_start_dir", dir)
+    App.toast(dir and string.format(_("Library opens in %s"), Files.name(dir)) or _("Library opens in the home folder"))
+    App.update()
+end
+
+-- Choose the folder the library opens in, from a picker that starts at the home.
+function Actions.pickLibraryStart()
+    App.push("library", { dir = Library.home(), pick = {
+        title = _("Library opens in"), label = _("Open library here"), icon = "library",
+        on_pick = function(dir)
+            App.pop()
+            Actions.setLibraryStart(dir)
+        end,
+    } })
+end
+
 -- The hold sheet of a book.
 function Actions.bookSheet(path)
     local info, st = Books.info(path), Books.state(path)
@@ -201,6 +219,7 @@ function Actions.folderSheet(path, open)
     App.sheet({ title = Files.name(path), sub = filemanagerutil.abbreviate(Files.parent(path)), actions = {
         { icon = "folder", label = _("Open"), on_tap = open },
         { icon = "home", label = _("Make library home"), on_tap = function() Actions.makeHome(path) end },
+        { icon = "library", label = _("Open library here"), on_tap = function() Actions.setLibraryStart(path) end },
         { icon = "edit", label = _("Rename"), on_tap = function() Actions.rename(path) end },
         { icon = "move", label = _("Move to"), on_tap = function() Actions.move(path) end },
         { icon = "trash", label = _("Delete"), danger = true, on_tap = function() Actions.delete(path) end },
