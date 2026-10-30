@@ -124,7 +124,10 @@ function Cover:drawFace(bb, x, y)
         if img and style == "ascii" then img = Ascii.get(self.path, img, Books.info(self.path).title) end
         if img then
             local iw, ih = img:getWidth(), img:getHeight()
-            bb:blitFrom(img, x + math.floor((w - iw) / 2), y + math.floor((h - ih) / 2), 0, 0, iw, ih)
+            local ix, iy = x + math.floor((w - iw) / 2), y + math.floor((h - ih) / 2)
+            -- night mode inverts the whole screen, so a picture goes in inverted to come out as it is
+            if style ~= "ascii" and Theme.nightMode() then bb:invertblitFrom(img, ix, iy, 0, 0, iw, ih)
+            else bb:blitFrom(img, ix, iy, 0, 0, iw, ih) end
             drawn = true
         end
     end
