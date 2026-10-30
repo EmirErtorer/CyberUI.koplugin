@@ -8,12 +8,7 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
-### Added
-- Hold a collection to delete it (Favorites stays).
-- An Annotate tile on the Deck's Controls page, left of Restart, opens the last book in Ink Away's annotation mode.
-- "Annotate this book" in the reader's Tools menu opens Ink Away's annotation mode.
-
-## [1.1.0] - 2026-10-30
+## [1.1.0] - 2026-10-31
 
 Everything since 1.0.0, the 1.0.5 prerelease included. The big ones: an operator
 ID card, Gigs that pay eddies for reading your backlog, a shop of looks to spend
@@ -66,6 +61,10 @@ them on, data shards, ten languages, and a home that comes back much faster.
 - **Colour dial** for the custom scheme: hue ring, saturation and brightness
   matrix, a grey preview and a note on whether the colour reads on the page.
 - **A quiet support note** at the end of System > About.
+- **Annotate** in one tap: a tile on the Deck's Controls page, left of Restart,
+  opens the last book in Ink Away's annotation mode, and "Annotate this book" sits
+  in the reader's Tools menu (both appear when Ink Away is installed).
+- **Delete a collection** by holding it on the Collections screen (Favorites stays).
 
 ### Changed
 - The recent list on home shares its room between its rows, so a fourth or fifth
