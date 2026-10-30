@@ -1,7 +1,7 @@
 -- System settings in six sections: Look (colour scheme, light or dark, custom
 -- colours), Covers (style, characters, size, ASCII sleep screen), Fonts (the font
 -- in use, the font page, text size), Home (start with CyberUI, the banner's
--- lines, top bar, daily goal, KOReader menu), Speed (refresh, library index)
+-- lines, top bar, daily goal, KOReader menu), Speed (refresh, keeping the book open, library index)
 -- and About.
 
 local Actions = require("cyberui/actions")
@@ -250,6 +250,23 @@ function SettingsScreen:speed()
         row(_("Full refresh every"), _("Screens between flashing refreshes that clear ghosting (0 never)"),
             Controls.Stepper({ value = Settings.get("full_refresh_every", 6), min = 0, max = 20,
                 format = function(v) return tostring(v) end, value_w = 48, on_change = function(v) save("full_refresh_every", v) end })),
+        row(_("Keep the book open on Home"), _("Home shows at once and the same book opens again with no loading; the book is closed later"),
+            Controls.Toggle:new({ on = Settings.get("park_reader", false), on_change = function(on)
+                save("park_reader", on)
+                if not on then require("cyberui/park").finish() end
+            end })),
+        Panel:new({ shape = "frame", pad = th.space.m, child = Layout.Column:new({ gap = th.space.xs, children = {
+            Label:new({ text = _("PARKING // WHAT IT COSTS"), kind = "micro", color = "muted" }),
+            Label:new({ text = _("Going home puts the book away instead of closing it. KOReader closes it for real when you open a different book, after 30 seconds of not touching the screen, or when you open KOReader's menu or its file browser."),
+                kind = "small", lines = 5 }),
+            Label:new({ text = _("- A different book, KOReader's menu and the file browser take a moment longer, since the close happens then."),
+                kind = "small", lines = 4 }),
+            Label:new({ text = _("- The book stays in memory while it is put away."), kind = "small", lines = 2 }),
+            Label:new({ text = _("- Sleeping soon after leaving a book shows that book's sleep screen."), kind = "small", lines = 3 }),
+            Label:new({ text = _("- KOReader's own gestures (corner taps, edge swipes) do not work on Home until the book is closed."),
+                kind = "small", lines = 4 }),
+            Label:new({ text = _("- A book read in landscape is closed the normal way."), kind = "small", lines = 2 }),
+        } }) }),
         row(_("Library index"), string.format(_("%d books indexed; rebuild after copying books over"), Library.count() or 0),
             Button:new({ label = _("Rebuild"), on_tap = function()
                 Library.reset()

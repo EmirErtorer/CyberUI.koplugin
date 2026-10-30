@@ -50,6 +50,7 @@ local function onTop()
     local top = UIManager:getTopmostVisibleWidget()
     return host ~= nil and top == host
 end
+App.onTop = onTop
 
 -- Make a screen instance from its module.
 local function make(id, params)
@@ -207,26 +208,35 @@ function App.raise()
     App.afterShow()
 end
 
+-- Close the book for real and let KOReader rebuild its file browser under
+-- home, which stays on top and is not painted again. Touches made while that
+-- blocks are not meant for home, so they are dropped.
+function App.realClose(ui, file)
+    prepainted = true
+    ui:onClose(false)
+    ui:showFileManager(file)
+    local ok, now = pcall(function() return require("ui/time").now() end)
+    if ok and host then host.ignore_before = now end
+end
+
 -- Leave the open book for home at once: progress is saved and home painted
--- first, then KOReader closes the book and rebuilds its file browser under
--- home (without a full-screen flash), so going home takes one paint.
+-- first. Then KOReader closes the book and rebuilds its file browser under
+-- home (without a full-screen flash), so going home takes one paint; with
+-- parking on, the book is only put away and stays open until it is needed.
 function App.homeFromBook(ui)
     -- (newer KOReader only: 2026.07.1 does not have it)
     if UIManager.setSuspendRepaints then UIManager:setSuspendRepaints(false) end
     local file = ui.document and ui.document.file
-    ui:saveSettings()
+    local Park = require("cyberui/park")
+    local parked = Park.park(ui)
+    if not parked then ui:saveSettings() end
     App.bookClosed(file)
     App.setHome(true)
     App.raise()
     UIManager:forceRePaint()
+    if parked then return end
     prepainted = true
-    UIManager:nextTick(function()
-        ui:onClose(false)
-        ui:showFileManager(file)
-        -- the touches made while that blocked are not meant for home
-        local ok, now = pcall(function() return require("ui/time").now() end)
-        if ok and host then host.ignore_before = now end
-    end)
+    UIManager:nextTick(function() App.realClose(ui, file) end)
 end
 
 -- Load the reader's code once, while home sits idle, so even the first book
@@ -438,6 +448,10 @@ function App.openBook(path, after_open)
     if clock_timer then UIManager:unschedule(clock_timer); clock_timer = nil end
     local ReaderUI = require("apps/reader/readerui")
     local JackIn = require("cyberui/jackin")
+    local Park = require("cyberui/park")
+    -- the book put away under home: bring it back, nothing to load
+    if Park.unpark(path, after_open) then return end
+    Park.noteOpen()
     if host and JackIn.wanted(path) then
         App.flash(JackIn.card(path))
         JackIn.silenced(path, function() ReaderUI:showReader(path, nil, nil, nil, after_open) end)
@@ -472,6 +486,7 @@ end
 -- Open KOReader's drop-down menu: in CyberUI's style unless the reader chose
 -- KOReader's own, or when the file browser's menu cannot be read.
 function App.koreaderMenu()
+    require("cyberui/park").finish()   -- the menu belongs to the file browser, which a parked book replaces
     local Menu = require("cyberui/menu")
     if Settings.get("styled_menu", true) and Menu.available() then
         if not Menu.current() then Menu.open() end
@@ -483,6 +498,7 @@ end
 
 -- Leave CyberUI for the file browser (and stay there after reading).
 function App.fileBrowser()
+    require("cyberui/park").finish()
     App.setHome(false)
     App.close()
 end

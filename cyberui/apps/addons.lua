@@ -43,8 +43,8 @@ end
 -- "ready" (running), "disabled" (switched off), "restart" (installed, not
 -- running yet) or "missing".
 function Addons.status(addon)
-    local fm = require("apps/filemanager/filemanager").instance
-    if fm and fm[pluginId(addon)] then return "ready" end
+    local ui = require("cyberui/park").ui()   -- the file browser, or the book parked under home
+    if ui and ui[pluginId(addon)] then return "ready" end
     if not Addons.installedPath(addon) then return "missing" end
     local off = G_reader_settings and G_reader_settings:readSetting("plugins_disabled")
     if type(off) == "table" and off[pluginId(addon)] then return "disabled" end
@@ -100,6 +100,7 @@ end
 function Addons.launch(addon)
     local s = Addons.status(addon)
     if s == "ready" then
+        require("cyberui/park").finish()   -- the plugin opens from the file browser
         local fm = require("apps/filemanager/filemanager").instance
         fm:handleEvent(Event:new(addon.open_event))
     elseif s == "restart" then

@@ -38,8 +38,8 @@ end
 
 -- A running plugin's instance by its name, or nil.
 local function plugin(name)
-    local fm = require("apps/filemanager/filemanager").instance
-    return fm and fm[name]
+    local ui = require("cyberui/park").ui()
+    return ui and ui[name]
 end
 
 ---------------------------------------------------------------- power
