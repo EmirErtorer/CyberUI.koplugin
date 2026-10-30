@@ -108,4 +108,40 @@ do
     Settings.set("library_group", nil)
 end
 
+-- icons from the device
+do
+    local Icons = require("cyberui/gfx/icons")
+    local ids = {}
+    for _, src in ipairs(Icons.sources()) do ids[#ids + 1] = src.id end
+    Kit.ok(ids[1] == "set" and ids[#ids] == "ko", "the set and KOReader's own icons are offered: " .. table.concat(ids, ","))
+    local ko = Icons.list("ko")
+    local set = {}
+    for _, n in ipairs(ko) do set[n] = true end
+    Kit.ok(#ko > 40 and set["ko:appbar.search.svg"], "KOReader's stock icons are listed with a prefix")
+    Kit.ok(not set["ko:rotation.A.svg"] and not set["ko:wifi.open.0.svg"], "its state variants are left out")
+    Kit.ok(Icons.sourceOf("ko:appbar.search.svg") == "ko" and Icons.sourceOf("pen") == "set" and Icons.sourceOf(nil) == "set",
+        "an icon name tells its source")
+    local function inked(name)
+        local bb = Kit.canvas()
+        Icons.draw(bb, name, 0, 0, 30, require("ffi/blitbuffer").COLOR_BLACK)
+        local w, n = bb:getWidth(), 0
+        for y = 0, 29 do for x = 0, 29 do if bb:getPixel(x, y):getColor8().a < 255 then n = n + 1 end end end
+        bb:free()
+        return n, w
+    end
+    Kit.ok(inked("ko:appbar.search.svg") > 20, "a stock icon draws")
+    Kit.ok(inked("ko:no-such-icon.svg") == inked("tools"), "a stock icon that is gone draws the tools icon")
+    local Pick = require("cyberui/screens/iconpick")
+    local picked
+    local s = Pick:new({ current = "ko:appbar.search.svg", on_pick = function(n) picked = n end })
+    Kit.ok(s.source == "ko" and s:names()[1]:sub(1, 3) == "ko:", "the picker opens on the source of the current icon")
+    local W, H = Kit.Screen:getWidth(), Kit.Screen:getHeight()
+    local root = s:build({ w = W, h = H })
+    root:layout(W, H)
+    local bb = Kit.canvas()
+    root:paint(bb, 0, 0)
+    bb:free()
+    Kit.ok(s.pages and s.pages >= 1, "the picker pages the stock icons")
+end
+
 Kit.finish("features")
