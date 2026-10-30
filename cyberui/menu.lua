@@ -123,8 +123,15 @@ function Menu.current()
     return nil
 end
 
+-- The stable name of a tab: its id, else its icon, else its place.
+local function tabKey(tab, i)
+    return tab.id or tab.icon or tostring(i)
+end
+
 -- Drop the menu down. opts: { km = KOReader's menu object, reader = true
--- inside a book }.
+-- inside a book, pick = function(target, item) to choose an entry instead of
+-- running it, pickable = function(item) to say which entries may be chosen,
+-- quiet = true to draw nothing until `m.quiet` is cleared and `m:show()` runs }.
 function Menu.open(opts)
     opts = opts or {}
     local km = opts.km or fmMenu()
@@ -132,13 +139,13 @@ function Menu.open(opts)
     -- CyberUI's Deck comes first, where ZenOS keeps its Controls, unless ZenOS
     -- is running (installed but switched off counts as not running)
     local tabs = {}
-    local deck = not opts.reader and not Menu.zenosRunning()
+    local deck = not opts.reader and not opts.pick and not Menu.zenosRunning()
     if deck then tabs[1] = { id = "cyberui_deck", deck = true } end
     local shift = #tabs
     for i, t in ipairs(km.tab_item_table) do tabs[i + shift] = t end
-    local m = setmetatable({ km = km, reader = opts.reader, tabs = tabs, shift = shift, stack = {}, trail = {}, page = 1 }, Menu)
+    local m = setmetatable({ km = km, reader = opts.reader, pick = opts.pick, pickable = opts.pickable, tabs = tabs, shift = shift, stack = {}, trail = {}, page = 1 }, Menu)
     m.tab_key = opts.reader and "readermenu_tab_index" or "filemanagermenu_tab_index"
-    local last = opts.reader and km.last_tab_index or G_reader_settings:readSetting(m.tab_key)
+    local last = opts.pick and 1 or opts.reader and km.last_tab_index or G_reader_settings:readSetting(m.tab_key)
     m.tab = math.max(1, math.min((last or 1) + shift, #tabs))
     m.items = tabs[m.tab]
     -- what item actions call on "the menu"
@@ -151,6 +158,7 @@ function Menu.open(opts)
         onClose = function() m:close() end,
     }
     showing = m
+    m.quiet = opts.quiet
     m:show()
     return m
 end
@@ -164,6 +172,7 @@ end
 -- Draw (or redraw) the panel: over home in CyberUI's window, over a book in
 -- a popup of its own.
 function Menu:show()
+    if self.quiet then return end
     if not self.reader then
         App.dialog(function(close, w) return self:build(close, w) end)
         return
@@ -205,7 +214,7 @@ function Menu:switchTab(i)
     if tab.callback then tab.callback() end
     self.tab, self.items, self.stack, self.trail, self.page = i, tab, {}, {}, 1
     self.shim.item_table = tab
-    if tab.remember ~= false and not tab.deck then
+    if tab.remember ~= false and not tab.deck and not self.pick then
         -- KOReader's own numbering, without the Deck
         local own = i - self.shift
         if self.reader then self.km.last_tab_index = own else G_reader_settings:saveSetting(self.tab_key, own) end
@@ -258,8 +267,41 @@ function Menu:info(title, text)
     UIManager:show(InfoMessage:new({ text = text }))
 end
 
+-- Where an item is in the tree, as { tab, trail, text } (what a launcher
+-- button keeps to open it again).
+function Menu:target(item)
+    local trail = {}
+    for i, t in ipairs(self.trail) do trail[i] = t end
+    return { tab = tabKey(self.tabs[self.tab], self.tab), trail = trail, text = textOf(item) }
+end
+
+-- The index of the tab with this stable name, or nil.
+function Menu:tabIndex(key)
+    for i, t in ipairs(self.tabs) do
+        if tabKey(t, i) == key then return i end
+    end
+    return nil
+end
+
+-- The shown item with this text, or nil.
+function Menu:find(text)
+    for _i, item in ipairs(self:visible()) do
+        if textOf(item) == text then return item end
+    end
+    return nil
+end
+
+-- Choose the item for a picker instead of running it (unless the picker
+-- says that kind of entry cannot be used).
+function Menu:choose(item)
+    if self.pickable and not self.pickable(item) then return App.toast(_("THAT ONE CANNOT BE USED")) end
+    self:close()
+    self.pick(self:target(item), item)
+end
+
 -- A tap on an item, as KOReader's menu handles it.
 function Menu:select(item)
+    if self.pick and not submenu(item) then return self:choose(item) end
     if item.tap_input or item.tap_input_func then
         self:close()
         return self:askInput(item.tap_input or item.tap_input_func())
@@ -281,6 +323,7 @@ end
 
 -- A long press on an item: its own action, else its help.
 function Menu:hold(item)
+    if self.pick then return self:choose(item) end
     if item.hold_input or item.hold_input_func then
         self:close()
         return self:askInput(item.hold_input or item.hold_input_func())
@@ -512,7 +555,7 @@ function Menu:build(_close, screen_w)
         tab_buttons[i] = Button:new({ icon = tabLook(t)[1], variant = i == self.tab and "chip_on" or "chip", grow = true,
             height = tabs_h, on_tap = function() self:switchTab(i) end })
     end
-    local path = "KOREADER // " .. look[2]
+    local path = (self.pick and "PICK // " or "KOREADER // ") .. look[2]
     for _i, t in ipairs(self.trail) do path = path .. " > " .. t:upper() end
     local title = #self.trail > 0 and self.trail[#self.trail] or look[2]
     local kids = {
@@ -521,6 +564,10 @@ function Menu:build(_close, screen_w)
         Layout.Row:new({ gap = gap, children = tab_buttons }),
     }
     local fixed = header_h + tabs_h + 2 * gap + 2 * pad + Theme.px(3)
+    if self.pick then
+        kids[#kids + 1] = Label:new({ text = _("TAP AN ENTRY TO USE IT. HOLD A SUBMENU TO USE THE MENU ITSELF."), kind = "micro", color = "muted", lines = 2 })
+        fixed = fixed + Theme.px(30)
+    end
     local want
     if tab.deck or tab.panel then
         -- a tab of controls: tiles (and for the deck, the glance; light too)
