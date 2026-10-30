@@ -90,7 +90,7 @@ function ColourPick:build()
     local params = self.params
     local rgb = self:rgb()
     local hex = Color.hex(rgb)
-    local dial = Dial:new({ hue = self.hue, sat = self.sat, val = self.val, grow = true, size = 360,
+    local dial = Dial:new({ hue = self.hue, sat = self.sat, val = self.val, size = 360,
         on_change = function(h, s, v) self.hue, self.sat, self.val = h, s, v; App.update() end })
     local readout = Layout.Row:new({ gap = th.space.m, valign = "center", children = {
         Label:new({ text = string.format("%s // H%d S%d V%d", hex, math.floor(self.hue + 0.5), math.floor(self.sat * 100 + 0.5), math.floor(self.val * 100 + 0.5)),
@@ -118,7 +118,9 @@ function ColourPick:build()
         controls.width = math.floor(screen:getWidth() * 0.5)
         body = Layout.Row:new({ gap = th.space.l, valign = "stretch", children = { dial, controls } })
     else
-        body = Layout.Column:new({ gap = th.space.m, children = { dial, controls } })
+        -- the dial centred in the room above the controls
+        local centred = Layout.Row:new({ grow = true, valign = "stretch", children = { Layout.Spacer:new({ grow = true }), dial, Layout.Spacer:new({ grow = true }) } })
+        body = Layout.Column:new({ gap = th.space.m, children = { centred, controls } })
     end
     return Frame.page({ screen = self, title = params.title or _("Colour"), path = "PICK // HSV", tab = "settings", body = body })
 end

@@ -50,7 +50,7 @@ function ShardsScreen:cell(item, h)
             meta = string.format(_("%d SHARDS"), item.count),
             on_tap = function() self.tab, self.book, self.page = "book", item.path, 1; App.update() end })
     end
-    return ShardCard:new({ shard = item.shard, number = item.number, of = item.of, height = h, lines = 4,
+    return ShardCard:new({ shard = item.shard, number = item.number, of = item.of, height = h, lines = 3,
         on_tap = function() App.push("shard", { shard = item.shard, number = item.number, of = item.of }) end })
 end
 
@@ -68,7 +68,7 @@ function ShardsScreen:build()
             kind = "body", color = "muted", lines = 4 })
     else
         body[#body + 1] = Grid:new({
-            grow = true, items = items, page = self.page, cols = 1, cell_h = self.tab == "books" and Theme.px(56) or Theme.px(124), gap = 0,
+            grow = true, items = items, page = self.page, cols = 1, cell_h = self.tab == "books" and Theme.px(56) or Theme.px(104), gap = 0,
             row_gap = self.tab == "books" and 0 or th.space.s,
             make = function(item, _w, h) return self:cell(item, h) end,
             on_layout = function(_cap, pages, page) self.pages, self.page = pages, page end,

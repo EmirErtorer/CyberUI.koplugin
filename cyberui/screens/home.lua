@@ -172,9 +172,11 @@ end
 
 -- Recent books other than the shown one, as many as fit. Tapping one shows
 -- it in the active panel; holding it opens its details.
-local function recentList(home, shown)
+local function recentList(home, shown, shard)
     local th = Theme.get()
+    -- the shard (when there is one) sits first, so a short column clips recent books, not it
     local kids = { Label:new({ text = _("RECENT_FILES"), kind = "micro", color = "muted" }) }
+    if shard then table.insert(kids, 1, shard) end
     local n = 0
     local row_h, thumb_w, thumb_h = Cover.recentSize()
     for _i, item in ipairs(History.recent(8)) do
@@ -194,9 +196,9 @@ local function recentList(home, shown)
         child = Layout.Column:new({ gap = th.space.s, clip = true, children = kids }) })
 end
 
--- A recovered highlight as a data shard, when there is one and the screen is
--- tall enough to spare the room (not a wide, short one). Tapping opens all the
--- shards, holding draws another.
+-- A recovered highlight as a data shard at the top of the recent list, when
+-- there is one and the screen is tall (not a wide, short one). Tapping opens all
+-- the shards, holding draws another.
 local function shardPanel(home)
     local screen = require("device").screen
     home.no_shard = false
@@ -206,7 +208,7 @@ local function shardPanel(home)
         home.no_shard = true
         return nil
     end
-    return ShardCard:new({ shard = pick.shard, number = pick.number, of = pick.of, lines = 2,
+    return ShardCard:new({ shard = pick.shard, number = pick.number, of = pick.of, lines = 3,
         on_tap = function() App.push("shards") end,
         on_hold = function() Shards.another(); App.update() end })
 end
@@ -234,8 +236,7 @@ function Home:build()
         dateRow(self),
         activeFile(shown),
     }
-    kids[#kids + 1] = shardPanel(self) or nil
-    kids[#kids + 1] = Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown), Launcher.build() } })
+    kids[#kids + 1] = Layout.Row:new({ grow = true, gap = th.space.l, valign = "stretch", children = { recentList(self, shown, shardPanel(self)), Launcher.build() } })
     kids[#kids + 1] = footer()
     return Layout.Column:new({ pad = { th.space.s, th.space.xl, th.space.m, th.space.xl }, gap = th.space.m, children = kids })
 end

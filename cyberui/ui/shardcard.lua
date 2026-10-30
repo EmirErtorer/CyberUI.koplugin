@@ -29,8 +29,8 @@ local function shape(id, w, h)
     }
     -- a short crack running down from the top edge, clear of the words
     local top = outline[4]
-    local crack = { { top[1], top[2] }, { top[1] - 0.012 * w, top[2] + 0.09 * y }, { top[1] + 0.010 * w, top[2] + 0.16 * y },
-        { top[1] - 0.006 * w, top[2] + 0.22 * y } }
+    local crack = { { top[1], top[2] }, { top[1] - 0.012 * w, top[2] + 0.06 * y }, { top[1] + 0.010 * w, top[2] + 0.11 * y },
+        { top[1] - 0.006 * w, top[2] + 0.15 * y } }
     return outline, crack
 end
 

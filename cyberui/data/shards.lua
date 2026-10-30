@@ -73,7 +73,7 @@ local function read(path)
     local file = sidecar(path)
     local index = books()
     if not file then
-        if index[path] then index[path] = nil; flat = nil; return true end
+        if index[path] then index[path] = nil; flat, shown = nil, nil; return true end
         return false
     end
     local stamp = lfs.attributes(file, "modification")
@@ -81,7 +81,7 @@ local function read(path)
     local list = Shards.of(path)
     while #list > PER_BOOK do list[#list] = nil end
     index[path] = { stamp = stamp, list = list }
-    flat = nil
+    flat, shown = nil, nil
     return true
 end
 
