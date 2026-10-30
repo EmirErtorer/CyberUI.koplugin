@@ -8,6 +8,23 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Added
+- Operator ID card: a handle, a rank earned from reading hours, an ID code with
+  a barcode, your totals, and a photo chosen from any folder on the device
+  (tap the face or PHOTO). Save the card as a picture. A slim strip on home
+  opens it.
+- Jack-in card: a card with the book shown while it opens, in place of
+  KOReader's small opening message (System > Home > Jack-in card).
+- Bounty board for books you never opened, oldest first, with a bounty that
+  grows by the day; a Bounties button on home.
+- Data shards: every highlight in your books as a recovered fragment, with a
+  shard on home, a Shards screen, and a way to open the book at the highlight.
+- Skyline chart: a month of reading as a night city on the calendar tab, and
+  the year by week on the goal tab.
+- Colour dial for the custom scheme: hue ring, saturation and brightness
+  matrix, a grey preview and a note on whether the colour reads on the page.
+- The icon picker also offers KOReader's own icons.
+
 ## [1.0.5] - 2026-10-27 *Prerelease*
 
 ### Added

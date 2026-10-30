@@ -252,6 +252,22 @@ do
     end
 end
 
+-- opening a book at a shard
+do
+    local App = require("cyberui/app")
+    local Actions = require("cyberui/actions")
+    local real, after = App.openBook, nil
+    App.openBook = function(_path, cb) after = cb end
+    Actions.openAt("/x/Dune.epub", { page = "/body/DocFragment[2]", pos0 = "/body/DocFragment[2]/p[3]" })
+    App.openBook = real
+    local got
+    after({ handleEvent = function(_, ev) got = ev end })
+    Kit.ok(got and got.handler == "onGotoXPointer" and got.args[1] == "/body/DocFragment[2]" and got.args[2] == "/body/DocFragment[2]/p[3]",
+        "opening at a shard goes to its place in the book")
+    after({ paging = {}, handleEvent = function(_, ev) got = ev end })
+    Kit.ok(got.handler == "onGotoPage", "and by page in a paged book")
+end
+
 -- the skyline
 do
     local Skyline = require("cyberui/ui/skyline")
