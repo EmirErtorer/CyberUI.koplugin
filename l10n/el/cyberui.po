@@ -211,7 +211,7 @@ msgstr "Αρχική"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr "Βιβλιοθήκη"
+msgstr "Βιβλία"
 
 #: cyberui/app.lua
 msgid "Caches"
@@ -235,7 +235,7 @@ msgstr "ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ // ΠΑΤΗΣΤΕ"
 
 #: cyberui/apps/addons.lua
 msgid "RESTART TO USE"
-msgstr "ΕΠΑΝΕΚΚΙΝΗΣΤΕ ΓΙΑ ΧΡΗΣΗ"
+msgstr "ΕΠΑΝΕΚΚΙΝΗΣΗ"
 
 #: cyberui/apps/addons.lua
 msgid "GET IT // FREE"
@@ -447,7 +447,7 @@ msgstr "ΝΕΟ"
 
 #: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DONE"
-msgstr "ΤΕΛΟΣ"
+msgstr "ΤΕΛΕΙΩΜΕΝΟ"
 
 #: cyberui/data/books.lua
 msgid "HOLD"
@@ -1145,7 +1145,7 @@ msgstr "ΠΛΗΚΤΡΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "KEYBOARD"
-msgstr "ΠΛΗΚΤΡΟΛΟΓΙΟ"
+msgstr "ΠΛΗΚΤΡ."
 
 #: cyberui/screens/diagnostics.lua
 msgid "OPTICS"
@@ -1173,7 +1173,7 @@ msgstr "ΛΕΙΤΟΥΡΓΙΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "PORTRAIT"
-msgstr "ΚΑΤΑΚΟΡΥΦΑ"
+msgstr "ΚΑΘΕΤΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "LANDSCAPE"
@@ -1181,11 +1181,11 @@ msgstr "ΟΡΙΖΟΝΤΙΑ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT ON"
-msgstr "ΑΝΤΙΣΤΡΟΦΗ ΕΝΕΡΓΗ"
+msgstr "ΑΝΤΙΣΤΡ. ON"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT OFF"
-msgstr "ΑΝΤΙΣΤΡΟΦΗ ΑΝΕΝΕΡΓΗ"
+msgstr "ΑΝΤΙΣΤΡ. OFF"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INPUT"
@@ -1249,11 +1249,11 @@ msgstr "ΣΕΛΙΔΕΣ"
 
 #: cyberui/screens/dossier.lua
 msgid "ADDED"
-msgstr "ΠΡΟΣΤΕΘΗΚΕ"
+msgstr "ΠΡΟΣΘ."
 
 #: cyberui/screens/dossier.lua
 msgid "OPENED"
-msgstr "ΑΝΟΙΧΤΗΚΕ"
+msgstr "ΑΝΟΙΓΜΑ"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
@@ -1365,7 +1365,7 @@ msgstr "ΣΕΤ"
 
 #: cyberui/screens/fonts.lua cyberui/screens/settings.lua
 msgid "Fonts"
-msgstr "Γραμματοσειρές"
+msgstr "Fonts"
 
 #: cyberui/screens/fonts.lua
 msgid "%d AVAILABLE"
@@ -1383,7 +1383,7 @@ msgstr "Σειρές"
 
 #: cyberui/screens/history.lua
 msgid "Calendar"
-msgstr "Ημερολόγιο"
+msgstr "Μήνας"
 
 #: cyberui/screens/history.lua
 msgid "Goal"
@@ -2035,11 +2035,11 @@ msgstr "πληκτρολογήστε για αναζήτηση"
 
 #: cyberui/screens/settings.lua
 msgid "Look"
-msgstr "Εμφάνιση"
+msgstr "Όψη"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
-msgstr "Εξώφυλλα"
+msgstr "Εξώφ."
 
 #: cyberui/screens/settings.lua
 msgid "Speed"
@@ -2047,7 +2047,7 @@ msgstr "Ταχύτητα"
 
 #: cyberui/screens/settings.lua
 msgid "About"
-msgstr "Πληροφορίες"
+msgstr "Info"
 
 #: cyberui/screens/settings.lua
 msgid "COLOUR SCHEME"
@@ -2679,7 +2679,7 @@ msgstr "Ψηλή και στενή, χωράει περισσότερα σε μ�
 
 #: cyberui/themes/fonts.lua
 msgid "The classic sci-fi display face, with Exo 2 for reading"
-msgstr "Η κλασική γραμματοσειρά επιστημονικής φαντασίας για τίτλους, με Exo 2 για ανάγνωση"
+msgstr "Η κλασική γραμματοσειρά sci-fi για τίτλους, με Exo 2 για ανάγνωση"
 
 #: cyberui/themes/fonts.lua
 msgid "Low, wide and geometric"
@@ -2812,8 +2812,8 @@ msgstr "ΑΜΟΙΒΕΣ"
 #: cyberui/ui/launcher.lua
 msgid "%s // %d WANTED"
 msgid_plural "%s // %d WANTED"
-msgstr[0] "%s // %d ΚΑΤΑΖΗΤΕΙΤΑΙ"
-msgstr[1] "%s // %d ΚΑΤΑΖΗΤΟΥΝΤΑΙ"
+msgstr[0] "%s // %d ΖΗΤΕΙΤΑΙ"
+msgstr[1] "%s // %d ΖΗΤΟΥΝΤΑΙ"
 
 #: cyberui/ui/launcher.lua
 msgid "BACKLOG CLEAR"

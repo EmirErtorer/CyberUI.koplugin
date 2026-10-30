@@ -211,11 +211,11 @@ msgstr "Inicio"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr "Biblioteca"
+msgstr "Libros"
 
 #: cyberui/app.lua
 msgid "Caches"
-msgstr "Colecciones"
+msgstr "Listas"
 
 #: cyberui/app.lua cyberui/screens/history.lua
 msgid "Log"
@@ -1181,11 +1181,11 @@ msgstr "HORIZONTAL"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT ON"
-msgstr "INVERSIÓN ACTIVA"
+msgstr "INVERSIÓN ON"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT OFF"
-msgstr "INVERSIÓN INACTIVA"
+msgstr "INVERSIÓN OFF"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INPUT"
@@ -1257,7 +1257,7 @@ msgstr "ABIERTO"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
-msgstr "COLECCIONES"
+msgstr "LISTAS"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
@@ -1375,7 +1375,7 @@ msgstr[1] "%d DISPONIBLES"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
-msgstr "Estadísticas"
+msgstr "Datos"
 
 #: cyberui/screens/history.lua
 msgid "Streaks"
@@ -2039,15 +2039,15 @@ msgstr "Aspecto"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
-msgstr "Portadas"
+msgstr "Tapas"
 
 #: cyberui/screens/settings.lua
 msgid "Speed"
-msgstr "Velocidad"
+msgstr "Rápido"
 
 #: cyberui/screens/settings.lua
 msgid "About"
-msgstr "Acerca de"
+msgstr "Info"
 
 #: cyberui/screens/settings.lua
 msgid "COLOUR SCHEME"

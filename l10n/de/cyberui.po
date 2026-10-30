@@ -211,15 +211,15 @@ msgstr "Home"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr "Bibliothek"
+msgstr "Bücher"
 
 #: cyberui/app.lua
 msgid "Caches"
-msgstr "Sammlungen"
+msgstr "Listen"
 
 #: cyberui/app.lua cyberui/screens/history.lua
 msgid "Log"
-msgstr "Protokoll"
+msgstr "Log"
 
 #: cyberui/app.lua cyberui/screens/settings.lua
 msgid "System"
@@ -447,7 +447,7 @@ msgstr "NEU"
 
 #: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DONE"
-msgstr "FERTIG"
+msgstr "BEENDET"
 
 #: cyberui/data/books.lua
 msgid "HOLD"
@@ -1181,11 +1181,11 @@ msgstr "QUERFORMAT"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT ON"
-msgstr "INVERTIERUNG AN"
+msgstr "INVERT AN"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT OFF"
-msgstr "INVERTIERUNG AUS"
+msgstr "INVERT AUS"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INPUT"
@@ -1249,7 +1249,7 @@ msgstr "SEITEN"
 
 #: cyberui/screens/dossier.lua
 msgid "ADDED"
-msgstr "HINZUGEFÜGT"
+msgstr "ERGÄNZT"
 
 #: cyberui/screens/dossier.lua
 msgid "OPENED"
@@ -1257,7 +1257,7 @@ msgstr "GEÖFFNET"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
-msgstr "SAMMLUNGEN"
+msgstr "LISTEN"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
@@ -1321,7 +1321,7 @@ msgstr "UMBENENNEN"
 
 #: cyberui/screens/dossier.lua
 msgid "MOVE TO"
-msgstr "VERSCHIEBEN NACH"
+msgstr "VERSCHIEBEN"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DELETE"
@@ -1365,7 +1365,7 @@ msgstr "SÄTZE"
 
 #: cyberui/screens/fonts.lua cyberui/screens/settings.lua
 msgid "Fonts"
-msgstr "Schriften"
+msgstr "Fonts"
 
 #: cyberui/screens/fonts.lua
 msgid "%d AVAILABLE"
@@ -2035,7 +2035,7 @@ msgstr "zum Suchen tippen"
 
 #: cyberui/screens/settings.lua
 msgid "Look"
-msgstr "Aussehen"
+msgstr "Optik"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"

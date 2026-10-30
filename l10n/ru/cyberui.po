@@ -220,11 +220,11 @@ msgstr "Домой"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr "Библиотека"
+msgstr "Книги"
 
 #: cyberui/app.lua
 msgid "Caches"
-msgstr "Подборки"
+msgstr "Списки"
 
 #: cyberui/app.lua cyberui/screens/history.lua
 msgid "Log"
@@ -244,7 +244,7 @@ msgstr "ВЫКЛЮЧЕНО // КОСНИТЕСЬ"
 
 #: cyberui/apps/addons.lua
 msgid "RESTART TO USE"
-msgstr "ПЕРЕЗАПУСТИТЕ, ЧТОБЫ ИСПОЛЬЗОВАТЬ"
+msgstr "НУЖЕН ПЕРЕЗАПУСК"
 
 #: cyberui/apps/addons.lua
 msgid "GET IT // FREE"
@@ -456,7 +456,7 @@ msgstr "НОВАЯ"
 
 #: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DONE"
-msgstr "ГОТОВО"
+msgstr "ЗАВЕРШЕНО"
 
 #: cyberui/data/books.lua
 msgid "HOLD"
@@ -584,7 +584,7 @@ msgstr "Не удалось сохранить фото"
 
 #: cyberui/data/sysinfo.lua
 msgid "INTERNAL"
-msgstr "ВНУТРЕННЯЯ"
+msgstr "ВНУТР."
 
 #: cyberui/data/sysinfo.lua cyberui/ui/launcher.lua
 msgid "LIBRARY"
@@ -1153,11 +1153,11 @@ msgstr "СТИЛУС"
 
 #: cyberui/screens/diagnostics.lua
 msgid "KEYS"
-msgstr "КЛАВИШИ"
+msgstr "КНОПКИ"
 
 #: cyberui/screens/diagnostics.lua
 msgid "KEYBOARD"
-msgstr "КЛАВИАТУРА"
+msgstr "КЛАВ."
 
 #: cyberui/screens/diagnostics.lua
 msgid "OPTICS"
@@ -1245,7 +1245,7 @@ msgstr "СКАНИРОВАТЬ ЗАНОВО"
 
 #: cyberui/screens/dossier.lua
 msgid "READING"
-msgstr "ЧТЕНИЕ"
+msgstr "ЧИТАЮ"
 
 #: cyberui/screens/dossier.lua
 msgid "ON HOLD"
@@ -1257,11 +1257,11 @@ msgstr "ФОРМАТ"
 
 #: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
 msgid "PAGES"
-msgstr "СТРАНИЦЫ"
+msgstr "СТР."
 
 #: cyberui/screens/dossier.lua
 msgid "ADDED"
-msgstr "ДОБАВЛЕНО"
+msgstr "ДОБАВЛ."
 
 #: cyberui/screens/dossier.lua
 msgid "OPENED"
@@ -1269,7 +1269,7 @@ msgstr "ОТКРЫТО"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
-msgstr "ПОДБОРКИ"
+msgstr "СПИСКИ"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
@@ -1388,7 +1388,7 @@ msgstr[2] "%d ДОСТУПНО"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
-msgstr "Статистика"
+msgstr "Итоги"
 
 #: cyberui/screens/history.lua
 msgid "Streaks"
@@ -2058,19 +2058,19 @@ msgstr "введите для поиска"
 
 #: cyberui/screens/settings.lua
 msgid "Look"
-msgstr "Оформление"
+msgstr "Вид"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
-msgstr "Обложки"
+msgstr "Обл."
 
 #: cyberui/screens/settings.lua
 msgid "Speed"
-msgstr "Скорость"
+msgstr "Темп"
 
 #: cyberui/screens/settings.lua
 msgid "About"
-msgstr "О программе"
+msgstr "Инфо"
 
 #: cyberui/screens/settings.lua
 msgid "COLOUR SCHEME"

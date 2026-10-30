@@ -216,11 +216,11 @@ msgstr "Ustaw jako folder domowy biblioteki"
 
 #: cyberui/app.lua cyberui/screens/settings.lua
 msgid "Home"
-msgstr "Ekran główny"
+msgstr "Start"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr "Biblioteka"
+msgstr "Książki"
 
 #: cyberui/app.lua
 msgid "Caches"
@@ -244,7 +244,7 @@ msgstr "WYŁĄCZONE // DOTKNIJ"
 
 #: cyberui/apps/addons.lua
 msgid "RESTART TO USE"
-msgstr "URUCHOM PONOWNIE, ABY UŻYWAĆ"
+msgstr "WYMAGA RESTARTU"
 
 #: cyberui/apps/addons.lua
 msgid "GET IT // FREE"
@@ -456,7 +456,7 @@ msgstr "NOWA"
 
 #: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DONE"
-msgstr "GOTOWE"
+msgstr "ZAKOŃCZONE"
 
 #: cyberui/data/books.lua
 msgid "HOLD"
@@ -1157,7 +1157,7 @@ msgstr "KLAWISZE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "KEYBOARD"
-msgstr "KLAWIATURA"
+msgstr "KLAW."
 
 #: cyberui/screens/diagnostics.lua
 msgid "OPTICS"
@@ -2070,7 +2070,7 @@ msgstr "Szybkość"
 
 #: cyberui/screens/settings.lua
 msgid "About"
-msgstr "O programie"
+msgstr "Info"
 
 #: cyberui/screens/settings.lua
 msgid "COLOUR SCHEME"
@@ -2845,9 +2845,9 @@ msgstr "NAGRODY"
 #: cyberui/ui/launcher.lua
 msgid "%s // %d WANTED"
 msgid_plural "%s // %d WANTED"
-msgstr[0] "%s // %d POSZUKIWANA"
-msgstr[1] "%s // %d POSZUKIWANE"
-msgstr[2] "%s // %d POSZUKIWANYCH"
+msgstr[0] "%s // %d SZUKANA"
+msgstr[1] "%s // %d SZUKANE"
+msgstr[2] "%s // %d SZUKANYCH"
 
 #: cyberui/ui/launcher.lua
 msgid "BACKLOG CLEAR"

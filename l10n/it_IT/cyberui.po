@@ -215,7 +215,7 @@ msgstr "Libreria"
 
 #: cyberui/app.lua
 msgid "Caches"
-msgstr "Collezioni"
+msgstr "Raccolte"
 
 #: cyberui/app.lua cyberui/screens/history.lua
 msgid "Log"
@@ -307,11 +307,11 @@ msgstr "Disegna, prendi appunti e scrivi sui tuoi libri con il dito o una penna:
 
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
-msgstr "AUTORIZZAZIONE"
+msgstr "ACCESSO"
 
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE_%dH"
-msgstr "AUTORIZZAZIONE_%dH"
+msgstr "ACCESSO_%dH"
 
 #: cyberui/data/achievements.lua cyberui/screens/diagnostics.lua
 msgid "UPTIME"
@@ -1181,11 +1181,11 @@ msgstr "ORIZZONTALE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT ON"
-msgstr "INVERSIONE ATTIVA"
+msgstr "INVERSIONE ON"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT OFF"
-msgstr "INVERSIONE SPENTA"
+msgstr "INVERSIONE OFF"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INPUT"
@@ -1257,7 +1257,7 @@ msgstr "APERTO"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
-msgstr "COLLEZIONI"
+msgstr "RACCOLTE"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
@@ -2039,7 +2039,7 @@ msgstr "Aspetto"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
-msgstr "Copertine"
+msgstr "Cover"
 
 #: cyberui/screens/settings.lua
 msgid "Speed"

@@ -207,15 +207,15 @@ msgstr "Kütüphane ana klasörü yap"
 
 #: cyberui/app.lua cyberui/screens/settings.lua
 msgid "Home"
-msgstr "Ana sayfa"
+msgstr "Ana"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr "Kütüphane"
+msgstr "Kitaplık"
 
 #: cyberui/app.lua
 msgid "Caches"
-msgstr "Koleksiyonlar"
+msgstr "Raflar"
 
 #: cyberui/app.lua cyberui/screens/history.lua
 msgid "Log"
@@ -235,7 +235,7 @@ msgstr "KAPALI // DOKUN"
 
 #: cyberui/apps/addons.lua
 msgid "RESTART TO USE"
-msgstr "KULLANMAK İÇİN YENİDEN BAŞLAT"
+msgstr "YENİDEN BAŞLAT"
 
 #: cyberui/apps/addons.lua
 msgid "GET IT // FREE"
@@ -1257,7 +1257,7 @@ msgstr "AÇILMA"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
-msgstr "KOLEKSİYONLAR"
+msgstr "RAFLAR"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
@@ -1365,7 +1365,7 @@ msgstr "TAKIMLAR"
 
 #: cyberui/screens/fonts.lua cyberui/screens/settings.lua
 msgid "Fonts"
-msgstr "Yazı tipleri"
+msgstr "Fontlar"
 
 #: cyberui/screens/fonts.lua
 msgid "%d AVAILABLE"
@@ -2039,7 +2039,7 @@ msgstr "Görünüm"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
-msgstr "Kapaklar"
+msgstr "Kapak"
 
 #: cyberui/screens/settings.lua
 msgid "Speed"

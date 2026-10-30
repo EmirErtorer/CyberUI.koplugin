@@ -211,11 +211,11 @@ msgstr "Accueil"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr "Bibliothèque"
+msgstr "Livres"
 
 #: cyberui/app.lua
 msgid "Caches"
-msgstr "Collections"
+msgstr "Listes"
 
 #: cyberui/app.lua cyberui/screens/history.lua
 msgid "Log"
@@ -447,7 +447,7 @@ msgstr "NOUVEAU"
 
 #: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "DONE"
-msgstr "LU"
+msgstr "TERMINÉ"
 
 #: cyberui/data/books.lua
 msgid "HOLD"
@@ -1181,11 +1181,11 @@ msgstr "PAYSAGE"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT ON"
-msgstr "INVERSION ACTIVE"
+msgstr "INVERSION ON"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT OFF"
-msgstr "INVERSION INACTIVE"
+msgstr "INVERSION OFF"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INPUT"
@@ -1257,7 +1257,7 @@ msgstr "OUVERT"
 
 #: cyberui/screens/dossier.lua
 msgid "CACHES"
-msgstr "COLLECTIONS"
+msgstr "LISTES"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
@@ -1375,7 +1375,7 @@ msgstr[1] "%d DISPONIBLES"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
-msgstr "Statistiques"
+msgstr "Stats"
 
 #: cyberui/screens/history.lua
 msgid "Streaks"
@@ -2035,11 +2035,11 @@ msgstr "saisissez pour rechercher"
 
 #: cyberui/screens/settings.lua
 msgid "Look"
-msgstr "Apparence"
+msgstr "Aspect"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
-msgstr "Couvertures"
+msgstr "Cover"
 
 #: cyberui/screens/settings.lua
 msgid "Speed"

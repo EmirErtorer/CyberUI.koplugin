@@ -211,7 +211,7 @@ msgstr "Início"
 
 #: cyberui/app.lua cyberui/screens/libmenu.lua cyberui/screens/library.lua
 msgid "Library"
-msgstr "Biblioteca"
+msgstr "Livros"
 
 #: cyberui/app.lua
 msgid "Caches"
@@ -1157,7 +1157,7 @@ msgstr "PAINEL"
 
 #: cyberui/screens/diagnostics.lua
 msgid "DEPTH"
-msgstr "PROFUNDIDADE"
+msgstr "PROF."
 
 #: cyberui/screens/diagnostics.lua
 msgid "COLOUR"
@@ -1181,11 +1181,11 @@ msgstr "PAISAGEM"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT ON"
-msgstr "INVERSÃO LIGADA"
+msgstr "INVERSÃO ON"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INVERT OFF"
-msgstr "INVERSÃO DESLIGADA"
+msgstr "INVERSÃO OFF"
 
 #: cyberui/screens/diagnostics.lua
 msgid "INPUT"
@@ -1249,7 +1249,7 @@ msgstr "PÁGINAS"
 
 #: cyberui/screens/dossier.lua
 msgid "ADDED"
-msgstr "ADICIONADO"
+msgstr "ADIÇÃO"
 
 #: cyberui/screens/dossier.lua
 msgid "OPENED"
@@ -1375,7 +1375,7 @@ msgstr[1] "%d DISPONÍVEIS"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
-msgstr "Estatísticas"
+msgstr "Dados"
 
 #: cyberui/screens/history.lua
 msgid "Streaks"
@@ -2035,7 +2035,7 @@ msgstr "digite para buscar"
 
 #: cyberui/screens/settings.lua
 msgid "Look"
-msgstr "Aparência"
+msgstr "Visual"
 
 #: cyberui/screens/settings.lua
 msgid "Covers"
@@ -2043,7 +2043,7 @@ msgstr "Capas"
 
 #: cyberui/screens/settings.lua
 msgid "Speed"
-msgstr "Velocidade"
+msgstr "Rápido"
 
 #: cyberui/screens/settings.lua
 msgid "About"

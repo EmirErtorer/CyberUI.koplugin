@@ -8,6 +8,21 @@ local Kit = dofile(REPO .. "/tests/kit.lua").boot(REPO)
 -- the real library and history of the emulator, read only
 G_reader_settings:saveSetting("home_dir", require("datastorage"):getDataDir() .. "/Books")
 
+-- CYBERUI_LANG=de draws in that language (KOReader's own day and month names too);
+-- TRUNC=1 lists the texts that were cut short with an ellipsis
+local LANG = os.getenv("CYBERUI_LANG")
+if LANG and LANG ~= "" then require("gettext").changeLang(LANG) end
+local truncated = {}
+if os.getenv("TRUNC") then
+    local Text = require("cyberui/gfx/text")
+    local fit = Text.fit
+    Text.fit = function(kind, s, w)
+        local r = fit(kind, s, w)
+        if r ~= s and r:find("…", 1, true) then truncated[s] = true end
+        return r
+    end
+end
+
 local Theme = require("cyberui/theme")
 local Settings = require("cyberui/settings")
 local Paint = require("cyberui/gfx/paint")
@@ -97,5 +112,10 @@ if next(only) == nil or only.history then
         end
     end
 end
+
+local cut = {}
+for text in pairs(truncated) do cut[#cut + 1] = text end
+table.sort(cut)
+for _, text in ipairs(cut) do print("TRUNC " .. (LANG or "en") .. " " .. text) end
 
 Kit.finish("screens")
