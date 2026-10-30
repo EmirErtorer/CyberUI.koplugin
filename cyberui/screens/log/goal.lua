@@ -14,6 +14,7 @@ local Insights = require("cyberui/data/insights")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Progress = require("cyberui/ui/progress")
+local Skyline = require("cyberui/ui/skyline")
 local Theme = require("cyberui/theme")
 local navrow = require("cyberui/ui/navrow")
 local tile = require("cyberui/ui/stattile")
@@ -37,6 +38,31 @@ local function ladder(l)
         rows[#rows + 1] = Layout.Row:new({ gap = th.space.xs, children = kids })
     end
     return Layout.Column:new({ gap = th.space.xs, children = rows })
+end
+
+-- The year as a skyline of 52 weeks: pages and minutes read each week, a sign
+-- on a week a book was finished, the months' initials underneath.
+local function yearSkyline(year, shelf)
+    local weeks = {}
+    for w = 1, 52 do weeks[w] = { pages = 0, minutes = 0 } end
+    local function weekOf(time) return math.min(52, math.floor((tonumber(os.date("%j", time)) - 1) / 7) + 1) end
+    for _i, d in ipairs(Insights.days()) do
+        if d.date:sub(1, 4) == tostring(year) then
+            local b = weeks[weekOf(d.time)]
+            b.pages, b.minutes = b.pages + d.pages, b.minutes + d.seconds / 60
+        end
+    end
+    for _i, b in ipairs(shelf) do
+        local y, m, d = (b.date or ""):match("^(%d+)-(%d+)-(%d+)")
+        if y then weeks[weekOf(os.time({ year = tonumber(y), month = tonumber(m), day = tonumber(d), hour = 12 }))].sign = true end
+    end
+    local now = os.date("*t")
+    if year == now.year then weeks[weekOf(os.time())].current = true end
+    local labels = {}
+    for m, initial in ipairs({ "J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D" }) do
+        labels[weekOf(os.time({ year = year, month = m, day = 1, hour = 12 }))] = initial
+    end
+    return Skyline:new({ buildings = weeks, labels = labels, minutes_per_window = 60, height = 104 })
 end
 
 -- Build the tab; `screen.goal_back` is how many years back from this one.
@@ -66,6 +92,9 @@ function GoalTab.build(screen)
         Progress:new({ value = math.min(#shelf / target, 1) }),
     } })
     local body = { nav, goal }
+    -- (a wide, short screen has no room for it)
+    local screen_dev = require("device").screen
+    if screen_dev:getWidth() <= screen_dev:getHeight() then body[#body + 1] = yearSkyline(year, shelf) end
     for _i, l in ipairs(ladders) do body[#body + 1] = ladder(l) end
     if #shelf == 0 then
         body[#body + 1] = Label:new({ grow = true, text = _("NO BOOKS FINISHED THIS YEAR. MARK A BOOK DONE AND IT SHELVES HERE."), kind = "small", color = "muted", lines = 3 })

@@ -5,9 +5,11 @@ local App = require("cyberui/app")
 local Charts = require("cyberui/ui/charts")
 local Format = require("cyberui/format")
 local Insights = require("cyberui/data/insights")
+local Controls = require("cyberui/ui/controls")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Settings = require("cyberui/settings")
+local Skyline = require("cyberui/ui/skyline")
 local Theme = require("cyberui/theme")
 local navrow = require("cyberui/ui/navrow")
 local _ = require("gettext")
@@ -31,19 +33,25 @@ function Calendar.build(screen)
     local first = os.time({ year = now.year, month = now.month - screen.cal_back, day = 1, hour = 12 })
     local t = os.date("*t", first)
     local days = tonumber(os.date("%d", os.time({ year = t.year, month = t.month + 1, day = 0, hour = 12 })))
-    local levels = {}
+    local levels, buildings = {}, {}
+    for d = 1, days do buildings[d] = { pages = 0, minutes = 0, current = screen.cal_back == 0 and d == now.day } end
     local month_prefix = os.date("%Y-%m-", first)
     local month_seconds = 0
     for _i, d in ipairs(Insights.days()) do
         if d.date:sub(1, #month_prefix) == month_prefix then
-            levels[tonumber(d.date:sub(9, 10))] = Charts.level(d.seconds, goal)
+            local day = tonumber(d.date:sub(9, 10))
+            levels[day] = Charts.level(d.seconds, goal)
+            buildings[day].pages, buildings[day].minutes = d.pages, d.seconds / 60
             month_seconds = month_seconds + d.seconds
         end
     end
     local nav = navrow({ label = os.date("%B %Y", first):upper(), can_next = screen.cal_back > 0,
         on_prev = function() screen.cal_back = screen.cal_back + 1; App.update() end,
         on_next = function() screen.cal_back = screen.cal_back - 1; App.update() end })
-    local month = Charts.Month:new({ first = (tonumber(os.date("%w", first)) + 6) % 7 + 1, days = days, levels = levels,
+    local as_skyline = Settings.get("cal_view", "grid") == "skyline"
+    local labels = { [1] = "1", [8] = "8", [15] = "15", [22] = "22", [days] = tostring(days) }
+    local month = as_skyline and Skyline:new({ buildings = buildings, labels = labels, height = 190 })
+        or Charts.Month:new({ first = (tonumber(os.date("%w", first)) + 6) % 7 + 1, days = days, levels = levels,
         today = screen.cal_back == 0 and now.day or nil })
 
     -- when the reader reads: a row per weekday, a column per hour
@@ -68,11 +76,15 @@ function Calendar.build(screen)
             Label:new({ text = "23", kind = "micro", color = "muted", align = "right" }),
         } }),
     } })
-    return Layout.Column:new({ grow = true, gap = th.space.m, children = {
-        nav, weekdays(), month,
-        Label:new({ text = string.format(_("%s READ THIS MONTH"), Format.duration(month_seconds)), kind = "mono_small", color = "muted" }),
-        pattern,
-    } })
+    local view = Controls.Segmented({ options = { { _("GRID"), "grid" }, { _("SKYLINE"), "skyline" } }, value = as_skyline and "skyline" or "grid",
+        kind = "label", on_change = function(v) Settings.save("cal_view", v); App.update() end })
+    local note = as_skyline and _("HEIGHT = PAGES // LIT WINDOWS = 5 MIN EACH") or string.format(_("%s READ THIS MONTH"), Format.duration(month_seconds))
+    local kids = { nav, view }
+    if not as_skyline then kids[#kids + 1] = weekdays() end
+    kids[#kids + 1] = month
+    kids[#kids + 1] = Label:new({ text = note, kind = "mono_small", color = "muted" })
+    kids[#kids + 1] = pattern
+    return Layout.Column:new({ grow = true, gap = th.space.m, children = kids })
 end
 
 return Calendar

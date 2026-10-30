@@ -251,6 +251,44 @@ do
     end
 end
 
+-- the skyline
+do
+    local Skyline = require("cyberui/ui/skyline")
+    local W = Kit.Screen:getWidth()
+    local b = {}
+    for d = 1, 30 do b[d] = { pages = d % 6 == 0 and 0 or d * 5, minutes = d * 3, current = d == 12, sign = d == 20 } end
+    local sk = Skyline:new({ buildings = b, labels = { [1] = "1", [30] = "30" }, height = 190 })
+    sk:layout(W - 40, nil)
+    Kit.ok(sk.h > 100, "the skyline has its height")
+    local bb = Kit.canvas()
+    sk:paint(bb, 10, 10)
+    Kit.ok(Kit.time(function() sk:paint(bb, 10, 10) end, 5) < 25, "a month's skyline paints in under 25 ms")
+    bb:free()
+    Skyline:new({ buildings = {}, height = 100 }):layout(W, nil)
+    local Settings = require("cyberui/settings")
+    local H = Kit.Screen:getHeight()
+    for _, view in ipairs({ "grid", "skyline" }) do
+        Settings.set("cal_view", view)
+        local ok, err = pcall(function()
+            local tab = require("cyberui/screens/log/calendar").build({ cal_back = 0 })
+            tab:layout(W, H)
+            local c = Kit.canvas()
+            tab:paint(c, 0, 0)
+            c:free()
+        end)
+        Kit.ok(ok, "the calendar tab builds as " .. view .. ": " .. tostring(err))
+    end
+    Settings.set("cal_view", nil)
+    local ok, err = pcall(function()
+        local tab = require("cyberui/screens/log/goal").build({ goal_back = 0, page = 1 })
+        tab:layout(W, H)
+        local c = Kit.canvas()
+        tab:paint(c, 0, 0)
+        c:free()
+    end)
+    Kit.ok(ok, "the goal tab builds with its skyline: " .. tostring(err))
+end
+
 -- the jack-in card
 do
     local JackIn = require("cyberui/jackin")
