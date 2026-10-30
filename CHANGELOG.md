@@ -17,6 +17,12 @@ versions marked *Prerelease* are test builds.
   as the payouts, so ownership and the balance cannot be edited in the
   settings file.
 
+### Added (menu)
+- CyberUI's tab in KOReader's menu now has two pages, the operator ID card
+  (face, handle, rank, eddies) and the controls, with the order your choice
+  (System > Home > Menu tab opens on). With ZenOS running the tab sits right
+  after ZenOS's Controls and Launcher. Swipe sideways or tap a page name.
+
 ### Fixed
 - A crash when a drag reached the photo crop window after it had closed.
 - The Traces backdrop no longer draws routes off the edge of the card.

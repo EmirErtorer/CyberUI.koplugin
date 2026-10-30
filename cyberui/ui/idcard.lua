@@ -54,6 +54,59 @@ local function handleLine(handle, kind, flair)
     } })
 end
 
+-- The rank's progress: what is next and the hours toward it, over a bar.
+local function progressColumn(rank, stats)
+    local next_line = rank.next
+        and { string.format(_("NEXT: %s"), rank.next), string.format(_("%.0f / %d H"), stats.hours, rank.need) }
+        or { _("TOP RANK REACHED"), string.format(_("%.0f H"), stats.hours) }
+    return Layout.Column:new({ children = {
+        Layout.Row:new({ children = {
+            Label:new({ text = next_line[1], kind = "mono_small", grow = true }),
+            Label:new({ text = next_line[2], kind = "mono_small", color = "muted" }),
+        } }),
+        Progress:new({ value = rank.value }),
+    } })
+end
+
+-- The barcode and the ID code under it.
+local function codeRow()
+    local th = Theme.get()
+    return Layout.Row:new({ gap = th.space.m, children = {
+        Layout.Column:new({ width = Theme.px(150), children = { IdCard.codeBars(26) } }),
+        Label:new({ text = "ID " .. Profile.id(), kind = "mono_small", grow = true, align = "right" }), -- i18n: keep
+    } })
+end
+
+-- The card's frame: the title strip over the contents, in the styles of `o`.
+local function cardPanel(o, body, pad)
+    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"),
+        pad = pad + Theme.px(styleOf(o, "frame").inset or 0), width = o.width, fill = o.width and "bg" or nil,
+        backdrop = styleOf(o, "background").draw, trim = styleOf(o, "frame").draw, child = body })
+end
+
+-- A card short enough for the menu: the face, handle and rank, the rank's
+-- progress, four totals (eddies among them) and the code. o as for full.
+function IdCard.compact(o)
+    local th = Theme.get()
+    local handle = Profile.handle()
+    local stats = Profile.stats()
+    local rank = Profile.rank(stats.hours)
+    local who = Layout.Column:new({ grow = true, gap = th.space.xs, children = {
+        handleLine(handle, "display", styleOf(o, "flair")),
+        Layout.Row:new({ gap = th.space.m, children = { IdCard.rankTag(rank),
+            Label:new({ text = string.format(_("LVL %d / %d"), rank.index, rank.count), kind = "mono_small", color = "muted" }) } }),
+    } })
+    return cardPanel(o, Layout.Column:new({ gap = th.space.m, children = {
+        Layout.Row:new({ gap = th.space.l, valign = "center", children = { Avatar:new({ seed = handle, size = 80, on_tap = o.on_photo }), who } }),
+        progressColumn(rank, stats),
+        Layout.Row:new({ gap = th.space.s, children = {
+            StatTile(_("HOURS"), string.format("%.1f", stats.hours)), StatTile(_("BOOKS"), tostring(stats.books)),
+            StatTile(_("EDDIES"), Format.credits(Ledger.balance())), StatTile(_("GIGS DONE"), tostring(select(2, Ledger.totals()))),
+        } }),
+        codeRow(),
+    } }), th.space.m)
+end
+
 -- A small card for the shop: the face, the handle with its flair and the rank,
 -- in the styles of o.styles (any left out are the plain ones).
 function IdCard.sample(o)
@@ -93,9 +146,6 @@ function IdCard.full(o)
             Label:new({ text = string.format(_("LVL %d / %d"), rank.index, rank.count), kind = "mono_small", color = "muted" }),
         } }),
     } })
-    local next_line = rank.next
-        and { string.format(_("NEXT: %s"), rank.next), string.format(_("%.0f / %d H"), stats.hours, rank.need) }
-        or { _("TOP RANK REACHED"), string.format(_("%.0f H"), stats.hours) }
     local tiles = Layout.Column:new({ gap = th.space.s, children = {
         Layout.Row:new({ gap = th.space.s, children = {
             StatTile(_("HOURS"), string.format("%.1f", stats.hours)),
@@ -112,17 +162,7 @@ function IdCard.full(o)
             StatTile(_("GIGS DONE"), tostring(select(2, Ledger.totals()))),
         } }),
     } })
-    local progress = Layout.Column:new({ children = {
-        Layout.Row:new({ children = {
-            Label:new({ text = next_line[1], kind = "mono_small", grow = true }),
-            Label:new({ text = next_line[2], kind = "mono_small", color = "muted" }),
-        } }),
-        Progress:new({ value = rank.value }),
-    } })
-    local code = Layout.Row:new({ gap = th.space.m, children = {
-        Layout.Column:new({ width = Theme.px(150), children = { IdCard.codeBars(26) } }),
-        Label:new({ text = "ID " .. Profile.id(), kind = "mono_small", grow = true, align = "right" }), -- i18n: keep
-    } })
+    local progress, code = progressColumn(rank, stats), codeRow()
     -- a wide, short screen puts the totals beside the identity
     local screen = require("device").screen
     local body
@@ -136,8 +176,7 @@ function IdCard.full(o)
             Layout.Row:new({ gap = th.space.l, valign = "stretch", children = { face, who } }), progress, tiles, code } })
     end
     if o.footer then table.insert(body.children, o.footer) end
-    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"), pad = th.space.l + Theme.px(styleOf(o, "frame").inset or 0), width = o.width,
-        fill = o.width and "bg" or nil, backdrop = styleOf(o, "background").draw, trim = styleOf(o, "frame").draw, child = body })
+    return cardPanel(o, body, th.space.l)
 end
 
 return IdCard

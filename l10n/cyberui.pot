@@ -716,7 +716,7 @@ msgstr ""
 msgid "VIEW"
 msgstr ""
 
-#: cyberui/menu.lua
+#: cyberui/menu.lua cyberui/screens/settings.lua
 msgid "CONTROLS"
 msgstr ""
 
@@ -754,6 +754,10 @@ msgstr ""
 
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "TINT"
+msgstr ""
+
+#: cyberui/menu.lua cyberui/screens/settings.lua
+msgid "OPERATOR ID"
 msgstr ""
 
 #: cyberui/menu.lua
@@ -2255,6 +2259,14 @@ msgstr ""
 msgid "A card with the book shown while it opens"
 msgstr ""
 
+#: cyberui/screens/settings.lua
+msgid "Menu tab opens on"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI's tab in KOReader's menu has two pages; this one comes first"
+msgstr ""
+
 #: cyberui/screens/settings.lua cyberui/screens/shard.lua
 msgid "Data shard"
 msgstr ""
@@ -2970,22 +2982,6 @@ msgid "Close"
 msgstr ""
 
 #: cyberui/ui/idcard.lua
-msgid "OPERATOR // ID-CARD"
-msgstr ""
-
-#: cyberui/ui/idcard.lua
-msgid "AUTH OK"
-msgstr ""
-
-#: cyberui/ui/idcard.lua
-msgid "RANK"
-msgstr ""
-
-#: cyberui/ui/idcard.lua
-msgid "LVL %d / %d"
-msgstr ""
-
-#: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
 msgstr ""
 
@@ -3002,7 +2998,27 @@ msgid "%.0f H"
 msgstr ""
 
 #: cyberui/ui/idcard.lua
+msgid "OPERATOR // ID-CARD"
+msgstr ""
+
+#: cyberui/ui/idcard.lua
+msgid "AUTH OK"
+msgstr ""
+
+#: cyberui/ui/idcard.lua
+msgid "LVL %d / %d"
+msgstr ""
+
+#: cyberui/ui/idcard.lua
 msgid "BOOKS"
+msgstr ""
+
+#: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr ""
+
+#: cyberui/ui/idcard.lua
+msgid "RANK"
 msgstr ""
 
 #: cyberui/ui/idcard.lua
@@ -3011,10 +3027,6 @@ msgstr ""
 
 #: cyberui/ui/idcard.lua
 msgid "%dD"
-msgstr ""
-
-#: cyberui/ui/idcard.lua
-msgid "EDDIES"
 msgstr ""
 
 #: cyberui/ui/keyboard.lua

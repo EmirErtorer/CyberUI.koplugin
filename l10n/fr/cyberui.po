@@ -717,7 +717,7 @@ msgstr "MISE EN PAGE"
 msgid "VIEW"
 msgstr "AFFICHAGE"
 
-#: cyberui/menu.lua
+#: cyberui/menu.lua cyberui/screens/settings.lua
 msgid "CONTROLS"
 msgstr "COMMANDES"
 
@@ -756,6 +756,10 @@ msgstr "LUMEN"
 #: cyberui/menu.lua cyberui/screens/diagnostics.lua
 msgid "TINT"
 msgstr "TEINTE"
+
+#: cyberui/menu.lua cyberui/screens/settings.lua
+msgid "OPERATOR ID"
+msgstr "ID OPÉRATEUR"
 
 #: cyberui/menu.lua
 msgid "Wi-Fi on"
@@ -2256,6 +2260,14 @@ msgstr "Carte de jack-in"
 msgid "A card with the book shown while it opens"
 msgstr "Une carte avec le livre affichée pendant son ouverture"
 
+#: cyberui/screens/settings.lua
+msgid "Menu tab opens on"
+msgstr "L'onglet du menu s'ouvre sur"
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI's tab in KOReader's menu has two pages; this one comes first"
+msgstr "L'onglet CyberUI du menu de KOReader a deux pages ; celle-ci vient en premier"
+
 #: cyberui/screens/settings.lua cyberui/screens/shard.lua
 msgid "Data shard"
 msgstr "Éclat de données"
@@ -2971,22 +2983,6 @@ msgid "Close"
 msgstr "Fermer"
 
 #: cyberui/ui/idcard.lua
-msgid "OPERATOR // ID-CARD"
-msgstr "OPÉRATEUR // CARTE D'ID"
-
-#: cyberui/ui/idcard.lua
-msgid "AUTH OK"
-msgstr "AUTORISÉ"
-
-#: cyberui/ui/idcard.lua
-msgid "RANK"
-msgstr "RANG"
-
-#: cyberui/ui/idcard.lua
-msgid "LVL %d / %d"
-msgstr "NIV %d / %d"
-
-#: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
 msgstr "SUIVANT : %s"
 
@@ -3003,8 +2999,28 @@ msgid "%.0f H"
 msgstr "%.0f H"
 
 #: cyberui/ui/idcard.lua
+msgid "OPERATOR // ID-CARD"
+msgstr "OPÉRATEUR // CARTE D'ID"
+
+#: cyberui/ui/idcard.lua
+msgid "AUTH OK"
+msgstr "AUTORISÉ"
+
+#: cyberui/ui/idcard.lua
+msgid "LVL %d / %d"
+msgstr "NIV %d / %d"
+
+#: cyberui/ui/idcard.lua
 msgid "BOOKS"
 msgstr "LIVRES"
+
+#: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr "EDDIES"
+
+#: cyberui/ui/idcard.lua
+msgid "RANK"
+msgstr "RANG"
 
 #: cyberui/ui/idcard.lua
 msgid "BEST RUN"
@@ -3013,10 +3029,6 @@ msgstr "MEILLEURE SÉRIE"
 #: cyberui/ui/idcard.lua
 msgid "%dD"
 msgstr "%dJ"
-
-#: cyberui/ui/idcard.lua
-msgid "EDDIES"
-msgstr "EDDIES"
 
 #: cyberui/ui/keyboard.lua
 msgid "space"

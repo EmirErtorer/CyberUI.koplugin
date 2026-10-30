@@ -9,8 +9,11 @@
 -- Tabs other plugins draw themselves (ZenOS's Controls and Launcher) are
 -- built off-screen with a stand-in menu to learn their buttons and actions,
 -- then shown as CyberUI buttons that run those same actions. Over home,
--- when ZenOS is not running, CyberUI's own Deck tab comes first: frontlight,
--- Wi-Fi, night mode, rotation, restart and exit, with the device at a glance.
+-- when ZenOS is not running, CyberUI's own Deck tab comes first (with ZenOS it
+-- comes right after ZenOS's Controls and Launcher). The tab has two pages, in
+-- the order the reader chose: the operator ID card (face, handle, rank,
+-- eddies) and the controls (frontlight, Wi-Fi, night mode, rotation, restart
+-- and exit, with the device at a glance). Swipe sideways or tap a page name.
 
 local Device = require("device")
 local Event = require("ui/event")
@@ -24,9 +27,11 @@ local Frame = require("cyberui/screens/frame")
 local Grid = require("cyberui/ui/grid")
 local Header = require("cyberui/ui/header")
 local Icon = require("cyberui/ui/icon")
+local IdCard = require("cyberui/ui/idcard")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Panel = require("cyberui/ui/panel")
+local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
 local _ = require("cyberui/gettext")
 
@@ -37,6 +42,7 @@ Menu.__index = Menu
 
 -- The panel's height as a share of the screen.
 local MIN_H, MAX_H = 0.3, 0.5
+local DECK_H = 0.7   -- the Deck tab holds the ID card, which needs more than a list does
 local PICK_H = 0.9   -- a picker lists long things (every KOReader action), so it takes more room
 
 -- KOReader's (and ZenOS's) tab icons as CyberUI icons and names; tabs other
@@ -140,17 +146,30 @@ function Menu.open(opts)
     opts = opts or {}
     local km = opts.km or fmMenu()
     if not km.tab_item_table then km:setUpdateItemTable() end
-    -- CyberUI's Deck comes first, where ZenOS keeps its Controls, unless ZenOS
-    -- is running (installed but switched off counts as not running)
+    -- CyberUI's Deck comes first, or with ZenOS right after its Controls and
+    -- Launcher (installed but switched off counts as not running)
+    local want_deck = not opts.reader and not opts.pick
+    local deck_at
+    if want_deck then
+        deck_at = 1
+        if Menu.zenosRunning() then
+            for i, t in ipairs(km.tab_item_table) do
+                if t.id == "quicksettings" or t.id == "app_launcher" then deck_at = i + 1 end
+            end
+        end
+    end
     local tabs = {}
-    local deck = not opts.reader and not opts.pick and not Menu.zenosRunning()
-    if deck then tabs[1] = { id = "cyberui_deck", deck = true } end
-    local shift = #tabs
-    for i, t in ipairs(km.tab_item_table) do tabs[i + shift] = t end
-    local m = setmetatable({ km = km, reader = opts.reader, pick = opts.pick, pickable = opts.pickable, title = opts.title, tabs = tabs, shift = shift, stack = {}, trail = {}, page = 1 }, Menu)
+    for i, t in ipairs(km.tab_item_table) do
+        if i == deck_at then tabs[#tabs + 1] = { id = "cyberui_deck", deck = true } end
+        tabs[#tabs + 1] = t
+    end
+    if deck_at and deck_at > #km.tab_item_table then tabs[#tabs + 1] = { id = "cyberui_deck", deck = true } end
+    local m = setmetatable({ km = km, reader = opts.reader, pick = opts.pick, pickable = opts.pickable, title = opts.title, tabs = tabs, deck_at = deck_at, deck_page = 1, stack = {}, trail = {}, page = 1 }, Menu)
     m.tab_key = opts.reader and "readermenu_tab_index" or "filemanagermenu_tab_index"
     local last = opts.pick and 1 or opts.reader and km.last_tab_index or G_reader_settings:readSetting(m.tab_key)
-    m.tab = math.max(1, math.min((last or 1) + shift, #tabs))
+    last = last or 1
+    if deck_at and last >= deck_at then last = last + 1 end   -- KOReader's numbering skips the Deck
+    m.tab = math.max(1, math.min(last, #tabs))
     m.items = tabs[m.tab]
     -- what item actions call on "the menu"
     m.shim = {
@@ -216,11 +235,11 @@ function Menu:switchTab(i)
         return
     end
     if tab.callback then tab.callback() end
-    self.tab, self.items, self.stack, self.trail, self.page = i, tab, {}, {}, 1
+    self.tab, self.items, self.stack, self.trail, self.page, self.deck_page = i, tab, {}, {}, 1, 1
     self.shim.item_table = tab
     if tab.remember ~= false and not tab.deck and not self.pick then
         -- KOReader's own numbering, without the Deck
-        local own = i - self.shift
+        local own = (self.deck_at and i > self.deck_at) and i - 1 or i
         if self.reader then self.km.last_tab_index = own else G_reader_settings:saveSetting(self.tab_key, own) end
     end
     self:show()
@@ -465,6 +484,37 @@ local function fmEvent(name, ...)
     if fm then fm:handleEvent(Event:new(name, ...)) else UIManager:broadcastEvent(Event:new(name, ...)) end
 end
 
+-- The two pages of the Deck tab, first page first, as the reader ordered them.
+local function deckOrder()
+    if Settings.get("deck_first", "card") == "controls" then return { "controls", "card" } end
+    return { "card", "controls" }
+end
+
+-- Which page of the Deck tab shows: "card" or "controls".
+function Menu:deckPage()
+    return deckOrder()[self.deck_page]
+end
+
+-- Show the other page of the Deck tab (delta 1 or -1); false at the ends.
+function Menu:turnDeck(delta)
+    local to = self.deck_page + delta
+    if to < 1 or to > 2 then return false end
+    self.deck_page = to
+    self:show()
+    return true
+end
+
+-- The page names under the Deck's contents, the shown one filled.
+function Menu:deckChips()
+    local names = { card = _("OPERATOR ID"), controls = _("CONTROLS") }
+    local row = Layout.Row:new({ gap = Theme.get().space.s, children = {} })
+    for i, id in ipairs(deckOrder()) do
+        row.children[#row.children + 1] = Button:new({ label = names[id], variant = i == self.deck_page and "chip_on" or "chip", grow = true,
+            height = Theme.px(38), on_tap = function() self.deck_page = i; self:show() end })
+    end
+    return row
+end
+
 -- CyberUI's own controls as tiles.
 function Menu:deckButtons()
     local NetworkMgr = require("ui/network/manager")
@@ -578,13 +628,19 @@ function Menu:build(_close, screen_w)
     local want
     if tab.deck or tab.panel then
         -- a tab of controls: tiles (and for the deck, the glance; light too)
-        local buttons = tab.deck and self:deckButtons() or self:panelButtons(tab)
+        local card = tab.deck and self:deckPage() == "card"
+        local buttons = (tab.deck and not card) and self:deckButtons() or (not tab.deck and self:panelButtons(tab)) or {}
         local inner = {}
-        if tab.deck then inner[#inner + 1] = glance() end
-        if tab.deck or tab.id == "quicksettings" then
-            for _i, r in ipairs(lightRows()) do inner[#inner + 1] = r end
+        if card then
+            inner[#inner + 1] = IdCard.compact({ on_photo = function() self:close(); require("cyberui/profileflow").card() end })
+        else
+            if tab.deck then inner[#inner + 1] = glance() end
+            if tab.deck or tab.id == "quicksettings" then
+                for _i, r in ipairs(lightRows()) do inner[#inner + 1] = r end
+            end
+            for _i, r in ipairs(self:tiles(buttons)) do inner[#inner + 1] = r end
         end
-        for _i, r in ipairs(self:tiles(buttons)) do inner[#inner + 1] = r end
+        if tab.deck then inner[#inner + 1] = self:deckChips() end
         if #buttons == 0 and not tab.deck then
             inner[#inner + 1] = Label:new({ text = _("Nothing to show here yet."), kind = "body", color = "muted" })
         end
@@ -599,7 +655,7 @@ function Menu:build(_close, screen_w)
             make = function(item, w, ch) return self:row(item, w, ch) end,
             on_layout = function(_c, pages, page) self.pages, self.page = pages, page end })
     end
-    local h = math.floor(math.max(screen_h * MIN_H, math.min(screen_h * (self.pick and PICK_H or MAX_H), want)))
+    local h = math.floor(math.max(screen_h * MIN_H, math.min(screen_h * (self.pick and PICK_H or tab.deck and DECK_H or MAX_H), want)))
     if want > h and not (tab.deck or tab.panel) then
         kids[#kids + 1] = Frame.pager(self, _("PAGE"), function(p)
             self.page = math.max(1, math.min(p, self.pages or 1))
@@ -614,6 +670,7 @@ function Menu:build(_close, screen_w)
     panel.dock = "top"
     panel.on_back = function() return self:up() end
     panel.on_page = function(delta)
+        if tab.deck then return self:turnDeck(delta) end
         if (self.pages or 1) < 2 then return false end
         self.page = math.max(1, math.min(self.page + delta, self.pages))
         self:show()
