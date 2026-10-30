@@ -62,7 +62,7 @@ local function yearSkyline(year, shelf)
     for m, initial in ipairs({ "J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D" }) do
         labels[weekOf(os.time({ year = year, month = m, day = 1, hour = 12 }))] = initial
     end
-    return Skyline:new({ buildings = weeks, labels = labels, height = 104 })
+    return Skyline:new({ buildings = weeks, labels = labels, height = 150 })
 end
 
 -- Build the tab; `screen.goal_back` is how many years back from this one.
