@@ -18,6 +18,7 @@ local ScopeSheet = require("cyberui/screens/log/scope")
 local Screen = require("cyberui/screens/screen")
 local Stats = require("cyberui/data/stats")
 local Streaks = require("cyberui/screens/log/streaks")
+local Text = require("cyberui/gfx/text")
 local Theme = require("cyberui/theme")
 local Week = require("cyberui/screens/log/week")
 local _ = require("cyberui/gettext")
@@ -53,7 +54,7 @@ function History:build()
         on_tap = ScopeSheet.open })
     local actions = { scope }
     if self.tab == "log" or self.tab == "calendar" then
-        actions[#actions + 1] = Button:new({ label = Metric.unit(), variant = "secondary", width = th.size.touch, height = th.size.touch,
+        actions[#actions + 1] = Button:new({ label = Metric.unit(), variant = "secondary", width = math.max(th.size.touch, Text.width("label", Metric.unit()) + 2 * th.space.m), height = th.size.touch,
             on_tap = function() Metric.toggle(); App.update() end })
     end
     if self.tab == "log" or self.tab == "stats" then
