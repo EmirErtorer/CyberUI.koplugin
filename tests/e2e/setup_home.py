@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Set a copied KOReader home to start with one home-screen plugin, named by
-CYBERUI_COMPARE (cyberui, cyberui_home, bookshelf or simpleui):  setup_home.py <home_dir>
+CYBERUI_COMPARE (cyberui, cyberui_home, cyberui_park, cyberui_park_home, bookshelf or simpleui):  setup_home.py <home_dir>
 The other two (and ZenOS, which clashes with SimpleUI) are switched off."""
 import os
 import re
@@ -9,7 +9,7 @@ import sys
 PLUGINS = {"cyberui": ("CyberUI", "cyberui"), "bookshelf": ("bookshelf", "bookshelf"),
            "simpleui": ("simpleui", "homescreen_simpleui")}
 which, home = os.environ.get("CYBERUI_COMPARE", "cyberui"), sys.argv[1]
-which = "cyberui" if which == "cyberui_home" else which  # same setup, other way home
+which = "cyberui" if which.startswith("cyberui_") else which  # same setup, other way home or parking
 on_dir, start_with = PLUGINS[which]
 off = [d for d, _ in PLUGINS.values() if d != on_dir] + ["zenos"]
 
