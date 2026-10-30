@@ -15,11 +15,21 @@ local Library = require("cyberui/data/library")
 
 local only = {}
 for i = 3, #arg do only[arg[i]] = true end
-local SCREENS = { "home", "library", "dossier", "collections", "history", "search", "settings", "trash", "fonts", "diagnostics", "topbar", "launcher", "launchedit", "iconpick", "card", "filepick", "bounty", "shards", "shard", "colourpick" }
+local SCREENS = { "home", "library", "dossier", "collections", "history", "search", "settings", "trash", "fonts", "diagnostics", "topbar", "launcher", "launchedit", "iconpick", "targetpick", "photocrop", "filepick", "bounty", "shards", "shard", "colourpick" }
 local PARAMS = {
     dossier = function() return { path = Library.all()[1] } end,
     launchedit = function() return { id = "library" } end,
     iconpick = function() return { current = "pen", on_pick = function() end } end,
+    targetpick = function() return { done = function() end } end,
+    photocrop = function()
+        local BB = require("ffi/blitbuffer")
+        local file = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-crop.png"
+        local bb = BB.new(480, 300, BB.TYPE_BBRGB32)
+        bb:fill(BB.colorFromString("#3070C0"))
+        bb:writePNG(file)
+        bb:free()
+        return { path = file, on_done = function() end }
+    end,
     shard = function() return { shard = { id = "3F2A91C0", text = "A test highlight that wraps over a few lines so the card can show its words.", path = Library.all()[1] }, number = 1, of = 1 } end,
     colourpick = function() return { title = "Accent", current = "#2457D6", on_pick = function() end } end,
     filepick = function() return { dir = Library.home(), exts = { png = true }, on_pick = function() end } end,

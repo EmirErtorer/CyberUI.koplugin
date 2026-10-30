@@ -213,7 +213,7 @@ function Home:build()
     local card = Settings.get("home_card", true)
     local kids = {
         status,
-        Masthead.build({ operator = card, on_open = function() App.push("card") end, on_photo = ProfileFlow.photo }),
+        Masthead.build({ operator = card, on_open = ProfileFlow.card, on_photo = ProfileFlow.photo }),
     }
     if not card then table.insert(kids, indexStrip()) end
     table.insert(kids, dateRow(self))

@@ -98,8 +98,9 @@ function Skyline:draw(bb, x, y)
     for _i, b in ipairs(self.buildings) do max = math.max(max, b.pages or 0) end
     local top = math.floor(chart_h * 0.84)   -- the tallest body, leaving room for roofs
     for i, b in ipairs(self.buildings) do
-        local bx = x + math.floor((i - 1) * slot)
-        local bw = math.max(3, math.floor(slot) - gap)
+        -- few buildings do not stretch into slabs: each is at most this wide, in the middle of its slot
+        local bw = math.max(3, math.min(math.floor(slot) - gap, Theme.px(40)))
+        local bx = x + math.floor((i - 0.5) * slot - bw / 2)
         if (b.pages or 0) > 0 then
             local bh = math.max(Theme.px(8), math.floor(top * math.sqrt(b.pages / max)))
             building(bb, b, i, bx, ground, bw, bh, th, self.minutes_per_window, chart_h)

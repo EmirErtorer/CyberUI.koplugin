@@ -84,11 +84,13 @@ Charts.Heatmap = Heatmap
 -- `rows` rows of square cells (seven days), one column per week (or per
 -- hour, for a weekday by hour pattern).
 function Heatmap:naturalHeight()
-    return self.rows * Theme.px(12) + (self.rows - 1) * Theme.px(3)
+    local labels = self.col_labels and (Text.height("micro") + Theme.px(4)) or 0
+    return self.rows * Theme.px(12) + (self.rows - 1) * Theme.px(3) + labels
 end
 
--- Cells from oldest (top-left) to today, shaded by level 0..4; each column
--- shares the width, each row is a day.
+-- Cells from oldest (top-left) to today, shaded by level 0..4 (a negative
+-- level leaves the cell out); each column shares the width, each row is a day.
+-- `col_labels` ({ [column] = text }) are centred under their columns.
 function Heatmap:draw(bb, x, y)
     local th = Theme.get()
     local gap = Theme.px(3)
@@ -98,8 +100,16 @@ function Heatmap:draw(bb, x, y)
         local week = math.floor((i - 1) / self.rows)
         local day = (i - 1) % self.rows
         local cx, cy = x + week * (cell_w + gap), y + day * (cell_h + gap)
-        Paint.fill(bb, cx, cy, cell_w, cell_h, th.c[LEVELS[level + 1]])
-        Paint.frame(bb, cx, cy, cell_w, cell_h, th.size.hair, th.c.line)
+        if level >= 0 then
+            Paint.fill(bb, cx, cy, cell_w, cell_h, th.c[LEVELS[level + 1]])
+            Paint.frame(bb, cx, cy, cell_w, cell_h, th.size.hair, th.c.line)
+        end
+    end
+    local label_y = y + self.rows * (cell_h + gap) + Theme.px(1)
+    for col, text in pairs(self.col_labels or {}) do
+        local tw = Text.width("micro", text)
+        local lx = x + (col - 1) * (cell_w + gap) + math.floor((cell_w - tw) / 2)
+        Text.draw(bb, math.max(x, math.min(lx, x + self.w - tw)), label_y, "micro", text, th.c.muted)
     end
 end
 

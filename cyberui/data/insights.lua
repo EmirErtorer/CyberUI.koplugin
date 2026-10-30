@@ -133,19 +133,26 @@ function Insights.clearance(hours)
     return { last = last, next = nxt, level = level }
 end
 
--- Seconds read in each hour of each weekday: grid[weekday 1..7 (Monday first)][hour 0..23].
+-- Reading in each hour of each weekday: { seconds = grid, pages = grid }, each
+-- grid[weekday 1..7 (Monday first)][hour 0..23]. A page view counts in the hour
+-- it began in.
 function Insights.pattern()
     return Statsdb.cached("pattern", function()
         return Statsdb.query(function(conn)
-            local grid = {}
-            for w = 1, 7 do grid[w] = {}; for h = 0, 23 do grid[w][h] = 0 end end
-            for _i, r in ipairs(rows(conn, string.format(
-                "SELECT strftime('%%w', start_time,'unixepoch','localtime'), strftime('%%H', start_time,'unixepoch','localtime'), sum(duration) "
-                .. "FROM page_stat_data WHERE 1 = 1%s GROUP BY 1, 2", Statsdb.scoped(conn)))) do
-                local w = (tonumber(r[1]) + 6) % 7 + 1   -- sunday 0 becomes the last
-                grid[w][tonumber(r[2])] = tonumber(r[3]) or 0
+            local seconds, pages = {}, {}
+            for w = 1, 7 do
+                seconds[w], pages[w] = {}, {}
+                for h = 0, 23 do seconds[w][h], pages[w][h] = 0, 0 end
             end
-            return grid
+            for _i, r in ipairs(rows(conn, string.format(
+                "SELECT strftime('%%w', start_time,'unixepoch','localtime'), strftime('%%H', start_time,'unixepoch','localtime'), "
+                .. "sum(duration), count(DISTINCT id_book || ':' || page) FROM page_stat_data WHERE 1 = 1%s GROUP BY 1, 2",
+                Statsdb.scoped(conn)))) do
+                local w = (tonumber(r[1]) + 6) % 7 + 1   -- sunday 0 becomes the last
+                seconds[w][tonumber(r[2])] = tonumber(r[3]) or 0
+                pages[w][tonumber(r[2])] = tonumber(r[4]) or 0
+            end
+            return { seconds = seconds, pages = pages }
         end)
     end)
 end

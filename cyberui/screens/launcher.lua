@@ -11,7 +11,6 @@ local Layout = require("cyberui/ui/layout")
 local Launcher = require("cyberui/data/launcher")
 local LauncherUI = require("cyberui/ui/launcher")
 local Screen = require("cyberui/screens/screen")
-local Theme = require("cyberui/theme")
 local _ = require("gettext")
 
 local LauncherScreen = Screen:extend()
@@ -38,12 +37,11 @@ local function entryRow(entry, i, count)
             Label:new({ text = label, kind = "heading", color = muted }),
             Label:new({ text = entry.hidden and _("HIDDEN") or sub, kind = "mono_small", color = "muted" }),
         } }),
-    }, buttons)
+    }, buttons, not fixed and function() LauncherUI.askRemove(entry, App.update) end or nil)
 end
 
 -- Build the editor.
 function LauncherScreen:build()
-    local th = Theme.get()
     local entries = Launcher.entries()
     local body = {}
     for i, entry in ipairs(entries) do body[#body + 1] = entryRow(entry, i, #entries) end
@@ -52,7 +50,7 @@ function LauncherScreen:build()
         App.push("launchedit", { id = Launcher.add() })
     end })
     return Frame.page({ screen = self, title = _("Launcher"), path = _("ADD // MOVE // HIDE // EDIT"), tab = "settings",
-        body = Layout.Column:new({ gap = th.space.s, clip = true, children = body }) })
+        body = Frame.paged(self, body, _("PAGE")) })
 end
 
 return LauncherScreen

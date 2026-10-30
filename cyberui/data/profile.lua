@@ -29,6 +29,8 @@ local ADJECTIVES = { "NIGHT", "NEON", "GHOST", "CHROME", "VOID", "STATIC", "RAZO
 local NOUNS = { "OWL", "FOX", "WOLF", "MOTH", "RAVEN", "VIPER", "LYNX", "CROW", "HARE", "KITE" }
 
 local PHOTO_PX = 256       -- the stored photo is this many pixels square
+Profile.PHOTO_MAX = 1600   -- pictures are read no larger than this on a side
+local PHOTO_MAX = Profile.PHOTO_MAX
 local photos = {}          -- size -> scaled photo, or false when there is none
 
 -- A bit operation's result as an unsigned 32 bit number (LuaJIT's are signed).
@@ -124,22 +126,57 @@ function Profile.hasPhoto()
     return lfs.attributes(Profile.photoFile(), "mode") == "file"
 end
 
--- Take the image at `path`: its middle square, scaled down and kept. True when
--- it worked, else nil and a reason.
-function Profile.setPhoto(path)
+-- The picture at `path` on a white page, so a see-through PNG does not turn
+-- black, at most `max` pixels on a side. Returns it, or nil and a reason.
+function Profile.load(path, max)
     local ok, img = pcall(RenderImage.renderImageFile, RenderImage, path, false)
     if not ok or not img then return nil, _("That file is not a picture KOReader can read") end
     local w, h = img:getWidth(), img:getHeight()
-    local side = math.min(w, h)
-    local square = Blitbuffer.new(side, side, img:getType())
-    square:blitFrom(img, 0, 0, math.floor((w - side) / 2), math.floor((h - side) / 2), side, side)
+    if math.max(w, h) > max then
+        -- a big photo is made smaller first, so the copies below stay small
+        local f = max / math.max(w, h)
+        img = RenderImage:scaleBlitBuffer(img, math.max(1, math.floor(w * f)), math.max(1, math.floor(h * f)), true)
+        w, h = img:getWidth(), img:getHeight()
+    end
+    local flat = Blitbuffer.new(w, h, Blitbuffer.TYPE_BBRGB32)
+    flat:fill(Blitbuffer.COLOR_WHITE)
+    local kind = img:getType()
+    if kind == Blitbuffer.TYPE_BBRGB32 or kind == Blitbuffer.TYPE_BB8A then
+        flat:alphablitFrom(img, 0, 0, 0, 0, w, h)
+    else
+        flat:blitFrom(img, 0, 0, 0, 0, w, h)
+    end
     img:free()
+    return flat
+end
+
+-- Keep the square of `img` at (x, y), `side` pixels wide, as the photo; a
+-- part of the square outside the picture stays white. True when it worked,
+-- else nil and a reason.
+function Profile.savePhoto(img, x, y, side)
+    x, y, side = math.floor(x + 0.5), math.floor(y + 0.5), math.max(1, math.floor(side + 0.5))
+    local square = Blitbuffer.new(side, side, Blitbuffer.TYPE_BBRGB32)
+    square:fill(Blitbuffer.COLOR_WHITE)
+    local dx, dy = math.max(0, -x), math.max(0, -y)
+    local sx, sy = math.max(0, x), math.max(0, y)
+    local w, h = math.min(side - dx, img:getWidth() - sx), math.min(side - dy, img:getHeight() - sy)
+    if w > 0 and h > 0 then square:blitFrom(img, dx, dy, sx, sy, w, h) end
     local out = RenderImage:scaleBlitBuffer(square, PHOTO_PX, PHOTO_PX, true)
     local wrote = pcall(out.writePNG, out, Profile.photoFile())
     out:free()
     dropPhotos()
     if not wrote then return nil, _("The photo could not be saved") end
     return true
+end
+
+-- Take the middle square of the picture at `path` as the photo.
+function Profile.setPhoto(path)
+    local img, err = Profile.load(path, PHOTO_MAX)
+    if not img then return nil, err end
+    local side = math.min(img:getWidth(), img:getHeight())
+    local ok, why = Profile.savePhoto(img, math.floor((img:getWidth() - side) / 2), math.floor((img:getHeight() - side) / 2), side)
+    img:free()
+    return ok, why
 end
 
 -- Go back to the generated face.

@@ -1,5 +1,5 @@
 -- The jack-in card: what the screen shows while a book opens, in place of the
--- small "Opening file" message KOReader would draw over home. The load blocks,
+-- small "Opening file" message KOReader would draw over the screen. The load blocks,
 -- so nothing on the card can move and it shows no made-up progress: the book
 -- (cover, title, where reading resumes) and a striped "working" bar. It is
 -- painted once, just before the load starts, and costs one small paint.
@@ -24,7 +24,8 @@ function JackIn.wanted(path)
     return Settings.get("jack_in", true) and lfs.attributes(path, "mode") == "file"
 end
 
--- The card for a book, centred on a blank screen.
+-- The card for a book: a floating panel, shown over whatever screen the book
+-- was opened from.
 function JackIn.card(path)
     local th = Theme.get()
     local info, st = Books.info(path), Books.state(path)
@@ -39,14 +40,12 @@ function JackIn.card(path)
         Layout.Spacer:new({ height = th.space.s }),
         Deco.Stripes:new({ dir = "d", height = Theme.px(14), color = "ink" }),
     }
-    local panel = Panel:new({ shape = "header", title = _("JACK-IN"), title_right = _("DECRYPTING..."), pad = th.space.l,
+    return Panel:new({ shape = "header", title = _("JACK-IN"), title_right = _("DECRYPTING..."), pad = th.space.l, fill = "bg",
+        width = math.min(require("device").screen:getWidth() - 2 * th.space.xl, Theme.px(560)),
         child = Layout.Row:new({ gap = th.space.l, valign = "stretch", children = {
             Cover:new({ path = path, width = Theme.px(112), height = Theme.px(164) }),
             Layout.Column:new({ grow = true, gap = th.space.xs, children = lines }),
         } }) })
-    return Layout.Column:new({ pad = { 0, th.space.xl }, children = {
-        Layout.Spacer:new({ grow = true }), panel, Layout.Spacer:new({ grow = true }),
-    } })
 end
 
 -- Run show() (the call that opens the book) with KOReader's own "Opening file"

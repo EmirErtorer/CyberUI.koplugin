@@ -38,6 +38,8 @@ function Host:init()
         Tap = { GestureRange:new({ ges = "tap", range = whole }) },
         Hold = { GestureRange:new({ ges = "hold", range = whole }) },
         Swipe = { GestureRange:new({ ges = "swipe", range = whole }) },
+        Pan = { GestureRange:new({ ges = "pan", range = whole }) },
+        PanRelease = { GestureRange:new({ ges = "pan_release", range = whole }) },
     }
     Host.addKeys(self)
 end
@@ -211,9 +213,35 @@ function Host:onHold(_, ges)
     return el ~= nil or self.overlay ~= nil
 end
 
+-- A finger moving over an element with on_drag(dx, dy, "move") moves it:
+-- dx, dy are the distance from where the touch began; on_drag(0, 0, "end")
+-- follows the lift.
+function Host:onPan(_, ges)
+    if not self.dragging then
+        self.dragging = self:target(ges.start_pos or ges.pos, "on_drag")
+        if self.dragging then self.dragging:on_drag(0, 0, "start") end
+    end
+    if not self.dragging then return self.overlay ~= nil end
+    self.dragging:on_drag(ges.relative.x, ges.relative.y, "move")
+    return true
+end
+
+-- The finger lifted after a drag. A fast lift also arrives as a swipe, which
+-- is let go by (the next one is real again).
+function Host:onPanRelease()
+    local el = self.dragging
+    if not el then return false end
+    self.dragging = nil
+    el:on_drag(0, 0, "end")
+    self.swallow_swipe = true
+    UIManager:scheduleIn(0.4, function() self.swallow_swipe = nil end)
+    return true
+end
+
 -- Swipes go to the app (paging, the KOReader menu from the top edge);
 -- false when it did not use the swipe.
 function Host:onSwipe(_, ges)
+    if self.swallow_swipe then self.swallow_swipe = nil; return true end
     if self.overlay then return true end
     return self.on_swipe ~= nil and self.on_swipe(ges.direction, ges.pos) == true
 end

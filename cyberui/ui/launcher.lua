@@ -60,6 +60,19 @@ function Launcher.describe(entry)
     return BUILTIN[entry.id]()
 end
 
+-- Ask before taking a button away: the reader's own are deleted, a built-in
+-- one is hidden (it can be shown again in the launcher editor).
+function Launcher.askRemove(entry, after)
+    if entry.id == LauncherData.FIXED then return App.toast(_("This button always stays, so the settings stay reachable")) end
+    local _icon, label = Launcher.describe(entry)
+    local builtin = LauncherData.isBuiltin(entry.id)
+    App.confirm({ title = builtin and _("Hide this button?") or _("Delete this button?"), text = label, danger = true,
+        ok = builtin and _("Hide") or _("Delete"), on_ok = function()
+            if builtin then LauncherData.setHidden(entry.id, true) else LauncherData.remove(entry.id) end
+            if after then after() end
+        end })
+end
+
 -- The panel of buttons.
 function Launcher.build()
     local th = Theme.get()
@@ -67,7 +80,7 @@ function Launcher.build()
     for _i, entry in ipairs(LauncherData.visible()) do
         local icon, label, sub, action = Launcher.describe(entry)
         buttons[#buttons + 1] = Button:new({ icon = icon, label = label, sub = sub, align = "left", variant = "soft",
-            corners = "r", grow = true, on_tap = action })
+            corners = "r", grow = true, on_tap = action, on_hold = function() Launcher.askRemove(entry, App.update) end })
     end
     -- one column; on a wide, short (landscape) screen two, so each keeps
     -- room for both of its lines

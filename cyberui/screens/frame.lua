@@ -6,6 +6,7 @@ local Button = require("cyberui/ui/button")
 local Header = require("cyberui/ui/header")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
+local PagedColumn = require("cyberui/ui/pagedcolumn")
 local StatusBar = require("cyberui/ui/statusbar")
 local TabBar = require("cyberui/ui/tabbar")
 local Theme = require("cyberui/theme")
@@ -43,6 +44,17 @@ function Frame.pager(state, label, on_page)
         Button:new({ icon = "forward", variant = "icon_on", width = w, on_tap = function() on_page(state.page + 1) end }),
         Button:new({ icon = "last", variant = "icon", width = w, on_tap = function() on_page(state.pages or 1) end }),
     } })
+end
+
+-- A column of `items` that pages when it is too long, paged by the screen's
+-- own `page` and `pages` (so swipes work too) with a paging row labelled
+-- `label`.
+function Frame.paged(screen, items, label)
+    return PagedColumn:new({
+        items = items, grow = true, page = screen.page or 1, gap = Theme.get().space.m,
+        make_pager = function(pc) return Frame.pager(pc, label, function(p) screen:setPage(p) end) end,
+        on_layout = function(pages, page) screen.pages, screen.page = pages, page end,
+    })
 end
 
 return Frame

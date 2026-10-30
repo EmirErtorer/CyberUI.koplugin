@@ -40,7 +40,7 @@ local SECTIONS = { { _("Look"), "look" }, { _("Covers"), "covers" }, { _("Fonts"
 
 -- Open on the Look section.
 function SettingsScreen:init()
-    self.section = "look"
+    self.section, self.page = "look", 1
 end
 
 -- Save a plain setting and redraw.
@@ -204,7 +204,7 @@ function SettingsScreen:home()
         row(_("Operator card"), _("Your face, handle and rank in the banner on home; tap the face to open the card"),
             Layout.Row:new({ gap = Theme.get().space.s, children = {
                 Controls.Toggle:new({ on = Settings.get("home_card", true), on_change = function(on) save("home_card", on) end }),
-                Button:new({ label = _("Open"), on_tap = function() App.push("card") end }),
+                Button:new({ label = _("Open"), on_tap = ProfileFlow.card }),
             } })),
         row(_("Launcher"), _("The buttons on home: hide, reorder, replace or add your own that open anything in KOReader"),
             Button:new({ label = _("Edit"), on_tap = function() App.push("launcher") end })),
@@ -282,12 +282,10 @@ end
 -- Build the screen.
 function SettingsScreen:build()
     local th = Theme.get()
-    local tabs = Controls.Segmented({ options = SECTIONS, value = self.section, kind = "label", on_change = function(v) self.section = v; App.update() end })
-    local body = { tabs }
-    for _i, el in ipairs(self[self.section](self)) do body[#body + 1] = el end
+    local tabs = Controls.Segmented({ options = SECTIONS, value = self.section, kind = "label", on_change = function(v) self.section, self.page = v, 1; App.update() end })
     return Frame.page({
         screen = self, title = _("System"), path = "~/.cyberui/config", tab = "settings",
-        body = Layout.Column:new({ gap = th.space.m, clip = true, children = body }),
+        body = Layout.Column:new({ gap = th.space.m, children = { tabs, Frame.paged(self, self[self.section](self), _("PAGE")) } }),
     })
 end
 

@@ -374,4 +374,69 @@ do
     Settings.set("jack_in", nil)
 end
 
+-- the photo window, a see-through picture, paging a long column, the log's metric
+do
+    local BB = require("ffi/blitbuffer")
+    local Profile = require("cyberui/data/profile")
+    local tmp = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-clear.png"
+    -- a PNG with an alpha channel, every pixel see-through
+    require("ffi/png").encodeToFile(tmp, require("ffi").new("uint8_t[?]", 40 * 20 * 4), 40, 20, 4)
+    local flat = Profile.load(tmp, Profile.PHOTO_MAX)
+    local c = flat:getPixel(5, 5):getColorRGB32()
+    Kit.ok(flat and flat:getWidth() == 40 and c.r == 255 and c.g == 255 and c.b == 255, "a see-through picture is read on white, not black")
+    flat:free()
+    local small = Profile.load(tmp, 16)
+    Kit.ok(small and math.max(small:getWidth(), small:getHeight()) == 16, "a big picture is made smaller, a small one is not made bigger")
+    small:free()
+    os.remove(tmp)
+
+    local PhotoWindow = require("cyberui/ui/photowindow")
+    local win = PhotoWindow:new({ img = BB.new(400, 200, BB.TYPE_BBRGB32), size = 200, width = 200, height = 200 })
+    win:layout(200, 200)
+    local x, y, side = win:crop()
+    Kit.ok(side == 200 and y == 0 and x >= 0 and x <= 200, "the window first fills with the picture's middle")
+    win:on_drag(0, 0, "start")
+    win:on_drag(-500, 0, "move")
+    local x2 = win:crop()
+    Kit.ok(x2 == 200, "dragging stops at the picture's edge")
+    win:setZoom(1)
+    local cx, cy, cside = win:crop()
+    Kit.ok(cside == 400 and cx == 0 and cy == -100, "zoomed out the whole picture shows, centred, on white")
+    local out = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-crop"
+    os.execute("rm -rf '" .. out .. "'; mkdir -p '" .. out .. "'")
+    Profile.dir = out
+    Kit.ok(Profile.savePhoto(win.img, cx, cy, cside) and Profile.hasPhoto(), "a square that reaches past the picture is kept")
+    Profile.clearPhoto()
+    Profile.dir = nil
+    win:release()
+
+    local Layout = require("cyberui/ui/layout")
+    local PagedColumn = require("cyberui/ui/pagedcolumn")
+    local items = {}
+    for i = 1, 10 do items[i] = Layout.Spacer:new({ height = 50 }) end
+    local made_pager = false
+    local column = PagedColumn:new({ items = items, gap = 0, make_pager = function()
+        made_pager = true
+        return Layout.Spacer:new({ height = 40 })
+    end })
+    column:layout(300, 220)
+    Kit.ok(column.pages == 4 and made_pager, "a long column pages, leaving room for the paging row (" .. tostring(column.pages) .. ")")
+    Kit.ok(#column.children == 3 + 1, "a page holds the items that fit and the paging row")
+    column.page = 4
+    column:layout(300, 220)
+    Kit.ok(#column.children == 1 + 1, "the last page holds what is left")
+    local short = PagedColumn:new({ items = { Layout.Spacer:new({ height = 50 }) }, gap = 0, make_pager = function() error("no pager wanted") end })
+    short:layout(300, 220)
+    Kit.ok(short.pages == 1, "a short column has no paging row")
+
+    local Metric = require("cyberui/data/metric")
+    local Settings = require("cyberui/settings")
+    Settings.set("log_metric", nil)
+    Kit.ok(not Metric.pages() and Metric.goal(30) == 30 and Metric.text(25.4) == "25 MIN", "minutes are counted at first, against the goal")
+    Metric.toggle()
+    Kit.ok(Metric.pages() and Metric.goal(30) == nil and Metric.text(12) == "12 PG", "pages have no minutes goal")
+    Kit.ok(Metric.level(0, 30, 10) == 0 and Metric.level(10, 30, 10) == 4 and Metric.level(1, 30, 10) == 1, "page shades go by the largest value shown")
+    Settings.set("log_metric", nil)
+end
+
 Kit.finish("features")

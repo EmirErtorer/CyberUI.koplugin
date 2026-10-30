@@ -129,6 +129,8 @@ local function tabKey(tab, i)
     return tab.id or tab.icon or tostring(i)
 end
 
+Menu.tabKey = tabKey
+
 -- Drop the menu down. opts: { km = KOReader's menu object, reader = true
 -- inside a book, pick = function(target, item) to choose an entry instead of
 -- running it, pickable = function(item) to say which entries may be chosen,

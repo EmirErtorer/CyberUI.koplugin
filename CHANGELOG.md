@@ -8,6 +8,26 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Changed
+- The jack-in card floats over the screen the book was opened from instead of a
+  blank one.
+- The operator card floats over home, with Photo, Handle and Save under it.
+- Choosing a photo opens the picture in a square window you drag and zoom
+  before using it; see-through PNGs no longer turn black.
+- A launcher button's target is picked from lists: plugins, plugin actions and
+  KOReader's actions by kind, with the whole menu as the last way in.
+- Holding a launcher button (on home or in the editor) asks before deleting it
+  (built-in buttons are hidden instead).
+- Long settings pages and the launcher editor page instead of being cut off.
+- The log counts minutes or pages (button in its header), the log and stats
+  tabs can draw their bars as a skyline, and the stats tab shows minutes and
+  pages together.
+- Telemetry numbers now come from one set of daily totals, so every tab agrees;
+  "last 7 days" is named as such, the twelve-week grid lines up Monday to
+  Sunday, the best streak is all-time, and a week in progress is compared with
+  the same stretch of the week before. The hour axis is labelled at the right
+  columns.
+
 ### Added
 - Operator ID card: a handle, a rank earned from reading hours, an ID code with
   a barcode, your totals, and a photo chosen from any folder on the device

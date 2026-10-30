@@ -42,15 +42,9 @@ function LaunchEdit:set(field, value)
     App.update()
 end
 
--- Ask what kind of target to pick, then pick it.
+-- Pick what the button opens from the lists of plugins and actions.
 function LaunchEdit:pickTarget()
-    local function chosen(target) self:set("target", target) end
-    App.choose({ title = _("What it opens"), options = {
-        { label = _("KOReader action"), sub = _("The actions gestures can run"), icon = "controls",
-            on_tap = function() Targets.pickAction(chosen) end },
-        { label = _("KOReader menu entry"), sub = _("Anything in the top menu, plugins too"), icon = "menu",
-            on_tap = function() Targets.pickMenu(chosen) end },
-    } })
+    App.push("targetpick", { done = function(target) self:set("target", target) end })
 end
 
 -- Build the editor.

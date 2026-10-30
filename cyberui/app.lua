@@ -107,10 +107,10 @@ function App.update(region)
 end
 
 -- Repaint one element in place after changing it (no rebuild).
-function App.repaint(el)
+function App.repaint(el, mode)
     if not (host and el.x) then return end
     -- the quickest refresh leaves traces on a dark screen
-    UIManager:setDirty(host, Theme.isDark() and "ui" or "fast", Host.box(el))
+    UIManager:setDirty(host, mode or (Theme.isDark() and "ui" or "fast"), Host.box(el))
 end
 
 -- Show the clock change once a minute while CyberUI is on top.
@@ -438,20 +438,22 @@ function App.openBook(path, after_open)
     if host and JackIn.wanted(path) then
         App.flash(JackIn.card(path))
         JackIn.silenced(path, function() ReaderUI:showReader(path, nil, nil, nil, after_open) end)
+        -- the book did not open: the screen under the card is drawn again
+        if not ReaderUI.instance then UIManager:setDirty(host, "ui") end
     else
         ReaderUI:showReader(path, nil, nil, nil, after_open)
     end
 end
 
--- Paint a card on the screen at once, then put the real screen back into the
--- window without painting it: the card stays up until whatever opens next
--- paints over it.
-function App.flash(root)
-    host:setRoot(root)
+-- Paint a card over the current screen at once, then forget it without
+-- painting: the card stays up until whatever opens next paints over it.
+function App.flash(card)
+    host.overlay = card
+    host:relayout()
     host:markRepainted()
-    UIManager:setDirty(host, "ui")
+    UIManager:setDirty(host, "ui", host:overlayBox())
     UIManager:forceRePaint()
-    build()
+    host.overlay = nil
 end
 
 -- A book was closed: what CyberUI knows about it is stale.

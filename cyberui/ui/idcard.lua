@@ -38,7 +38,9 @@ local function monthOf(t)
     return t and os.date("%Y-%m", t) or "-"
 end
 
--- The full card. o: { on_photo (tap the face), on_handle (tap the handle) }.
+-- The full card. o: { on_photo (tap the face), on_handle (tap the handle),
+-- width (floating: a narrow card, everything stacked), footer (an element
+-- under the rest) }.
 function IdCard.full(o)
     local th = Theme.get()
     local handle = Profile.handle()
@@ -86,7 +88,7 @@ function IdCard.full(o)
     -- a wide, short screen puts the totals beside the identity
     local screen = require("device").screen
     local body
-    if screen:getWidth() > screen:getHeight() then
+    if not o.width and screen:getWidth() > screen:getHeight() then
         body = Layout.Row:new({ gap = th.space.l, valign = "stretch", children = {
             Layout.Column:new({ grow = true, gap = th.space.m, children = { Layout.Row:new({ gap = th.space.l, valign = "stretch", children = { face, who } }), progress, code } }),
             (function() tiles.grow = true; return tiles end)(),
@@ -95,7 +97,9 @@ function IdCard.full(o)
         body = Layout.Column:new({ gap = th.space.m, children = {
             Layout.Row:new({ gap = th.space.l, valign = "stretch", children = { face, who } }), progress, tiles, code } })
     end
-    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"), pad = th.space.l, child = body })
+    if o.footer then table.insert(body.children, o.footer) end
+    return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"), pad = th.space.l, width = o.width,
+        fill = o.width and "bg" or nil, child = body })
 end
 
 return IdCard

@@ -3,6 +3,9 @@
 -- card as a picture.
 
 local App = require("cyberui/app")
+local Button = require("cyberui/ui/button")
+local IdCard = require("cyberui/ui/idcard")
+local Layout = require("cyberui/ui/layout")
 local Blitbuffer = require("ffi/blitbuffer")
 local DataStorage = require("datastorage")
 local Library = require("cyberui/data/library")
@@ -19,25 +22,32 @@ local ProfileFlow = {}
 -- Picture types KOReader can draw.
 local PICTURES = { png = true, jpg = true, jpeg = true, gif = true, bmp = true, webp = true }
 
--- Pick a picture anywhere on the device (starting in the library) and keep it
--- as the photo.
-function ProfileFlow.pickPhoto()
+-- Pick a picture anywhere on the device (starting in the library), frame it
+-- in the photo window and keep it as the photo; after() runs when that is done.
+function ProfileFlow.pickPhoto(after)
+    if type(after) ~= "function" then after = nil end
     App.push("filepick", { dir = Library.home(), title = _("Photo"), exts = PICTURES, on_pick = function(path)
-        local ok, err = Profile.setPhoto(path)
-        App.pop()
-        App.toast(ok and _("Photo changed") or err)
-        App.update()
+        App.push("photocrop", { path = path, on_done = function(ok, err)
+            App.pop()
+            App.pop()
+            App.toast(ok and _("Photo changed") or err)
+            App.update()
+            if after then after() end
+        end })
     end })
 end
 
 -- The photo sheet: choose a picture from the device, or go back to the glyph.
-function ProfileFlow.photo()
-    local actions = { { icon = "image", label = _("Choose a picture"), sub = _("From any folder on this device"), on_tap = ProfileFlow.pickPhoto } }
+function ProfileFlow.photo(after)
+    if type(after) ~= "function" then after = nil end   -- a tap hands over the element instead
+    local actions = { { icon = "image", label = _("Choose a picture"), sub = _("From any folder on this device"),
+        on_tap = function() ProfileFlow.pickPhoto(after) end } }
     if Profile.hasPhoto() then
         actions[#actions + 1] = { icon = "trash", label = _("Remove photo"), sub = _("Use the generated glyph"), danger = true, on_tap = function()
             Profile.clearPhoto()
             App.toast(_("Photo removed"))
             App.update()
+            if after then after() end
         end }
     end
     App.sheet({ title = _("Your photo"), sub = _("Shown on your ID card"), cols = 1, actions = actions })
@@ -50,6 +60,26 @@ function ProfileFlow.editHandle(after)
         if after then after() end
         App.update()
     end, _("Save"), { placeholder = Profile.handle() })
+end
+
+-- The card floating over the screen, with its ways to change it. Each one
+-- closes the card and brings it back when it is done.
+function ProfileFlow.card()
+    local th = Theme.get()
+    App.dialog(function(close, screen_w)
+        local function then_card(fn) return function() close(); fn(ProfileFlow.card) end end
+        local footer = Layout.Row:new({ gap = th.space.s, children = {
+            Button:new({ icon = "image", label = _("PHOTO"), variant = "soft", grow = true, on_tap = then_card(ProfileFlow.photo) }),
+            Button:new({ icon = "edit", label = _("HANDLE"), variant = "soft", grow = true, on_tap = then_card(ProfileFlow.editHandle) }),
+            Button:new({ icon = "download", label = _("SAVE"), variant = "soft", grow = true, on_tap = function()
+                local file, err = ProfileFlow.export(IdCard.full({}))
+                App.toast(file and string.format(_("Saved %s"), file:match("[^/]+$")) or err)
+            end }),
+            Button:new({ icon = "close", variant = "icon", width = th.size.touch, on_tap = close }),
+        } })
+        return IdCard.full({ width = math.min(screen_w - 2 * th.space.xl, Theme.px(560)), footer = footer,
+            on_photo = then_card(ProfileFlow.photo), on_handle = then_card(ProfileFlow.editHandle) })
+    end)
 end
 
 -- Save the card as a picture in KOReader's screenshots folder (`ProfileFlow.dir`

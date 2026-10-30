@@ -10,8 +10,10 @@ local Controls = require("cyberui/ui/controls")
 local Frame = require("cyberui/screens/frame")
 local GoalTab = require("cyberui/screens/log/goal")
 local Layout = require("cyberui/ui/layout")
+local Metric = require("cyberui/data/metric")
 local Period = require("cyberui/screens/log/period")
 local Scope = require("cyberui/data/statsscope")
+local Settings = require("cyberui/settings")
 local ScopeSheet = require("cyberui/screens/log/scope")
 local Screen = require("cyberui/screens/screen")
 local Stats = require("cyberui/data/stats")
@@ -49,9 +51,19 @@ function History:build()
         on_change = function(v) self.tab, self.page = v, 1; App.update() end })
     local scope = Button:new({ icon = "folder", variant = Scope.active() and "icon_on" or "icon", width = th.size.touch,
         on_tap = ScopeSheet.open })
+    local actions = { scope }
+    if self.tab == "log" or self.tab == "calendar" then
+        actions[#actions + 1] = Button:new({ label = Metric.unit(), variant = "secondary", width = th.size.touch, height = th.size.touch,
+            on_tap = function() Metric.toggle(); App.update() end })
+    end
+    if self.tab == "log" or self.tab == "stats" then
+        local skyline = Settings.get("chart_view", "bars") == "skyline"
+        actions[#actions + 1] = Button:new({ icon = "skyline", variant = skyline and "icon_on" or "icon", width = th.size.touch,
+            on_tap = function() Settings.save("chart_view", skyline and "bars" or "skyline"); App.update() end })
+    end
     local path = "/VAR/LOG/" .. (Scope.active() and string.format(" // %d FOLDERS", #Scope.folders()) or "")
     return Frame.page({
-        screen = self, title = _("Telemetry.log"), path = path, tab = "history", actions = { scope },
+        screen = self, title = _("Telemetry.log"), path = path, tab = "history", actions = actions,
         body = Layout.Column:new({ gap = th.space.m, children = { tabs, module.build(self) } }),
     })
 end

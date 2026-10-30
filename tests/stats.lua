@@ -71,8 +71,25 @@ local months = Insights.months(year)
 local sum = 0
 for _, m in ipairs(months) do sum = sum + m.seconds end
 Kit.ok(#months == 12 and sum > 0, "a year splits into twelve months")
-local grid = Insights.pattern()
-Kit.ok(grid and grid[1][9] ~= nil, "the weekday by hour grid is there")
+local pattern = Insights.pattern()
+local grid_s, grid_p = pattern.seconds, pattern.pages
+local total_s, total_p = 0, 0
+for w = 1, 7 do for h = 0, 23 do total_s, total_p = total_s + grid_s[w][h], total_p + grid_p[w][h] end end
+local day_pages = 0
+for _, d in ipairs(days) do day_pages = day_pages + d.pages end
+Kit.ok(total_s == all_time.seconds, "the hour grid holds every second read (" .. total_s .. ")")
+Kit.ok(total_p == day_pages, "and every page")
+local weekday = (tonumber(os.date("%w")) + 6) % 7 + 1
+Kit.ok(grid_s[weekday][9] == 1800 and grid_p[weekday][9] == 3, "today's morning reading sits in its weekday and the hour it began in")
+for h = 0, 23 do
+    if h ~= 9 and h ~= 21 then Kit.ok(grid_s[weekday][h] == 0, "no reading is shown in hour " .. h) end
+end
+local daily = Stats.daily(7)
+Kit.ok(#daily == 7 and daily[7].seconds == 1800 and daily[7].pages == 3 and daily[6].seconds == 1800 and daily[3].seconds == 0,
+    "the last seven days carry time and pages, empty days are zero")
+local totals = Stats.totals(4)
+Kit.ok(totals.seconds == 7200 and totals.pages == 12, "a week's totals are the sum of its days (" .. totals.seconds .. ", " .. totals.pages .. ")")
+Kit.ok(Stats.streak() == 4 and Stats.bestStreak() == 4, "the streak and the best streak come from the same days")
 local sessions = Stats.sessions(10)
 Kit.ok(sessions and sessions[1].pages == 3, "a session counts its pages once")
 local book = Insights.book(a)

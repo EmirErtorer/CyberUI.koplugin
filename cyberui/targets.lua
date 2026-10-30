@@ -1,6 +1,6 @@
 -- What a launcher button can open: a KOReader action (the ones gestures use)
--- or an entry of KOReader's top menu. Choosing one goes through CyberUI's own
--- menu in pick mode, so both lists look and behave like the menu itself.
+-- or an entry of KOReader's top menu. The lists to choose from are in
+-- targetlist.lua; this file runs and describes a target.
 -- A target is { kind = "action", id, value, title } or
 -- { kind = "menu", tab, trail, text, title }.
 
@@ -10,42 +10,6 @@ local Menu = require("cyberui/menu")
 local _ = require("gettext")
 
 local Targets = {}
-
--- Can this entry of the action list be chosen? Only plain actions: a group
--- of them, or one that asks for a number first, has nothing to run.
-local function plainAction(item)
-    return item.callback ~= nil and not item.sub_item_table and not item.text_func
-end
-
--- The action an entry of the action list stands for: tapping it in KOReader's
--- chooser records it in `location`, so its callback tells us which it is.
-local function actionOf(item, location)
-    location.actions = nil
-    item.callback({ updateItems = function() end })
-    for k, v in pairs(location.actions or {}) do
-        if type(k) == "string" and k ~= "settings" then return { kind = "action", id = k, value = v, title = item.text } end
-    end
-    return nil
-end
-
--- Choose one of KOReader's actions; done(target) gets it.
-function Targets.pickAction(done)
-    local location = {}
-    local items = {}
-    Dispatcher:addSubMenu({}, items, location, "actions")
-    table.remove(items, 1)   -- "Nothing"
-    -- the groups of actions only: what follows them is for KOReader's profiles
-    for i, item in ipairs(items) do
-        if not item.sub_item_table then
-            for j = #items, i, -1 do items[j] = nil end
-            break
-        end
-    end
-    Menu.open({ km = { tab_item_table = { items } }, title = _("KOREADER ACTIONS"), pickable = plainAction, pick = function(_target, item)
-        local target = actionOf(item, location)
-        if target then done(target) end
-    end })
-end
 
 -- Choose an entry of KOReader's top menu; done(target) gets it.
 function Targets.pickMenu(done)

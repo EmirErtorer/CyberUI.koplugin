@@ -2,28 +2,25 @@
 -- per day, the reading streak, totals and recent sessions. Results are cached
 -- until a book is closed, since only reading changes them.
 
+local Insights = require("cyberui/data/insights")
 local Statsdb = require("cyberui/data/statsdb")
 
 local Stats = {}
 
 local query, rows, cached, midnight = Statsdb.query, Statsdb.rows, Statsdb.cached, Statsdb.midnight
 
--- Seconds read on each of the last `n` days, oldest first: { date, seconds }.
+-- Reading on each of the last `n` days, oldest first: { date, time, seconds,
+-- pages }. Every number in the log comes from the same per-day totals
+-- (Insights.days), so the tabs always agree.
 function Stats.daily(n)
     return cached("daily" .. n, function()
-        local since = midnight(n - 1)
         local by_day = {}
-        query(function(conn)
-            for _i, r in ipairs(rows(conn, string.format(
-                "SELECT date(start_time,'unixepoch','localtime'), sum(duration) FROM page_stat_data "
-                .. "WHERE start_time >= %d%s GROUP BY 1", since, Statsdb.scoped(conn)))) do
-                by_day[r[1]] = tonumber(r[2]) or 0
-            end
-        end)
+        for _i, d in ipairs(Insights.days()) do by_day[d.date] = d end
         local out = {}
         for i = n - 1, 0, -1 do
             local day = os.date("%Y-%m-%d", midnight(i) + 43200)
-            out[#out + 1] = { date = day, time = midnight(i), seconds = by_day[day] or 0 }
+            local d = by_day[day]
+            out[#out + 1] = { date = day, time = midnight(i), seconds = d and d.seconds or 0, pages = d and d.pages or 0 }
         end
         return out
     end)
@@ -38,36 +35,22 @@ end
 -- Days in a row with some reading, counting back from today (or yesterday
 -- when nothing was read yet today).
 function Stats.streak()
-    local days = Stats.daily(365) or {}
-    local count = 0
-    local i = #days
-    if i > 0 and days[i].seconds == 0 then i = i - 1 end
-    while i > 0 and days[i].seconds > 0 do
-        count = count + 1
-        i = i - 1
-    end
-    return count
+    return Insights.streaks().day_now
 end
 
--- Longest run of reading days in the last year.
+-- Longest run of reading days ever.
 function Stats.bestStreak()
-    local best, run = 0, 0
-    for _i, d in ipairs(Stats.daily(365) or {}) do
-        if d.seconds > 0 then run = run + 1; best = math.max(best, run) else run = 0 end
-    end
-    return best
+    return Insights.streaks().day_best
 end
 
--- Seconds and pages read over the last `n` days.
+-- Seconds and pages read over the last `n` days (pages counted per day, as the
+-- daily numbers are).
 function Stats.totals(n)
-    return cached("totals" .. n, function()
-        return query(function(conn)
-            local r = rows(conn, string.format(
-                "SELECT sum(duration), count(DISTINCT id_book || ':' || page) FROM page_stat_data WHERE start_time >= %d%s",
-                midnight(n - 1), Statsdb.scoped(conn)))[1]
-            return { seconds = tonumber(r and r[1]) or 0, pages = tonumber(r and r[2]) or 0 }
-        end)
-    end) or { seconds = 0, pages = 0 }
+    local t = { seconds = 0, pages = 0 }
+    for _i, d in ipairs(Stats.daily(n) or {}) do
+        t.seconds, t.pages = t.seconds + d.seconds, t.pages + d.pages
+    end
+    return t
 end
 
 -- Books with any reading this calendar year.
