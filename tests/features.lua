@@ -375,6 +375,31 @@ do
     Kit.ok(ok, "a drag on a closed photo window is ignored")
 end
 
+-- the board drawn in the diagnostics' empty space: fits several rooms, nothing when too small
+do
+    local Mainboard = require("cyberui/ui/mainboard")
+    local Paint = require("cyberui/gfx/paint")
+    local WHITE = require("ffi/blitbuffer").COLOR_WHITE
+    for _, size in ipairs({ { 1128, 472 }, { 900, 380 }, { 600, 420 }, { 1100, 300 } }) do
+        local bb = Kit.canvas(1200, 600)
+        Paint.fill(bb, 0, 0, 1200, 600, WHITE)
+        local ok = pcall(function()
+            local el = Mainboard:new({})
+            el:layout(size[1], size[2])
+            el:paint(bb, 10, 10)
+        end)
+        Kit.ok(ok, "the board draws in " .. size[1] .. " x " .. size[2])
+        bb:free()
+    end
+    local bb = Kit.canvas(400, 200)
+    Paint.fill(bb, 0, 0, 400, 200, WHITE)
+    local el = Mainboard:new({})
+    el:layout(300, 60)
+    el:paint(bb, 0, 0)
+    Kit.ok(bb:getPixel(150, 30):getColor8().a == 255, "nothing is drawn where the room is too small")
+    bb:free()
+end
+
 -- opening a book at a shard
 do
     local App = require("cyberui/app")

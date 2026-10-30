@@ -48,7 +48,7 @@ function Column:layout(w, h)
         local room = h - pt - pb
         local acc, shown = 0, 0
         for i, c in ipairs(self.children) do
-            local need = c.h + (i > 1 and gap or 0)
+            local need = (c.h or 0) + (i > 1 and gap or 0)
             if acc + need > room then break end
             acc, shown = acc + need, i
         end

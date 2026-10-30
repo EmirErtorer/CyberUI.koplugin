@@ -17,6 +17,14 @@ versions marked *Prerelease* are test builds.
   as the payouts, so ownership and the balance cannot be edited in the
   settings file.
 
+### Added (diagnostics)
+- A see-through view of an e-reader's main board fills the empty space under
+  the Diagnostics readouts: SoC and memory in ball-grid packages, flash, power
+  chip with inductors, frontlight driver, touch controller, Wi-Fi module under
+  its shield can, display and touch flex connectors, USB-C, battery connector,
+  crystals and test points, joined by straight traces. It scales to the room
+  and leaves the screen alone when there is too little.
+
 ### Added (menu)
 - CyberUI's tab in KOReader's menu now has two pages, the operator ID card
   (face, handle, rank, eddies) and the controls, with the order your choice

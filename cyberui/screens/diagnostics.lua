@@ -12,6 +12,7 @@ local Frame = require("cyberui/screens/frame")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Library = require("cyberui/data/library")
+local Mainboard = require("cyberui/ui/mainboard")
 local Panel = require("cyberui/ui/panel")
 local Progress = require("cyberui/ui/progress")
 local Screen = require("cyberui/screens/screen")
@@ -175,6 +176,7 @@ function Diagnostics:build()
         } }),
         uptimePanel(),
         identLines(),
+        Mainboard:new({ grow = true }),   -- the empty space under the readouts: the board inside
     } })
     return Frame.page({ screen = self, title = _("Diagnostics"), path = "ROOT@" .. Banner.device() .. " // SYS.MONITOR", -- i18n: keep
         tab = "home", body = body,
