@@ -407,7 +407,7 @@ local function lightRows()
         function(v) pd:setIntensity(v) end, pd.fl_min or 0, pd.fl_max or 24)
     if Device:hasNaturalLight() then
         rows[#rows + 1] = stepper(_("TINT"), function() return pd:frontlightWarmth() end,
-            function(v) pd:setWarmth(v) end, pd.fl_warmth_min or 0, pd.fl_warmth_max or 100)
+            function(v) pd:setWarmth(v) end, 0, 100)  -- setWarmth takes KOReader's 0-100 scale, not the native one
     end
     return rows
 end
