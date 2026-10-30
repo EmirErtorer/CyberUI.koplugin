@@ -496,13 +496,14 @@ do
     Settings.set("jack_in", nil)
 end
 
--- reader parking: off by default, and nothing to do when nothing is parked
+-- reader parking: on by default, and nothing to do when nothing is parked
 do
     local Park = require("cyberui/park")
     local Settings = require("cyberui/settings")
     Settings.set("park_reader", nil)
-    Kit.ok(not Park.enabled(), "parking is off until it is switched on")
-    Kit.ok(not Park.park({ document = {} }), "a book is not parked while parking is off")
+    Kit.ok(Park.enabled(), "parking is on until it is switched off")
+    Settings.set("park_reader", false)
+    Kit.ok(not Park.enabled() and not Park.park({ document = {} }), "a book is not parked while parking is off")
     Kit.ok(not Park.isParked() and Park.file() == nil and not Park.finish() and not Park.unpark("/some/book.epub"),
         "with nothing parked there is nothing to finish or bring back")
     Kit.ok(Park.ui() == nil, "and no file browser stand-in")

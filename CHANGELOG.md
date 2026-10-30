@@ -17,7 +17,17 @@ versions marked *Prerelease* are test builds.
   as the payouts, so ownership and the balance cannot be edited in the
   settings file.
 
+### Fixed
+- A crash when a drag reached the photo crop window after it had closed.
+- The Traces backdrop no longer draws routes off the edge of the card.
+
 ### Changed
+- Keeping the book open on Home is on by default.
+- The recent list on home shares its room between its rows, so no gap a row
+  could have filled is left (a fourth or fifth row fits where it used to stop at three).
+- The shop shows two styles to a row, with compact jack-in previews, so a tab
+  fits on one page.
+- A gig's dossier has a Take gig button with its price.
 - The skyline is redrawn as a city: towers of several styles with masts, lights
   and billboards over a pale far skyline; windows lit by time read.
 - Touches made while KOReader is still closing a book are no longer pressed on
@@ -47,7 +57,7 @@ versions marked *Prerelease* are test builds.
   are `.po` files in `l10n/` that can be edited without touching the code (your
   own edits go in `settings/cyberui-l10n/` and survive updates). A check in the test
   suite fails when any text is untranslated, so new features arrive translated.
-- Keep the book open on Home (System > Speed, off by default): going home puts
+- Keep the book open on Home (System > Speed, on by default): going home puts
   the book away instead of closing it, so the same book opens again in about a
   third of the time and nothing blocks after home is shown. KOReader closes it
   when a different book is opened, after 30 seconds untouched, or when KOReader's

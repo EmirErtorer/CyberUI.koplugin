@@ -1,4 +1,4 @@
--- Reader parking (System > Speed, off by default). Leaving a book for home
+-- Reader parking (System > Speed, on by default). Leaving a book for home
 -- does not close it: home is raised over the live reader, which stays open
 -- underneath, so going home takes one paint and opening the same book again
 -- is a swap, with no load. The real close (KOReader writing the book's data
@@ -32,7 +32,7 @@ local probe_task          -- the scheduled idle check
 
 -- Is parking switched on?
 function Park.enabled()
-    return Settings.get("park_reader", false) == true
+    return Settings.get("park_reader", true) == true
 end
 
 -- KOReader's reader, if one is open.

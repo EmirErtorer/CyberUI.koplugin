@@ -251,7 +251,7 @@ function SettingsScreen:speed()
             Controls.Stepper({ value = Settings.get("full_refresh_every", 6), min = 0, max = 20,
                 format = function(v) return tostring(v) end, value_w = 48, on_change = function(v) save("full_refresh_every", v) end })),
         row(_("Keep the book open on Home"), _("Home shows at once and the same book opens again with no loading; the book is closed later"),
-            Controls.Toggle:new({ on = Settings.get("park_reader", false), on_change = function(on)
+            Controls.Toggle:new({ on = Settings.get("park_reader", true), on_change = function(on)
                 save("park_reader", on)
                 if not on then require("cyberui/park").finish() end
             end })),

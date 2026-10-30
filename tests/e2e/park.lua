@@ -22,7 +22,7 @@ H.step(4, function()
     for f in lfs.dir(dir) do if f:match("%.epub$") then books[#books + 1] = dir .. "/" .. f end end
     table.sort(books)
     A, B = books[1], books[2]
-    H.check(not Park.enabled(), "parking is off by default")
+    H.check(Park.enabled(), "parking is on by default")
     Settings.set("park_reader", true)
     Park.IDLE_S, Park.EVERY_S = 4, 1   -- the idle close, sped up for the test
     app().openBook(A)
