@@ -4,7 +4,7 @@
 
 local Addons = require("cyberui/apps/addons")
 local App = require("cyberui/app")
-local Bounty = require("cyberui/data/bounty")
+local Gigs = require("cyberui/data/gigs")
 local Button = require("cyberui/ui/button")
 local Collections = require("cyberui/data/collections")
 local Format = require("cyberui/format")
@@ -31,10 +31,10 @@ local BUILTIN = {
         return "collections", _("COLLECTIONS"), string.format(_.n("%d CACHE", "%d CACHES", #Collections.list()), #Collections.list()), function() App.go("collections") end
     end,
     history = function() return "history", _("HISTORY"), _("TELEMETRY.LOG"), function() App.go("history") end end,
-    bounty = function()
-        local list = Bounty.list()
-        return "bounty", _("BOUNTIES"), #list > 0 and string.format(_.n("%s // %d WANTED", "%s // %d WANTED", #list), Format.credits(Bounty.total()), #list) or _("BACKLOG CLEAR"),
-            function() App.push("bounty") end
+    gigs = function()
+        local n = #Gigs.board()
+        return "gigs", _("GIGS"), n > 0 and string.format(_.n("%d OPEN", "%d OPEN", n), n) or _("BACKLOG CLEAR"),
+            function() App.push("gigs") end
     end,
     shards = function()
         local n = Shards.count()

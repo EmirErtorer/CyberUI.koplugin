@@ -30,7 +30,7 @@ local Library = require("cyberui/data/library")
 
 local only = {}
 for i = 3, #arg do only[arg[i]] = true end
-local SCREENS = { "home", "library", "dossier", "collections", "history", "search", "settings", "trash", "fonts", "diagnostics", "topbar", "launcher", "launchedit", "iconpick", "targetpick", "photocrop", "filepick", "bounty", "shards", "shard", "colourpick" }
+local SCREENS = { "home", "library", "dossier", "collections", "history", "search", "settings", "trash", "fonts", "diagnostics", "topbar", "launcher", "launchedit", "iconpick", "targetpick", "photocrop", "filepick", "gigs", "shards", "shard", "colourpick" }
 local PARAMS = {
     dossier = function() return { path = Library.all()[1] } end,
     launchedit = function() return { id = "library" } end,

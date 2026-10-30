@@ -35,3 +35,7 @@ Settings, Search...) the translation uses KOReader's.
 Short forms are used where a label has little room (tab bars, stat tiles):
 the tab for the library is "Books" in most languages, and the second tab says
 "Lists" where "Collections" does not fit.
+
+Kept as they are in every language: **Gig / Gigs** (the paid reading jobs),
+**Eddies** (the currency, symbol €$) and **Ink Away**, **CyberUI**, **KOReader**.
+The check fails a translation that drops them.

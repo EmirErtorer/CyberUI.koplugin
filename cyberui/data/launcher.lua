@@ -8,7 +8,7 @@ local Launcher = {}
 
 -- The built-in buttons, in their default order, and the one that always
 -- stays so the settings can always be reached.
-Launcher.BUILTIN = { "library", "collections", "history", "search", "bounty", "shards", "inkaway", "settings" }
+Launcher.BUILTIN = { "library", "collections", "history", "search", "gigs", "shards", "inkaway", "settings" }
 
 -- Built-in buttons that start hidden (the reader can show them in the editor).
 Launcher.HIDDEN_AT_FIRST = { shards = true }
@@ -24,6 +24,7 @@ for _i, id in ipairs(Launcher.BUILTIN) do builtin[id] = true end
 function Launcher.entries()
     local out, seen = {}, {}
     for _i, e in ipairs(Settings.get("launcher", {})) do
+        if type(e) == "table" and e.id == "bounty" then e.id = "gigs" end   -- its old name
         if type(e) == "table" and (builtin[e.id] or e.custom) and not seen[e.id] then
             seen[e.id] = true
             out[#out + 1] = e

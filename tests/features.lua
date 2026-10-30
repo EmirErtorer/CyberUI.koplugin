@@ -237,20 +237,75 @@ do
     Shards.reset()
     Shards.file = nil
 
-    local Bounty = require("cyberui/data/bounty")
-    local list_b = Bounty.list()
+    local Gigs = require("cyberui/data/gigs")
+    local board = Gigs.board()
     local last = 1e9
-    for _, b in ipairs(list_b) do
-        Kit.ok(b.days >= Bounty.GRACE_DAYS and b.reward == b.days * Bounty.PER_DAY and b.days <= last, "a bounty grows with the days idle, oldest first")
-        last = b.days
+    for _, g in ipairs(board) do
+        Kit.ok(g.days >= Gigs.GRACE_DAYS and g.price == Gigs.price(g.pages, g.days) and g.days <= last, "a gig is priced from its pages and days idle, oldest first")
+        last = g.days
     end
-    Kit.ok(Bounty.total() == (function() local t = 0; for _, b in ipairs(list_b) do t = t + b.reward end; return t end)(), "the total adds the bounties")
-    if #list_b > 0 then
-        Bounty.skip(list_b[1].path)
-        Kit.ok(#Bounty.list() == #list_b - 1, "a book said to be not wanted leaves the board")
-        Bounty.reset()
-        Kit.ok(#Bounty.list() == #list_b, "and comes back")
+    Kit.ok(Gigs.price(300, 7) == 60 and Gigs.price(300, 70) == 120 and Gigs.price(300, 700) == 120, "the price grows with the wait and stops at double")
+    Kit.ok(Gigs.price(1, 7) == 20 and Gigs.price(100, 14) % 20 == 0, "prices are whole steps of 20")
+    local step, finish = Gigs.split(120)
+    Kit.ok(step == 6 and finish == 60 and step * 10 + finish == 120, "ten steps and the finish add up to the price")
+    if #board > 0 then
+        Gigs.skip(board[1].path)
+        Kit.ok(#Gigs.board() == #board - 1, "a book said to be not wanted leaves the board")
+        Gigs.reset()
+        Kit.ok(#Gigs.board() == #board, "and comes back")
     end
+end
+
+-- gigs: taking one, reading it, the payouts and the signed ledger
+do
+    local Gigs = require("cyberui/data/gigs")
+    local Settings = require("cyberui/settings")
+    local lfs = require("libs/libkoreader-lfs")
+    local saved = Settings.get("gigs")
+    Settings.set("gigs", nil)
+    Gigs.reload()
+    local tmp = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-gigs"
+    os.execute("rm -rf '" .. tmp .. "'; mkdir -p '" .. tmp .. "'")
+    local book = tmp .. "/Long.epub"
+    local f = io.open(book, "w")
+    f:write(string.rep("x", 600 * 1024))
+    f:close()
+    local old = os.time() - 80 * 86400
+    lfs.touch(book, old, old)
+    Kit.ok(Gigs.pages(book) == 300, "a book never opened is sized from its file")
+    Gigs.accept(book)
+    local q = Gigs.quote(book)
+    Kit.ok(q and q.price == 120, "taking a gig fixes the price")
+    Gigs.follow(book)
+    for p = 1, 100 do Gigs.page(p, 300) end
+    local paid_now = Gigs.settle()
+    Kit.ok(paid_now == 18 and Gigs.balance() == 18, "a third of the book pays three steps")
+    Kit.ok(Gigs.settle() == 0, "and nothing twice")
+    Gigs.follow(book)
+    Kit.ok(Gigs.active()[1].milestones == 3 and Gigs.active()[1].price == 120, "the gig is active with its payouts so far")
+    for p = 101, 300 do Gigs.page(p, 300) end
+    Kit.ok(Gigs.settle() == 102 and Gigs.balance() == 120, "reading to the end pays the rest and the finish")
+    local earned, done = Gigs.totals()
+    Kit.ok(earned == 120 and done == 1 and #Gigs.active() == 0, "the gig is done")
+    Kit.ok(Gigs.recent(1)[1].kind == "f" and Gigs.takeReceipt().finished, "the finish is the latest payout and a notice is waiting")
+    -- skipping to the end pays nothing
+    local skim = tmp .. "/Skim.epub"
+    f = io.open(skim, "w"); f:write(string.rep("x", 600 * 1024)); f:close()
+    lfs.touch(skim, old, old)
+    Gigs.accept(skim)
+    Gigs.follow(skim)
+    Gigs.page(300, 300)
+    Kit.ok(Gigs.settle() == 0, "jumping to the last page pays nothing")
+    -- the settings file edited by hand
+    local d = Settings.get("gigs")
+    d.ledger[1].a = 999
+    d.quotes[skim].price = 9000
+    Gigs.reload()
+    Kit.ok(Gigs.balance() == 120 - 6 and Gigs.rejected() == 1, "an edited ledger entry stops counting")
+    Kit.ok(Gigs.quote(skim) == nil, "an edited price is not trusted")
+    Settings.set("gigs", saved)
+    Gigs.reload()
+    os.execute("rm -rf '" .. tmp .. "'")
 end
 
 -- opening a book at a shard

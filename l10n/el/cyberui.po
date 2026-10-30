@@ -189,7 +189,7 @@ msgstr[1] "Παραμένουν στον κάδο για %d ημέρες."
 msgid "Open"
 msgstr "Άνοιγμα"
 
-#: cyberui/actions.lua cyberui/screens/bounty.lua
+#: cyberui/actions.lua cyberui/screens/gigs.lua
 msgid "Details"
 msgstr "Λεπτομέρειες"
 
@@ -228,6 +228,14 @@ msgstr "Σύστημα"
 #: cyberui/app.lua
 msgid "Something went wrong; see crash.log"
 msgstr "Κάτι πήγε στραβά· δείτε το crash.log"
+
+#: cyberui/app.lua
+msgid "GIG FINISHED +%s"
+msgstr "ΤΕΛΕΙΩΣΕ ΤΟ GIG +%s"
+
+#: cyberui/app.lua
+msgid "GIG PAYOUT +%s"
+msgstr "ΠΛΗΡΩΜΗ GIG +%s"
 
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
@@ -877,60 +885,6 @@ msgstr "Αποθηκεύτηκε το %s"
 msgid "The card could not be saved"
 msgstr "Δεν ήταν δυνατή η αποθήκευση της κάρτας"
 
-#: cyberui/screens/bounty.lua
-msgid "%s ON ITS HEAD"
-msgstr "%s ΓΙΑ ΤΟ ΚΕΦΑΛΙ ΤΟΥ"
-
-#: cyberui/screens/bounty.lua
-msgid "Claim it"
-msgstr "Διεκδίκηση"
-
-#: cyberui/screens/bounty.lua
-msgid "Open the book"
-msgstr "Άνοιγμα του βιβλίου"
-
-#: cyberui/screens/bounty.lua
-msgid "Not wanted"
-msgstr "Δεν καταζητείται"
-
-#: cyberui/screens/bounty.lua
-msgid "Take it off the board"
-msgstr "Αφαίρεση από τον πίνακα"
-
-#: cyberui/screens/bounty.lua
-msgid "MOST_WANTED"
-msgstr "ΠΙΟ_ΚΑΤΑΖΗΤΟΥΜΕΝΑ"
-
-#: cyberui/screens/bounty.lua
-msgid "WANTED"
-msgstr "ΚΑΤΑΖΗΤΕΙΤΑΙ"
-
-#: cyberui/screens/bounty.lua
-msgid "AT LARGE %d DAY"
-msgid_plural "AT LARGE %d DAYS"
-msgstr[0] "ΣΕ ΦΥΓΗ ΕΔΩ ΚΑΙ %d ΗΜΕΡΑ"
-msgstr[1] "ΣΕ ΦΥΓΗ ΕΔΩ ΚΑΙ %d ΗΜΕΡΕΣ"
-
-#: cyberui/screens/bounty.lua
-msgid "CLAIM"
-msgstr "ΔΙΕΚΔΙΚΗΣΗ"
-
-#: cyberui/screens/bounty.lua
-msgid "NO OUTSTANDING TARGETS"
-msgstr "ΚΑΝΕΝΑΣ ΕΚΚΡΕΜΗΣ ΣΤΟΧΟΣ"
-
-#: cyberui/screens/bounty.lua
-msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week appear here with a bounty on them."
-msgstr "Κάθε βιβλίο της βιβλιοθήκης έχει ανοιχτεί ή είναι ακόμη καινούριο. Τα βιβλία που μένουν αδιάβαστα για μια εβδομάδα εμφανίζονται εδώ με αμοιβή."
-
-#: cyberui/screens/bounty.lua
-msgid "Bounties"
-msgstr "Αμοιβές"
-
-#: cyberui/screens/bounty.lua
-msgid "MOST WANTED // %s ON THE BOARD"
-msgstr "ΠΙΟ ΚΑΤΑΖΗΤΟΥΜΕΝΑ // %s ΣΤΟΝ ΠΙΝΑΚΑ"
-
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
 msgid_plural "%d FILES"
@@ -1372,6 +1326,137 @@ msgid "%d AVAILABLE"
 msgid_plural "%d AVAILABLE"
 msgstr[0] "%d ΔΙΑΘΕΣΙΜΟ"
 msgstr[1] "%d ΔΙΑΘΕΣΙΜΑ"
+
+#: cyberui/screens/gigs.lua
+msgid "PAYS %s"
+msgstr "ΠΛΗΡΩΝΕΙ %s"
+
+#: cyberui/screens/gigs.lua
+msgid "Take the gig"
+msgstr "Ανάλαβε το gig"
+
+#: cyberui/screens/gigs.lua
+msgid "Open the book"
+msgstr "Άνοιγμα του βιβλίου"
+
+#: cyberui/screens/gigs.lua
+msgid "Not wanted"
+msgstr "Δεν καταζητείται"
+
+#: cyberui/screens/gigs.lua
+msgid "Take it off the board"
+msgstr "Αφαίρεση από τον πίνακα"
+
+#: cyberui/screens/gigs.lua
+msgid "HOW_GIGS_WORK"
+msgstr "ΠΩΣ_ΛΕΙΤΟΥΡΓΟΥΝ_ΤΑ_GIGS"
+
+#: cyberui/screens/gigs.lua
+msgid "A book that sits unread for a week becomes a gig. Open it to take the gig and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more."
+msgstr "Ένα βιβλίο που μένει μία εβδομάδα αδιάβαστο γίνεται gig. Άνοιξέ το για να αναλάβεις το gig και να κλειδώσεις την τιμή. Κάθε 10% που διαβάζεις πληρώνει το ένα εικοστό της τιμής και η ολοκλήρωση πληρώνει το άλλο μισό. Τα μεγαλύτερα βιβλία και οι μεγαλύτερες αναμονές πληρώνουν περισσότερο."
+
+#: cyberui/screens/gigs.lua
+msgid "TOP_GIG"
+msgstr "TOP_GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "AT LARGE %d DAY"
+msgid_plural "AT LARGE %d DAYS"
+msgstr[0] "ΣΕ ΦΥΓΗ ΕΔΩ ΚΑΙ %d ΗΜΕΡΑ"
+msgstr[1] "ΣΕ ΦΥΓΗ ΕΔΩ ΚΑΙ %d ΗΜΕΡΕΣ"
+
+#: cyberui/screens/gigs.lua
+msgid "~%d PAGE"
+msgid_plural "~%d PAGES"
+msgstr[0] "~%d ΣΕΛΙΔΑ"
+msgstr[1] "~%d ΣΕΛΙΔΕΣ"
+
+#: cyberui/screens/gigs.lua
+msgid "%s PER 10%% // %s ON FINISH"
+msgstr "%s ΑΝΑ 10%% // %s ΣΤΗΝ ΟΛΟΚΛΗΡΩΣΗ"
+
+#: cyberui/screens/gigs.lua
+msgid "TAKE GIG"
+msgstr "ΑΝΑΛΑΒΕ GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "NO OPEN GIGS"
+msgstr "ΚΑΝΕΝΑ ΑΝΟΙΧΤΟ GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week become gigs here."
+msgstr "Κάθε βιβλίο της βιβλιοθήκης έχει ανοιχτεί ή είναι ακόμη καινούργιο. Τα βιβλία που μένουν μία εβδομάδα αδιάβαστα γίνονται εδώ gigs."
+
+#: cyberui/screens/gigs.lua cyberui/ui/launcher.lua
+msgid "GIGS"
+msgstr "GIGS"
+
+#: cyberui/screens/gigs.lua
+msgid "NO GIGS TAKEN"
+msgstr "ΚΑΝΕΝΑ GIG ΔΕΝ ΑΝΑΛΗΦΘΗΚΕ"
+
+#: cyberui/screens/gigs.lua
+msgid "Take an open gig and start reading. It shows up here and pays as you read."
+msgstr "Ανάλαβε ένα ανοιχτό gig και ξεκίνα να διαβάζεις. Εμφανίζεται εδώ και πληρώνει όσο διαβάζεις."
+
+#: cyberui/screens/gigs.lua
+msgid "%s OF %s PAID"
+msgstr "%s ΑΠΟ %s ΠΛΗΡΩΘΗΚΑΝ"
+
+#: cyberui/screens/gigs.lua
+msgid "BALANCE"
+msgstr "ΥΠΟΛΟΙΠΟ"
+
+#: cyberui/screens/gigs.lua
+msgid "EARNED"
+msgstr "ΚΕΡΔΗ"
+
+#: cyberui/screens/gigs.lua cyberui/ui/idcard.lua
+msgid "GIGS DONE"
+msgstr "ΟΛΟΚΛΗΡΩΜΕΝΑ GIGS"
+
+#: cyberui/screens/gigs.lua
+msgid "NO PAYOUTS YET"
+msgstr "ΑΚΟΜΑ ΧΩΡΙΣ ΠΛΗΡΩΜΕΣ"
+
+#: cyberui/screens/gigs.lua
+msgid "Read a gig to earn eddies. Each payout is listed here."
+msgstr "Διάβασε ένα gig για να κερδίσεις eddies. Κάθε πληρωμή αναγράφεται εδώ."
+
+#: cyberui/screens/gigs.lua
+msgid "GIG FINISHED"
+msgstr "ΤΕΛΕΙΩΣΕ ΤΟ GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "%d%% READ"
+msgstr "ΔΙΑΒΑΣΤΗΚΕ %d%%"
+
+#: cyberui/screens/gigs.lua
+msgid "PAYOUTS"
+msgstr "ΠΛΗΡΩΜΕΣ"
+
+#: cyberui/screens/gigs.lua
+msgctxt "gigs tab"
+msgid "Open"
+msgstr "Ανοιχτά"
+
+#: cyberui/screens/gigs.lua
+msgid "Active"
+msgstr "Ενεργά"
+
+#: cyberui/screens/gigs.lua
+msgid "Payouts"
+msgstr "Πληρωμές"
+
+#: cyberui/screens/gigs.lua
+msgid "%d LEDGER ENTRY FAILED THE CHECK"
+msgid_plural "%d LEDGER ENTRIES FAILED THE CHECK"
+msgstr[0] "%d ΕΓΓΡΑΦΗ ΤΟΥ ΜΗΤΡΩΟΥ ΑΠΕΤΥΧΕ ΣΤΟΝ ΕΛΕΓΧΟ"
+msgstr[1] "%d ΕΓΓΡΑΦΕΣ ΤΟΥ ΜΗΤΡΩΟΥ ΑΠΕΤΥΧΑΝ ΣΤΟΝ ΕΛΕΓΧΟ"
+
+#: cyberui/screens/gigs.lua
+msgid "GIGS // BALANCE %s"
+msgstr "GIGS // ΥΠΟΛΟΙΠΟ %s"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
@@ -2774,6 +2859,10 @@ msgid "%dD"
 msgstr "%dΗ"
 
 #: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr "EDDIES"
+
+#: cyberui/ui/idcard.lua
 msgid "OPERATOR // ID-CARD"
 msgstr "ΧΕΙΡΙΣΤΗΣ // ΚΑΡΤΑ ID"
 
@@ -2814,14 +2903,10 @@ msgid "TELEMETRY.LOG"
 msgstr "TELEMETRY.LOG"
 
 #: cyberui/ui/launcher.lua
-msgid "BOUNTIES"
-msgstr "ΑΜΟΙΒΕΣ"
-
-#: cyberui/ui/launcher.lua
-msgid "%s // %d WANTED"
-msgid_plural "%s // %d WANTED"
-msgstr[0] "%s // %d ΖΗΤΕΙΤΑΙ"
-msgstr[1] "%s // %d ΖΗΤΟΥΝΤΑΙ"
+msgid "%d OPEN"
+msgid_plural "%d OPEN"
+msgstr[0] "%d ΑΝΟΙΧΤΟ"
+msgstr[1] "%d ΑΝΟΙΧΤΑ"
 
 #: cyberui/ui/launcher.lua
 msgid "BACKLOG CLEAR"

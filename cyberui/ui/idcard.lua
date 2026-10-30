@@ -6,6 +6,7 @@ local Avatar = require("cyberui/ui/avatar")
 local Button = require("cyberui/ui/button")
 local Deco = require("cyberui/ui/deco")
 local Format = require("cyberui/format")
+local Gigs = require("cyberui/data/gigs")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Paint = require("cyberui/gfx/paint")
@@ -72,6 +73,10 @@ function IdCard.full(o)
             StatTile(_("BEST RUN"), string.format(_("%dD"), stats.best_run)),
             StatTile(_("DAYS READ"), tostring(stats.days)),
             StatTile(_("SINCE"), monthOf(stats.since)),
+        } }),
+        Layout.Row:new({ gap = th.space.s, children = {
+            StatTile(_("EDDIES"), Format.credits(Gigs.balance())),
+            StatTile(_("GIGS DONE"), tostring(select(2, Gigs.totals()))),
         } }),
     } })
     local progress = Layout.Column:new({ children = {

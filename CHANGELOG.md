@@ -50,8 +50,12 @@ versions marked *Prerelease* are test builds.
   rank sit in the banner on home; tap the face to open the card.
 - Jack-in card: a card with the book shown while it opens, in place of
   KOReader's small opening message (System > Home > Jack-in card).
-- Bounty board for books you never opened, oldest first, with a bounty that
-  grows by the day; a Bounties button on home.
+- Gigs: books you never opened become paid work after a week, priced by
+  length and how long they waited (€$20 steps, up to double). Opening one takes
+  the gig; every 10% you read pays a twentieth of the price and finishing pays
+  the other half. Your eddies balance sits on the ID card; the ledger is
+  signed, so editing the settings file does not add money. A Gigs button on
+  home, with open, active and payout lists.
 - Data shards: every highlight in your books as a recovered fragment, with a
   shard on home (on by default, System > Home > Data shard turns it off), a Shards screen, and a way to open the book at the highlight.
 - Skyline chart: a month of reading as a night city on the calendar tab, and

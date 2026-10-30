@@ -60,7 +60,7 @@ function Profile.rng(seed)
 end
 
 -- The seed this device's profile is made from, made on first use and kept.
-local function seed()
+function Profile.seed()
     local s = Settings.get("profile_seed")
     if not s then
         s = string.format("%d-%d", os.time(), math.floor(os.clock() * 1e6))
@@ -73,13 +73,13 @@ end
 function Profile.handle()
     local h = Settings.get("handle")
     if h and h ~= "" then return h end
-    local h32 = Profile.hash(seed())
+    local h32 = Profile.hash(Profile.seed())
     return string.format("%s_%s.%d", ADJECTIVES[h32 % #ADJECTIVES + 1], NOUNS[math.floor(h32 / 16) % #NOUNS + 1], math.floor(h32 / 256) % 10)
 end
 
 -- The ID code, three groups of hex digits; it does not change with the handle.
 function Profile.id()
-    local s = seed()
+    local s = Profile.seed()
     return string.format("%04X-%04X-%04X", Profile.hash(s .. "a") % 65536, Profile.hash(s .. "b") % 65536, Profile.hash(s .. "c") % 65536)
 end
 

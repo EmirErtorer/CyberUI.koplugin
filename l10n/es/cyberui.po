@@ -189,7 +189,7 @@ msgstr[1] "Esperan %d días en la papelera."
 msgid "Open"
 msgstr "Abrir"
 
-#: cyberui/actions.lua cyberui/screens/bounty.lua
+#: cyberui/actions.lua cyberui/screens/gigs.lua
 msgid "Details"
 msgstr "Detalles"
 
@@ -228,6 +228,14 @@ msgstr "Sistema"
 #: cyberui/app.lua
 msgid "Something went wrong; see crash.log"
 msgstr "Algo ha fallado; consulta crash.log"
+
+#: cyberui/app.lua
+msgid "GIG FINISHED +%s"
+msgstr "GIG TERMINADO +%s"
+
+#: cyberui/app.lua
+msgid "GIG PAYOUT +%s"
+msgstr "PAGO DE GIG +%s"
 
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
@@ -877,60 +885,6 @@ msgstr "%s guardado"
 msgid "The card could not be saved"
 msgstr "No se pudo guardar la tarjeta"
 
-#: cyberui/screens/bounty.lua
-msgid "%s ON ITS HEAD"
-msgstr "%s POR SU CABEZA"
-
-#: cyberui/screens/bounty.lua
-msgid "Claim it"
-msgstr "Reclamar"
-
-#: cyberui/screens/bounty.lua
-msgid "Open the book"
-msgstr "Abrir el libro"
-
-#: cyberui/screens/bounty.lua
-msgid "Not wanted"
-msgstr "No se busca"
-
-#: cyberui/screens/bounty.lua
-msgid "Take it off the board"
-msgstr "Quitarlo del tablón"
-
-#: cyberui/screens/bounty.lua
-msgid "MOST_WANTED"
-msgstr "MÁS_BUSCADOS"
-
-#: cyberui/screens/bounty.lua
-msgid "WANTED"
-msgstr "SE BUSCA"
-
-#: cyberui/screens/bounty.lua
-msgid "AT LARGE %d DAY"
-msgid_plural "AT LARGE %d DAYS"
-msgstr[0] "PRÓFUGO %d DÍA"
-msgstr[1] "PRÓFUGO %d DÍAS"
-
-#: cyberui/screens/bounty.lua
-msgid "CLAIM"
-msgstr "COBRAR"
-
-#: cyberui/screens/bounty.lua
-msgid "NO OUTSTANDING TARGETS"
-msgstr "SIN OBJETIVOS PENDIENTES"
-
-#: cyberui/screens/bounty.lua
-msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week appear here with a bounty on them."
-msgstr "Todos los libros de la biblioteca se han abierto o aún son nuevos. Los libros que pasan una semana sin leerse aparecen aquí con una recompensa."
-
-#: cyberui/screens/bounty.lua
-msgid "Bounties"
-msgstr "Recompensas"
-
-#: cyberui/screens/bounty.lua
-msgid "MOST WANTED // %s ON THE BOARD"
-msgstr "MÁS BUSCADOS // %s EN EL TABLÓN"
-
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
 msgid_plural "%d FILES"
@@ -1372,6 +1326,137 @@ msgid "%d AVAILABLE"
 msgid_plural "%d AVAILABLE"
 msgstr[0] "%d DISPONIBLE"
 msgstr[1] "%d DISPONIBLES"
+
+#: cyberui/screens/gigs.lua
+msgid "PAYS %s"
+msgstr "PAGA %s"
+
+#: cyberui/screens/gigs.lua
+msgid "Take the gig"
+msgstr "Aceptar el gig"
+
+#: cyberui/screens/gigs.lua
+msgid "Open the book"
+msgstr "Abrir el libro"
+
+#: cyberui/screens/gigs.lua
+msgid "Not wanted"
+msgstr "No se busca"
+
+#: cyberui/screens/gigs.lua
+msgid "Take it off the board"
+msgstr "Quitarlo del tablón"
+
+#: cyberui/screens/gigs.lua
+msgid "HOW_GIGS_WORK"
+msgstr "CÓMO_FUNCIONAN_LOS_GIGS"
+
+#: cyberui/screens/gigs.lua
+msgid "A book that sits unread for a week becomes a gig. Open it to take the gig and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more."
+msgstr "Un libro que pasa una semana sin leerse se convierte en un gig. Ábrelo para aceptar el gig y fijar su precio. Cada 10% que lees paga una veinteava parte del precio, y terminarlo paga la otra mitad. Los libros más largos y las esperas más largas pagan más."
+
+#: cyberui/screens/gigs.lua
+msgid "TOP_GIG"
+msgstr "TOP_GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "AT LARGE %d DAY"
+msgid_plural "AT LARGE %d DAYS"
+msgstr[0] "PRÓFUGO %d DÍA"
+msgstr[1] "PRÓFUGO %d DÍAS"
+
+#: cyberui/screens/gigs.lua
+msgid "~%d PAGE"
+msgid_plural "~%d PAGES"
+msgstr[0] "~%d PÁGINA"
+msgstr[1] "~%d PÁGINAS"
+
+#: cyberui/screens/gigs.lua
+msgid "%s PER 10%% // %s ON FINISH"
+msgstr "%s POR CADA 10%% // %s AL TERMINAR"
+
+#: cyberui/screens/gigs.lua
+msgid "TAKE GIG"
+msgstr "ACEPTAR GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "NO OPEN GIGS"
+msgstr "NO HAY GIGS ABIERTOS"
+
+#: cyberui/screens/gigs.lua
+msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week become gigs here."
+msgstr "Todos los libros de la biblioteca ya se han abierto o siguen siendo nuevos. Los libros que pasan una semana sin leerse se convierten aquí en gigs."
+
+#: cyberui/screens/gigs.lua cyberui/ui/launcher.lua
+msgid "GIGS"
+msgstr "GIGS"
+
+#: cyberui/screens/gigs.lua
+msgid "NO GIGS TAKEN"
+msgstr "NO HAY GIGS ACEPTADOS"
+
+#: cyberui/screens/gigs.lua
+msgid "Take an open gig and start reading. It shows up here and pays as you read."
+msgstr "Acepta un gig abierto y empieza a leer. Aparece aquí y paga a medida que lees."
+
+#: cyberui/screens/gigs.lua
+msgid "%s OF %s PAID"
+msgstr "%s DE %s PAGADOS"
+
+#: cyberui/screens/gigs.lua
+msgid "BALANCE"
+msgstr "SALDO"
+
+#: cyberui/screens/gigs.lua
+msgid "EARNED"
+msgstr "GANADO"
+
+#: cyberui/screens/gigs.lua cyberui/ui/idcard.lua
+msgid "GIGS DONE"
+msgstr "GIGS TERMINADOS"
+
+#: cyberui/screens/gigs.lua
+msgid "NO PAYOUTS YET"
+msgstr "AÚN NO HAY PAGOS"
+
+#: cyberui/screens/gigs.lua
+msgid "Read a gig to earn eddies. Each payout is listed here."
+msgstr "Lee un gig para ganar eddies. Cada pago aparece aquí."
+
+#: cyberui/screens/gigs.lua
+msgid "GIG FINISHED"
+msgstr "GIG TERMINADO"
+
+#: cyberui/screens/gigs.lua
+msgid "%d%% READ"
+msgstr "%d%% LEÍDO"
+
+#: cyberui/screens/gigs.lua
+msgid "PAYOUTS"
+msgstr "PAGOS"
+
+#: cyberui/screens/gigs.lua
+msgctxt "gigs tab"
+msgid "Open"
+msgstr "Abiertos"
+
+#: cyberui/screens/gigs.lua
+msgid "Active"
+msgstr "Activos"
+
+#: cyberui/screens/gigs.lua
+msgid "Payouts"
+msgstr "Pagos"
+
+#: cyberui/screens/gigs.lua
+msgid "%d LEDGER ENTRY FAILED THE CHECK"
+msgid_plural "%d LEDGER ENTRIES FAILED THE CHECK"
+msgstr[0] "%d ENTRADA DEL REGISTRO NO SUPERÓ LA COMPROBACIÓN"
+msgstr[1] "%d ENTRADAS DEL REGISTRO NO SUPERARON LA COMPROBACIÓN"
+
+#: cyberui/screens/gigs.lua
+msgid "GIGS // BALANCE %s"
+msgstr "GIGS // SALDO %s"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
@@ -2774,6 +2859,10 @@ msgid "%dD"
 msgstr "%dD"
 
 #: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr "EDDIES"
+
+#: cyberui/ui/idcard.lua
 msgid "OPERATOR // ID-CARD"
 msgstr "OPERADOR // TARJETA DE ID"
 
@@ -2814,14 +2903,10 @@ msgid "TELEMETRY.LOG"
 msgstr "TELEMETRY.LOG"
 
 #: cyberui/ui/launcher.lua
-msgid "BOUNTIES"
-msgstr "RECOMPENSAS"
-
-#: cyberui/ui/launcher.lua
-msgid "%s // %d WANTED"
-msgid_plural "%s // %d WANTED"
-msgstr[0] "%s // %d SE BUSCA"
-msgstr[1] "%s // %d SE BUSCAN"
+msgid "%d OPEN"
+msgid_plural "%d OPEN"
+msgstr[0] "%d ABIERTO"
+msgstr[1] "%d ABIERTOS"
 
 #: cyberui/ui/launcher.lua
 msgid "BACKLOG CLEAR"

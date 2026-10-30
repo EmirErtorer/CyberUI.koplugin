@@ -1,5 +1,5 @@
 -- The cyberpunk batch, each feature used for real and photographed: the
--- operator ID card with a photo from the device, the jack-in card, the bounty
+-- operator ID card with a photo from the device, the jack-in card, the gigs
 -- board, data shards, the skyline and the colour dial. Needs
 -- setup_newfeatures.sh (reading data for the skyline).
 local H = ...
@@ -47,7 +47,7 @@ end)
 
 ---------------------------------------------------------------- home
 H.step(S, function()
-    H.check(H.find(nil, "bounty") ~= nil, "home has the bounties button")
+    H.check(H.find(nil, "gigs") ~= nil, "home has the gigs button")
     H.check(H.findWhere(function(el) return el.shard ~= nil end) ~= nil, "home shows a data shard")
     H.shot("cp01-home")
 end)
@@ -121,14 +121,14 @@ H.step(S, function()
     app().update()
 end)
 
----------------------------------------------------------------- bounty board
+---------------------------------------------------------------- gigs board
 H.step(S, function()
-    H.tap(nil, "bounty")
+    H.tap(nil, "gigs")
 end)
 H.step(S, function()
-    H.check(screen().id == "bounty", "the bounties button opens the board")
-    H.check(H.find("CLAIM") ~= nil, "the most wanted book has a poster")
-    H.shot("cp08-bounty")
+    H.check(screen().id == "gigs", "the gigs button opens the board")
+    H.check(H.find("TAKE GIG") ~= nil, "the top gig has a poster")
+    H.shot("cp08-gigs")
     app().go("home")
 end)
 

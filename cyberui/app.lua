@@ -445,6 +445,7 @@ end
 
 -- Open a book in the reader; CyberUI stays underneath to come back to.
 function App.openBook(path, after_open)
+    require("cyberui/data/gigs").accept(path)
     if clock_timer then UIManager:unschedule(clock_timer); clock_timer = nil end
     local ReaderUI = require("apps/reader/readerui")
     local JackIn = require("cyberui/jackin")
@@ -473,8 +474,19 @@ function App.flash(card)
     host.overlay = nil
 end
 
+-- Say what the last reading paid, as a notice on whatever is showing.
+function App.payoutNotice()
+    local Gigs = require("cyberui/data/gigs")
+    local note = Gigs.takeReceipt()
+    if note then
+        App.toast(string.format(note.finished and _("GIG FINISHED +%s") or _("GIG PAYOUT +%s"), require("cyberui/format").credits(note.total)))
+    end
+end
+
 -- A book was closed: what CyberUI knows about it is stale.
 function App.bookClosed(path)
+    local Gigs = require("cyberui/data/gigs")
+    if Gigs.settle() > 0 then UIManager:scheduleIn(0.8, App.payoutNotice) end
     if path then
         require("cyberui/data/shards").refresh(path)
         Books.forget(path)

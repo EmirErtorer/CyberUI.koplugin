@@ -299,7 +299,7 @@ end
 
 -- Names that are never translated: a text that has one must keep it, as written
 -- (in capitals where the text is in capitals).
-local BRANDS = { "CyberUI", "KOReader", "Ink Away", "Wi-Fi", "GitHub", "ZenOS", "Calibre", "Hardcover", "Bookshelf", "Oxanium",
+local BRANDS = { "CyberUI", "KOReader", "Ink Away", "Wi-Fi", "GitHub", "ZenOS", "Calibre", "Hardcover", "Bookshelf", "Gig", "Eddies", "Oxanium",
     "Chakra Petch", "Rajdhani", "Orbitron", "Exo 2", "JetBrains Mono", "Share Tech", "Turret Road", "Michroma", "Electrolize",
     "Audiowide", "Wallpoet", "Russo One", "Iceland", "VT323", "Press Start 2P", "OPDS", "USB", "EPUB", "PDF" }
 

@@ -189,7 +189,7 @@ msgstr[1] "Çöpte %d gün bekler."
 msgid "Open"
 msgstr "Aç"
 
-#: cyberui/actions.lua cyberui/screens/bounty.lua
+#: cyberui/actions.lua cyberui/screens/gigs.lua
 msgid "Details"
 msgstr "Ayrıntılar"
 
@@ -228,6 +228,14 @@ msgstr "Sistem"
 #: cyberui/app.lua
 msgid "Something went wrong; see crash.log"
 msgstr "Bir şeyler ters gitti; crash.log dosyasına bak"
+
+#: cyberui/app.lua
+msgid "GIG FINISHED +%s"
+msgstr "GIG BİTTİ +%s"
+
+#: cyberui/app.lua
+msgid "GIG PAYOUT +%s"
+msgstr "GIG ÖDEMESİ +%s"
 
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
@@ -877,60 +885,6 @@ msgstr "%s kaydedildi"
 msgid "The card could not be saved"
 msgstr "Kart kaydedilemedi"
 
-#: cyberui/screens/bounty.lua
-msgid "%s ON ITS HEAD"
-msgstr "BAŞINA %s ÖDÜL"
-
-#: cyberui/screens/bounty.lua
-msgid "Claim it"
-msgstr "Al"
-
-#: cyberui/screens/bounty.lua
-msgid "Open the book"
-msgstr "Kitabı aç"
-
-#: cyberui/screens/bounty.lua
-msgid "Not wanted"
-msgstr "İstenmiyor"
-
-#: cyberui/screens/bounty.lua
-msgid "Take it off the board"
-msgstr "Panodan kaldır"
-
-#: cyberui/screens/bounty.lua
-msgid "MOST_WANTED"
-msgstr "EN_ÇOK_ARANAN"
-
-#: cyberui/screens/bounty.lua
-msgid "WANTED"
-msgstr "ARANIYOR"
-
-#: cyberui/screens/bounty.lua
-msgid "AT LARGE %d DAY"
-msgid_plural "AT LARGE %d DAYS"
-msgstr[0] "%d GÜNDÜR FİRARİ"
-msgstr[1] "%d GÜNDÜR FİRARİ"
-
-#: cyberui/screens/bounty.lua
-msgid "CLAIM"
-msgstr "AL"
-
-#: cyberui/screens/bounty.lua
-msgid "NO OUTSTANDING TARGETS"
-msgstr "AÇIK HEDEF YOK"
-
-#: cyberui/screens/bounty.lua
-msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week appear here with a bounty on them."
-msgstr "Kütüphanedeki her kitap açılmış ya da hâlâ yeni. Bir hafta okunmadan duran kitaplar burada üzerlerinde ödülle görünür."
-
-#: cyberui/screens/bounty.lua
-msgid "Bounties"
-msgstr "Ödüller"
-
-#: cyberui/screens/bounty.lua
-msgid "MOST WANTED // %s ON THE BOARD"
-msgstr "EN ÇOK ARANANLAR // PANODA %s"
-
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
 msgid_plural "%d FILES"
@@ -1372,6 +1326,137 @@ msgid "%d AVAILABLE"
 msgid_plural "%d AVAILABLE"
 msgstr[0] "%d MEVCUT"
 msgstr[1] "%d MEVCUT"
+
+#: cyberui/screens/gigs.lua
+msgid "PAYS %s"
+msgstr "ÖDÜL %s"
+
+#: cyberui/screens/gigs.lua
+msgid "Take the gig"
+msgstr "Gig'i al"
+
+#: cyberui/screens/gigs.lua
+msgid "Open the book"
+msgstr "Kitabı aç"
+
+#: cyberui/screens/gigs.lua
+msgid "Not wanted"
+msgstr "İstenmiyor"
+
+#: cyberui/screens/gigs.lua
+msgid "Take it off the board"
+msgstr "Panodan kaldır"
+
+#: cyberui/screens/gigs.lua
+msgid "HOW_GIGS_WORK"
+msgstr "GIGLER_NASIL_İŞLER"
+
+#: cyberui/screens/gigs.lua
+msgid "A book that sits unread for a week becomes a gig. Open it to take the gig and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more."
+msgstr "Bir hafta okunmadan duran kitap bir gig olur. Gig'i almak için kitabı aç; fiyatı o an sabitlenir. Okuduğun her %10, fiyatın yirmide birini öder, bitirince diğer yarısı gelir. Daha uzun kitaplar ve daha uzun beklemeler daha çok öder."
+
+#: cyberui/screens/gigs.lua
+msgid "TOP_GIG"
+msgstr "TOP_GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "AT LARGE %d DAY"
+msgid_plural "AT LARGE %d DAYS"
+msgstr[0] "%d GÜNDÜR FİRARİ"
+msgstr[1] "%d GÜNDÜR FİRARİ"
+
+#: cyberui/screens/gigs.lua
+msgid "~%d PAGE"
+msgid_plural "~%d PAGES"
+msgstr[0] "~%d SAYFA"
+msgstr[1] "~%d SAYFA"
+
+#: cyberui/screens/gigs.lua
+msgid "%s PER 10%% // %s ON FINISH"
+msgstr "HER %%10 İÇİN %s // BİTİNCE %s"
+
+#: cyberui/screens/gigs.lua
+msgid "TAKE GIG"
+msgstr "GIG'İ AL"
+
+#: cyberui/screens/gigs.lua
+msgid "NO OPEN GIGS"
+msgstr "AÇIK GIG YOK"
+
+#: cyberui/screens/gigs.lua
+msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week become gigs here."
+msgstr "Kütüphanedeki her kitap açılmış ya da hâlâ yeni. Bir hafta okunmadan duran kitaplar burada gig olur."
+
+#: cyberui/screens/gigs.lua cyberui/ui/launcher.lua
+msgid "GIGS"
+msgstr "GIGS"
+
+#: cyberui/screens/gigs.lua
+msgid "NO GIGS TAKEN"
+msgstr "ALINMIŞ GIG YOK"
+
+#: cyberui/screens/gigs.lua
+msgid "Take an open gig and start reading. It shows up here and pays as you read."
+msgstr "Açık bir gig al ve okumaya başla. Burada görünür ve okudukça öder."
+
+#: cyberui/screens/gigs.lua
+msgid "%s OF %s PAID"
+msgstr "%s / %s ÖDENDİ"
+
+#: cyberui/screens/gigs.lua
+msgid "BALANCE"
+msgstr "BAKİYE"
+
+#: cyberui/screens/gigs.lua
+msgid "EARNED"
+msgstr "KAZANILAN"
+
+#: cyberui/screens/gigs.lua cyberui/ui/idcard.lua
+msgid "GIGS DONE"
+msgstr "BİTEN GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "NO PAYOUTS YET"
+msgstr "HENÜZ ÖDEME YOK"
+
+#: cyberui/screens/gigs.lua
+msgid "Read a gig to earn eddies. Each payout is listed here."
+msgstr "Eddies kazanmak için bir gig oku. Her ödeme burada listelenir."
+
+#: cyberui/screens/gigs.lua
+msgid "GIG FINISHED"
+msgstr "GIG BİTTİ"
+
+#: cyberui/screens/gigs.lua
+msgid "%d%% READ"
+msgstr "%%%d OKUNDU"
+
+#: cyberui/screens/gigs.lua
+msgid "PAYOUTS"
+msgstr "ÖDEMELER"
+
+#: cyberui/screens/gigs.lua
+msgctxt "gigs tab"
+msgid "Open"
+msgstr "Açık"
+
+#: cyberui/screens/gigs.lua
+msgid "Active"
+msgstr "Etkin"
+
+#: cyberui/screens/gigs.lua
+msgid "Payouts"
+msgstr "Ödemeler"
+
+#: cyberui/screens/gigs.lua
+msgid "%d LEDGER ENTRY FAILED THE CHECK"
+msgid_plural "%d LEDGER ENTRIES FAILED THE CHECK"
+msgstr[0] "%d DEFTER KAYDI DOĞRULANAMADI"
+msgstr[1] "%d DEFTER KAYDI DOĞRULANAMADI"
+
+#: cyberui/screens/gigs.lua
+msgid "GIGS // BALANCE %s"
+msgstr "GIGS // BAKİYE %s"
 
 #: cyberui/screens/history.lua
 msgid "Stats"
@@ -2774,6 +2859,10 @@ msgid "%dD"
 msgstr "%dG"
 
 #: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr "EDDIES"
+
+#: cyberui/ui/idcard.lua
 msgid "OPERATOR // ID-CARD"
 msgstr "OPERATÖR // KİMLİK KARTI"
 
@@ -2814,14 +2903,10 @@ msgid "TELEMETRY.LOG"
 msgstr "TELEMETRY.LOG"
 
 #: cyberui/ui/launcher.lua
-msgid "BOUNTIES"
-msgstr "ÖDÜLLER"
-
-#: cyberui/ui/launcher.lua
-msgid "%s // %d WANTED"
-msgid_plural "%s // %d WANTED"
-msgstr[0] "%s // %d ARANIYOR"
-msgstr[1] "%s // %d ARANIYOR"
+msgid "%d OPEN"
+msgid_plural "%d OPEN"
+msgstr[0] "%d AÇIK"
+msgstr[1] "%d AÇIK"
 
 #: cyberui/ui/launcher.lua
 msgid "BACKLOG CLEAR"

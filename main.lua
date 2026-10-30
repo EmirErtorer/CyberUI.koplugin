@@ -103,6 +103,22 @@ function CyberUI:onShow()
     end
 end
 
+-- The book is ready: if it is a gig taken, start following what is read.
+function CyberUI:onReaderReady()
+    require("cyberui/data/gigs").follow(self.ui.document and self.ui.document.file)
+end
+
+-- A page was shown: it counts toward the gig's payouts.
+function CyberUI:onPageUpdate(page)
+    local doc = self.ui.document
+    if type(page) == "number" and doc then require("cyberui/data/gigs").page(page, doc:getPageCount()) end
+end
+
+-- The device sleeps: pay what has been read so the sleep cannot lose it.
+function CyberUI:onSuspend()
+    require("cyberui/data/gigs").settle()
+end
+
 -- A book was closed in the reader: its details changed, and the next file
 -- browser shown is a return from it.
 function CyberUI:onCloseDocument()
