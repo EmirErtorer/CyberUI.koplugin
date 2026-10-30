@@ -3,7 +3,7 @@
 
 local _ = require("cyberui/gettext")
 
-return {
+local InkAway = {
     id = "inkaway",
     name = "Ink Away",
     folder = "ink-away.koplugin",
@@ -16,3 +16,21 @@ return {
     tagline = _("DRAW // NOTES // INK"),
     description = _("Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."),
 }
+
+-- Open Ink Away's annotation mode on a book: the one put away under home or
+-- the one read last, brought back first (the mode belongs to an open book).
+function InkAway.annotate()
+    local Addons = require("cyberui/apps/addons")
+    if Addons.status(InkAway) ~= "ready" then return Addons.launch(InkAway) end
+    local path = require("cyberui/park").file()
+    if not path then
+        local last = require("cyberui/data/history").current()
+        path = last and last.path
+    end
+    if not path then return require("cyberui/app").toast(_("Open a book first")) end
+    require("cyberui/app").openBook(path, function(ui)
+        require("ui/uimanager"):nextTick(function() ui:handleEvent(require("ui/event"):new("InkAwayAnnotate")) end)
+    end)
+end
+
+return InkAway

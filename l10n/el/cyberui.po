@@ -313,6 +313,10 @@ msgstr "ΣΧΕΔΙΑΣΗ // ΣΗΜΕΙΩΣΕΙΣ // ΜΕΛΑΝΙ"
 msgid "Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."
 msgstr "Σχεδιάστε, κρατήστε σημειώσεις και γράψτε πάνω στα βιβλία σας με το δάχτυλο ή μια γραφίδα: σχέδια με επίπεδα, τετράδια με γραμμωτές, καρό και σελίδες οργάνωσης και μελάνι σε οποιοδήποτε βιβλίο που ακολουθεί το κείμενο. Εξαγωγή διαφανούς PNG ή PDF."
 
+#: cyberui/apps/inkaway.lua
+msgid "Open a book first"
+msgstr "Άνοιξε πρώτα ένα βιβλίο"
+
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
 msgstr "ΠΡΟΣΒΑΣΗ"
@@ -776,6 +780,10 @@ msgstr "Νυχτερινή λειτουργία"
 #: cyberui/menu.lua
 msgid "Rotate"
 msgstr "Περιστροφή"
+
+#: cyberui/menu.lua
+msgid "Annotate"
+msgstr "Σχολιασμός"
 
 #: cyberui/menu.lua
 msgid "Restart"

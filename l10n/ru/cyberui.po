@@ -322,6 +322,10 @@ msgstr "РИСУЙТЕ // ЗАПИСЫВАЙТЕ // ЧЕРНИЛА"
 msgid "Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."
 msgstr "Рисуйте, делайте заметки и пишите поверх своих книг пальцем или стилусом: рисунки со слоями, блокноты с линованными, клетчатыми и планировочными страницами, а также чернила на любой книге, следующие за текстом. Экспорт в прозрачный PNG или PDF."
 
+#: cyberui/apps/inkaway.lua
+msgid "Open a book first"
+msgstr "Сначала откройте книгу"
+
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
 msgstr "ДОПУСК"
@@ -785,6 +789,10 @@ msgstr "Ночной режим"
 #: cyberui/menu.lua
 msgid "Rotate"
 msgstr "Повернуть"
+
+#: cyberui/menu.lua
+msgid "Annotate"
+msgstr "Заметки"
 
 #: cyberui/menu.lua
 msgid "Restart"

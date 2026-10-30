@@ -322,6 +322,10 @@ msgstr "RYSUJ // NOTUJ // TUSZ"
 msgid "Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."
 msgstr "Rysuj, rób notatki i pisz po swoich książkach palcem lub rysikiem: rysunki z warstwami, zeszyty ze stronami w linie, kratkę i planera oraz tusz na każdej książce, który podąża za tekstem. Eksportuj przezroczysty PNG lub PDF."
 
+#: cyberui/apps/inkaway.lua
+msgid "Open a book first"
+msgstr "Najpierw otwórz książkę"
+
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
 msgstr "UPRAWNIENIA"
@@ -785,6 +789,10 @@ msgstr "Tryb nocny"
 #: cyberui/menu.lua
 msgid "Rotate"
 msgstr "Obróć"
+
+#: cyberui/menu.lua
+msgid "Annotate"
+msgstr "Adnotuj"
 
 #: cyberui/menu.lua
 msgid "Restart"

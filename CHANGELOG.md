@@ -10,6 +10,7 @@ versions marked *Prerelease* are test builds.
 
 ### Added
 - Hold a collection to delete it (Favorites stays).
+- An Annotate tile on the Deck's Controls page, left of Restart, opens the last book in Ink Away's annotation mode.
 - "Annotate this book" in the reader's Tools menu opens Ink Away's annotation mode.
 
 ## [1.1.0] - 2026-10-30

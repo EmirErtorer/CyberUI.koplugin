@@ -313,6 +313,10 @@ msgstr "ÇİZ // NOT AL // MÜREKKEP"
 msgid "Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."
 msgstr "Parmağınla veya kalemle kitaplarının üzerine çiz, not al ve yaz: katmanlı çizimler, çizgili, kareli ve planlayıcı sayfalı defterler ve metni izleyen mürekkep. Şeffaf PNG veya PDF olarak dışa aktar."
 
+#: cyberui/apps/inkaway.lua
+msgid "Open a book first"
+msgstr "Önce bir kitap aç"
+
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
 msgstr "YETKİ"
@@ -776,6 +780,10 @@ msgstr "Gece modu"
 #: cyberui/menu.lua
 msgid "Rotate"
 msgstr "Döndür"
+
+#: cyberui/menu.lua
+msgid "Annotate"
+msgstr "Not al"
 
 #: cyberui/menu.lua
 msgid "Restart"

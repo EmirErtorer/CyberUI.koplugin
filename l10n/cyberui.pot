@@ -312,6 +312,10 @@ msgstr ""
 msgid "Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."
 msgstr ""
 
+#: cyberui/apps/inkaway.lua
+msgid "Open a book first"
+msgstr ""
+
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
 msgstr ""
@@ -774,6 +778,10 @@ msgstr ""
 
 #: cyberui/menu.lua
 msgid "Rotate"
+msgstr ""
+
+#: cyberui/menu.lua
+msgid "Annotate"
 msgstr ""
 
 #: cyberui/menu.lua

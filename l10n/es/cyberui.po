@@ -313,6 +313,10 @@ msgstr "DIBUJA // ANOTA // TINTA"
 msgid "Draw, take notes and write on your books with a finger or a stylus: drawings with layers, notebooks with lined, grid and planner pages, and ink on any book that follows the text. Export a transparent PNG or a PDF."
 msgstr "Dibuja, toma notas y escribe sobre tus libros con el dedo o un lápiz: dibujos con capas, cuadernos con páginas rayadas, cuadriculadas y de agenda, y tinta sobre cualquier libro que sigue el texto. Exporta un PNG transparente o un PDF."
 
+#: cyberui/apps/inkaway.lua
+msgid "Open a book first"
+msgstr "Abre un libro primero"
+
 #: cyberui/data/achievements.lua
 msgid "CLEARANCE"
 msgstr "AUTORIZACIÓN"
@@ -776,6 +780,10 @@ msgstr "Modo nocturno"
 #: cyberui/menu.lua
 msgid "Rotate"
 msgstr "Rotar"
+
+#: cyberui/menu.lua
+msgid "Annotate"
+msgstr "Anotar"
 
 #: cyberui/menu.lua
 msgid "Restart"

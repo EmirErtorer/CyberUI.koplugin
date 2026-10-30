@@ -532,6 +532,14 @@ function Menu:deckButtons()
             fmEvent("IterateRotation")
         end },
     }
+    -- Ink Away's annotation mode on the book being read, when Ink Away is installed
+    local InkAway = require("cyberui/apps/inkaway")
+    if require("cyberui/apps/addons").status(InkAway) ~= "missing" then
+        out[#out + 1] = { label = _("Annotate"), icon = InkAway.icon, callback = function()
+            self:close()
+            InkAway.annotate()
+        end }
+    end
     if Device:canRestart() then
         out[#out + 1] = { label = _("Restart"), icon = "restart", callback = function()
             self:close()
