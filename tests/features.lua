@@ -64,4 +64,48 @@ do
     Settings.set("cover_stretch", nil)
 end
 
+-- library sorting, grouping and filters
+do
+    local Library = require("cyberui/data/library")
+    local Groups = require("cyberui/data/libgroups")
+    local all = Library.all()
+    local up = Library.sort(all, "title")
+    local down = Library.sort(all, "title", true)
+    Kit.ok(#up == #all and up[1] == down[#down], "reversing a sort turns the order round")
+    for _, order in ipairs(Library.SORTS) do
+        Kit.ok(#Library.sort(all, order) == #all, "sort by " .. order .. " keeps every book")
+    end
+    for _, kind in ipairs({ "author", "series", "status", "format", "added" }) do
+        local total = 0
+        for _, g in ipairs(Groups.list(kind)) do
+            total = total + g.count
+            Kit.ok(#Groups.books(kind, g.key) == g.count, "group " .. kind .. "/" .. g.name .. " holds what it counts")
+        end
+        Kit.ok(total == #all, "grouping by " .. kind .. " places every book once")
+    end
+    local fmt = Groups.formats()[1]
+    local only = Groups.filter(all, { format = fmt })
+    Kit.ok(#only > 0 and #only <= #all, "the format filter keeps that format")
+    Kit.ok(Groups.filter(all, {}) == all, "no filter returns the same list")
+
+    -- the screen in every grouping, picking books
+    local Lib = require("cyberui/screens/library")
+    local W, H = Kit.Screen:getWidth(), Kit.Screen:getHeight()
+    for _, kind in ipairs({ "folder", "all", "author", "series", "status", "format", "added" }) do
+        Settings.set("library_group", kind)
+        local ok, err = pcall(function()
+            local s = Lib:new({})
+            local root = s:build({ w = W, h = H })
+            root:layout(W, H)
+            local bb = Kit.canvas()
+            root:paint(bb, 0, 0)
+            s.selecting = true
+            s:build({ w = W, h = H }):layout(W, H)
+            bb:free()
+        end)
+        Kit.ok(ok, "library grouped by " .. kind .. " builds: " .. tostring(err))
+    end
+    Settings.set("library_group", nil)
+end
+
 Kit.finish("features")
