@@ -115,8 +115,8 @@ end
 -- Is ZenOS running? KOReader keeps each loaded plugin under its name, so an
 -- installed but switched off ZenOS is not there.
 function Menu.zenosRunning()
-    local fm = require("apps/filemanager/filemanager").instance
-    return fm ~= nil and fm.zenos ~= nil
+    local ui = require("apps/filemanager/filemanager").instance or require("apps/reader/readerui").instance
+    return ui ~= nil and ui.zenos ~= nil
 end
 
 -- Can the styled menu be shown over home now?
@@ -139,7 +139,7 @@ end
 Menu.tabKey = tabKey
 
 -- Drop the menu down. opts: { km = KOReader's menu object, reader = true
--- inside a book, pick = function(target, item) to choose an entry instead of
+-- inside a book (the Deck is there too), pick = function(target, item) to choose an entry instead of
 -- running it, pickable = function(item) to say which entries may be chosen,
 -- title = the name shown for the list, quiet = true to draw nothing until `m.quiet` is cleared and `m:show()` runs }.
 function Menu.open(opts)
@@ -148,7 +148,7 @@ function Menu.open(opts)
     if not km.tab_item_table then km:setUpdateItemTable() end
     -- CyberUI's Deck comes first, or with ZenOS right after its Controls and
     -- Launcher (installed but switched off counts as not running)
-    local want_deck = not opts.reader and not opts.pick
+    local want_deck = not opts.pick
     local deck_at
     if want_deck then
         deck_at = 1

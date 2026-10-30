@@ -37,7 +37,7 @@ them on, data shards, ten languages, and a home that comes back much faster.
 - **Keep the book open on Home** (System > Speed, on by default): going home puts
   the book away instead of closing it, so the same book opens again in about a
   third of the time and nothing blocks after home is shown.
-- **Operator ID in KOReader's menu**: CyberUI's tab has two pages, the ID card and
+- **Operator ID in KOReader's menu**, in a book too: CyberUI's tab has two pages, the ID card and
   the controls, in the order you choose (System > Home > Menu tab opens on). With
   ZenOS running it sits right after ZenOS's Controls and Launcher.
 - **Diagnostics**: a see-through view of an e-reader's main board in the empty
@@ -62,8 +62,9 @@ them on, data shards, ten languages, and a home that comes back much faster.
   matrix, a grey preview and a note on whether the colour reads on the page.
 - **A quiet support note** at the end of System > About.
 - **Annotate** in one tap: a tile on the Deck's Controls page, left of Restart,
-  opens the last book in Ink Away's annotation mode, and "Annotate this book" sits
-  in the reader's Tools menu (both appear when Ink Away is installed).
+  opens the book in Ink Away's annotation mode (the one being read, or the last
+  one read), and "Annotate this book" sits in the reader's Tools menu (both appear
+  when Ink Away is installed).
 - **Delete a collection** by holding it on the Collections screen (Favorites stays).
 
 ### Changed
