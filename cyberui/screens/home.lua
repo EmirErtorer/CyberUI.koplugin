@@ -10,6 +10,7 @@ local Cover = require("cyberui/ui/cover")
 local Deco = require("cyberui/ui/deco")
 local Files = require("cyberui/data/files")
 local Format = require("cyberui/format")
+local FitList = require("cyberui/ui/fitlist")
 local History = require("cyberui/data/history")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
@@ -156,25 +157,26 @@ end
 local function recentList(home, shown, shard)
     local th = Theme.get()
     -- the shard (when there is one) sits first, so a short column clips recent books, not it
-    local kids = { Label:new({ text = _("RECENT_FILES"), kind = "micro", color = "muted" }) }
-    if shard then table.insert(kids, 1, shard) end
-    local n = 0
-    local row_h, thumb_w, thumb_h = Cover.recentSize()
+    local head = { Label:new({ text = _("RECENT_FILES"), kind = "micro", color = "muted" }) }
+    if shard then table.insert(head, 1, shard) end
+    local books = {}
     for _i, item in ipairs(History.recent(8)) do
-        local p = item.path
-        if not (shown and p == shown.path) then
-            n = n + 1
-            kids[#kids + 1] = ListRow.build({ path = p, title = Books.info(p).title, meta = Books.badge(p) .. " // " .. Format.ago(item.time),
-                height = row_h, thumb_w = thumb_w, thumb_h = thumb_h,
+        if not (shown and item.path == shown.path) then books[#books + 1] = item end
+    end
+    if #books == 0 then
+        head[#head + 1] = Label:new({ text = _("Books you open show up here."), kind = "small", color = "muted" })
+    end
+    local row_h, thumb_w, thumb_h = Cover.recentSize()
+    local list = FitList:new({ head = head, count = #books, base = row_h, gap = th.space.s,
+        make = function(i, height, f)
+            local item = books[i]
+            local p = item.path
+            return ListRow.build({ path = p, title = Books.info(p).title, meta = Books.badge(p) .. " // " .. Format.ago(item.time),
+                height = height, thumb_w = math.floor(thumb_w * f), thumb_h = math.floor(thumb_h * f),
                 on_tap = function() home.picked = p; App.update() end,
                 on_hold = function() Actions.details(p) end })
-        end
-    end
-    if n == 0 then
-        kids[#kids + 1] = Label:new({ text = _("Books you open show up here."), kind = "small", color = "muted" })
-    end
-    return Panel:new({ shape = "rail", line = "accent", grow = true, pad = { 0, 0, 0, th.space.l },
-        child = Layout.Column:new({ gap = th.space.s, clip = true, children = kids }) })
+        end })
+    return Panel:new({ shape = "rail", line = "accent", grow = true, pad = { 0, 0, 0, th.space.l }, child = list })
 end
 
 -- A recovered highlight as a data shard at the top of the recent list, when

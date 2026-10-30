@@ -9,6 +9,7 @@ local Collections = require("cyberui/data/collections")
 local Cover = require("cyberui/ui/cover")
 local Format = require("cyberui/format")
 local Frame = require("cyberui/screens/frame")
+local Gigs = require("cyberui/data/gigs")
 local History = require("cyberui/data/history")
 local Insights = require("cyberui/data/insights")
 local Label = require("cyberui/ui/label")
@@ -117,8 +118,11 @@ function Dossier:build()
     if History.lastOpened(path) then
         folder_row[2] = Button:new({ label = _("FORGET"), sub = _("remove from history"), grow = true, on_tap = function() Actions.unhistory(path) end })
     end
+    local offer = Gigs.offer(path)
     local actions = Layout.Column:new({ gap = th.space.s, children = {
-        Button:new({ label = _("OPEN FILE"), icon = "forward", variant = "primary", corners = "tb", on_tap = function() Actions.open(path) end }),
+        offer and Button:new({ label = _("TAKE GIG"), sub = Format.credits(offer.price), icon = "forward", variant = "primary", corners = "tb",
+            height = Theme.px(64), on_tap = function() Actions.open(path) end })
+            or Button:new({ label = _("OPEN FILE"), icon = "forward", variant = "primary", corners = "tb", on_tap = function() Actions.open(path) end }),
         Layout.Row:new({ gap = th.space.s, children = {
             Button:new({ label = _("STATUS"), sub = STATUS[st.status], grow = true, on_tap = function() Actions.statusSheet(path) end }),
             Button:new({ label = _("COLLECTION +"), grow = true, on_tap = function() Actions.collect(path) end }),

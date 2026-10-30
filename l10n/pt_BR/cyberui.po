@@ -1249,6 +1249,10 @@ msgstr "ESQUECER"
 msgid "remove from history"
 msgstr "remover do histórico"
 
+#: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
+msgid "TAKE GIG"
+msgstr "ACEITAR GIG"
+
 #: cyberui/screens/dossier.lua
 msgid "OPEN FILE"
 msgstr "ABRIR ARQUIVO"
@@ -1366,10 +1370,6 @@ msgstr[1] "~%d PÁGINAS"
 #: cyberui/screens/gigs.lua
 msgid "%s PER 10%% // %s ON FINISH"
 msgstr "%s A CADA 10%% // %s AO CONCLUIR"
-
-#: cyberui/screens/gigs.lua
-msgid "TAKE GIG"
-msgstr "ACEITAR GIG"
 
 #: cyberui/screens/gigs.lua
 msgid "NO OPEN GIGS"

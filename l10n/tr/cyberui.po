@@ -1249,6 +1249,10 @@ msgstr "UNUT"
 msgid "remove from history"
 msgstr "geçmişten kaldır"
 
+#: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
+msgid "TAKE GIG"
+msgstr "GIG'İ AL"
+
 #: cyberui/screens/dossier.lua
 msgid "OPEN FILE"
 msgstr "DOSYAYI AÇ"
@@ -1366,10 +1370,6 @@ msgstr[1] "~%d SAYFA"
 #: cyberui/screens/gigs.lua
 msgid "%s PER 10%% // %s ON FINISH"
 msgstr "HER %%10 İÇİN %s // BİTİNCE %s"
-
-#: cyberui/screens/gigs.lua
-msgid "TAKE GIG"
-msgstr "GIG'İ AL"
 
 #: cyberui/screens/gigs.lua
 msgid "NO OPEN GIGS"

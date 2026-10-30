@@ -107,6 +107,13 @@ function Gigs.board()
     return list
 end
 
+-- The open gig on this book, or nil.
+function Gigs.offer(path)
+    for _i, g in ipairs(Gigs.board()) do
+        if g.path == path then return g end
+    end
+end
+
 -- The sum of every open gig's price.
 function Gigs.total()
     local sum = 0

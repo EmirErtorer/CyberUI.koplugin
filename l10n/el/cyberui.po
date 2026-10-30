@@ -1249,6 +1249,10 @@ msgstr "ΞΕΧΑΣΤΕ"
 msgid "remove from history"
 msgstr "αφαίρεση από το ιστορικό"
 
+#: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
+msgid "TAKE GIG"
+msgstr "ΑΝΑΛΑΒΕ GIG"
+
 #: cyberui/screens/dossier.lua
 msgid "OPEN FILE"
 msgstr "ΑΝΟΙΓΜΑ ΑΡΧΕΙΟΥ"
@@ -1366,10 +1370,6 @@ msgstr[1] "~%d ΣΕΛΙΔΕΣ"
 #: cyberui/screens/gigs.lua
 msgid "%s PER 10%% // %s ON FINISH"
 msgstr "%s ΑΝΑ 10%% // %s ΣΤΗΝ ΟΛΟΚΛΗΡΩΣΗ"
-
-#: cyberui/screens/gigs.lua
-msgid "TAKE GIG"
-msgstr "ΑΝΑΛΑΒΕ GIG"
 
 #: cyberui/screens/gigs.lua
 msgid "NO OPEN GIGS"
