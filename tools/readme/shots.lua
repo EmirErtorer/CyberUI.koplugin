@@ -6,7 +6,12 @@ local Settings = require("cyberui/settings")
 local UIManager = require("ui/uimanager")
 local OUT = os.getenv("CYBERUI_DRIVE_OUT")
 
+-- close any notice another plugin has put on screen (an update message, say), then take the shot
 local function shot(name)
+    local InfoMessage = require("ui/widget/infomessage")
+    for _i, w in ipairs(UIManager._window_stack) do
+        if getmetatable(w.widget) == InfoMessage then UIManager:close(w.widget) end   -- (a window closed mid-loop only skips one, fine here)
+    end
     UIManager:forceRePaint()
     H.shot(name)
 end
