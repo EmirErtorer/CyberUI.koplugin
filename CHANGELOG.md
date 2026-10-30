@@ -17,6 +17,10 @@ versions marked *Prerelease* are test builds.
   as the payouts, so ownership and the balance cannot be edited in the
   settings file.
 
+### Added (about)
+- A small support note at the end of System > About: a QR code and the link to
+  buy me a coffee, in a few humble words. It shows nowhere else.
+
 ### Added (diagnostics)
 - A see-through view of an e-reader's main board fills the empty space under
   the Diagnostics readouts: SoC and memory in ball-grid packages, flash, power

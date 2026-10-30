@@ -406,6 +406,20 @@ do
     bb:free()
 end
 
+-- the support QR code: a square of whole modules, white round dark modules
+do
+    local QRCode = require("cyberui/ui/qrcode")
+    local qr = QRCode:new({ text = "https://buymeacoffee.com/emirertorer", size = 150 })
+    qr:layout(nil, nil)
+    Kit.ok(qr.grid ~= nil and #qr.grid >= 21 and qr.w == qr.h and qr.w % qr:module() == 0, "the QR code is a square of whole modules")
+    local bb = Kit.canvas(400, 400)
+    require("cyberui/gfx/paint").fill(bb, 0, 0, 400, 400, require("ffi/blitbuffer").COLOR_BLACK)
+    qr:paint(bb, 10, 10)
+    Kit.ok(bb:getPixel(10, 10):getColor8().a == 255 and bb:getPixel(10 + qr:module() * 4, 10 + qr:module() * 4):getColor8().a == 0,
+        "white quiet border round a dark finder corner")
+    bb:free()
+end
+
 -- opening a book at a shard
 do
     local App = require("cyberui/app")

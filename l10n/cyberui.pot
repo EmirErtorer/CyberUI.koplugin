@@ -2444,6 +2444,18 @@ msgid "Home stays loaded while you read, so closing a book is a redraw, not a re
 msgstr ""
 
 #: cyberui/screens/settings.lua
+msgid "SUPPORT // KEEP THE DECK ALIVE"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI is free and made by one person. If it makes your reading better, a coffee helps keep it going."
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "SCAN WITH YOUR PHONE"
+msgstr ""
+
+#: cyberui/screens/settings.lua
 msgid "Version"
 msgstr ""
 

@@ -20,6 +20,7 @@ local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Library = require("cyberui/data/library")
 local Panel = require("cyberui/ui/panel")
+local QRCode = require("cyberui/ui/qrcode")
 local ProfileFlow = require("cyberui/profileflow")
 local Progress = require("cyberui/ui/progress")
 local Registry = require("cyberui/theme/registry")
@@ -285,6 +286,22 @@ function SettingsScreen:speed()
     }
 end
 
+-- The support note: a QR code for the coffee page and a few humble words.
+local SUPPORT_URL = "https://buymeacoffee.com/emirertorer"
+local function supportPanel()
+    local th = Theme.get()
+    return Panel:new({ shape = "header", title = _("SUPPORT // KEEP THE DECK ALIVE"), pad = th.space.m,
+        child = Layout.Row:new({ gap = th.space.l, valign = "center", children = {
+            QRCode:new({ text = SUPPORT_URL, size = 150 }),
+            Layout.Column:new({ grow = true, gap = th.space.s, children = {
+                Label:new({ text = _("CyberUI is free and made by one person. If it makes your reading better, a coffee helps keep it going."),
+                    kind = "body", lines = 5 }),
+                Label:new({ text = _("SCAN WITH YOUR PHONE"), kind = "micro", color = "accent" }),
+                Label:new({ text = "buymeacoffee.com/emirertorer", kind = "mono_small", color = "muted" }), -- i18n: keep
+            } }),
+        } }) })
+end
+
 -- The About section.
 function SettingsScreen:about()
     return {
@@ -298,6 +315,7 @@ function SettingsScreen:about()
             Button:new({ label = _("Open"), on_tap = function() App.push("updates") end })),
         row(_("Fonts"), _("Oxanium, Chakra Petch, Tomorrow, Rajdhani, Orbitron, Exo 2, Turret Road, Michroma, Electrolize, Audiowide, Wallpoet, Russo One, Iceland, VT323, Press Start 2P, Share Tech, Share Tech Mono and JetBrains Mono, SIL Open Font License"), Layout.Spacer:new({ width = 1 })),
         Label:new({ text = _("A fast cyberpunk home screen for KOReader."), kind = "body", color = "muted", lines = 2 }),
+        supportPanel(),
     }
 end
 

@@ -2445,6 +2445,18 @@ msgid "Home stays loaded while you read, so closing a book is a redraw, not a re
 msgstr "Ana sayfa sen okurken yüklü kalır; bu yüzden bir kitabı kapatmak yeniden çizimdir, yeniden kurulum değil. Her şey düz şekillerle çizilir ve yalnızca değişen yer yenilenir."
 
 #: cyberui/screens/settings.lua
+msgid "SUPPORT // KEEP THE DECK ALIVE"
+msgstr "DESTEK // DECK'İ AYAKTA TUT"
+
+#: cyberui/screens/settings.lua
+msgid "CyberUI is free and made by one person. If it makes your reading better, a coffee helps keep it going."
+msgstr "CyberUI ücretsizdir ve tek bir kişi tarafından yapılıyor. Okumanı güzelleştiriyorsa, bir kahve devam etmesine yardım eder."
+
+#: cyberui/screens/settings.lua
+msgid "SCAN WITH YOUR PHONE"
+msgstr "TELEFONUNLA TARA"
+
+#: cyberui/screens/settings.lua
 msgid "Version"
 msgstr "Sürüm"
 
