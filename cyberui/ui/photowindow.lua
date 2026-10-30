@@ -41,6 +41,7 @@ end
 -- The offsets the picture may have: it cannot leave the window, and a
 -- picture smaller than the window stays in the middle.
 function PhotoWindow:clamp()
+    if not self.img then return end
     local s, side = self:scale(), self.w or self.size
     local sw, sh = self.img:getWidth() * s, self.img:getHeight() * s
     local function limit(v, extent)
@@ -70,6 +71,7 @@ end
 
 -- Drag: the picture follows the finger from where the touch began.
 function PhotoWindow:on_drag(dx, dy, phase)
+    if self.released then return end   -- the screen it was on has gone
     if phase == "start" then
         self.from_x, self.from_y = self.ox, self.oy
     elseif phase == "move" then
@@ -102,6 +104,7 @@ end
 
 -- Draw the part of the picture in view on a white page, with the frame.
 function PhotoWindow:draw(bb, x, y)
+    if self.released then return end
     local th = Theme.get()
     local side = self.w
     self:clamp()
@@ -119,6 +122,7 @@ end
 
 -- Give back the memory.
 function PhotoWindow:release()
+    self.released = true
     if self.scaled then self.scaled:free(); self.scaled = nil end
     if self.img then self.img:free(); self.img = nil end
 end

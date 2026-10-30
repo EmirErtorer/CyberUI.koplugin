@@ -231,6 +231,7 @@ end
 -- follows the lift.
 function Host:onPan(_, ges)
     if self:stale(ges) then return true end
+    if self.dragging and self.dragging.released then self.dragging = nil end   -- its screen has gone
     if not self.dragging then
         self.dragging = self:target(ges.start_pos or ges.pos, "on_drag")
         if self.dragging then self.dragging:on_drag(0, 0, "start") end
@@ -246,6 +247,7 @@ function Host:onPanRelease()
     local el = self.dragging
     if not el then return false end
     self.dragging = nil
+    if el.released then return true end
     el:on_drag(0, 0, "end")
     self.swallow_swipe = true
     UIManager:scheduleIn(0.4, function() self.swallow_swipe = nil end)

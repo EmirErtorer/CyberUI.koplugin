@@ -361,6 +361,20 @@ do
     Ledger.reload()
 end
 
+-- a drag that arrives after the photo window was closed does nothing (it crashed once)
+do
+    local BB = require("ffi/blitbuffer")
+    local PhotoWindow = require("cyberui/ui/photowindow")
+    local win = PhotoWindow:new({ img = BB.new(200, 100, BB.TYPE_BBRGB32), size = 100 })
+    win:release()
+    local ok = pcall(function()
+        win:on_drag(0, 0, "start")
+        win:on_drag(5, 5, "move")
+        win:on_drag(0, 0, "end")
+    end)
+    Kit.ok(ok, "a drag on a closed photo window is ignored")
+end
+
 -- opening a book at a shard
 do
     local App = require("cyberui/app")
