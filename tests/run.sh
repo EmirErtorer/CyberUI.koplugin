@@ -14,7 +14,7 @@ if command -v luacheck >/dev/null; then
     run luacheck bash -c "cd '$repo' && luacheck -q cyberui main.lua _meta.lua"
 fi
 if [ -x "$emu/luajit" ]; then
-    for suite in widgets screens install features; do
+    for suite in widgets screens install features stats; do
         run "$suite" bash -c "cd '$emu' && SDL_VIDEODRIVER=offscreen ./luajit '$repo/tests/$suite.lua' '$repo' 2>&1 | { $(declare -f filter); filter; }; exit \${PIPESTATUS[0]}"
     done
 else

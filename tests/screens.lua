@@ -61,4 +61,28 @@ for _, id in ipairs(SCREENS) do
     end
 end
 
+-- the tabs of the reading log each build and paint
+if next(only) == nil or only.history then
+    local History = require("cyberui/screens/history")
+    for _, tab in ipairs({ "stats", "streaks", "calendar", "goal" }) do
+        for _, mode in ipairs({ "light", "dark" }) do
+            Settings.set("scheme", "neon")
+            Settings.set("mode", mode)
+            Theme.refresh()
+            local bb = Kit.canvas()
+            local ok, err = pcall(function()
+                local s = History:new({})
+                s.tab = tab
+                local root = s:build({ w = W, h = H })
+                root:layout(W, H)
+                Paint.fill(bb, 0, 0, W, H, Theme.get().c.bg)
+                root:paint(bb, 0, 0)
+            end)
+            Kit.ok(ok, "history/" .. tab .. " " .. mode .. ": " .. tostring(err))
+            if OUT and ok then Kit.png(bb, string.format("%s/history-%s-%s.png", OUT, tab, mode)) end
+            bb:free()
+        end
+    end
+end
+
 Kit.finish("screens")

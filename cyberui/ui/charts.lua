@@ -11,6 +11,13 @@ local Charts = {}
 -- The theme roles used for heatmap levels 0 (nothing) to 4 (most).
 local LEVELS = { "bg", "soft", "line", "muted", "ink" }
 
+-- The heatmap level 0..4 for `seconds` read against a daily goal in minutes.
+function Charts.level(seconds, goal)
+    local m = seconds / 60
+    if m <= 0 then return 0 end
+    return m < goal / 3 and 1 or (m < goal and 2 or (m < goal * 2 and 3 or 4))
+end
+
 ---------------------------------------------------------------- Bar
 local Bar = Element:extend({})
 
@@ -71,27 +78,56 @@ function Bars:paint(bb, x, y)
 end
 
 ---------------------------------------------------------------- Heatmap
-local Heatmap = Element:extend({ weeks = 12 })
+local Heatmap = Element:extend({ weeks = 12, rows = 7 })
 Charts.Heatmap = Heatmap
 
--- Seven rows of square cells, one column per week.
+-- `rows` rows of square cells (seven days), one column per week (or per
+-- hour, for a weekday by hour pattern).
 function Heatmap:naturalHeight()
-    return 7 * Theme.px(12) + 6 * Theme.px(3)
+    return self.rows * Theme.px(12) + (self.rows - 1) * Theme.px(3)
 end
 
--- Cells from oldest (top-left) to today, shaded by level 0..4; each week is
--- a column sharing the width, each day a row.
+-- Cells from oldest (top-left) to today, shaded by level 0..4; each column
+-- shares the width, each row is a day.
 function Heatmap:draw(bb, x, y)
     local th = Theme.get()
     local gap = Theme.px(3)
     local cell_w = math.floor((self.w - gap * (self.weeks - 1)) / self.weeks)
     local cell_h = Theme.px(12)
     for i, level in ipairs(self.levels) do
-        local week = math.floor((i - 1) / 7)
-        local day = (i - 1) % 7
+        local week = math.floor((i - 1) / self.rows)
+        local day = (i - 1) % self.rows
         local cx, cy = x + week * (cell_w + gap), y + day * (cell_h + gap)
         Paint.fill(bb, cx, cy, cell_w, cell_h, th.c[LEVELS[level + 1]])
         Paint.frame(bb, cx, cy, cell_w, cell_h, th.size.hair, th.c.line)
+    end
+end
+
+---------------------------------------------------------------- Month
+local Month = Element:extend({})
+Charts.Month = Month
+
+-- Six rows of seven days, tall enough for a day number.
+function Month:naturalHeight()
+    return 6 * Theme.px(34) + 5 * Theme.px(3)
+end
+
+-- A month as a calendar: `first` is the weekday of the 1st (1 = Monday),
+-- `days` how many days it has, `levels[d]` the shade 0..4 of day d and
+-- `today` the day to outline. The weekday initials sit above the cells.
+function Month:draw(bb, x, y)
+    local th = Theme.get()
+    local gap = Theme.px(3)
+    local cell_w = math.floor((self.w - gap * 6) / 7)
+    local cell_h = Theme.px(34)
+    for d = 1, self.days do
+        local slot = self.first - 1 + d - 1
+        local cx, cy = x + (slot % 7) * (cell_w + gap), y + math.floor(slot / 7) * (cell_h + gap)
+        local level = self.levels[d] or 0
+        Paint.fill(bb, cx, cy, cell_w, cell_h, th.c[LEVELS[level + 1]])
+        Paint.frame(bb, cx, cy, cell_w, cell_h, d == self.today and th.size.stroke or th.size.hair, d == self.today and th.c.ink or th.c.line)
+        local s = tostring(d)
+        Text.draw(bb, cx + Theme.px(4), cy + Theme.px(2), "micro", s, level >= 3 and th.c.on_ink or th.c.ink)
     end
 end
 

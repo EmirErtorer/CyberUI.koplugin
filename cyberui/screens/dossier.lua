@@ -10,6 +10,7 @@ local Cover = require("cyberui/ui/cover")
 local Format = require("cyberui/format")
 local Frame = require("cyberui/screens/frame")
 local History = require("cyberui/data/history")
+local Insights = require("cyberui/data/insights")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Panel = require("cyberui/ui/panel")
@@ -91,6 +92,13 @@ function Dossier:build()
         } }),
         Progress:new({ value = st.percent, segments = 30, book = true }),
     } })
+    local t = Insights.book(path)
+    if t and t.seconds > 0 then
+        local left = st.status == "complete" and 0 or math.max(0, t.total_pages - t.pages) * t.per_page
+        progress.children[#progress.children + 1] = Label:new({ kind = "mono_small", color = "muted", lines = 2,
+            text = string.format(_("READ %s // %dD // %d PG/H%s"), Format.duration(t.seconds), t.days, math.floor(3600 / t.per_page + 0.5),
+                left > 0 and string.format(_(" // ~%s LEFT"), Format.duration(left)) or "") })
+    end
 
     local synopsis = Panel:new({ shape = "brackets", label = _("SYNOPSIS"), pad = th.space.l, grow = true,
         child = ScrollText:new({ text = info.description and util.htmlToPlainTextIfHtml(info.description) or _("No description in this book's details."),
