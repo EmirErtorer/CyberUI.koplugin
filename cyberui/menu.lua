@@ -228,6 +228,14 @@ end
 -- Show another tab.
 function Menu:switchTab(i)
     local tab = self.tabs[i]
+    -- ZenOS's Home tab opens ZenOS's own library, which would cover CyberUI: when
+    -- CyberUI is the home screen it goes to CyberUI's home instead
+    if tab.id == "zen_library_home" and (App.isHome() or G_reader_settings:readSetting("start_with") == "cyberui") then
+        self:close()
+        local reader = self.reader and require("apps/reader/readerui").instance
+        if reader and reader.document then App.homeFromBook(reader) end
+        return
+    end
     if tab.id == "zen_library_home" or (tab.callback and #tab == 0 and not tab.panel) then
         -- a tab that is an action (ZenOS's home, its settings page)
         self:close()

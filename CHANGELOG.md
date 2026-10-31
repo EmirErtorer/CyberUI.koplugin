@@ -8,6 +8,9 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Fixed
+- With ZenOS running, its Home tab in the toolbar opened ZenOS's own library over CyberUI. It now goes to CyberUI home when CyberUI is the chosen home screen.
+
 ## [1.1.1] - 2026-10-31
 
 ### Fixed
