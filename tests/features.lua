@@ -735,4 +735,14 @@ do
     I18n.use(nil)
 end
 
+-- the folder picker with nothing being moved (the stats scope, the library start, moving books)
+do
+    local Library = require("cyberui/screens/library")
+    local ok, err = pcall(function()
+        local s = Library:new({ dir = require("cyberui/data/library").home(), pick = { title = "Pick", on_pick = function() end } })
+        s:build({ w = Kit.Screen:getWidth(), h = Kit.Screen:getHeight() })
+    end)
+    Kit.ok(ok, "the folder picker builds without a folder being moved: " .. tostring(err))
+end
+
 Kit.finish("features")

@@ -148,7 +148,7 @@ function Library:source()
         -- a folder being moved cannot go into itself
         folders = {}
         for _i, f in ipairs(l.folders) do if f.path ~= p.pick.moving then folders[#folders + 1] = f end end
-        return folders, {}, p.pick.title, Files.name(p.pick.moving)
+        return folders, {}, p.pick.title, p.pick.moving and Files.name(p.pick.moving) or nil
     end
     return folders, l.books, dir == home() and _("Library") or Files.name(dir), nil
 end

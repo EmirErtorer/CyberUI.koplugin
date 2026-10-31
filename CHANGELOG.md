@@ -8,6 +8,12 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-31
+
+### Fixed
+- Choosing a folder no longer ends in "Something went wrong" and a crash. This hit
+  Statistics scope (Add a folder), Library opens in, and moving books to a folder.
+
 ## [1.1.0] - 2026-10-31
 
 Everything since 1.0.0, the 1.0.5 prerelease included. The big ones: an operator
@@ -179,7 +185,8 @@ The first release.
   checking the download. Once a day, only on Wi-Fi that is already on, it
   looks by itself and says so on home.
 
-[Unreleased]: https://github.com/EmirErtorer/CyberUI.koplugin/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/EmirErtorer/CyberUI.koplugin/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.1.1
 [1.1.0]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.1.0
 [1.0.5]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.0.5
 [1.0.0]: https://github.com/EmirErtorer/CyberUI.koplugin/releases/tag/v1.0.0
