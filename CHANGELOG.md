@@ -9,6 +9,7 @@ versions marked *Prerelease* are test builds.
 ## [Unreleased]
 
 ### Fixed
+- CyberUI could freeze on a phone (a white screen, or stuck after opening it) while it looked through the whole storage for books. It no longer follows linked folders or Android's own data folder, and stops after a few thousand folders.
 - With ZenOS running, its Home tab in the toolbar opened ZenOS's own library over CyberUI. It now goes to CyberUI home when CyberUI is the chosen home screen.
 
 ## [1.1.1] - 2026-10-31

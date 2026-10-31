@@ -745,4 +745,22 @@ do
     Kit.ok(ok, "the folder picker builds without a folder being moved: " .. tostring(err))
 end
 
+-- the library walk skips linked folders and Android's data folder
+do
+    local Library = require("cyberui/data/library")
+    local lfs = require("libs/libkoreader-lfs")
+    local root = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-walk"
+    os.execute("rm -rf '" .. root .. "'; mkdir -p '" .. root .. "/a' '" .. root .. "/Android/data'")
+    for _, f in ipairs({ "/a/one.epub", "/Android/data/hidden.epub" }) do io.open(root .. f, "w"):close() end
+    os.execute("ln -s '" .. root .. "' '" .. root .. "/a/loop'")
+    local home = G_reader_settings:readSetting("home_dir")
+    G_reader_settings:saveSetting("home_dir", root)
+    Library.reset()
+    local walked = Library.all()
+    Kit.ok(#walked == 1 and walked[1] == root .. "/a/one.epub", "a link back up is not followed and Android's data folder is skipped")
+    G_reader_settings:saveSetting("home_dir", home)
+    Library.reset()
+    os.execute("rm -rf '" .. root .. "'")
+end
+
 Kit.finish("features")

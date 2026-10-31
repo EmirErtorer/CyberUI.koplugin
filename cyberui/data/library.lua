@@ -14,6 +14,9 @@ local listings = {}   -- dir -> { mtime, folders, books }
 local index           -- { books = {paths}, built = time } for the whole library
 
 local MAX_DEPTH = 8
+-- A phone's whole storage can hold tens of thousands of folders: the walk stops
+-- after this many, so the first screen is never held up by it.
+local MAX_FOLDERS = 3000
 
 -- KOReader's home folder (KOReader before 2026 has no getHomeFolder).
 local function homeFolder()
@@ -81,18 +84,27 @@ function Library.list(dir)
 end
 
 -- Every book under the home folder (walked once, then cached until a change
--- marks it stale).
+-- marks it stale). Linked folders are not followed (a link back up would be
+-- walked again and again), nor is Android's own data folder; the walk is cut off
+-- after MAX_FOLDERS folders.
 function Library.all()
     if index and not index.stale then return index.books end
-    local books = {}
+    local books, seen = {}, 0
+    local home = Library.home()
     local function walk(dir, depth)
+        seen = seen + 1
         local l = Library.list(dir)
         for _i, b in ipairs(l.books) do books[#books + 1] = b end
         if depth < MAX_DEPTH then
-            for _i, f in ipairs(l.folders) do walk(f.path, depth + 1) end
+            for _i, f in ipairs(l.folders) do
+                if seen >= MAX_FOLDERS then return end
+                if lfs.symlinkattributes(f.path, "mode") ~= "link" and not (dir == home and f.name == "Android") then
+                    walk(f.path, depth + 1)
+                end
+            end
         end
     end
-    walk(Library.home(), 0)
+    walk(home, 0)
     index = { books = books, built = os.time() }
     return books
 end
