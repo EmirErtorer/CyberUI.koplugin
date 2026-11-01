@@ -5,6 +5,7 @@
 -- DONE). A folder shows its first book's cover stacked on two sheets with a
 -- FOLDER strip; an empty one a card with a folder icon.
 
+local Blitbuffer = require("ffi/blitbuffer")
 local Element = require("cyberui/ui/element")
 local Ascii = require("cyberui/gfx/ascii")
 local Books = require("cyberui/data/books")
@@ -17,6 +18,20 @@ local Theme = require("cyberui/theme")
 local _ = require("cyberui/gettext")
 
 local Cover = Element:extend({})
+
+-- Blit a picture inverted. The C blitter ends KOReader outright when the
+-- picture and the screen differ in pixel type (a colour cover on a colour
+-- screen), so such a picture is first copied into the screen's type.
+local function invertBlit(bb, img, x, y, w, h)
+    if img:getType() == bb:getType() then
+        bb:invertblitFrom(img, x, y, 0, 0, w, h)
+        return
+    end
+    local same = Blitbuffer.new(w, h, bb:getType())
+    same:blitFrom(img, 0, 0, 0, 0, w, h)
+    bb:invertblitFrom(same, x, y, 0, 0, w, h)
+    same:free()
+end
 
 -- The patterns a data card can wear, picked from the title so a book keeps its look.
 local PATTERNS = { "h", "v", "grid", "solid", "plain" }
@@ -127,7 +142,7 @@ function Cover:drawFace(bb, x, y)
             local iw, ih = img:getWidth(), img:getHeight()
             local ix, iy = x + math.floor((w - iw) / 2), y + math.floor((h - ih) / 2)
             -- night mode inverts the whole screen, so a picture goes in inverted to come out as it is
-            if style ~= "ascii" and Theme.nightMode() then bb:invertblitFrom(img, ix, iy, 0, 0, iw, ih)
+            if style ~= "ascii" and Theme.nightMode() then invertBlit(bb, img, ix, iy, iw, ih)
             else bb:blitFrom(img, ix, iy, 0, 0, iw, ih) end
             drawn = true
         end

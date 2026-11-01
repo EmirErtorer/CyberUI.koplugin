@@ -745,6 +745,27 @@ do
     Kit.ok(ok, "the folder picker builds without a folder being moved: " .. tostring(err))
 end
 
+-- a colour cover drawn in night mode onto a screen of another pixel type (the C
+-- blitter would end KOReader)
+do
+    local Blitbuffer = require("ffi/blitbuffer")
+    local Covers = require("cyberui/data/covers")
+    local Theme = require("cyberui/theme")
+    local Cover = require("cyberui/ui/cover")
+    local get, night, style = Covers.get, Theme.nightMode, Settings.get("cover_style")
+    local img = Blitbuffer.new(40, 60, Blitbuffer.TYPE_BBRGB24)
+    img:fill(Blitbuffer.ColorRGB24(200, 40, 40))
+    Covers.get = function() return img end
+    Theme.nightMode = function() return true end
+    Settings.set("cover_style", "image")
+    local bb = Blitbuffer.new(100, 100, Blitbuffer.TYPE_BBRGB32)
+    local c = Cover:new({ w = 44, h = 64, path = "/x/book.epub" })
+    Kit.ok(pcall(c.drawFace, c, bb, 10, 10), "a colour cover is drawn inverted onto a screen of another pixel type")
+    bb:free(); img:free()
+    Covers.get, Theme.nightMode = get, night
+    Settings.set("cover_style", style)
+end
+
 -- the library walk skips linked folders and Android's data folder
 do
     local Library = require("cyberui/data/library")
