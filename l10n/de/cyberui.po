@@ -44,6 +44,10 @@ msgid "Status"
 msgstr "Status"
 
 #: cyberui/actions.lua cyberui/screens/collections.lua
+msgid "Collections"
+msgstr "Sammlungen"
+
+#: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "New collection"
 msgstr "Neue Sammlung"
 
@@ -54,10 +58,6 @@ msgstr "Zu %s hinzugefügt"
 #: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Create"
 msgstr "Erstellen"
-
-#: cyberui/actions.lua cyberui/screens/collections.lua
-msgid "Collections"
-msgstr "Sammlungen"
 
 #: cyberui/actions.lua cyberui/screens/trash.lua
 msgid "That did not work"

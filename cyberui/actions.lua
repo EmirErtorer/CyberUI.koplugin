@@ -99,13 +99,15 @@ function Actions.statusSheet(path)
     App.choose({ title = _("Status"), options = options })
 end
 
--- Pick the collections the book is in, or make a new one for it.
-function Actions.collect(path)
+-- Pick the collections the book is in, or make a new one for it; `page` is the
+-- page of a long list to show (kept as a collection is ticked).
+function Actions.collect(path, page)
     local options = {}
+    local sheet = { title = _("Collections"), options = options, page = page }
     for _i, c in ipairs(Collections.list()) do
         options[#options + 1] = {
             label = c.title, checked = Collections.has(path, c.name),
-            on_tap = function() Collections.toggle(path, c.name); App.update(); Actions.collect(path) end,
+            on_tap = function() Collections.toggle(path, c.name); App.update(); Actions.collect(path, sheet.page) end,
         }
     end
     options[#options + 1] = { label = _("New collection"), icon = "plus", on_tap = function()
@@ -118,7 +120,7 @@ function Actions.collect(path)
             App.update()
         end, _("Create"))
     end }
-    App.choose({ title = _("Collections"), options = options })
+    App.choose(sheet)
 end
 
 -- Show the folder the book is in.

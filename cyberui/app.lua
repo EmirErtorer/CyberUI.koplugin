@@ -407,7 +407,8 @@ end
 
 -- Let the reader pick from options (see Dialog.choose).
 function App.choose(o)
-    App.dialog(function(close, w) return Dialog.choose(o, close, w) end)
+    o.show = function(page) o.page = page; App.choose(o) end
+    App.dialog(function(close, w) return Dialog.choose(o, close, w, Screen:getHeight()) end)
 end
 
 -- A short notice near the bottom for two seconds.

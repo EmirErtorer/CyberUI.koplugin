@@ -8,6 +8,9 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Changed
+- A list of choices too long for the screen (the collections when adding a book to one, filters, and the like) is now split into pages with previous and next buttons, so every entry can be reached.
+
 ### Fixed
 - On colour screens (Kobo Clara Colour and the like) KOReader quit over and over at start when night mode was on and a book had a colour cover: covers are now converted to the screen's pixel type before they are drawn inverted.
 - CyberUI could freeze on a phone (a white screen, or stuck after opening it) while it looked through the whole storage for books. It no longer follows linked folders or Android's own data folder, and stops after a few thousand folders.

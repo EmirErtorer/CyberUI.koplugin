@@ -79,18 +79,45 @@ local function tiles(kids, items, cols, make)
     end
 end
 
--- A list of choices; options are { label, sub, icon, on_tap, checked },
--- `cols` to a row (1 by default).
-function Dialog.choose(o, close, screen_w)
+-- How many rows of choices fit on one page of the list: what is left of the
+-- screen once the title, the buttons under the list and the padding are taken.
+local function rowsPerPage(screen_h)
     local th = Theme.get()
+    local row = th.size.touch + th.space.s
+    local fixed = 2 * th.space.xl + 3 * row + Theme.px(24)   -- title, paging row, Close
+    return math.max(3, math.floor((screen_h * 0.92 - fixed) / row))
+end
+
+-- A list of choices; options are { label, sub, icon, on_tap, checked },
+-- `cols` to a row (1 by default). A list too long for the screen is paged: `page`
+-- is the one showing and show(page) opens another (App.choose supplies it).
+function Dialog.choose(o, close, screen_w, screen_h)
+    local th = Theme.get()
+    local cols = o.cols or 1
     local kids = { Label:new({ text = o.title, kind = "title" }) }
-    tiles(kids, o.options, o.cols or 1, function(opt)
+    local options, pages = o.options, 1
+    local per = rowsPerPage(screen_h or Theme.px(900)) * cols
+    if o.show and #options > per then
+        pages = math.ceil(#options / per)
+        o.page = math.min(math.max(o.page or 1, 1), pages)
+        options = {}
+        for i = (o.page - 1) * per + 1, math.min(o.page * per, #o.options) do options[#options + 1] = o.options[i] end
+    end
+    tiles(kids, options, cols, function(opt)
         return Button:new({
             label = opt.label, sub = opt.sub, align = "left", icon = opt.checked and "check" or opt.icon,
-            height = (o.cols or 1) > 1 and opt.sub and Theme.px(58) or nil,
+            height = cols > 1 and opt.sub and Theme.px(58) or nil,
             variant = opt.checked and "chip_on" or "soft", on_tap = closing(close, opt.on_tap),
         })
     end)
+    if pages > 1 then
+        local function go(page) return function() o.show(page) end end
+        kids[#kids + 1] = Layout.Row:new({ gap = th.space.s, children = {
+            Button:new({ label = "<", grow = true, variant = o.page > 1 and "soft" or "ghost", on_tap = o.page > 1 and go(o.page - 1) or nil }),
+            Label:new({ text = o.page .. " / " .. pages, kind = "mono", align = "center" }),
+            Button:new({ label = ">", grow = true, variant = o.page < pages and "soft" or "ghost", on_tap = o.page < pages and go(o.page + 1) or nil }),
+        } })
+    end
     kids[#kids + 1] = Button:new({ label = o.cancel or _("Close"), variant = "ghost", on_tap = closing(close) })
     return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
         child = Layout.Column:new({ gap = th.space.s, children = kids }) })
