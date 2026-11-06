@@ -9,6 +9,13 @@ local Ledger = require("cyberui/data/ledger")
 local Settings = require("cyberui/settings")
 local Shop = require("cyberui/data/shop")
 
+-- Open the Gigs section.
+local function gigsSection()
+    H.app().current().section = "gigs"
+    H.app().current().page = 1
+    H.app().update()
+end
+
 -- Tap the switch in the settings row with this label.
 local function flip()
     local row = H.find("Gigs and eddies", nil, false)
@@ -27,8 +34,7 @@ H.step(4, function()
     H.app().go("settings")
 end)
 H.step(2, function()
-    H.app().current().section = "home"
-    H.app().update()
+    gigsSection()
 end)
 H.step(2, function()
     H.shot("economy-1-settings")
@@ -77,8 +83,7 @@ H.step(2, function()
     H.app().go("settings")
 end)
 H.step(2, function()
-    H.app().current().section = "home"
-    H.app().update()
+    gigsSection()
 end)
 H.step(2, function()
     flip()

@@ -1,7 +1,7 @@
--- System settings in six sections: Look (colour scheme, light or dark, custom
+-- System settings in seven sections: Look (colour scheme, light or dark, custom
 -- colours), Covers (style, characters, size, ASCII sleep screen), Fonts (the font
 -- in use, the font page, text size), Home (start with CyberUI, the banner's
--- lines, top bar, daily goal, KOReader menu), Speed (refresh, keeping the book open, library index)
+-- lines, top bar, daily goal, KOReader menu), Gigs (the switch and the board), Speed (refresh, keeping the book open, library index)
 -- and About.
 
 local Actions = require("cyberui/actions")
@@ -39,7 +39,7 @@ local _ = require("cyberui/gettext")
 
 local SettingsScreen = Screen:extend()
 
-local SECTIONS = { { _("Look"), "look" }, { _("Covers"), "covers" }, { _("Fonts"), "fonts" }, { _("Home"), "home" }, { _("Speed"), "speed" },
+local SECTIONS = { { _("Look"), "look" }, { _("Covers"), "covers" }, { _("Fonts"), "fonts" }, { _("Home"), "home" }, { _("Gigs"), "gigs" }, { _("Speed"), "speed" },
     { _("About"), "about" } }
 
 -- Open on the Look section.
@@ -195,19 +195,7 @@ end
 -- The Home section.
 function SettingsScreen:home()
     local is_home = G_reader_settings:readSetting("start_with") == "cyberui"
-    local rows = {
-        row(_("Gigs and eddies"), _("Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"),
-            Controls.Toggle:new({ on = Economy.on(), on_change = EconomyFlow.switch })),
-    }
-    if Economy.on() then
-        rows[#rows + 1] = row(_("Gigs on the board"), _("How many books the board offers; a new count applies when the board is next drawn"),
-            Controls.Segmented({ options = { { "3", 3 }, { "5", 5 }, { "10", 10 } }, kind = "label",
-                value = Gigs.slots(), on_change = function(v) save("gig_slots", v) end }))
-        rows[#rows + 1] = row(_("Board drawn anew"), _("Days before the unopened gigs on the board are swapped for others"),
-            Controls.Segmented({ options = { { "3", 3 }, { "7", 7 }, { "14", 14 } }, kind = "label",
-                value = Gigs.rotation(), on_change = function(v) save("gig_rotation", v) end }))
-    end
-    local more = {
+    return {
         row(_("Start with CyberUI"), _("Open CyberUI when KOReader starts and after closing a book"),
             Controls.Toggle:new({ on = is_home, on_change = function(on)
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
@@ -257,7 +245,22 @@ function SettingsScreen:home()
         row(_("File browser"), _("Leave CyberUI for KOReader's own file browser"),
             Button:new({ label = _("Open"), on_tap = function() App.fileBrowser() end })),
     }
-    for _i, r in ipairs(more) do rows[#rows + 1] = r end
+end
+
+-- The Gigs section: the switch, and how the board of gigs is run.
+function SettingsScreen:gigs()
+    local rows = {
+        row(_("Gigs and eddies"), _("Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"),
+            Controls.Toggle:new({ on = Economy.on(), on_change = EconomyFlow.switch })),
+    }
+    if Economy.on() then
+        rows[#rows + 1] = row(_("Gigs on the board"), _("How many books the board offers; a new count applies when the board is next drawn"),
+            Controls.Segmented({ options = { { "3", 3 }, { "5", 5 }, { "10", 10 } }, kind = "label",
+                value = Gigs.slots(), on_change = function(v) save("gig_slots", v) end }))
+        rows[#rows + 1] = row(_("Board drawn anew"), _("Days before the unopened gigs on the board are swapped for others"),
+            Controls.Segmented({ options = { { "3", 3 }, { "7", 7 }, { "14", 14 } }, kind = "label",
+                value = Gigs.rotation(), on_change = function(v) save("gig_rotation", v) end }))
+    end
     return rows
 end
 

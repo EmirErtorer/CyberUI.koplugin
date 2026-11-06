@@ -2240,6 +2240,10 @@ msgid "Covers"
 msgstr ""
 
 #: cyberui/screens/settings.lua
+msgid "Gigs"
+msgstr ""
+
+#: cyberui/screens/settings.lua
 msgid "Speed"
 msgstr ""
 
@@ -2355,30 +2359,6 @@ msgstr ""
 
 #: cyberui/screens/settings.lua
 msgid "Banner top line"
-msgstr ""
-
-#: cyberui/screens/settings.lua
-msgid "Gigs and eddies"
-msgstr ""
-
-#: cyberui/screens/settings.lua
-msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
-msgstr ""
-
-#: cyberui/screens/settings.lua
-msgid "Gigs on the board"
-msgstr ""
-
-#: cyberui/screens/settings.lua
-msgid "How many books the board offers; a new count applies when the board is next drawn"
-msgstr ""
-
-#: cyberui/screens/settings.lua
-msgid "Board drawn anew"
-msgstr ""
-
-#: cyberui/screens/settings.lua
-msgid "Days before the unopened gigs on the board are swapped for others"
 msgstr ""
 
 #: cyberui/screens/settings.lua
@@ -2499,6 +2479,30 @@ msgstr ""
 
 #: cyberui/screens/settings.lua
 msgid "Leave CyberUI for KOReader's own file browser"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
 msgstr ""
 
 #: cyberui/screens/settings.lua

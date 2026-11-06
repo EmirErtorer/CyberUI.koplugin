@@ -2267,6 +2267,10 @@ msgid "Covers"
 msgstr "Обл."
 
 #: cyberui/screens/settings.lua
+msgid "Gigs"
+msgstr "Gigs"
+
+#: cyberui/screens/settings.lua
 msgid "Speed"
 msgstr "Темп"
 
@@ -2384,30 +2388,6 @@ msgstr "Сменить позывной"
 #: cyberui/screens/settings.lua
 msgid "Banner top line"
 msgstr "Верхняя строка баннера"
-
-#: cyberui/screens/settings.lua
-msgid "Gigs and eddies"
-msgstr "Gigs и eddies"
-
-#: cyberui/screens/settings.lua
-msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
-msgstr "Платное чтение: gigs и eddies за то, что ты читаешь. Когда выключено, ничего не платится, а любой вид можно носить, пока ты не включишь снова"
-
-#: cyberui/screens/settings.lua
-msgid "Gigs on the board"
-msgstr "Gigs на доске"
-
-#: cyberui/screens/settings.lua
-msgid "How many books the board offers; a new count applies when the board is next drawn"
-msgstr "Сколько книг предлагает доска; новое число действует со следующей жеребьёвки"
-
-#: cyberui/screens/settings.lua
-msgid "Board drawn anew"
-msgstr "Обновление доски"
-
-#: cyberui/screens/settings.lua
-msgid "Days before the unopened gigs on the board are swapped for others"
-msgstr "Дни до замены непрочитанных gigs на доске другими"
 
 #: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
@@ -2528,6 +2508,30 @@ msgstr "Файловый менеджер"
 #: cyberui/screens/settings.lua
 msgid "Leave CyberUI for KOReader's own file browser"
 msgstr "Выйти из CyberUI в файловый менеджер KOReader"
+
+#: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr "Gigs и eddies"
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr "Платное чтение: gigs и eddies за то, что ты читаешь. Когда выключено, ничего не платится, а любой вид можно носить, пока ты не включишь снова"
+
+#: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr "Gigs на доске"
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr "Сколько книг предлагает доска; новое число действует со следующей жеребьёвки"
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr "Обновление доски"
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
+msgstr "Дни до замены непрочитанных gigs на доске другими"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"

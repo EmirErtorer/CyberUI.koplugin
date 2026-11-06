@@ -2241,6 +2241,10 @@ msgid "Covers"
 msgstr "Cover"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs"
+msgstr "Gigs"
+
+#: cyberui/screens/settings.lua
 msgid "Speed"
 msgstr "Vitesse"
 
@@ -2357,30 +2361,6 @@ msgstr "Changer de pseudo"
 #: cyberui/screens/settings.lua
 msgid "Banner top line"
 msgstr "Ligne supérieure de la bannière"
-
-#: cyberui/screens/settings.lua
-msgid "Gigs and eddies"
-msgstr "Gigs et eddies"
-
-#: cyberui/screens/settings.lua
-msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
-msgstr "Lecture payée : gigs et eddies pour ce que tu lis. Désactivé, rien ne paie et tous les looks sont libres jusqu'à la réactivation"
-
-#: cyberui/screens/settings.lua
-msgid "Gigs on the board"
-msgstr "Gigs au tableau"
-
-#: cyberui/screens/settings.lua
-msgid "How many books the board offers; a new count applies when the board is next drawn"
-msgstr "Combien de livres le tableau propose ; le nouveau nombre vaut au prochain tirage"
-
-#: cyberui/screens/settings.lua
-msgid "Board drawn anew"
-msgstr "Renouvellement du tableau"
-
-#: cyberui/screens/settings.lua
-msgid "Days before the unopened gigs on the board are swapped for others"
-msgstr "Jours avant que les gigs non ouverts du tableau soient remplacés"
 
 #: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
@@ -2501,6 +2481,30 @@ msgstr "Navigateur de fichiers"
 #: cyberui/screens/settings.lua
 msgid "Leave CyberUI for KOReader's own file browser"
 msgstr "Quitter CyberUI pour le navigateur de fichiers de KOReader"
+
+#: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr "Gigs et eddies"
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr "Lecture payée : gigs et eddies pour ce que tu lis. Désactivé, rien ne paie et tous les looks sont libres jusqu'à la réactivation"
+
+#: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr "Gigs au tableau"
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr "Combien de livres le tableau propose ; le nouveau nombre vaut au prochain tirage"
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr "Renouvellement du tableau"
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
+msgstr "Jours avant que les gigs non ouverts du tableau soient remplacés"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"

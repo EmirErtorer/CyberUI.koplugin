@@ -2241,6 +2241,10 @@ msgid "Covers"
 msgstr "Εξώφ."
 
 #: cyberui/screens/settings.lua
+msgid "Gigs"
+msgstr "Gigs"
+
+#: cyberui/screens/settings.lua
 msgid "Speed"
 msgstr "Ταχύτητα"
 
@@ -2357,30 +2361,6 @@ msgstr "Αλλαγή ψευδωνύμου"
 #: cyberui/screens/settings.lua
 msgid "Banner top line"
 msgstr "Επάνω γραμμή του πανό"
-
-#: cyberui/screens/settings.lua
-msgid "Gigs and eddies"
-msgstr "Gigs και eddies"
-
-#: cyberui/screens/settings.lua
-msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
-msgstr "Αμειβόμενη ανάγνωση: gigs και eddies για ό,τι διαβάζεις. Όταν είναι κλειστό, τίποτα δεν πληρώνεται και κάθε εμφάνιση φοριέται ελεύθερα μέχρι να το ανάψεις ξανά"
-
-#: cyberui/screens/settings.lua
-msgid "Gigs on the board"
-msgstr "Gigs στον πίνακα"
-
-#: cyberui/screens/settings.lua
-msgid "How many books the board offers; a new count applies when the board is next drawn"
-msgstr "Πόσα βιβλία προσφέρει ο πίνακας· ο νέος αριθμός ισχύει από την επόμενη κλήρωση"
-
-#: cyberui/screens/settings.lua
-msgid "Board drawn anew"
-msgstr "Ανανέωση πίνακα"
-
-#: cyberui/screens/settings.lua
-msgid "Days before the unopened gigs on the board are swapped for others"
-msgstr "Ημέρες πριν αλλάξουν τα αδιάβαστα gigs του πίνακα με άλλα"
 
 #: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
@@ -2501,6 +2481,30 @@ msgstr "Περιηγητής αρχείων"
 #: cyberui/screens/settings.lua
 msgid "Leave CyberUI for KOReader's own file browser"
 msgstr "Έξοδος από το CyberUI στον δικό του περιηγητή αρχείων του KOReader"
+
+#: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr "Gigs και eddies"
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr "Αμειβόμενη ανάγνωση: gigs και eddies για ό,τι διαβάζεις. Όταν είναι κλειστό, τίποτα δεν πληρώνεται και κάθε εμφάνιση φοριέται ελεύθερα μέχρι να το ανάψεις ξανά"
+
+#: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr "Gigs στον πίνακα"
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr "Πόσα βιβλία προσφέρει ο πίνακας· ο νέος αριθμός ισχύει από την επόμενη κλήρωση"
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr "Ανανέωση πίνακα"
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
+msgstr "Ημέρες πριν αλλάξουν τα αδιάβαστα gigs του πίνακα με άλλα"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"

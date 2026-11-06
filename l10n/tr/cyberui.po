@@ -2241,6 +2241,10 @@ msgid "Covers"
 msgstr "Kapak"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs"
+msgstr "Gigs"
+
+#: cyberui/screens/settings.lua
 msgid "Speed"
 msgstr "Hız"
 
@@ -2357,30 +2361,6 @@ msgstr "Takma adı değiştir"
 #: cyberui/screens/settings.lua
 msgid "Banner top line"
 msgstr "Başlığın üst satırı"
-
-#: cyberui/screens/settings.lua
-msgid "Gigs and eddies"
-msgstr "Gigs ve eddies"
-
-#: cyberui/screens/settings.lua
-msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
-msgstr "Ücretli okuma: okuduklarına karşılık gigs ve eddies. Kapalıyken hiçbir şey ödemez ve yeniden açana kadar her görünümü takabilirsin"
-
-#: cyberui/screens/settings.lua
-msgid "Gigs on the board"
-msgstr "Panodaki gig'ler"
-
-#: cyberui/screens/settings.lua
-msgid "How many books the board offers; a new count applies when the board is next drawn"
-msgstr "Panonun kaç kitap sunduğu; yeni sayı pano bir sonraki çekilişinde geçerli olur"
-
-#: cyberui/screens/settings.lua
-msgid "Board drawn anew"
-msgstr "Pano yenileme süresi"
-
-#: cyberui/screens/settings.lua
-msgid "Days before the unopened gigs on the board are swapped for others"
-msgstr "Panodaki açılmamış gig'ler başkalarıyla değiştirilmeden önceki gün sayısı"
 
 #: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
@@ -2501,6 +2481,30 @@ msgstr "Dosya gezgini"
 #: cyberui/screens/settings.lua
 msgid "Leave CyberUI for KOReader's own file browser"
 msgstr "CyberUI'dan çıkıp KOReader'ın kendi dosya gezginine geç"
+
+#: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr "Gigs ve eddies"
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr "Ücretli okuma: okuduklarına karşılık gigs ve eddies. Kapalıyken hiçbir şey ödemez ve yeniden açana kadar her görünümü takabilirsin"
+
+#: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr "Panodaki gig'ler"
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr "Panonun kaç kitap sunduğu; yeni sayı pano bir sonraki çekilişinde geçerli olur"
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr "Pano yenileme süresi"
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
+msgstr "Panodaki açılmamış gig'ler başkalarıyla değiştirilmeden önceki gün sayısı"
 
 #: cyberui/screens/settings.lua
 msgid "Full refresh in dark mode"
