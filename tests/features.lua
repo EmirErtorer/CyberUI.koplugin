@@ -244,15 +244,16 @@ do
         Kit.ok(g.days >= Gigs.GRACE_DAYS and g.price == Gigs.price(g.pages, g.days) and g.days <= last, "a gig is priced from its pages and days idle, oldest first")
         last = g.days
     end
-    Kit.ok(Gigs.price(300, 7) == 60 and Gigs.price(300, 70) == 120 and Gigs.price(300, 700) == 120, "the price grows with the wait and stops at double")
+    Kit.ok(Gigs.price(300, 7) == 80 and Gigs.price(300, 28) == 120 and Gigs.price(300, 700) == 120, "a gig's price grows by a quarter a week and stops at double after four weeks")
     Kit.ok(Gigs.price(1, 7) == 20 and Gigs.price(100, 14) % 20 == 0, "prices are whole steps of 20")
+    Kit.ok(Gigs.basePrice(300) == 40 and Gigs.basePrice(10) == 20, "any other book pays half the gig rate, in steps of 20")
     local step, finish = Gigs.split(120)
     Kit.ok(step == 6 and finish == 60 and step * 10 + finish == 120, "ten steps and the finish add up to the price")
+    Kit.ok(#board <= Gigs.slots(), "the board never holds more than its slots")
     if #board > 0 then
         Gigs.skip(board[1].path)
-        Kit.ok(#Gigs.board() == #board - 1, "a book said to be not wanted leaves the board")
-        Gigs.reset()
-        Kit.ok(#Gigs.board() == #board, "and comes back")
+        Kit.ok(#Gigs.board() == #board - 1 or #Gigs.board() == math.min(Gigs.slots(), #board), "a book said to be not wanted leaves the board")
+        Settings.set("bounty_skipped", nil)
     end
 end
 
@@ -273,6 +274,11 @@ do
     f:close()
     local old = os.time() - 80 * 86400
     lfs.touch(book, old, old)
+    local Library = require("cyberui/data/library")
+    local home = G_reader_settings:readSetting("home_dir")
+    G_reader_settings:saveSetting("home_dir", tmp)
+    Library.reset()
+    Settings.set("gig_slots", nil)
     Kit.ok(Gigs.pages(book) == 300, "a book never opened is sized from its file")
     Gigs.accept(book)
     local q = Gigs.quote(book)
@@ -293,6 +299,8 @@ do
     local skim = tmp .. "/Skim.epub"
     f = io.open(skim, "w"); f:write(string.rep("x", 600 * 1024)); f:close()
     lfs.touch(skim, old, old)
+    Library.reset()
+    Gigs.reload()
     Gigs.accept(skim)
     Gigs.follow(skim)
     Gigs.page(300, 300)
@@ -305,6 +313,88 @@ do
     Kit.ok(Ledger.balance() == 120 - 6 and Ledger.rejected() == 1, "an edited ledger entry stops counting")
     Kit.ok(Gigs.quote(skim) == nil, "an edited price is not trusted")
     Settings.set("gigs", saved)
+    G_reader_settings:saveSetting("home_dir", home)
+    Library.reset()
+    Gigs.reload()
+    os.execute("rm -rf '" .. tmp .. "'")
+end
+
+-- the board: slots, the draw, the weekly redraw, rolling, turning a book down, the plain rate
+do
+    local Gigs = require("cyberui/data/gigs")
+    local Ledger = require("cyberui/data/ledger")
+    local Library = require("cyberui/data/library")
+    local Settings = require("cyberui/settings")
+    local lfs = require("libs/libkoreader-lfs")
+    local saved = { Settings.get("gigs"), Settings.get("gig_slots"), Settings.get("gig_rotation"), Settings.get("bounty_skipped") }
+    local home = G_reader_settings:readSetting("home_dir")
+    local tmp = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-board"
+    os.execute("rm -rf '" .. tmp .. "'; mkdir -p '" .. tmp .. "'")
+    local old = os.time() - 10 * 86400
+    for i = 1, 12 do
+        local f = io.open(string.format("%s/Book%02d.epub", tmp, i), "w")
+        f:write(string.rep("x", 200 * 1024))
+        f:close()
+        lfs.touch(string.format("%s/Book%02d.epub", tmp, i), old, old)
+    end
+    local fresh = tmp .. "/Fresh.epub"
+    local f = io.open(fresh, "w"); f:write("x"); f:close()
+    G_reader_settings:saveSetting("home_dir", tmp)
+    Library.reset()
+    Settings.set("gigs", nil); Settings.set("gig_slots", nil); Settings.set("gig_rotation", nil); Settings.set("bounty_skipped", nil)
+    Gigs.reload()
+    local function paths(list) local t = {} for _, g in ipairs(list) do t[#t + 1] = g.path end table.sort(t) return table.concat(t, ",") end
+    local board = Gigs.board()
+    local seen, dup = {}, false
+    for _, g in ipairs(board) do dup = dup or seen[g.path]; seen[g.path] = true end
+    Kit.ok(#board == 5 and not dup, "the board holds five different books by default")
+    Kit.ok(not seen[fresh], "a book added today is not offered yet")
+    Kit.ok(paths(Gigs.board()) == paths(board) and Gigs.rotatesIn() == 7, "the board stays as it is until it is drawn anew")
+    Settings.set("gig_slots", 10)
+    Gigs.reload()
+    Kit.ok(#Gigs.board() == 5, "a bigger board waits for the next draw, so settings cannot be used to get fresh picks")
+    Gigs.skip(board[1].path)
+    Kit.ok(#Gigs.board() == 4 and not Gigs.offer(board[1].path), "a book turned down leaves its slot empty")
+    Ledger.add("m", "/earned", 1, 30)
+    Ledger.save()
+    local victim = Gigs.board()[1].path
+    local ok, pick = Gigs.roll(victim)
+    Kit.ok(ok and pick ~= victim and Ledger.balance() == 10 and #Gigs.board() == 4 and Gigs.offer(pick), "a roll swaps the book for another and costs 20 eddies")
+    Kit.ok(not Gigs.offer(victim), "the book that was rolled away is off the board")
+    Kit.ok(select(2, Gigs.roll(pick)) == "short" and Ledger.balance() == 10, "a roll needs the eddies")
+    Kit.ok(select(2, Gigs.roll("/not/on/board.epub")) == "slot", "only a gig on the board can be rolled")
+    Ledger.add("m", "/earned", 2, 100)
+    Ledger.save()
+    Kit.ok(Gigs.roll(pick) and Ledger.balance() == 90, "every roll is a separate signed purchase")
+    -- the draw comes again after the days are up (and a bigger board is filled then)
+    local d = Settings.get("gigs")
+    d.board.t = os.time() - 8 * 86400
+    Gigs.reload()
+    Kit.ok(#Gigs.board() == 10 and Gigs.rotatesIn() == 7, "after a week the board is drawn anew, with the new slot count")
+    -- taking a gig is only possible on a book the board offers
+    local on, off = Gigs.board()[1].path, nil
+    for i = 1, 12 do
+        local path = string.format("%s/Book%02d.epub", tmp, i)
+        if not Gigs.offer(path) then off = path end
+    end
+    Gigs.accept(on)
+    Kit.ok(Gigs.quote(on) and Gigs.quote(on).days >= 10 and Gigs.quote(on).price == Gigs.price(Gigs.pages(on), Gigs.quote(on).days), "taking a gig fixes the board's price")
+    Gigs.accept(fresh)
+    Kit.ok(Gigs.quote(fresh) == nil, "a book that is not on the board cannot be taken as a gig")
+    -- any other book pays at the plain rate
+    local before = Ledger.balance()
+    Gigs.follow(fresh)
+    Kit.ok(Gigs.quote(fresh) and Gigs.quote(fresh).days == 0 and Gigs.quote(fresh).price == Gigs.basePrice(Gigs.pages(fresh)), "a book read off the board is followed at the plain rate")
+    local pages = Gigs.pages(fresh)
+    for p = 1, pages do Gigs.page(p, pages) end
+    local paid = Gigs.settle()
+    Kit.ok(paid == Gigs.basePrice(pages) and Ledger.balance() == before + paid and Gigs.takeReceipt().gig == false, "reading it to the end pays the plain price, with a notice that is not a gig's")
+    Kit.ok(#Gigs.active() == 1 and Gigs.active()[1].path == on, "the active list holds gigs only")
+    local earned, done = Ledger.totals()
+    Kit.ok(done == 0, "a plain book does not count as a gig done")
+    Settings.set("gigs", saved[1]); Settings.set("gig_slots", saved[2]); Settings.set("gig_rotation", saved[3]); Settings.set("bounty_skipped", saved[4])
+    G_reader_settings:saveSetting("home_dir", home)
+    Library.reset()
     Gigs.reload()
     os.execute("rm -rf '" .. tmp .. "'")
 end

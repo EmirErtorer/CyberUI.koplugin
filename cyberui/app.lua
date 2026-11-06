@@ -509,7 +509,9 @@ function App.payoutNotice()
     local Gigs = require("cyberui/data/gigs")
     local note = Gigs.takeReceipt()
     if note then
-        App.toast(string.format(note.finished and _("GIG FINISHED +%s") or _("GIG PAYOUT +%s"), require("cyberui/format").credits(note.total)))
+        local text = note.gig and (note.finished and _("GIG FINISHED +%s") or _("GIG PAYOUT +%s"))
+            or (note.finished and _("BOOK FINISHED +%s") or _("READING PAYOUT +%s"))
+        App.toast(string.format(text, require("cyberui/format").credits(note.total)))
     end
 end
 

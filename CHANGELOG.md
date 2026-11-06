@@ -8,9 +8,16 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+### Added
+- **Gigs and eddies can be turned off** in System > Home, after three "are you sure" windows. Off, nothing pays, the Gigs tile on home becomes the shop, the ID card drops the eddies tiles and every look can be worn. Turned back on, any look that was not paid for goes back to the free one, and eddies and purchases are kept.
+- **Every book pays eddies now**, not only gigs: about a tenth of an eddy per page, paid as you read and when you finish. Only books started from the beginning count.
+- **A small board of gigs.** The board offers 5 unopened books at a time (3, 5 or 10 in System > Home), drawn at random and drawn anew every week (3, 7 or 14 days). Gigs pay two to four times the plain rate, and a book's price grows by a quarter per week it has waited, up to double after a month.
+- **Roll a gig** for 20 eddies to swap it for another book (hold a gig on the board).
+
 ## [1.1.2] - 2026-11-01
 
 ### Changed
+- Taking a gig needs the book to be on the board. "Not wanted" takes a book off the board for good and its slot stays empty until the board is drawn anew.
 - A list of choices too long for the screen (the collections when adding a book to one, filters, and the like) is now split into pages with previous and next buttons, so every entry can be reached.
 
 ### Fixed

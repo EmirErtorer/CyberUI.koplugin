@@ -1,5 +1,6 @@
--- Gigs: the backlog as paid work. Three tabs: the open gigs (books waiting
--- for a week or more, the oldest as a poster, with a note on how gigs pay),
+-- Gigs: reading as paid work. Three tabs: the open gigs (the books on the
+-- board, the oldest as a poster, with a note on how gigs pay and when the
+-- board is drawn anew),
 -- the gigs taken and how far each has paid, and the payouts so far. The
 -- balance is in the header; it only ever goes up by reading.
 
@@ -37,7 +38,13 @@ local function holdSheet(g)
     App.sheet({ title = info.title, sub = string.format(_("PAYS %s"), Format.credits(g.price)), cols = 1, actions = {
         { icon = "forward", label = _("Take the gig"), sub = _("Open the book"), on_tap = function() Actions.open(g.path) end },
         { icon = "eye", label = _("Details"), on_tap = function() Actions.details(g.path) end },
-        { icon = "close", label = _("Not wanted"), sub = _("Take it off the board"), on_tap = function()
+        { icon = "restore", label = _("Roll"), sub = string.format(_("Swap it for another book, %s"), Format.credits(Gigs.ROLL_COST)), on_tap = function()
+            local ok, why = Gigs.roll(g.path)
+            if ok then App.toast(_("ROLLED")) elseif why == "short" then App.toast(string.format(_("NEED %s MORE"), Format.credits(Gigs.ROLL_COST - Ledger.balance())))
+            else App.toast(_("NO OTHER BOOK TO ROLL")) end
+            App.update()
+        end },
+        { icon = "close", label = _("Not wanted"), sub = _("Take it off the board for good"), on_tap = function()
             Gigs.skip(g.path)
             App.update()
         end },
@@ -49,7 +56,14 @@ local function explainer()
     local th = Theme.get()
     return Panel:new({ shape = "brackets", label = _("HOW_GIGS_WORK"), pad = th.space.m,
         child = Label:new({ kind = "small", color = "muted", lines = 6,
-            text = _("A book that sits unread for a week becomes a gig. Open it to take the gig and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more.") }) })
+            text = _("Every book you read pays eddies. The gigs on the board pay two to four times more: open one to take it and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more, up to a month. Hold a gig to roll it for eddies.") }) })
+end
+
+-- When the board is drawn anew.
+local function rotation()
+    local n = Gigs.rotatesIn()
+    if not n then return Layout.Spacer:new({ height = 0 }) end
+    return Label:new({ text = string.format(_.n("NEW BOARD IN %d DAY", "NEW BOARD IN %d DAYS", n), n), kind = "mono_small", color = "muted" })
 end
 
 -- The poster of the oldest open gig.
@@ -98,8 +112,8 @@ function GigsScreen:openTab()
     local th = Theme.get()
     local list = Gigs.board()
     if #list == 0 then
-        return Layout.Column:new({ gap = th.space.m, children = { explainer(),
-            empty(_("NO OPEN GIGS"), _("Every book in the library has been opened, or is still new. Books that sit unread for a week become gigs here.")) } })
+        return Layout.Column:new({ gap = th.space.m, children = { explainer(), rotation(),
+            empty(_("NO OPEN GIGS"), _("Every book in the library has been opened, or is still new. Unread books are picked for the board when it is next drawn.")) } })
     end
     local rest = {}
     for i = 2, #list do rest[#rest + 1] = list[i] end
@@ -109,7 +123,7 @@ function GigsScreen:openTab()
             on_tap = function() Actions.details(g.path) end, on_hold = function() holdSheet(g) end })
     end)
     return Layout.Column:new({ gap = th.space.m, grow = true, children = {
-        self.page == 1 and explainer() or Layout.Spacer:new({ height = 0 }), poster(list[1]), grid,
+        self.page == 1 and explainer() or Layout.Spacer:new({ height = 0 }), rotation(), poster(list[1]), grid,
         Frame.pager(self, _("GIGS"), function(p) self:setPage(p) end),
     } })
 end
@@ -157,7 +171,8 @@ function GigsScreen:payoutsTab()
     end
     local grid = paged(self, list, function(p)
         return ListRow.build({ path = p.path, title = Books.info(p.path).title, title_kind = "body",
-            meta = p.kind == "f" and _("GIG FINISHED") or string.format(_("%d%% READ"), p.n * 10), value = "+" .. Format.credits(p.amount) })
+            meta = (p.kind == "f" and _("GIG FINISHED")) or (p.kind == "e" and _("BOOK FINISHED")) or string.format(_("%d%% READ"), p.n * 10),
+            value = "+" .. Format.credits(p.amount) })
     end)
     return Layout.Column:new({ gap = th.space.m, grow = true, children = { tiles, grid,
         Frame.pager(self, _("PAYOUTS"), function(p) self:setPage(p) end) } })

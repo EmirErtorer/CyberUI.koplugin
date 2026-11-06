@@ -237,6 +237,14 @@ msgstr "GIG ERLEDIGT +%s"
 msgid "GIG PAYOUT +%s"
 msgstr "GIG-AUSZAHLUNG +%s"
 
+#: cyberui/app.lua
+msgid "BOOK FINISHED +%s"
+msgstr "BUCH FERTIG +%s"
+
+#: cyberui/app.lua
+msgid "READING PAYOUT +%s"
+msgstr "LESE-AUSZAHLUNG +%s"
+
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
 msgstr "AUSGESCHALTET // TIPPEN"
@@ -1416,20 +1424,46 @@ msgid "Open the book"
 msgstr "Buch öffnen"
 
 #: cyberui/screens/gigs.lua
+msgid "Roll"
+msgstr "Neu würfeln"
+
+#: cyberui/screens/gigs.lua
+msgid "Swap it for another book, %s"
+msgstr "Gegen ein anderes Buch tauschen, %s"
+
+#: cyberui/screens/gigs.lua
+msgid "ROLLED"
+msgstr "NEU GEWÜRFELT"
+
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+msgid "NEED %s MORE"
+msgstr "%s FEHLEN"
+
+#: cyberui/screens/gigs.lua
+msgid "NO OTHER BOOK TO ROLL"
+msgstr "KEIN ANDERES BUCH"
+
+#: cyberui/screens/gigs.lua
 msgid "Not wanted"
 msgstr "Nicht gesucht"
 
 #: cyberui/screens/gigs.lua
-msgid "Take it off the board"
-msgstr "Von der Tafel nehmen"
+msgid "Take it off the board for good"
+msgstr "Für immer von der Tafel nehmen"
 
 #: cyberui/screens/gigs.lua
 msgid "HOW_GIGS_WORK"
 msgstr "SO_FUNKTIONIEREN_GIGS"
 
 #: cyberui/screens/gigs.lua
-msgid "A book that sits unread for a week becomes a gig. Open it to take the gig and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more."
-msgstr "Ein Buch, das eine Woche ungelesen bleibt, wird zum Gig. Öffne es, um den Gig anzunehmen und den Preis festzulegen. Alle 10 % Lesefortschritt zahlen ein Zwanzigstel des Preises, und das Beenden zahlt die andere Hälfte. Längere Bücher und längere Wartezeiten zahlen mehr."
+msgid "Every book you read pays eddies. The gigs on the board pay two to four times more: open one to take it and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more, up to a month. Hold a gig to roll it for eddies."
+msgstr "Jedes Buch, das du liest, bringt Eddies. Die Gigs an der Tafel zahlen zwei- bis viermal mehr: Öffne einen, um ihn anzunehmen und den Preis festzulegen. Je 10% gelesen zahlt ein Zwanzigstel des Preises, und das Beenden zahlt die andere Hälfte. Längere Bücher und längere Wartezeiten zahlen mehr, bis zu einem Monat. Halte einen Gig gedrückt, um ihn gegen Eddies neu zu würfeln."
+
+#: cyberui/screens/gigs.lua
+msgid "NEW BOARD IN %d DAY"
+msgid_plural "NEW BOARD IN %d DAYS"
+msgstr[0] "NEUE TAFEL IN %d TAG"
+msgstr[1] "NEUE TAFEL IN %d TAGEN"
 
 #: cyberui/screens/gigs.lua
 msgid "TOP_GIG"
@@ -1456,8 +1490,8 @@ msgid "NO OPEN GIGS"
 msgstr "KEINE OFFENEN GIGS"
 
 #: cyberui/screens/gigs.lua
-msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week become gigs here."
-msgstr "Jedes Buch der Bibliothek wurde geöffnet oder ist noch neu. Bücher, die eine Woche ungelesen bleiben, werden hier zu Gigs."
+msgid "Every book in the library has been opened, or is still new. Unread books are picked for the board when it is next drawn."
+msgstr "Jedes Buch der Bibliothek wurde geöffnet oder ist noch neu. Ungelesene Bücher werden bei der nächsten Ziehung für die Tafel ausgewählt."
 
 #: cyberui/screens/gigs.lua cyberui/ui/launcher.lua
 msgid "GIGS"
@@ -1498,6 +1532,10 @@ msgstr "Lies einen Gig, um Eddies zu verdienen. Jede Auszahlung steht hier."
 #: cyberui/screens/gigs.lua
 msgid "GIG FINISHED"
 msgstr "GIG ERLEDIGT"
+
+#: cyberui/screens/gigs.lua
+msgid "BOOK FINISHED"
+msgstr "BUCH FERTIG"
 
 #: cyberui/screens/gigs.lua
 msgid "%d%% READ"
@@ -2329,6 +2367,22 @@ msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and ev
 msgstr "Bezahltes Lesen: Gigs und Eddies für das, was du liest. Ausgeschaltet zahlt nichts und jeder Look ist frei tragbar, bis du es wieder einschaltest"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr "Gigs an der Tafel"
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr "Wie viele Bücher die Tafel anbietet; eine neue Zahl gilt ab der nächsten Ziehung"
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr "Tafel neu ziehen"
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
+msgstr "Tage, bevor die ungeöffneten Gigs an der Tafel ausgetauscht werden"
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr "Mit CyberUI starten"
 
@@ -2619,10 +2673,6 @@ msgstr "ZUM AUSRÜSTEN TIPPEN"
 #: cyberui/screens/shop.lua
 msgid "TAP TO BUY"
 msgstr "ZUM KAUFEN TIPPEN"
-
-#: cyberui/screens/shop.lua
-msgid "NEED %s MORE"
-msgstr "%s FEHLEN"
 
 #: cyberui/screens/shop.lua
 msgid "BUY %s"

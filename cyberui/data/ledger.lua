@@ -5,8 +5,9 @@
 -- file cannot make money or unlock anything. (The code is open, so this stops
 -- casual edits, not a determined one.)
 --
--- Entry kinds: "m" a milestone payout, "f" a finish payout, "s" a purchase (a
--- negative amount, `p` the id of the style bought).
+-- Entry kinds: "m" and "f" a gig's milestone and finish payouts, "n" and "e"
+-- the same for a book read at the plain rate, "s" a purchase (a negative
+-- amount, `p` the id of the style bought or "roll" with `n` counting them).
 -- Stored as { quotes = {}, seen = {}, ledger = { { k, p, n, a, t, sig } } }.
 
 local Economy = require("cyberui/data/economy")

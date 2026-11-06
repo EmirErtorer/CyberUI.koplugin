@@ -237,6 +237,14 @@ msgstr "GIG BİTTİ +%s"
 msgid "GIG PAYOUT +%s"
 msgstr "GIG ÖDEMESİ +%s"
 
+#: cyberui/app.lua
+msgid "BOOK FINISHED +%s"
+msgstr "KİTAP BİTTİ +%s"
+
+#: cyberui/app.lua
+msgid "READING PAYOUT +%s"
+msgstr "OKUMA ÖDEMESİ +%s"
+
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
 msgstr "KAPALI // DOKUN"
@@ -1416,20 +1424,46 @@ msgid "Open the book"
 msgstr "Kitabı aç"
 
 #: cyberui/screens/gigs.lua
+msgid "Roll"
+msgstr "Yeniden çek"
+
+#: cyberui/screens/gigs.lua
+msgid "Swap it for another book, %s"
+msgstr "Başka bir kitapla değiştir, %s"
+
+#: cyberui/screens/gigs.lua
+msgid "ROLLED"
+msgstr "YENİDEN ÇEKİLDİ"
+
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+msgid "NEED %s MORE"
+msgstr "%s DAHA GEREK"
+
+#: cyberui/screens/gigs.lua
+msgid "NO OTHER BOOK TO ROLL"
+msgstr "ÇEKİLECEK BAŞKA KİTAP YOK"
+
+#: cyberui/screens/gigs.lua
 msgid "Not wanted"
 msgstr "İstenmiyor"
 
 #: cyberui/screens/gigs.lua
-msgid "Take it off the board"
-msgstr "Panodan kaldır"
+msgid "Take it off the board for good"
+msgstr "Panodan kalıcı olarak kaldır"
 
 #: cyberui/screens/gigs.lua
 msgid "HOW_GIGS_WORK"
 msgstr "GIGLER_NASIL_İŞLER"
 
 #: cyberui/screens/gigs.lua
-msgid "A book that sits unread for a week becomes a gig. Open it to take the gig and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more."
-msgstr "Bir hafta okunmadan duran kitap bir gig olur. Gig'i almak için kitabı aç; fiyatı o an sabitlenir. Okuduğun her %10, fiyatın yirmide birini öder, bitirince diğer yarısı gelir. Daha uzun kitaplar ve daha uzun beklemeler daha çok öder."
+msgid "Every book you read pays eddies. The gigs on the board pay two to four times more: open one to take it and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more, up to a month. Hold a gig to roll it for eddies."
+msgstr "Okuduğun her kitap eddies kazandırır. Panodaki gig'ler iki ila dört kat fazla öder: birini açarak al, fiyatı sabitlenir. Okuduğun her 10% fiyatın yirmide birini öder, bitirmek diğer yarısını. Daha uzun kitaplar ve daha uzun beklemeler, bir aya kadar, daha çok öder. Bir gig'e basılı tutarak eddies karşılığı yeniden çekebilirsin."
+
+#: cyberui/screens/gigs.lua
+msgid "NEW BOARD IN %d DAY"
+msgid_plural "NEW BOARD IN %d DAYS"
+msgstr[0] "YENİ PANO %d GÜN SONRA"
+msgstr[1] "YENİ PANO %d GÜN SONRA"
 
 #: cyberui/screens/gigs.lua
 msgid "TOP_GIG"
@@ -1456,8 +1490,8 @@ msgid "NO OPEN GIGS"
 msgstr "AÇIK GIG YOK"
 
 #: cyberui/screens/gigs.lua
-msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week become gigs here."
-msgstr "Kütüphanedeki her kitap açılmış ya da hâlâ yeni. Bir hafta okunmadan duran kitaplar burada gig olur."
+msgid "Every book in the library has been opened, or is still new. Unread books are picked for the board when it is next drawn."
+msgstr "Kütüphanedeki her kitap açılmış ya da hâlâ yeni. Okunmamış kitaplar pano bir sonraki çekilişinde seçilir."
 
 #: cyberui/screens/gigs.lua cyberui/ui/launcher.lua
 msgid "GIGS"
@@ -1498,6 +1532,10 @@ msgstr "Eddies kazanmak için bir gig oku. Her ödeme burada listelenir."
 #: cyberui/screens/gigs.lua
 msgid "GIG FINISHED"
 msgstr "GIG BİTTİ"
+
+#: cyberui/screens/gigs.lua
+msgid "BOOK FINISHED"
+msgstr "KİTAP BİTTİ"
 
 #: cyberui/screens/gigs.lua
 msgid "%d%% READ"
@@ -2329,6 +2367,22 @@ msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and ev
 msgstr "Ücretli okuma: okuduklarına karşılık gigs ve eddies. Kapalıyken hiçbir şey ödemez ve yeniden açana kadar her görünümü takabilirsin"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr "Panodaki gig'ler"
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr "Panonun kaç kitap sunduğu; yeni sayı pano bir sonraki çekilişinde geçerli olur"
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr "Pano yenileme süresi"
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
+msgstr "Panodaki açılmamış gig'ler başkalarıyla değiştirilmeden önceki gün sayısı"
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr "CyberUI ile başla"
 
@@ -2619,10 +2673,6 @@ msgstr "TAKMAK İÇİN DOKUN"
 #: cyberui/screens/shop.lua
 msgid "TAP TO BUY"
 msgstr "SATIN ALMAK İÇİN DOKUN"
-
-#: cyberui/screens/shop.lua
-msgid "NEED %s MORE"
-msgstr "%s DAHA GEREK"
 
 #: cyberui/screens/shop.lua
 msgid "BUY %s"

@@ -237,6 +237,14 @@ msgstr "ΤΕΛΕΙΩΣΕ ΤΟ GIG +%s"
 msgid "GIG PAYOUT +%s"
 msgstr "ΠΛΗΡΩΜΗ GIG +%s"
 
+#: cyberui/app.lua
+msgid "BOOK FINISHED +%s"
+msgstr "ΤΕΛΕΙΩΣΕ ΤΟ ΒΙΒΛΙΟ +%s"
+
+#: cyberui/app.lua
+msgid "READING PAYOUT +%s"
+msgstr "ΠΛΗΡΩΜΗ ΑΝΑΓΝΩΣΗΣ +%s"
+
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
 msgstr "ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ // ΠΑΤΗΣΤΕ"
@@ -1416,20 +1424,46 @@ msgid "Open the book"
 msgstr "Άνοιγμα του βιβλίου"
 
 #: cyberui/screens/gigs.lua
+msgid "Roll"
+msgstr "Ξαναρίξε"
+
+#: cyberui/screens/gigs.lua
+msgid "Swap it for another book, %s"
+msgstr "Αντάλλαξέ το με άλλο βιβλίο, %s"
+
+#: cyberui/screens/gigs.lua
+msgid "ROLLED"
+msgstr "ΞΑΝΑΡΙΧΤΗΚΕ"
+
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+msgid "NEED %s MORE"
+msgstr "ΛΕΙΠΟΥΝ %s"
+
+#: cyberui/screens/gigs.lua
+msgid "NO OTHER BOOK TO ROLL"
+msgstr "ΔΕΝ ΥΠΑΡΧΕΙ ΑΛΛΟ ΒΙΒΛΙΟ"
+
+#: cyberui/screens/gigs.lua
 msgid "Not wanted"
 msgstr "Δεν καταζητείται"
 
 #: cyberui/screens/gigs.lua
-msgid "Take it off the board"
-msgstr "Αφαίρεση από τον πίνακα"
+msgid "Take it off the board for good"
+msgstr "Αφαίρεσέ το από τον πίνακα για πάντα"
 
 #: cyberui/screens/gigs.lua
 msgid "HOW_GIGS_WORK"
 msgstr "ΠΩΣ_ΛΕΙΤΟΥΡΓΟΥΝ_ΤΑ_GIGS"
 
 #: cyberui/screens/gigs.lua
-msgid "A book that sits unread for a week becomes a gig. Open it to take the gig and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more."
-msgstr "Ένα βιβλίο που μένει μία εβδομάδα αδιάβαστο γίνεται gig. Άνοιξέ το για να αναλάβεις το gig και να κλειδώσεις την τιμή. Κάθε 10% που διαβάζεις πληρώνει το ένα εικοστό της τιμής και η ολοκλήρωση πληρώνει το άλλο μισό. Τα μεγαλύτερα βιβλία και οι μεγαλύτερες αναμονές πληρώνουν περισσότερο."
+msgid "Every book you read pays eddies. The gigs on the board pay two to four times more: open one to take it and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more, up to a month. Hold a gig to roll it for eddies."
+msgstr "Κάθε βιβλίο που διαβάζεις πληρώνει eddies. Τα gigs στον πίνακα πληρώνουν δύο έως τέσσερις φορές περισσότερα: άνοιξε ένα για να το πάρεις και να κλειδώσει η τιμή. Κάθε 10% που διαβάζεις πληρώνει το ένα εικοστό της τιμής και το τέλος πληρώνει το άλλο μισό. Μεγαλύτερα βιβλία και μεγαλύτερη αναμονή πληρώνουν περισσότερα, μέχρι έναν μήνα. Κράτα πατημένο ένα gig για να το ξαναρίξεις με eddies."
+
+#: cyberui/screens/gigs.lua
+msgid "NEW BOARD IN %d DAY"
+msgid_plural "NEW BOARD IN %d DAYS"
+msgstr[0] "ΝΕΟΣ ΠΙΝΑΚΑΣ ΣΕ %d ΜΕΡΑ"
+msgstr[1] "ΝΕΟΣ ΠΙΝΑΚΑΣ ΣΕ %d ΜΕΡΕΣ"
 
 #: cyberui/screens/gigs.lua
 msgid "TOP_GIG"
@@ -1456,8 +1490,8 @@ msgid "NO OPEN GIGS"
 msgstr "ΚΑΝΕΝΑ ΑΝΟΙΧΤΟ GIG"
 
 #: cyberui/screens/gigs.lua
-msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week become gigs here."
-msgstr "Κάθε βιβλίο της βιβλιοθήκης έχει ανοιχτεί ή είναι ακόμη καινούργιο. Τα βιβλία που μένουν μία εβδομάδα αδιάβαστα γίνονται εδώ gigs."
+msgid "Every book in the library has been opened, or is still new. Unread books are picked for the board when it is next drawn."
+msgstr "Κάθε βιβλίο της βιβλιοθήκης έχει ανοιχτεί ή είναι ακόμα καινούργιο. Τα αδιάβαστα βιβλία επιλέγονται για τον πίνακα στην επόμενη κλήρωση."
 
 #: cyberui/screens/gigs.lua cyberui/ui/launcher.lua
 msgid "GIGS"
@@ -1498,6 +1532,10 @@ msgstr "Διάβασε ένα gig για να κερδίσεις eddies. Κάθ�
 #: cyberui/screens/gigs.lua
 msgid "GIG FINISHED"
 msgstr "ΤΕΛΕΙΩΣΕ ΤΟ GIG"
+
+#: cyberui/screens/gigs.lua
+msgid "BOOK FINISHED"
+msgstr "ΤΕΛΕΙΩΣΕ ΤΟ ΒΙΒΛΙΟ"
 
 #: cyberui/screens/gigs.lua
 msgid "%d%% READ"
@@ -2329,6 +2367,22 @@ msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and ev
 msgstr "Αμειβόμενη ανάγνωση: gigs και eddies για ό,τι διαβάζεις. Όταν είναι κλειστό, τίποτα δεν πληρώνεται και κάθε εμφάνιση φοριέται ελεύθερα μέχρι να το ανάψεις ξανά"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr "Gigs στον πίνακα"
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr "Πόσα βιβλία προσφέρει ο πίνακας· ο νέος αριθμός ισχύει από την επόμενη κλήρωση"
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr "Ανανέωση πίνακα"
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
+msgstr "Ημέρες πριν αλλάξουν τα αδιάβαστα gigs του πίνακα με άλλα"
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr "Εκκίνηση με το CyberUI"
 
@@ -2619,10 +2673,6 @@ msgstr "ΠΑΤΗΣΕ ΓΙΑ ΧΡΗΣΗ"
 #: cyberui/screens/shop.lua
 msgid "TAP TO BUY"
 msgstr "ΠΑΤΗΣΕ ΓΙΑ ΑΓΟΡΑ"
-
-#: cyberui/screens/shop.lua
-msgid "NEED %s MORE"
-msgstr "ΛΕΙΠΟΥΝ %s"
 
 #: cyberui/screens/shop.lua
 msgid "BUY %s"

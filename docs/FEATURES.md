@@ -20,8 +20,9 @@ The full list, with every setting. The [README](../README.md) has the short vers
 | | |
 |---|---|
 | **Operator ID card** | A handle, a rank earned from your reading hours, an ID code and barcode, your totals and a photo from the device. Tap your face on home to open it; save it as a picture. |
-| **Gigs** | A book left unread for a week becomes a gig. Opening it takes the gig and fixes the price (about a fifth of an eddy per page, up to double for long waits). Every 10% you read pays a twentieth of it, and finishing pays the other half. Home tells you what each reading paid. |
-| **Eddies** | Earned only by reading gigs. They sit in a signed ledger, so editing the settings file does not add any, and your balance shows on the ID card. |
+| **Gigs** | Every book you read pays eddies (about a tenth of an eddy per page). The board offers a few unopened books as gigs, paying two to four times that: five slots drawn at random and drawn anew every week (3, 5 or 10 slots and 3, 7 or 14 days are in System > Home). A gig's price grows by a quarter for every week the book has waited, up to double after a month. Opening one takes the gig and fixes the price; every 10% you read pays a twentieth of it and finishing pays the other half. Hold a gig to roll it for 20 eddies or turn the book down. Home tells you what each reading paid. |
+| **Eddies** | Earned by reading. They sit in a signed ledger, so editing the settings file does not add any, and your balance shows on the ID card. |
+| **Gigs and eddies switch** | System > Home turns the whole thing off after three questions. Off, nothing pays, the Gigs tile becomes the shop and every look can be worn. Turned back on, looks you did not buy return to the free ones; your eddies are still there. |
 | **Shop** | Spend eddies on looks, never anything else: card frames, backdrops, handle flairs and jack-in cards, five of each with one free. Every style is previewed before you buy. |
 | **Data shards** | Your highlights as recovered fragments on home and in their own screen; open the book at the highlight. |
 

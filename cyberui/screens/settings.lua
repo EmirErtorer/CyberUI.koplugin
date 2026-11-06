@@ -14,6 +14,7 @@ local Cover = require("cyberui/ui/cover")
 local Covers = require("cyberui/data/covers")
 local Custom = require("cyberui/themes/custom")
 local Economy = require("cyberui/data/economy")
+local Gigs = require("cyberui/data/gigs")
 local EconomyFlow = require("cyberui/economyflow")
 local Files = require("cyberui/data/files")
 local Fonts = require("cyberui/screens/fonts")
@@ -194,9 +195,19 @@ end
 -- The Home section.
 function SettingsScreen:home()
     local is_home = G_reader_settings:readSetting("start_with") == "cyberui"
-    return {
+    local rows = {
         row(_("Gigs and eddies"), _("Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"),
             Controls.Toggle:new({ on = Economy.on(), on_change = EconomyFlow.switch })),
+    }
+    if Economy.on() then
+        rows[#rows + 1] = row(_("Gigs on the board"), _("How many books the board offers; a new count applies when the board is next drawn"),
+            Controls.Segmented({ options = { { "3", 3 }, { "5", 5 }, { "10", 10 } }, kind = "label",
+                value = Gigs.slots(), on_change = function(v) save("gig_slots", v) end }))
+        rows[#rows + 1] = row(_("Board drawn anew"), _("Days before the unopened gigs on the board are swapped for others"),
+            Controls.Segmented({ options = { { "3", 3 }, { "7", 7 }, { "14", 14 } }, kind = "label",
+                value = Gigs.rotation(), on_change = function(v) save("gig_rotation", v) end }))
+    end
+    local more = {
         row(_("Start with CyberUI"), _("Open CyberUI when KOReader starts and after closing a book"),
             Controls.Toggle:new({ on = is_home, on_change = function(on)
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
@@ -246,6 +257,8 @@ function SettingsScreen:home()
         row(_("File browser"), _("Leave CyberUI for KOReader's own file browser"),
             Button:new({ label = _("Open"), on_tap = function() App.fileBrowser() end })),
     }
+    for _i, r in ipairs(more) do rows[#rows + 1] = r end
+    return rows
 end
 
 -- The Speed section.

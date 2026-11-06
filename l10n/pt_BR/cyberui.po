@@ -237,6 +237,14 @@ msgstr "GIG CONCLUÍDO +%s"
 msgid "GIG PAYOUT +%s"
 msgstr "PAGAMENTO DO GIG +%s"
 
+#: cyberui/app.lua
+msgid "BOOK FINISHED +%s"
+msgstr "LIVRO CONCLUÍDO +%s"
+
+#: cyberui/app.lua
+msgid "READING PAYOUT +%s"
+msgstr "PAGAMENTO DE LEITURA +%s"
+
 #: cyberui/apps/addons.lua
 msgid "SWITCHED OFF // TAP"
 msgstr "DESATIVADO // TOQUE"
@@ -1416,20 +1424,46 @@ msgid "Open the book"
 msgstr "Abrir o livro"
 
 #: cyberui/screens/gigs.lua
+msgid "Roll"
+msgstr "Sortear de novo"
+
+#: cyberui/screens/gigs.lua
+msgid "Swap it for another book, %s"
+msgstr "Troque por outro livro, %s"
+
+#: cyberui/screens/gigs.lua
+msgid "ROLLED"
+msgstr "SORTEADO"
+
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+msgid "NEED %s MORE"
+msgstr "FALTAM %s"
+
+#: cyberui/screens/gigs.lua
+msgid "NO OTHER BOOK TO ROLL"
+msgstr "NÃO HÁ OUTRO LIVRO"
+
+#: cyberui/screens/gigs.lua
 msgid "Not wanted"
 msgstr "Não procurado"
 
 #: cyberui/screens/gigs.lua
-msgid "Take it off the board"
-msgstr "Tirar do quadro"
+msgid "Take it off the board for good"
+msgstr "Tirar do quadro para sempre"
 
 #: cyberui/screens/gigs.lua
 msgid "HOW_GIGS_WORK"
 msgstr "COMO_FUNCIONAM_OS_GIGS"
 
 #: cyberui/screens/gigs.lua
-msgid "A book that sits unread for a week becomes a gig. Open it to take the gig and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more."
-msgstr "Um livro que fica uma semana sem ser lido vira um gig. Abra-o para aceitar o gig e fixar o preço. A cada 10% lidos você recebe um vigésimo do preço, e concluir o livro paga a outra metade. Livros mais longos e esperas maiores pagam mais."
+msgid "Every book you read pays eddies. The gigs on the board pay two to four times more: open one to take it and fix its price. Every 10% you read pays a twentieth of the price, and finishing pays the other half. Longer books and longer waits pay more, up to a month. Hold a gig to roll it for eddies."
+msgstr "Todo livro que você lê paga eddies. Os gigs do quadro pagam de duas a quatro vezes mais: abra um para pegá-lo e fixar o preço. Cada 10% lidos paga um vigésimo do preço, e terminar paga a outra metade. Livros mais longos e esperas maiores pagam mais, até um mês. Segure um gig para sorteá-lo de novo por eddies."
+
+#: cyberui/screens/gigs.lua
+msgid "NEW BOARD IN %d DAY"
+msgid_plural "NEW BOARD IN %d DAYS"
+msgstr[0] "NOVO QUADRO EM %d DIA"
+msgstr[1] "NOVO QUADRO EM %d DIAS"
 
 #: cyberui/screens/gigs.lua
 msgid "TOP_GIG"
@@ -1456,8 +1490,8 @@ msgid "NO OPEN GIGS"
 msgstr "NENHUM GIG ABERTO"
 
 #: cyberui/screens/gigs.lua
-msgid "Every book in the library has been opened, or is still new. Books that sit unread for a week become gigs here."
-msgstr "Todos os livros da biblioteca já foram abertos ou ainda são novos. Livros que ficam uma semana sem leitura viram gigs aqui."
+msgid "Every book in the library has been opened, or is still new. Unread books are picked for the board when it is next drawn."
+msgstr "Todos os livros da biblioteca já foram abertos ou ainda são novos. Livros não lidos são escolhidos para o quadro no próximo sorteio."
 
 #: cyberui/screens/gigs.lua cyberui/ui/launcher.lua
 msgid "GIGS"
@@ -1498,6 +1532,10 @@ msgstr "Leia um gig para ganhar eddies. Cada pagamento aparece listado aqui."
 #: cyberui/screens/gigs.lua
 msgid "GIG FINISHED"
 msgstr "GIG CONCLUÍDO"
+
+#: cyberui/screens/gigs.lua
+msgid "BOOK FINISHED"
+msgstr "LIVRO CONCLUÍDO"
 
 #: cyberui/screens/gigs.lua
 msgid "%d%% READ"
@@ -2329,6 +2367,22 @@ msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and ev
 msgstr "Leitura paga: gigs e eddies pelo que você lê. Desligado, nada paga e todo visual fica liberado até você religar"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs on the board"
+msgstr "Gigs no quadro"
+
+#: cyberui/screens/settings.lua
+msgid "How many books the board offers; a new count applies when the board is next drawn"
+msgstr "Quantos livros o quadro oferece; um novo número vale no próximo sorteio do quadro"
+
+#: cyberui/screens/settings.lua
+msgid "Board drawn anew"
+msgstr "Renovação do quadro"
+
+#: cyberui/screens/settings.lua
+msgid "Days before the unopened gigs on the board are swapped for others"
+msgstr "Dias até os gigs não abertos do quadro serem trocados por outros"
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr "Iniciar com o CyberUI"
 
@@ -2619,10 +2673,6 @@ msgstr "TOQUE PARA EQUIPAR"
 #: cyberui/screens/shop.lua
 msgid "TAP TO BUY"
 msgstr "TOQUE PARA COMPRAR"
-
-#: cyberui/screens/shop.lua
-msgid "NEED %s MORE"
-msgstr "FALTAM %s"
 
 #: cyberui/screens/shop.lua
 msgid "BUY %s"
