@@ -728,6 +728,11 @@ do
     Kit.ok(Host.stale(host, { time = now - time.s(2) }), "a touch made before the close finished is dropped")
     Kit.ok(not Host.stale(host, { time = now + time.s(2) }), "a touch made after it is kept")
     Kit.ok(not Host.stale({}, { time = now }) and not Host.stale(host, {}), "with no close pending, or no time on the touch, nothing is dropped")
+    -- a swipe that starts on the tab bar (which swallows touches but cannot be dragged) must not crash
+    local swallower = { swallow = true }
+    local pan_host = { stale = function() return false end, target = function() return swallower end }
+    local ok_pan, handled = pcall(Host.onPan, pan_host, nil, { pos = { x = 1, y = 1 }, relative = { x = 0, y = -5 } })
+    Kit.ok(ok_pan and handled == true and pan_host.dragging == nil, "a pan that starts on something undraggable is swallowed, not a crash")
 end
 
 -- the photo window, a see-through picture, paging a long column, the log's metric

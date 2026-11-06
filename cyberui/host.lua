@@ -240,8 +240,14 @@ function Host:onPan(_, ges)
     if self:stale(ges) then return true end
     if self.dragging and self.dragging.released then self.dragging = nil end   -- its screen has gone
     if not self.dragging then
-        self.dragging = self:target(ges.start_pos or ges.pos, "on_drag")
-        if self.dragging then self.dragging:on_drag(0, 0, "start") end
+        -- an element that swallows touches (the tab bar) is found too, but cannot be dragged
+        local el = self:target(ges.start_pos or ges.pos, "on_drag")
+        if el and el.on_drag then
+            self.dragging = el
+            el:on_drag(0, 0, "start")
+        elseif el then
+            return true
+        end
     end
     if not self.dragging then return self.overlay ~= nil end
     self.dragging:on_drag(ges.relative.x, ges.relative.y, "move")
