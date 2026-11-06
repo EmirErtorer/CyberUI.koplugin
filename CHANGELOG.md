@@ -15,7 +15,7 @@ versions marked *Prerelease* are test builds.
 - **Roll a gig** for 20 eddies to swap it for another book (hold a gig on the board).
 
 ### Fixed
-- Ink Away's pen tab in the top menu now shows as the pen in CyberUI's menu instead of a plus labelled EXTRA.
+- Ink Away's pen tab in the top menu now shows as the pen in CyberUI's menu instead of a plus labelled EXTRA, and opens Ink Away's quick menu in CyberUI's style, over home and over a book.
 
 ## [1.1.2] - 2026-11-01
 

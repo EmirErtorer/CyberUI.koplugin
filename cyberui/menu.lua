@@ -237,6 +237,12 @@ function Menu:switchTab(i)
         if reader and reader.document then App.homeFromBook(reader) end
         return
     end
+    if tab.icon == "inkaway.tab" then
+        -- Ink Away's quick menu, drawn in CyberUI's style (its own sheet when it can't be)
+        self:close()
+        if not require("cyberui/apps/inkaway").quickMenu(self.km.ui, self.reader) and tab.callback then tab.callback() end
+        return
+    end
     if tab.id == "zen_library_home" or (tab.callback and #tab == 0 and not tab.panel) then
         -- a tab that is an action (ZenOS's home, its settings page)
         self:close()

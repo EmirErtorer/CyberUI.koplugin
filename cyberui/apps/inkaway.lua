@@ -35,4 +35,44 @@ function InkAway.annotate()
     end)
 end
 
+-- CyberUI icons for the glyphs of Ink Away's quick menu.
+local TILE_ICONS = { pen = "pen", booknotes = "notes", clipboard = "image", notebook = "book", library = "library" }
+
+-- Ink Away's quick menu (its pen tab in the top menu) drawn as a CyberUI sheet,
+-- over home or, in a book, in a popup of its own, with the same actions and
+-- gesture hints as Ink Away's own sheet. `ui` is the file browser or the reader
+-- the tab belongs to. False when Ink Away is not running there, so the caller
+-- can use Ink Away's own.
+function InkAway.quickMenu(ui, in_book)
+    local plugin = ui and ui[(InkAway.folder:gsub("%.koplugin$", ""))]
+    local ok, Launcher = pcall(require, "ink/launcher")
+    local ok_l, L = pcall(require, "ink/l10n")
+    if not (plugin and ok and ok_l) then return false end
+    local tiles = Launcher.tiles(plugin, L, function(text, ...)
+        local args = { ... }
+        return (text:gsub("%%(%d)", function(i) return tostring(args[tonumber(i)]) end))
+    end)
+    local actions = {}
+    for _i, t in ipairs(tiles) do
+        actions[#actions + 1] = { icon = TILE_ICONS[t.icon] or "pen", label = t.title, sub = t.note,
+            on_tap = function() require("ui/uimanager"):nextTick(t.run) end }
+    end
+    local o = {
+        title = "Ink Away",   -- i18n: keep
+        sub = _("DRAW // NOTES // INK"), cols = 1, actions = actions,
+    }
+    if not in_book then
+        require("cyberui/app").sheet(o)
+        return true
+    end
+    local Dialog = require("cyberui/ui/dialog")
+    local Popup = require("cyberui/popup")
+    local popup
+    local function close() if popup then popup:close(); popup = nil end end
+    popup = Popup:new({ element = Dialog.sheet(o, close, require("device").screen:getWidth()),
+        on_outside = close, on_back = function() close(); return true end })
+    popup:open()
+    return true
+end
+
 return InkAway
