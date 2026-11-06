@@ -46,15 +46,19 @@ function Toggle:draw(bb, x, y)
 end
 
 ---------------------------------------------------------------- Segmented
--- A framed row of choices; `options` is a list of { label, value }.
+-- A framed row of choices; `options` is a list of { label, value } (with an
+-- optional `icon`, `on_hold` and `on_tap` of their own; `disabled` for all).
 function Controls.Segmented(o)
     local row = Layout.Row:new({ children = {} })
     for _i, opt in ipairs(o.options) do
         row.children[#row.children + 1] = Button:new({
-            label = opt[1], grow = true, height = o.height or Theme.px(38),
+            label = opt[1], icon = opt.icon, grow = true, height = o.height or Theme.px(38),
             kind = o.kind or "mono_small",
-            variant = (opt[2] == o.value) and "seg_on" or "seg",
-            on_tap = function() if o.on_change then o.on_change(opt[2]) end end,
+            variant = (opt[2] == o.value) and "seg_on" or "seg", disabled = o.disabled,
+            on_tap = not o.disabled and function()
+                if opt.on_tap then opt.on_tap() elseif o.on_change then o.on_change(opt[2]) end
+            end or nil,
+            on_hold = not o.disabled and opt.on_hold or nil,
         })
     end
     local th = Theme.get()

@@ -60,6 +60,7 @@ function CyberUI:init()
     if self.ui.document then
         self:styleReaderMenu()
         require("cyberui/skin/buttondialog").install(self.ui)
+        require("cyberui/skin/configdialog").install()
     end
 end
 

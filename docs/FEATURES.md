@@ -53,6 +53,7 @@ The full list, with every setting. The [README](../README.md) has the short vers
 | | |
 |---|---|
 | **Restyled** | The drop-down menu over home and inside books, in CyberUI's style, read live from KOReader so every setting and every plugin's entry is there. It drops from the top and takes up to half the screen. |
+| **Restyled in books** | The settings panel at the bottom of a book (font size, margins, render mode, contrast and the rest) and the menu after selecting text (and the one for editing a saved highlight) are in CyberUI's style too. KOReader still builds and runs them, so every option works as before: tap a choice, hold it to make it the default, use the fine-tune and more buttons. The highlight menu floats where KOReader puts it. Off with the same switch as the menu's. |
 | **Deck** | Two pages: your operator ID, and the controls (frontlight and warmth, Wi-Fi, night mode, rotate, Annotate, restart and exit, with the device at a glance). In a book too, in the order you choose. |
 | **Annotate** | When Ink Away is installed: a tile in the Deck's controls and an entry in the reader's Tools menu open its annotation mode on the book. |
 | **With ZenOS** | When ZenOS is running, its Controls and Launcher show as CyberUI tiles instead of the Deck. |

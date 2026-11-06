@@ -20,6 +20,7 @@ local Popup = InputContainer:extend({
     element = nil,     -- the element shown, laid out at its own size
     on_outside = nil,  -- a tap outside the element
     on_back = nil,     -- the Back key; true when it was used
+    on_swipe = nil,    -- a swipe anywhere: function(direction)
     place = nil,       -- function(element) -> x, y for an element that floats
 })
 
@@ -72,7 +73,11 @@ end
 
 function Popup:onTap(_, ges) return touch(self, ges, "on_tap") end
 function Popup:onHold(_, ges) return touch(self, ges, "on_hold") end
-function Popup:onSwipe() return true end
+-- A swipe goes to on_swipe(direction) when there is one.
+function Popup:onSwipe(_, ges)
+    if self.on_swipe then self.on_swipe(ges.direction) end
+    return true
+end
 
 -- The page turn keys page the element when it pages.
 function Popup:onPageNext() local f = self.element.on_page; if f then f(1) end; return true end
