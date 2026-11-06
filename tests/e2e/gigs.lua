@@ -29,7 +29,8 @@ H.step(2, function()
     A = books[1]
     local old = os.time() - 90 * 86400
     lfs.touch(A, old, old)
-    Settings.set("gigs", nil)
+    -- the board holds this book (it is drawn at random, so it is put there)
+    Settings.set("gigs", { quotes = {}, seen = {}, ledger = {}, board = { t = os.time(), slots = { A } } })
     Gigs.reload()
     require("cyberui/data/books").forget(A)
     H.check(require("cyberui/park").enabled(), "keeping the book open is on by default")
