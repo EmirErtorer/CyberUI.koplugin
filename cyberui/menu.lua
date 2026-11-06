@@ -27,6 +27,7 @@ local Frame = require("cyberui/screens/frame")
 local Grid = require("cyberui/ui/grid")
 local Header = require("cyberui/ui/header")
 local Icon = require("cyberui/ui/icon")
+local Slider = require("cyberui/ui/slider")
 local IdCard = require("cyberui/ui/idcard")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
@@ -185,6 +186,14 @@ function Menu.open(opts)
     m.quiet = opts.quiet
     m:show()
     return m
+end
+
+-- Repaint one element of the open menu (a slider being dragged) without rebuilding it.
+function Menu:repaint(el)
+    if not self.reader then return App.repaint(el) end
+    if self.popup and self.popup_open then
+        UIManager:setDirty(self.popup, Theme.isDark() and "ui" or "fast", require("cyberui/host").box(el))
+    end
 end
 
 -- Is this menu still showing?
@@ -466,28 +475,24 @@ end
 
 ---------------------------------------------------------------- deck
 
--- The frontlight (and warmth) stepper rows, when the device has them.
+-- The frontlight (and warmth) slider rows, when the device has them.
 local function lightRows()
     local rows = {}
     if not Device:hasFrontlight() then return rows end
     local pd = Device:getPowerDevice()
-    local function stepper(label, get, set, min, max)
-        local step = math.max(1, math.floor((max - min) / 20))
-        local cur = get() or min
+    local function lightRow(label, get, set, min, max)
+        local slider = Slider:new({ min = min, max = max, value = get() or min, grow = true, on_change = set,
+            on_redraw = function(el) if showing then showing:repaint(el) end end })
         return Layout.Row:new({ gap = Theme.get().space.s, children = {
             Icon:new({ name = "light", size = 20 }),
-            Label:new({ text = label, kind = "label", grow = true }),
-            Button:new({ label = "-", variant = "chip", width = Theme.px(44), on_tap = function()
-                set(math.max(min, cur - step)); if showing then showing:show() end end }),
-            Label:new({ text = string.format("%d", cur), kind = "mono", width = Theme.px(44), align = "center" }),
-            Button:new({ label = "+", variant = "chip", width = Theme.px(44), on_tap = function()
-                set(math.min(max, cur + step)); if showing then showing:show() end end }),
+            Label:new({ text = label, kind = "label", width = Theme.px(76) }),
+            slider,
         } })
     end
-    rows[#rows + 1] = stepper(_("LUMEN"), function() return pd:frontlightIntensity() end,
+    rows[#rows + 1] = lightRow(_("LUMEN"), function() return pd:frontlightIntensity() end,
         function(v) pd:setIntensity(v) end, pd.fl_min or 0, pd.fl_max or 24)
     if Device:hasNaturalLight() then
-        rows[#rows + 1] = stepper(_("TINT"), function() return pd:frontlightWarmth() end,
+        rows[#rows + 1] = lightRow(_("TINT"), function() return pd:frontlightWarmth() end,
             function(v) pd:setWarmth(v) end, 0, 100)  -- setWarmth takes KOReader's 0-100 scale, not the native one
     end
     return rows

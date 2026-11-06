@@ -31,6 +31,8 @@ function Popup:init()
         Tap = { GestureRange:new({ ges = "tap", range = whole }) },
         Hold = { GestureRange:new({ ges = "hold", range = whole }) },
         Swipe = { GestureRange:new({ ges = "swipe", range = whole }) },
+        Pan = { GestureRange:new({ ges = "pan", range = whole }) },
+        PanRelease = { GestureRange:new({ ges = "pan_release", range = whole }) },
     }
     Host.addKeys(self)
     self:setElement(self.element)
@@ -64,6 +66,7 @@ Popup.press = Host.press
 local function touch(self, ges, handler)
     local el = self.element:hit(ges.pos.x, ges.pos.y, handler)
     if el then
+        el.touch = ges.pos
         self:press(el, handler)
     elseif handler == "on_tap" and not self.element:contains(ges.pos.x, ges.pos.y) and self.on_outside then
         self.on_outside()
@@ -73,6 +76,22 @@ end
 
 function Popup:onTap(_, ges) return touch(self, ges, "on_tap") end
 function Popup:onHold(_, ges) return touch(self, ges, "on_hold") end
+-- A finger moving over an element with on_drag moves it (as in the CyberUI window).
+function Popup:target(pos, handler)
+    local el = self.element:hit(pos.x, pos.y, handler)
+    if el then el.touch = pos end
+    return el
+end
+function Popup:stale() return false end
+function Popup:onPan(arg, ges)
+    Host.onPan(self, arg, ges)
+    return true
+end
+function Popup:onPanRelease(arg, ges)
+    Host.onPanRelease(self, arg, ges)
+    return true
+end
+
 -- A swipe goes to on_swipe(direction) when there is one.
 function Popup:onSwipe(_, ges)
     if self.on_swipe then self.on_swipe(ges.direction) end

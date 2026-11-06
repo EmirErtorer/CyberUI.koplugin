@@ -154,14 +154,17 @@ end
 
 -- Find what was touched: the overlay is modal and closes on a touch outside it.
 function Host:target(pos, handler)
+    local el
     if self.overlay then
-        local el = self.overlay:hit(pos.x, pos.y, handler)
+        el = self.overlay:hit(pos.x, pos.y, handler)
         if not el and not self.overlay:contains(pos.x, pos.y) and handler == "on_tap" and self.on_outside then
             self.on_outside()
         end
-        return el
+    else
+        el = self.root and self.root:hit(pos.x, pos.y, handler)
     end
-    return self.root and self.root:hit(pos.x, pos.y, handler)
+    if el then el.touch = pos end   -- where the finger is, for a slider
+    return el
 end
 
 -- Key input CyberUI does not use stops here, so it never reaches the hidden
