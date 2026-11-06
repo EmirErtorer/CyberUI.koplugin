@@ -14,6 +14,9 @@ versions marked *Prerelease* are test builds.
 - **A small board of gigs.** The board offers 5 unopened books at a time (3, 5 or 10 in System > Gigs), drawn at random and drawn anew every week (3, 7 or 14 days). Gigs pay two to four times the plain rate, and a book's price grows by a quarter per week it has waited, up to double after a month.
 - **Roll a gig** for 20 eddies to swap it for another book (hold a gig on the board).
 
+### Fixed
+- Ink Away's pen tab in the top menu now shows as the pen in CyberUI's menu instead of a plus labelled EXTRA.
+
 ## [1.1.2] - 2026-11-01
 
 ### Changed

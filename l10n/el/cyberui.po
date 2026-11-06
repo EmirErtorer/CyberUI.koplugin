@@ -797,6 +797,10 @@ msgstr "ΕΚΚΙΝΗΤΗΣ"
 msgid "DECK"
 msgstr "DECK"
 
+#: cyberui/menu.lua cyberui/ui/launcher.lua
+msgid "INK AWAY"
+msgstr "INK AWAY"
+
 #: cyberui/menu.lua
 msgid "EXTRA"
 msgstr "ΕΠΙΠΛΕΟΝ"
@@ -3251,10 +3255,6 @@ msgstr "ΚΑΜΙΑ ΕΠΙΣΗΜΑΝΣΗ ΑΚΟΜΗ"
 #: cyberui/ui/launcher.lua
 msgid "GREP THE ARCHIVE"
 msgstr "ΑΝΑΖΗΤΗΣΗ ΣΤΟ ΑΡΧΕΙΟ"
-
-#: cyberui/ui/launcher.lua
-msgid "INK AWAY"
-msgstr "INK AWAY"
 
 #: cyberui/ui/launcher.lua
 msgid "SYSTEM"

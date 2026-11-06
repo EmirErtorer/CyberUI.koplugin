@@ -806,6 +806,10 @@ msgstr "ЛАУНЧЕР"
 msgid "DECK"
 msgstr "ДЕК"
 
+#: cyberui/menu.lua cyberui/ui/launcher.lua
+msgid "INK AWAY"
+msgstr "INK AWAY"
+
 #: cyberui/menu.lua
 msgid "EXTRA"
 msgstr "ЕЩЁ"
@@ -3289,10 +3293,6 @@ msgstr "ВЫДЕЛЕНИЙ ПОКА НЕТ"
 #: cyberui/ui/launcher.lua
 msgid "GREP THE ARCHIVE"
 msgstr "ПОИСК ПО АРХИВУ"
-
-#: cyberui/ui/launcher.lua
-msgid "INK AWAY"
-msgstr "INK AWAY"
 
 #: cyberui/ui/launcher.lua
 msgid "SYSTEM"

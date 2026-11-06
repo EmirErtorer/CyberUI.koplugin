@@ -61,6 +61,7 @@ local TABS = {
     quicksettings = { "controls", _("CONTROLS") },
     app_launcher = { "grid", _("LAUNCHER") },
     cyberui_deck = { "deck", _("DECK") },
+    ["inkaway.tab"] = { "pen", _("INK AWAY") },
 }
 local EXTRA = { "plus", _("EXTRA") }
 

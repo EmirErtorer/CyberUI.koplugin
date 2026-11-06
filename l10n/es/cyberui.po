@@ -797,6 +797,10 @@ msgstr "LANZADOR"
 msgid "DECK"
 msgstr "DECK"
 
+#: cyberui/menu.lua cyberui/ui/launcher.lua
+msgid "INK AWAY"
+msgstr "INK AWAY"
+
 #: cyberui/menu.lua
 msgid "EXTRA"
 msgstr "EXTRA"
@@ -3251,10 +3255,6 @@ msgstr "AÚN SIN SUBRAYADOS"
 #: cyberui/ui/launcher.lua
 msgid "GREP THE ARCHIVE"
 msgstr "BUSCA EN EL ARCHIVO"
-
-#: cyberui/ui/launcher.lua
-msgid "INK AWAY"
-msgstr "INK AWAY"
 
 #: cyberui/ui/launcher.lua
 msgid "SYSTEM"

@@ -797,6 +797,10 @@ msgstr "BAŞLATICI"
 msgid "DECK"
 msgstr "DECK"
 
+#: cyberui/menu.lua cyberui/ui/launcher.lua
+msgid "INK AWAY"
+msgstr "INK AWAY"
+
 #: cyberui/menu.lua
 msgid "EXTRA"
 msgstr "EKSTRA"
@@ -3251,10 +3255,6 @@ msgstr "HENÜZ VURGU YOK"
 #: cyberui/ui/launcher.lua
 msgid "GREP THE ARCHIVE"
 msgstr "ARŞİVİ TARA"
-
-#: cyberui/ui/launcher.lua
-msgid "INK AWAY"
-msgstr "INK AWAY"
 
 #: cyberui/ui/launcher.lua
 msgid "SYSTEM"

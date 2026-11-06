@@ -797,6 +797,10 @@ msgstr "STARTER"
 msgid "DECK"
 msgstr "DECK"
 
+#: cyberui/menu.lua cyberui/ui/launcher.lua
+msgid "INK AWAY"
+msgstr "INK AWAY"
+
 #: cyberui/menu.lua
 msgid "EXTRA"
 msgstr "EXTRA"
@@ -3251,10 +3255,6 @@ msgstr "NOCH KEINE MARKIERUNGEN"
 #: cyberui/ui/launcher.lua
 msgid "GREP THE ARCHIVE"
 msgstr "DAS ARCHIV DURCHSUCHEN"
-
-#: cyberui/ui/launcher.lua
-msgid "INK AWAY"
-msgstr "INK AWAY"
 
 #: cyberui/ui/launcher.lua
 msgid "SYSTEM"
