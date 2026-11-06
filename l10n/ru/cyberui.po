@@ -630,6 +630,62 @@ msgstr "Его больше нет в корзине."
 msgid "Its folder is gone. Restore that first."
 msgstr "Его папки больше нет. Сначала восстановите её."
 
+#: cyberui/economyflow.lua
+msgid "HOLD UP, CHOOM"
+msgstr "ПОДОЖДИ, CHOOM"
+
+#: cyberui/economyflow.lua
+msgid "Gigs and eddies are a nova feature. You sure you wanna be zeroing the switch?"
+msgstr "Gigs и eddies — крутая фича. Точно хочешь обнулить переключатель?"
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT"
+msgstr "ОБНУЛИТЬ"
+
+#: cyberui/economyflow.lua
+msgid "KEEP IT"
+msgstr "ОСТАВИТЬ"
+
+#: cyberui/economyflow.lua
+msgid "FLATLINING THE ECONOMY?"
+msgstr "УБИВАЕШЬ ЭКОНОМИКУ?"
+
+#: cyberui/economyflow.lua
+msgid "No more payouts, no more eddies. The street quits paying you to read your backlog. Sure, choom?"
+msgstr "Ни выплат, ни eddies. Улица больше не платит тебе за чтение твоей стопки книг. Точно, choom?"
+
+#: cyberui/economyflow.lua
+msgid "FLATLINE IT"
+msgstr "УБИТЬ"
+
+#: cyberui/economyflow.lua
+msgid "KEEP EARNING"
+msgstr "ЗАРАБАТЫВАТЬ ДАЛЬШЕ"
+
+#: cyberui/economyflow.lua
+msgid "LAST CALL, RUNNER"
+msgstr "ПОСЛЕДНИЙ ЗВОНОК, РАННЕР"
+
+#: cyberui/economyflow.lua
+msgid "Your eddies stay in the vault. But if you ever switch this back on, every look you did not buy goes back to default. Zero it for real?"
+msgstr "Твои eddies останутся в хранилище. Но если ты когда-нибудь включишь это снова, каждый вид, который ты не покупал, вернётся к стандартному. Обнулить по-настоящему?"
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT FOR REAL"
+msgstr "ОБНУЛИТЬ ПО-НАСТОЯЩЕМУ"
+
+#: cyberui/economyflow.lua
+msgid "BACK OUT"
+msgstr "ОТСТУПИТЬ"
+
+#: cyberui/economyflow.lua
+msgid "GIGS OFFLINE // EVERY LOOK UNLOCKED"
+msgstr "GIGS ВЫКЛ // ВСЕ ВИДЫ ОТКРЫТЫ"
+
+#: cyberui/economyflow.lua
+msgid "GIGS ONLINE"
+msgstr "GIGS ВКЛ"
+
 #: cyberui/format.lua
 msgid "NEVER"
 msgstr "НИКОГДА"
@@ -1485,7 +1541,7 @@ msgstr[0] "%d ЗАПИСЬ УЧЁТА НЕ ПРОШЛА ПРОВЕРКУ"
 msgstr[1] "%d ЗАПИСИ УЧЁТА НЕ ПРОШЛИ ПРОВЕРКУ"
 msgstr[2] "%d ЗАПИСЕЙ УЧЁТА НЕ ПРОШЛИ ПРОВЕРКУ"
 
-#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua cyberui/ui/launcher.lua
 msgid "SHOP"
 msgstr "МАГАЗИН"
 
@@ -2291,6 +2347,14 @@ msgid "Banner top line"
 msgstr "Верхняя строка баннера"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr "Gigs и eddies"
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr "Платное чтение: gigs и eddies за то, что ты читаешь. Когда выключено, ничего не платится, а любой вид можно носить, пока ты не включишь снова"
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr "Запускать с CyberUI"
 
@@ -2607,6 +2671,10 @@ msgid "OWNED"
 msgstr "КУПЛЕНО"
 
 #: cyberui/screens/shop.lua
+msgid "ON LOAN"
+msgstr "НА ВРЕМЯ"
+
+#: cyberui/screens/shop.lua
 msgid "NEXT: %s // NEED %s MORE"
 msgstr "ДАЛЕЕ: %s // НЕ ХВАТАЕТ %s"
 
@@ -2615,8 +2683,16 @@ msgid "NEXT: %s // READY TO BUY"
 msgstr "ДАЛЕЕ: %s // МОЖНО КУПИТЬ"
 
 #: cyberui/screens/shop.lua
+msgid "GIGS OFF // LOOKS ON LOAN, THE ONES YOU DID NOT BUY RESET WHEN GIGS COME BACK"
+msgstr "GIGS ВЫКЛ // ВИДЫ НА ВРЕМЯ, НЕКУПЛЕННЫЕ СБРОСЯТСЯ, КОГДА GIGS ВЕРНУТСЯ"
+
+#: cyberui/screens/shop.lua
 msgid "SHOP // BALANCE %s"
 msgstr "МАГАЗИН // БАЛАНС %s"
+
+#: cyberui/screens/shop.lua
+msgid "SHOP // GIGS OFF"
+msgstr "МАГАЗИН // GIGS ВЫКЛ"
 
 #: cyberui/screens/targetpick.lua
 msgid "What it opens"
@@ -3048,6 +3124,10 @@ msgid "Close"
 msgstr "Закрыть"
 
 #: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr "EDDIES"
+
+#: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
 msgstr "ДАЛЕЕ: %s"
 
@@ -3078,10 +3158,6 @@ msgstr "УР %d / %d"
 #: cyberui/ui/idcard.lua
 msgid "BOOKS"
 msgstr "КНИГИ"
-
-#: cyberui/ui/idcard.lua
-msgid "EDDIES"
-msgstr "EDDIES"
 
 #: cyberui/ui/idcard.lua
 msgid "RANK"
@@ -3128,6 +3204,10 @@ msgstr "ИСТОРИЯ"
 #: cyberui/ui/launcher.lua
 msgid "TELEMETRY.LOG"
 msgstr "TELEMETRY.LOG"
+
+#: cyberui/ui/launcher.lua
+msgid "ALL LOOKS UNLOCKED"
+msgstr "ВСЕ ВИДЫ ОТКРЫТЫ"
 
 #: cyberui/ui/launcher.lua
 msgid "%d OPEN"

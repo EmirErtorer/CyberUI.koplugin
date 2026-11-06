@@ -11,6 +11,7 @@ local Frame = require("cyberui/screens/frame")
 local IdCard = require("cyberui/ui/idcard")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
+local Economy = require("cyberui/data/economy")
 local Ledger = require("cyberui/data/ledger")
 local Library = require("cyberui/data/library")
 local Panel = require("cyberui/ui/panel")
@@ -91,7 +92,8 @@ local function entry(cat, style, width)
         child = Layout.Column:new({ gap = th.space.xs, children = {
             Layout.Row:new({ children = {
                 Label:new({ text = style.name, kind = "heading", grow = true }),
-                Label:new({ text = owned and (style.price == 0 and _("FREE") or _("OWNED")) or Format.credits(style.price), kind = "mono", color = owned and "muted" or "accent" }),
+                Label:new({ text = owned and (Shop.bought(style) and (style.price == 0 and _("FREE") or _("OWNED")) or _("ON LOAN")) or Format.credits(style.price),
+                    kind = "mono", color = owned and "muted" or "accent" }),
             } }),
             preview(cat, style, width),
             Label:new({ text = note, kind = "mono_small", color = colour }),
@@ -142,10 +144,10 @@ function ShopScreen:build()
         items[#items + 1] = Layout.Row:new({ gap = th.space.m, valign = "top", children = row })
     end
     local kids = { tabs }
-    local line = nextLine()
-    if line then kids[#kids + 1] = Label:new({ text = line, kind = "mono_small", color = "muted" }) end
+    local line = Economy.on() and nextLine() or _("GIGS OFF // LOOKS ON LOAN, THE ONES YOU DID NOT BUY RESET WHEN GIGS COME BACK")
+    if line then kids[#kids + 1] = Label:new({ text = line, kind = "mono_small", color = "muted", lines = 2 }) end
     kids[#kids + 1] = Frame.paged(self, items, _("SHOP"))
-    return Frame.page({ screen = self, title = _("SHOP"), path = string.format(_("SHOP // BALANCE %s"), Format.credits(Ledger.balance())),
+    return Frame.page({ screen = self, title = _("SHOP"), path = Economy.on() and string.format(_("SHOP // BALANCE %s"), Format.credits(Ledger.balance())) or _("SHOP // GIGS OFF"),
         tab = "library", body = Layout.Column:new({ gap = th.space.m, children = kids }) })
 end
 

@@ -621,6 +621,62 @@ msgstr "Es ist nicht mehr im Papierkorb."
 msgid "Its folder is gone. Restore that first."
 msgstr "Der zugehörige Ordner ist weg. Stelle ihn zuerst wieder her."
 
+#: cyberui/economyflow.lua
+msgid "HOLD UP, CHOOM"
+msgstr "LANGSAM, CHOOM"
+
+#: cyberui/economyflow.lua
+msgid "Gigs and eddies are a nova feature. You sure you wanna be zeroing the switch?"
+msgstr "Gigs und Eddies sind ein Nova-Feature. Bist du sicher, dass du den Schalter auf null setzen willst?"
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT"
+msgstr "AUF NULL"
+
+#: cyberui/economyflow.lua
+msgid "KEEP IT"
+msgstr "BEHALTEN"
+
+#: cyberui/economyflow.lua
+msgid "FLATLINING THE ECONOMY?"
+msgstr "DIE WIRTSCHAFT FLATLINEN?"
+
+#: cyberui/economyflow.lua
+msgid "No more payouts, no more eddies. The street quits paying you to read your backlog. Sure, choom?"
+msgstr "Keine Auszahlungen, keine Eddies. Die Straße zahlt dir nichts mehr dafür, deinen Bücherstapel zu lesen. Sicher, Choom?"
+
+#: cyberui/economyflow.lua
+msgid "FLATLINE IT"
+msgstr "FLATLINEN"
+
+#: cyberui/economyflow.lua
+msgid "KEEP EARNING"
+msgstr "WEITER VERDIENEN"
+
+#: cyberui/economyflow.lua
+msgid "LAST CALL, RUNNER"
+msgstr "LETZTER AUFRUF, RUNNER"
+
+#: cyberui/economyflow.lua
+msgid "Your eddies stay in the vault. But if you ever switch this back on, every look you did not buy goes back to default. Zero it for real?"
+msgstr "Deine Eddies bleiben im Tresor. Aber wenn du das je wieder einschaltest, geht jeder Look, den du nicht gekauft hast, auf den Standard zurück. Wirklich auf null?"
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT FOR REAL"
+msgstr "WIRKLICH AUF NULL"
+
+#: cyberui/economyflow.lua
+msgid "BACK OUT"
+msgstr "ZURÜCK"
+
+#: cyberui/economyflow.lua
+msgid "GIGS OFFLINE // EVERY LOOK UNLOCKED"
+msgstr "GIGS AUS // ALLE LOOKS FREIGESCHALTET"
+
+#: cyberui/economyflow.lua
+msgid "GIGS ONLINE"
+msgstr "GIGS AN"
+
 #: cyberui/format.lua
 msgid "NEVER"
 msgstr "NIE"
@@ -1470,7 +1526,7 @@ msgid_plural "%d LEDGER ENTRIES FAILED THE CHECK"
 msgstr[0] "%d KONTOEINTRAG HAT DIE PRÜFUNG NICHT BESTANDEN"
 msgstr[1] "%d KONTOEINTRÄGE HABEN DIE PRÜFUNG NICHT BESTANDEN"
 
-#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua cyberui/ui/launcher.lua
 msgid "SHOP"
 msgstr "SHOP"
 
@@ -2265,6 +2321,14 @@ msgid "Banner top line"
 msgstr "Obere Bannerzeile"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr "Gigs und Eddies"
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr "Bezahltes Lesen: Gigs und Eddies für das, was du liest. Ausgeschaltet zahlt nichts und jeder Look ist frei tragbar, bis du es wieder einschaltest"
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr "Mit CyberUI starten"
 
@@ -2577,6 +2641,10 @@ msgid "OWNED"
 msgstr "IM BESITZ"
 
 #: cyberui/screens/shop.lua
+msgid "ON LOAN"
+msgstr "GELIEHEN"
+
+#: cyberui/screens/shop.lua
 msgid "NEXT: %s // NEED %s MORE"
 msgstr "NÄCHSTES: %s // %s FEHLEN"
 
@@ -2585,8 +2653,16 @@ msgid "NEXT: %s // READY TO BUY"
 msgstr "NÄCHSTES: %s // BEREIT ZUM KAUFEN"
 
 #: cyberui/screens/shop.lua
+msgid "GIGS OFF // LOOKS ON LOAN, THE ONES YOU DID NOT BUY RESET WHEN GIGS COME BACK"
+msgstr "GIGS AUS // LOOKS GELIEHEN, NICHT GEKAUFTE KEHREN ZURÜCK, WENN DIE GIGS WIEDERKOMMEN"
+
+#: cyberui/screens/shop.lua
 msgid "SHOP // BALANCE %s"
 msgstr "SHOP // KONTOSTAND %s"
+
+#: cyberui/screens/shop.lua
+msgid "SHOP // GIGS OFF"
+msgstr "SHOP // GIGS AUS"
 
 #: cyberui/screens/targetpick.lua
 msgid "What it opens"
@@ -3015,6 +3091,10 @@ msgid "Close"
 msgstr "Schließen"
 
 #: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr "EDDIES"
+
+#: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
 msgstr "NÄCHSTER: %s"
 
@@ -3045,10 +3125,6 @@ msgstr "STF %d / %d"
 #: cyberui/ui/idcard.lua
 msgid "BOOKS"
 msgstr "BÜCHER"
-
-#: cyberui/ui/idcard.lua
-msgid "EDDIES"
-msgstr "EDDIES"
 
 #: cyberui/ui/idcard.lua
 msgid "RANK"
@@ -3093,6 +3169,10 @@ msgstr "VERLAUF"
 #: cyberui/ui/launcher.lua
 msgid "TELEMETRY.LOG"
 msgstr "TELEMETRY.LOG"
+
+#: cyberui/ui/launcher.lua
+msgid "ALL LOOKS UNLOCKED"
+msgstr "ALLE LOOKS FREIGESCHALTET"
 
 #: cyberui/ui/launcher.lua
 msgid "%d OPEN"

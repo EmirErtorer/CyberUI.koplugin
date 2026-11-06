@@ -13,6 +13,8 @@ local Controls = require("cyberui/ui/controls")
 local Cover = require("cyberui/ui/cover")
 local Covers = require("cyberui/data/covers")
 local Custom = require("cyberui/themes/custom")
+local Economy = require("cyberui/data/economy")
+local EconomyFlow = require("cyberui/economyflow")
 local Files = require("cyberui/data/files")
 local Fonts = require("cyberui/screens/fonts")
 local Frame = require("cyberui/screens/frame")
@@ -193,6 +195,8 @@ end
 function SettingsScreen:home()
     local is_home = G_reader_settings:readSetting("start_with") == "cyberui"
     return {
+        row(_("Gigs and eddies"), _("Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"),
+            Controls.Toggle:new({ on = Economy.on(), on_change = EconomyFlow.switch })),
         row(_("Start with CyberUI"), _("Open CyberUI when KOReader starts and after closing a book"),
             Controls.Toggle:new({ on = is_home, on_change = function(on)
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")

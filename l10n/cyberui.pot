@@ -620,6 +620,62 @@ msgstr ""
 msgid "Its folder is gone. Restore that first."
 msgstr ""
 
+#: cyberui/economyflow.lua
+msgid "HOLD UP, CHOOM"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "Gigs and eddies are a nova feature. You sure you wanna be zeroing the switch?"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "KEEP IT"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "FLATLINING THE ECONOMY?"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "No more payouts, no more eddies. The street quits paying you to read your backlog. Sure, choom?"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "FLATLINE IT"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "KEEP EARNING"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "LAST CALL, RUNNER"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "Your eddies stay in the vault. But if you ever switch this back on, every look you did not buy goes back to default. Zero it for real?"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT FOR REAL"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "BACK OUT"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "GIGS OFFLINE // EVERY LOOK UNLOCKED"
+msgstr ""
+
+#: cyberui/economyflow.lua
+msgid "GIGS ONLINE"
+msgstr ""
+
 #: cyberui/format.lua
 msgid "NEVER"
 msgstr ""
@@ -1469,7 +1525,7 @@ msgid_plural "%d LEDGER ENTRIES FAILED THE CHECK"
 msgstr[0] ""
 msgstr[1] ""
 
-#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua cyberui/ui/launcher.lua
 msgid "SHOP"
 msgstr ""
 
@@ -2264,6 +2320,14 @@ msgid "Banner top line"
 msgstr ""
 
 #: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr ""
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr ""
 
@@ -2576,6 +2640,10 @@ msgid "OWNED"
 msgstr ""
 
 #: cyberui/screens/shop.lua
+msgid "ON LOAN"
+msgstr ""
+
+#: cyberui/screens/shop.lua
 msgid "NEXT: %s // NEED %s MORE"
 msgstr ""
 
@@ -2584,7 +2652,15 @@ msgid "NEXT: %s // READY TO BUY"
 msgstr ""
 
 #: cyberui/screens/shop.lua
+msgid "GIGS OFF // LOOKS ON LOAN, THE ONES YOU DID NOT BUY RESET WHEN GIGS COME BACK"
+msgstr ""
+
+#: cyberui/screens/shop.lua
 msgid "SHOP // BALANCE %s"
+msgstr ""
+
+#: cyberui/screens/shop.lua
+msgid "SHOP // GIGS OFF"
 msgstr ""
 
 #: cyberui/screens/targetpick.lua
@@ -3014,6 +3090,10 @@ msgid "Close"
 msgstr ""
 
 #: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr ""
+
+#: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
 msgstr ""
 
@@ -3043,10 +3123,6 @@ msgstr ""
 
 #: cyberui/ui/idcard.lua
 msgid "BOOKS"
-msgstr ""
-
-#: cyberui/ui/idcard.lua
-msgid "EDDIES"
 msgstr ""
 
 #: cyberui/ui/idcard.lua
@@ -3091,6 +3167,10 @@ msgstr ""
 
 #: cyberui/ui/launcher.lua
 msgid "TELEMETRY.LOG"
+msgstr ""
+
+#: cyberui/ui/launcher.lua
+msgid "ALL LOOKS UNLOCKED"
 msgstr ""
 
 #: cyberui/ui/launcher.lua

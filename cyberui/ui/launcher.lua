@@ -4,6 +4,7 @@
 
 local Addons = require("cyberui/apps/addons")
 local App = require("cyberui/app")
+local Economy = require("cyberui/data/economy")
 local Gigs = require("cyberui/data/gigs")
 local Button = require("cyberui/ui/button")
 local Collections = require("cyberui/data/collections")
@@ -32,6 +33,7 @@ local BUILTIN = {
     end,
     history = function() return "history", _("HISTORY"), _("TELEMETRY.LOG"), function() App.go("history") end end,
     gigs = function()
+        if not Economy.on() then return "shop", _("SHOP"), _("ALL LOOKS UNLOCKED"), function() App.push("shop") end end
         local n = #Gigs.board()
         return "gigs", _("GIGS"), n > 0 and string.format(_.n("%d OPEN", "%d OPEN", n), n) or _("BACKLOG CLEAR"),
             function() App.push("gigs") end

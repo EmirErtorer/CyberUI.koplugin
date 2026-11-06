@@ -621,6 +621,62 @@ msgstr "Δεν βρίσκεται πια στον κάδο."
 msgid "Its folder is gone. Restore that first."
 msgstr "Ο φάκελός του δεν υπάρχει πια. Επαναφέρετέ τον πρώτα."
 
+#: cyberui/economyflow.lua
+msgid "HOLD UP, CHOOM"
+msgstr "ΣΤΑΜΑΤΑ, CHOOM"
+
+#: cyberui/economyflow.lua
+msgid "Gigs and eddies are a nova feature. You sure you wanna be zeroing the switch?"
+msgstr "Τα Gigs και τα eddies είναι nova λειτουργία. Σίγουρα θέλεις να μηδενίσεις τον διακόπτη;"
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT"
+msgstr "ΜΗΔΕΝΙΣΕ"
+
+#: cyberui/economyflow.lua
+msgid "KEEP IT"
+msgstr "ΚΡΑΤΑ ΤΟ"
+
+#: cyberui/economyflow.lua
+msgid "FLATLINING THE ECONOMY?"
+msgstr "ΣΚΟΤΩΝΕΙΣ ΤΗΝ ΟΙΚΟΝΟΜΙΑ;"
+
+#: cyberui/economyflow.lua
+msgid "No more payouts, no more eddies. The street quits paying you to read your backlog. Sure, choom?"
+msgstr "Τέρμα οι πληρωμές, τέρμα τα eddies. Ο δρόμος σταματά να σε πληρώνει για να διαβάζεις τη στοίβα σου. Σίγουρα, choom;"
+
+#: cyberui/economyflow.lua
+msgid "FLATLINE IT"
+msgstr "ΣΚΟΤΩΣΕ ΤΗΝ"
+
+#: cyberui/economyflow.lua
+msgid "KEEP EARNING"
+msgstr "ΣΥΝΕΧΙΣΕ ΝΑ ΚΕΡΔΙΖΕΙΣ"
+
+#: cyberui/economyflow.lua
+msgid "LAST CALL, RUNNER"
+msgstr "ΤΕΛΕΥΤΑΙΑ ΚΛΗΣΗ, RUNNER"
+
+#: cyberui/economyflow.lua
+msgid "Your eddies stay in the vault. But if you ever switch this back on, every look you did not buy goes back to default. Zero it for real?"
+msgstr "Τα eddies σου μένουν στο θησαυροφυλάκιο. Αλλά αν το ενεργοποιήσεις ξανά, κάθε εμφάνιση που δεν αγόρασες γυρίζει στην προεπιλογή. Μηδενισμός στ' αλήθεια;"
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT FOR REAL"
+msgstr "ΜΗΔΕΝΙΣΕ ΣΤ' ΑΛΗΘΕΙΑ"
+
+#: cyberui/economyflow.lua
+msgid "BACK OUT"
+msgstr "ΠΙΣΩ"
+
+#: cyberui/economyflow.lua
+msgid "GIGS OFFLINE // EVERY LOOK UNLOCKED"
+msgstr "GIGS ΑΝΕΝΕΡΓΑ // ΟΛΕΣ ΟΙ ΕΜΦΑΝΙΣΕΙΣ ΞΕΚΛΕΙΔΩΜΕΝΕΣ"
+
+#: cyberui/economyflow.lua
+msgid "GIGS ONLINE"
+msgstr "GIGS ΕΝΕΡΓΑ"
+
 #: cyberui/format.lua
 msgid "NEVER"
 msgstr "ΠΟΤΕ"
@@ -1470,7 +1526,7 @@ msgid_plural "%d LEDGER ENTRIES FAILED THE CHECK"
 msgstr[0] "%d ΕΓΓΡΑΦΗ ΤΟΥ ΜΗΤΡΩΟΥ ΑΠΕΤΥΧΕ ΣΤΟΝ ΕΛΕΓΧΟ"
 msgstr[1] "%d ΕΓΓΡΑΦΕΣ ΤΟΥ ΜΗΤΡΩΟΥ ΑΠΕΤΥΧΑΝ ΣΤΟΝ ΕΛΕΓΧΟ"
 
-#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua cyberui/ui/launcher.lua
 msgid "SHOP"
 msgstr "ΚΑΤΑΣΤΗΜΑ"
 
@@ -2265,6 +2321,14 @@ msgid "Banner top line"
 msgstr "Επάνω γραμμή του πανό"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr "Gigs και eddies"
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr "Αμειβόμενη ανάγνωση: gigs και eddies για ό,τι διαβάζεις. Όταν είναι κλειστό, τίποτα δεν πληρώνεται και κάθε εμφάνιση φοριέται ελεύθερα μέχρι να το ανάψεις ξανά"
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr "Εκκίνηση με το CyberUI"
 
@@ -2577,6 +2641,10 @@ msgid "OWNED"
 msgstr "ΚΤΗΜΑ"
 
 #: cyberui/screens/shop.lua
+msgid "ON LOAN"
+msgstr "ΔΑΝΕΙΚΟ"
+
+#: cyberui/screens/shop.lua
 msgid "NEXT: %s // NEED %s MORE"
 msgstr "ΕΠΟΜΕΝΟ: %s // ΛΕΙΠΟΥΝ %s"
 
@@ -2585,8 +2653,16 @@ msgid "NEXT: %s // READY TO BUY"
 msgstr "ΕΠΟΜΕΝΟ: %s // ΕΤΟΙΜΟ ΓΙΑ ΑΓΟΡΑ"
 
 #: cyberui/screens/shop.lua
+msgid "GIGS OFF // LOOKS ON LOAN, THE ONES YOU DID NOT BUY RESET WHEN GIGS COME BACK"
+msgstr "GIGS ΑΝΕΝΕΡΓΑ // ΕΜΦΑΝΙΣΕΙΣ ΔΑΝΕΙΚΕΣ, ΟΣΕΣ ΔΕΝ ΑΓΟΡΑΣΕΣ ΕΠΑΝΕΡΧΟΝΤΑΙ ΟΤΑΝ ΞΑΝΑΓΥΡΙΣΟΥΝ ΤΑ GIGS"
+
+#: cyberui/screens/shop.lua
 msgid "SHOP // BALANCE %s"
 msgstr "ΚΑΤΑΣΤΗΜΑ // ΥΠΟΛΟΙΠΟ %s"
+
+#: cyberui/screens/shop.lua
+msgid "SHOP // GIGS OFF"
+msgstr "ΚΑΤΑΣΤΗΜΑ // GIGS ΑΝΕΝΕΡΓΑ"
 
 #: cyberui/screens/targetpick.lua
 msgid "What it opens"
@@ -3015,6 +3091,10 @@ msgid "Close"
 msgstr "Κλείσιμο"
 
 #: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr "EDDIES"
+
+#: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
 msgstr "ΕΠΟΜΕΝΟ: %s"
 
@@ -3045,10 +3125,6 @@ msgstr "ΕΠΙΠ %d / %d"
 #: cyberui/ui/idcard.lua
 msgid "BOOKS"
 msgstr "ΒΙΒΛΙΑ"
-
-#: cyberui/ui/idcard.lua
-msgid "EDDIES"
-msgstr "EDDIES"
 
 #: cyberui/ui/idcard.lua
 msgid "RANK"
@@ -3093,6 +3169,10 @@ msgstr "ΙΣΤΟΡΙΚΟ"
 #: cyberui/ui/launcher.lua
 msgid "TELEMETRY.LOG"
 msgstr "TELEMETRY.LOG"
+
+#: cyberui/ui/launcher.lua
+msgid "ALL LOOKS UNLOCKED"
+msgstr "ΟΛΕΣ ΟΙ ΕΜΦΑΝΙΣΕΙΣ ΞΕΚΛΕΙΔΩΜΕΝΕΣ"
 
 #: cyberui/ui/launcher.lua
 msgid "%d OPEN"

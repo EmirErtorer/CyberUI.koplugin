@@ -5,6 +5,7 @@
 local Avatar = require("cyberui/ui/avatar")
 local Button = require("cyberui/ui/button")
 local Deco = require("cyberui/ui/deco")
+local Economy = require("cyberui/data/economy")
 local Flair = require("cyberui/ui/flair")
 local Format = require("cyberui/format")
 local Ledger = require("cyberui/data/ledger")
@@ -20,6 +21,18 @@ local Theme = require("cyberui/theme")
 local _ = require("cyberui/gettext")
 
 local IdCard = {}
+
+-- The tiles for the eddies and the gigs done: none while the economy is off.
+local function moneyTiles()
+    if not Economy.on() then return {} end
+    return { StatTile(_("EDDIES"), Format.credits(Ledger.balance())), StatTile(_("GIGS DONE"), tostring(select(2, Ledger.totals()))) }
+end
+
+-- `tiles` with the money tiles added at the end.
+local function withMoney(tiles)
+    for _i, t in ipairs(moneyTiles()) do tiles[#tiles + 1] = t end
+    return tiles
+end
 
 -- The rank as a filled tag; `small` for a tag that sits in a line of text.
 function IdCard.rankTag(rank, small)
@@ -99,10 +112,9 @@ function IdCard.compact(o)
     return cardPanel(o, Layout.Column:new({ gap = th.space.m, children = {
         Layout.Row:new({ gap = th.space.l, valign = "center", children = { Avatar:new({ seed = handle, size = 80, on_tap = o.on_photo }), who } }),
         progressColumn(rank, stats),
-        Layout.Row:new({ gap = th.space.s, children = {
+        Layout.Row:new({ gap = th.space.s, children = withMoney({
             StatTile(_("HOURS"), string.format("%.1f", stats.hours)), StatTile(_("BOOKS"), tostring(stats.books)),
-            StatTile(_("EDDIES"), Format.credits(Ledger.balance())), StatTile(_("GIGS DONE"), tostring(select(2, Ledger.totals()))),
-        } }),
+        }) }),
         codeRow(),
     } }), th.space.m)
 end
@@ -157,11 +169,8 @@ function IdCard.full(o)
             StatTile(_("DAYS READ"), tostring(stats.days)),
             StatTile(_("SINCE"), monthOf(stats.since)),
         } }),
-        Layout.Row:new({ gap = th.space.s, children = {
-            StatTile(_("EDDIES"), Format.credits(Ledger.balance())),
-            StatTile(_("GIGS DONE"), tostring(select(2, Ledger.totals()))),
-        } }),
     } })
+    if Economy.on() then tiles.children[#tiles.children + 1] = Layout.Row:new({ gap = th.space.s, children = moneyTiles() }) end
     local progress, code = progressColumn(rank, stats), codeRow()
     -- a wide, short screen puts the totals beside the identity
     local screen = require("device").screen

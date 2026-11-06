@@ -38,9 +38,10 @@ function Shop.category(id)
 end
 
 -- Was the style paid for (or is it free)? Only this ever counts for keeps.
-local function bought(style)
+function Shop.bought(style)
     return style.price == 0 or Ledger.has("s", style.id)
 end
+local bought = Shop.bought
 
 -- Is the style the reader's to wear: bought, or lent while the economy is off?
 function Shop.owned(style)

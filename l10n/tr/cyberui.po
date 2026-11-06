@@ -621,6 +621,62 @@ msgstr "Artık çöpte değil."
 msgid "Its folder is gone. Restore that first."
 msgstr "Klasörü yok. Önce onu geri yükle."
 
+#: cyberui/economyflow.lua
+msgid "HOLD UP, CHOOM"
+msgstr "DUR BİR, CHOOM"
+
+#: cyberui/economyflow.lua
+msgid "Gigs and eddies are a nova feature. You sure you wanna be zeroing the switch?"
+msgstr "Gigs ve eddies nova bir özellik. Şalteri sıfırlamak istediğinden emin misin?"
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT"
+msgstr "SIFIRLA"
+
+#: cyberui/economyflow.lua
+msgid "KEEP IT"
+msgstr "KALSIN"
+
+#: cyberui/economyflow.lua
+msgid "FLATLINING THE ECONOMY?"
+msgstr "EKONOMİYİ ÖLDÜRÜYOR MUSUN?"
+
+#: cyberui/economyflow.lua
+msgid "No more payouts, no more eddies. The street quits paying you to read your backlog. Sure, choom?"
+msgstr "Ödeme de yok, eddies de yok. Sokak, birikmiş kitaplarını okuman için sana artık ödeme yapmaz. Emin misin, choom?"
+
+#: cyberui/economyflow.lua
+msgid "FLATLINE IT"
+msgstr "ÖLDÜR GİTSİN"
+
+#: cyberui/economyflow.lua
+msgid "KEEP EARNING"
+msgstr "KAZANMAYA DEVAM"
+
+#: cyberui/economyflow.lua
+msgid "LAST CALL, RUNNER"
+msgstr "SON ÇAĞRI, RUNNER"
+
+#: cyberui/economyflow.lua
+msgid "Your eddies stay in the vault. But if you ever switch this back on, every look you did not buy goes back to default. Zero it for real?"
+msgstr "Eddies'lerin kasada kalır. Ama bunu bir gün yeniden açarsan, satın almadığın her görünüm varsayılana döner. Gerçekten sıfırlansın mı?"
+
+#: cyberui/economyflow.lua
+msgid "ZERO IT FOR REAL"
+msgstr "GERÇEKTEN SIFIRLA"
+
+#: cyberui/economyflow.lua
+msgid "BACK OUT"
+msgstr "VAZGEÇ"
+
+#: cyberui/economyflow.lua
+msgid "GIGS OFFLINE // EVERY LOOK UNLOCKED"
+msgstr "GIGS KAPALI // TÜM GÖRÜNÜMLER AÇIK"
+
+#: cyberui/economyflow.lua
+msgid "GIGS ONLINE"
+msgstr "GIGS AÇIK"
+
 #: cyberui/format.lua
 msgid "NEVER"
 msgstr "HİÇ"
@@ -1470,7 +1526,7 @@ msgid_plural "%d LEDGER ENTRIES FAILED THE CHECK"
 msgstr[0] "%d DEFTER KAYDI DOĞRULANAMADI"
 msgstr[1] "%d DEFTER KAYDI DOĞRULANAMADI"
 
-#: cyberui/screens/gigs.lua cyberui/screens/shop.lua
+#: cyberui/screens/gigs.lua cyberui/screens/shop.lua cyberui/ui/launcher.lua
 msgid "SHOP"
 msgstr "MAĞAZA"
 
@@ -2265,6 +2321,14 @@ msgid "Banner top line"
 msgstr "Başlığın üst satırı"
 
 #: cyberui/screens/settings.lua
+msgid "Gigs and eddies"
+msgstr "Gigs ve eddies"
+
+#: cyberui/screens/settings.lua
+msgid "Paid reading: gigs and eddies for what you read. Off, nothing pays and every look is free to wear until you turn it back on"
+msgstr "Ücretli okuma: okuduklarına karşılık gigs ve eddies. Kapalıyken hiçbir şey ödemez ve yeniden açana kadar her görünümü takabilirsin"
+
+#: cyberui/screens/settings.lua
 msgid "Start with CyberUI"
 msgstr "CyberUI ile başla"
 
@@ -2577,6 +2641,10 @@ msgid "OWNED"
 msgstr "SAHİP"
 
 #: cyberui/screens/shop.lua
+msgid "ON LOAN"
+msgstr "ÖDÜNÇ"
+
+#: cyberui/screens/shop.lua
 msgid "NEXT: %s // NEED %s MORE"
 msgstr "SIRADAKİ: %s // %s DAHA GEREK"
 
@@ -2585,8 +2653,16 @@ msgid "NEXT: %s // READY TO BUY"
 msgstr "SIRADAKİ: %s // ALMAYA HAZIR"
 
 #: cyberui/screens/shop.lua
+msgid "GIGS OFF // LOOKS ON LOAN, THE ONES YOU DID NOT BUY RESET WHEN GIGS COME BACK"
+msgstr "GIGS KAPALI // GÖRÜNÜMLER ÖDÜNÇ, SATIN ALMADIKLARIN GIGS GERİ GELİNCE SIFIRLANIR"
+
+#: cyberui/screens/shop.lua
 msgid "SHOP // BALANCE %s"
 msgstr "MAĞAZA // BAKİYE %s"
+
+#: cyberui/screens/shop.lua
+msgid "SHOP // GIGS OFF"
+msgstr "MAĞAZA // GIGS KAPALI"
 
 #: cyberui/screens/targetpick.lua
 msgid "What it opens"
@@ -3015,6 +3091,10 @@ msgid "Close"
 msgstr "Kapat"
 
 #: cyberui/ui/idcard.lua
+msgid "EDDIES"
+msgstr "EDDIES"
+
+#: cyberui/ui/idcard.lua
 msgid "NEXT: %s"
 msgstr "SONRAKİ: %s"
 
@@ -3045,10 +3125,6 @@ msgstr "SVY %d / %d"
 #: cyberui/ui/idcard.lua
 msgid "BOOKS"
 msgstr "KİTAP"
-
-#: cyberui/ui/idcard.lua
-msgid "EDDIES"
-msgstr "EDDIES"
 
 #: cyberui/ui/idcard.lua
 msgid "RANK"
@@ -3093,6 +3169,10 @@ msgstr "GEÇMİŞ"
 #: cyberui/ui/launcher.lua
 msgid "TELEMETRY.LOG"
 msgstr "TELEMETRY.LOG"
+
+#: cyberui/ui/launcher.lua
+msgid "ALL LOOKS UNLOCKED"
+msgstr "TÜM GÖRÜNÜMLER AÇIK"
 
 #: cyberui/ui/launcher.lua
 msgid "%d OPEN"
