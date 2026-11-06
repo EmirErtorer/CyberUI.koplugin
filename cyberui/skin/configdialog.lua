@@ -88,7 +88,6 @@ local function control(group)
                 return fn
             end
             local off = w.fine_tune and 1 or 0
-            local th = Theme.get()
             local cells = {}
             local function add(i, label, on)
                 cells[#cells + 1] = Button:new({ label = label, grow = true, height = Theme.px(38), kind = "mono_small",
