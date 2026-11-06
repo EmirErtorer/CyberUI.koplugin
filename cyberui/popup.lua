@@ -20,7 +20,6 @@ local Popup = InputContainer:extend({
     element = nil,     -- the element shown, laid out at its own size
     on_outside = nil,  -- a tap outside the element
     on_back = nil,     -- the Back key; true when it was used
-    centered = false,  -- in the middle of the screen, not at the top left
 })
 
 -- Touches anywhere on the screen come here (outside the element they close it).
@@ -39,20 +38,18 @@ end
 function Popup:setElement(el)
     self.element = el
     el:layout(el:naturalWidth() or Screen:getWidth(), nil)
-    self.ox = self.centered and math.floor((Screen:getWidth() - el.w) / 2) or 0
-    self.oy = self.centered and math.floor((Screen:getHeight() - el.h) / 2) or 0
     self.dimen = Geom:new({ x = 0, y = 0, w = el.w, h = el.h })
 end
 
 -- The area to refresh.
 function Popup:box()
-    return Geom:new({ x = self.ox, y = self.oy, w = self.element.w, h = self.element.h })
+    return Geom:new({ x = 0, y = 0, w = self.element.w, h = self.element.h })
 end
 
--- Paint the element at the top left (or in the middle).
+-- Paint the element at the top left.
 function Popup:paintTo(bb, x, y)
     Theme.sync()
-    self.element:paint(bb, x + self.ox, y + self.oy)
+    self.element:paint(bb, x, y)
 end
 
 -- The pressed element gets the same feedback as in the CyberUI window.

@@ -59,7 +59,7 @@ function InkAway.quickMenu(ui, in_book)
     end
     local o = {
         title = "Ink Away",   -- i18n: keep
-        sub = _("DRAW // NOTES // INK"), cols = 1, actions = actions,
+        sub = _("DRAW // NOTES // INK"), cols = 1, dock = "top", actions = actions,
     }
     if not in_book then
         require("cyberui/app").sheet(o)
@@ -69,7 +69,7 @@ function InkAway.quickMenu(ui, in_book)
     local Popup = require("cyberui/popup")
     local popup
     local function close() if popup then popup:close(); popup = nil end end
-    popup = Popup:new({ centered = true, element = Dialog.sheet(o, close, require("device").screen:getWidth()),
+    popup = Popup:new({ element = Dialog.sheet(o, close, require("device").screen:getWidth()),
         on_outside = close, on_back = function() close(); return true end })
     popup:open()
     return true
