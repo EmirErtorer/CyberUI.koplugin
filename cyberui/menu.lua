@@ -199,7 +199,7 @@ end
 
 -- Is this menu still showing?
 function Menu:isOpen()
-    if self.reader then return self.popup_open == true end
+    if self.reader then return self.popup_open == true or self.aside == true end
     return self.panel ~= nil and App.overlay() == self.panel
 end
 
@@ -225,6 +225,7 @@ end
 
 -- Close the menu if it is still open.
 function Menu:close()
+    self.aside = false
     if self.reader then
         if self.popup and self.popup_open then
             self.popup_open = false
@@ -362,10 +363,57 @@ function Menu:select(item)
     local callback = item.callback_func and item.callback_func() or item.callback
     if not callback then return end
     callback(self.shim)
+    if self.reader and item.keep_menu_open then
+        -- a dialog may come at once or a moment later
+        UIManager:nextTick(function() self:stepAside() end)
+        UIManager:scheduleIn(0.4, function() self:stepAside() end)
+    end
     if item.checked ~= nil or item.checked_func then
         if not (item.check_callback_updates_menu or item.check_callback_closes_menu) then self.shim.updateItems() end
     elseif not item.keep_menu_open then
         self:close()
+    end
+end
+
+-- The windows above the reader (not the menu's own popup), bottom first.
+function Menu:windowsAbove()
+    local reader = require("apps/reader/readerui").instance
+    local above, seen = {}, false
+    for _i, win in ipairs(UIManager._window_stack) do
+        if seen and win.widget ~= self.popup then above[#above + 1] = win.widget end
+        if win.widget == reader then seen = true end
+    end
+    return above
+end
+
+-- An item that keeps the menu open may show a window of its own (a plugin's
+-- settings dialog): the drop-down would sit over it, so it steps aside and
+-- comes back when the window has gone.
+function Menu:stepAside()
+    if not (self.reader and self.popup_open) then return end
+    local above = self:windowsAbove()
+    if #above == 0 then return end
+    self.popup_open = false
+    self.popup:close()
+    self.aside = true
+    self:watch(above[#above])
+end
+
+-- Come back when `widget` closes, unless another window is still up (then wait for that one).
+function Menu:watch(widget)
+    local closed = widget.onCloseWidget
+    widget.onCloseWidget = function(w, ...)
+        widget.onCloseWidget = closed
+        local r = closed and closed(w, ...)
+        UIManager:nextTick(function()
+            if not (self.aside and showing == self) then return end
+            local above = self:windowsAbove()
+            if #above > 0 then return self:watch(above[#above]) end
+            self.aside = false
+            self.popup = nil
+            self:show()
+        end)
+        return r
     end
 end
 
