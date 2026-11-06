@@ -42,7 +42,8 @@ local Menu = {}
 Menu.__index = Menu
 
 -- The panel's height as a share of the screen.
-local MIN_H, MAX_H = 0.3, 0.5
+local MIN_H = 0.3
+local DEFAULT_H = 0.8   -- how much of the screen a list may take (System > Home > Menu height)
 local DECK_H = 0.7   -- the Deck tab holds the ID card, which needs more than a list does
 local PICK_H = 0.9   -- a picker lists long things (every KOReader action), so it takes more room
 
@@ -683,7 +684,7 @@ function Menu:build(_close, screen_w)
             make = function(item, w, ch) return self:row(item, w, ch) end,
             on_layout = function(_c, pages, page) self.pages, self.page = pages, page end })
     end
-    local h = math.floor(math.max(screen_h * MIN_H, math.min(screen_h * (self.pick and PICK_H or tab.deck and DECK_H or MAX_H), want)))
+    local h = math.floor(math.max(screen_h * MIN_H, math.min(screen_h * (self.pick and PICK_H or tab.deck and DECK_H or Settings.get("menu_height", DEFAULT_H)), want)))
     if want > h and not (tab.deck or tab.panel) then
         kids[#kids + 1] = Frame.pager(self, _("PAGE"), function(p)
             self.page = math.max(1, math.min(p, self.pages or 1))

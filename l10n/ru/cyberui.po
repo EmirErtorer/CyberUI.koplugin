@@ -2525,6 +2525,14 @@ msgstr "Меню KOReader"
 msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down from the top"
 msgstr "В стиле CyberUI (выкл.: собственное меню KOReader); также открывается свайпом вниз от верхнего края"
 
+#: cyberui/screens/settings.lua
+msgid "Menu height"
+msgstr "Высота меню"
+
+#: cyberui/screens/settings.lua
+msgid "How much of the screen KOReader's menu may take: taller shows more entries and needs fewer pages"
+msgstr "Сколько экрана может занимать меню KOReader: выше значит больше пунктов и меньше страниц"
+
 #: cyberui/screens/settings.lua cyberui/targetlist.lua
 msgid "File browser"
 msgstr "Файловый менеджер"

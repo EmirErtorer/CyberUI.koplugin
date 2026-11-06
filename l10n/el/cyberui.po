@@ -2498,6 +2498,14 @@ msgstr "Μενού KOReader"
 msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down from the top"
 msgstr "Στο στιλ του CyberUI (ανενεργό: το δικό του του KOReader)· ανοίγει και με σύρσιμο προς τα κάτω από την κορυφή"
 
+#: cyberui/screens/settings.lua
+msgid "Menu height"
+msgstr "Ύψος μενού"
+
+#: cyberui/screens/settings.lua
+msgid "How much of the screen KOReader's menu may take: taller shows more entries and needs fewer pages"
+msgstr "Πόση από την οθόνη μπορεί να πιάνει το μενού του KOReader: πιο ψηλό δείχνει περισσότερες καταχωρίσεις και λιγότερες σελίδες"
+
 #: cyberui/screens/settings.lua cyberui/targetlist.lua
 msgid "File browser"
 msgstr "Περιηγητής αρχείων"

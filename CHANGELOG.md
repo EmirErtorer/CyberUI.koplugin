@@ -15,6 +15,7 @@ versions marked *Prerelease* are test builds.
 - **Roll a gig** for 20 eddies to swap it for another book (hold a gig on the board).
 
 ### Changed
+- **The menu's lists are taller**, taking up to 80% of the screen (was half), so most tabs fit without turning pages. System > Home > Menu height sets it to 50, 65, 80 or 90%.
 - **Lumen and tint are sliders** (cyberpunk cells you tap or drag) in the Deck and Controls pages of the menu, and in KOReader's own frontlight window, instead of the + and - buttons.
 - **Saving the ID card asks where.** SAVE opens a folder picker (starting where you saved last) and writes the picture there; a folder that can't be written to is reported instead of failing silently.
 - **The settings panel and the highlight menu in books are in CyberUI's style.** The bottom panel for font size, margins, render mode and the rest, and the menu that appears after selecting text, now look like the rest of CyberUI. They work exactly as KOReader's own, and go back to KOReader's look with the menu's switch in System > Home.
