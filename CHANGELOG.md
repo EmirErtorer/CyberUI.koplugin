@@ -14,6 +14,9 @@ versions marked *Prerelease* are test builds.
 - **A small board of gigs.** The board offers 5 unopened books at a time (3, 5 or 10 in System > Gigs), drawn at random and drawn anew every week (3, 7 or 14 days). Gigs pay two to four times the plain rate, and a book's price grows by a quarter per week it has waited, up to double after a month.
 - **Roll a gig** for 20 eddies to swap it for another book (hold a gig on the board).
 
+### Added
+- **Series from the books' own details.** Collections has a Series switch listing every series found in the books' metadata (two or more books), each opening its books in series order. Series made in Calibre or EPUB3 show up by themselves.
+
 ### Changed
 - **The menu's lists are taller**, taking up to 80% of the screen (was half), so most tabs fit without turning pages. System > Home > Menu height sets it to 50, 65, 80 or 90%.
 - **Lumen and tint are sliders** (cyberpunk cells you tap or drag) in the Deck and Controls pages of the menu, and in KOReader's own frontlight window, instead of the + and - buttons.
@@ -21,6 +24,8 @@ versions marked *Prerelease* are test builds.
 - **The settings panel and the highlight menu in books are in CyberUI's style.** The bottom panel for font size, margins, render mode and the rest, and the menu that appears after selecting text, now look like the rest of CyberUI. They work exactly as KOReader's own, and go back to KOReader's look with the menu's switch in System > Home.
 
 ### Fixed
+- KOReader quit to the device's own system when a swipe began on the tab bar (for example from the bottom corner on a book's details).
+- In a book, KOReader's drop-down menu stayed over a plugin's dialog opened from it (Bookends' settings, for one); it now steps aside until the dialog closes.
 - Ink Away's pen tab in the top menu now shows as the pen in CyberUI's menu instead of a plus labelled EXTRA, and opens Ink Away's quick menu in CyberUI's style, over home and over a book.
 
 ## [1.1.2] - 2026-11-01

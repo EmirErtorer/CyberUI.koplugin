@@ -9,6 +9,7 @@ local lfs = require("libs/libkoreader-lfs")
 local _ = require("cyberui/gettext")
 
 local Groups = {}
+local inSeriesOrder   -- defined below
 
 -- The groupings: id and name. "folder" is the real folders, "all" no grouping.
 Groups.KINDS = {
@@ -69,6 +70,38 @@ function Groups.books(kind, key)
     local out = {}
     for _i, p in ipairs(Library.all()) do
         if (keyOf(kind, p)) == key then out[#out + 1] = p end
+    end
+    if kind == "series" then table.sort(out, inSeriesOrder) end
+    return out
+end
+
+-- A book's place in its series (the number from its metadata, 0 when it has none).
+local function seriesIndex(path)
+    return tonumber(Books.info(path).series_index) or 0
+end
+
+-- Series order: by number, then by title.
+inSeriesOrder = function(a, b)
+    local ia, ib = seriesIndex(a), seriesIndex(b)
+    if ia ~= ib then return ia < ib end
+    return Books.info(a).title:lower() < Books.info(b).title:lower()
+end
+
+-- The books of one series by name, in series order.
+function Groups.seriesBooks(name)
+    local out = Groups.books("series", name)
+    table.sort(out, inSeriesOrder)
+    return out
+end
+
+-- Every series the books' own metadata names: { name, title, books } with the
+-- books in series order, sorted by name. A "series" of one book is left out.
+function Groups.series()
+    local out = {}
+    for _i, g in ipairs(Groups.list("series")) do
+        if g.key ~= "~" and g.count > 1 then
+            out[#out + 1] = { name = g.key, title = g.name, books = Groups.seriesBooks(g.key) }
+        end
     end
     return out
 end

@@ -51,14 +51,14 @@ end
 -- Are books shown in groups (author, series...) instead of folders?
 function Library:grouped()
     local p = self.params
-    return not (p.dir or p.pick or p.collection or p.query) and LibMenu.group() ~= "folder"
+    return not (p.dir or p.pick or p.collection or p.series or p.query) and LibMenu.group() ~= "folder"
 end
 
 -- Back to the top of the library: where it opens, or the folder it was given.
 function Library:reroot()
     local params = self.params
     self.page, self.filter = 1, "all"
-    if params.collection or params.query then return end
+    if params.collection or params.series or params.query then return end
     if params.dir then
         self.trail = { ((params.dir):gsub("(.)/+$", "%1")) }
     else
@@ -136,6 +136,9 @@ function Library:source()
     local p = self.params
     if p.collection then
         return {}, Collections.books(p.collection), Collections.title(p.collection), "/SYS/CACHES/"
+    end
+    if p.series then
+        return {}, Groups.seriesBooks(p.series), p.series, "/SYS/SERIES/"
     end
     if p.query then
         return {}, Data.search(p.query), _("Search"), "/GREP/"
@@ -350,7 +353,12 @@ function Library:build()
     local th = Theme.get()
     local folders, books, title, path = self:source()
     books = Groups.filter(books, Settings.get("library_extra", {}))
-    books = Data.sort(books, Settings.get("library_sort", "recent"), Settings.get("library_desc", false))
+    -- a series is read in its own order, whatever the library is sorted by
+    if self.params.series then
+        books = Data.sort(books, "series", false)
+    else
+        books = Data.sort(books, Settings.get("library_sort", "recent"), Settings.get("library_desc", false))
+    end
     local shown, counts = Data.filter(books, self.filter)
     local items = {}
     if self.filter == "all" then
@@ -387,7 +395,7 @@ function Library:build()
     end
     return Frame.page({
         screen = self, title = title, path = path, actions = self:actions(),
-        tab = self.params.collection and "collections" or "library",
+        tab = (self.params.collection or self.params.series) and "collections" or "library",
         body = Layout.Column:new({ gap = th.space.m, children = body_kids }),
     })
 end

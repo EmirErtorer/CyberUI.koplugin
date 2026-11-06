@@ -4,7 +4,10 @@
 
 local App = require("cyberui/app")
 local Button = require("cyberui/ui/button")
+local Books = require("cyberui/data/books")
 local Collections = require("cyberui/data/collections")
+local Controls = require("cyberui/ui/controls")
+local Groups = require("cyberui/data/libgroups")
 local Cover = require("cyberui/ui/cover")
 local Frame = require("cyberui/screens/frame")
 local Grid = require("cyberui/ui/grid")
@@ -19,8 +22,9 @@ local _ = require("cyberui/gettext")
 local CollectionsScreen = Screen:extend()
 
 -- Start on the first page.
-function CollectionsScreen:init()
+function CollectionsScreen:init(params)
     self.page = 1
+    self.mode = params and params.mode or "collections"
 end
 
 -- A 2 x 2 mosaic of the collection's first covers.
@@ -34,13 +38,16 @@ local function mosaic(books, w, h)
     } })
 end
 
--- Open a collection in the browser.
+-- Open a collection (or a series, by the name its books carry) in the browser.
 local function open(c)
-    return function() App.push("library", { collection = c.name }) end
+    return function()
+        if c.series then App.push("library", { series = c.name }) else App.push("library", { collection = c.name }) end
+    end
 end
 
 -- Hold a collection: ask, then delete it (Favorites stays).
 local function askRemove(c)
+    if c.series then return nil end   -- a series comes from the books themselves
     return function()
         if c.name == require("readcollection").default_collection_name then
             return App.toast(_("Favorites always stays"))
@@ -95,15 +102,38 @@ local function create()
     end, _("Create"))
 end
 
+-- The series the books' metadata names, as cards like the collections' own.
+function CollectionsScreen:seriesBody()
+    local list = Groups.series()
+    for _i, c in ipairs(list) do c.series = true end
+    -- books whose details are still being read may add more: look again when done
+    Books.whenExtracted(function() if App.current() == self then App.update() end end)
+    if #list == 0 then
+        return Label:new({ grow = true, text = _("No series found yet. A series appears here once books with a series in their details have been read."),
+            kind = "body", color = "muted", align = "center", lines = 3 })
+    end
+    return Grid:new({ grow = true, items = list, page = self.page, cols = 2, cell_h = Theme.px(112),
+        make = card, on_layout = function(_c, pages, page) self.pages, self.page = pages, page end })
+end
+
 -- Build the screen.
 function CollectionsScreen:build()
     local th = Theme.get()
+    local switch = Controls.Segmented({ value = self.mode, options = { { _("Collections"), "collections" }, { _("Series"), "series" } },
+        on_change = function(mode) self.mode, self.page = mode, 1; App.update() end })
+    if self.mode == "series" then
+        return Frame.page({
+            screen = self, title = _("Series"), path = "/SYS/SERIES/", tab = "collections",
+            body = Layout.Column:new({ gap = th.space.l, children = { switch, self:seriesBody(),
+                Frame.pager(self, _("CACHE"), function(p) self:setPage(p) end) } }),
+        })
+    end
     local all = Collections.list()
     local fav, rest = nil, {}
     for _i, c in ipairs(all) do
         if not fav and c.name == require("readcollection").default_collection_name then fav = c else rest[#rest + 1] = c end
     end
-    local kids = {}
+    local kids = { switch }
     if fav then kids[#kids + 1] = pinned(fav) end
     if #rest == 0 then
         kids[#kids + 1] = Label:new({ grow = true, text = _("No other collections yet. Make one with + New."),

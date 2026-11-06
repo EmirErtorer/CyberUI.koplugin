@@ -538,7 +538,7 @@ msgstr "Wszystkie książki"
 msgid "Author"
 msgstr "Autor"
 
-#: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
+#: cyberui/data/libgroups.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
 msgid "Series"
 msgstr "Seria"
 
@@ -998,12 +998,16 @@ msgid "Collection created"
 msgstr "Utworzono kolekcję"
 
 #: cyberui/screens/collections.lua
-msgid "No other collections yet. Make one with + New."
-msgstr "Nie ma jeszcze innych kolekcji. Utwórz ją przyciskiem + Nowa."
+msgid "No series found yet. A series appears here once books with a series in their details have been read."
+msgstr "Nie znaleziono jeszcze serii. Seria pojawi się tu, gdy odczytane zostaną książki z serią w szczegółach."
 
 #: cyberui/screens/collections.lua
 msgid "CACHE"
 msgstr "KOLEKCJA"
+
+#: cyberui/screens/collections.lua
+msgid "No other collections yet. Make one with + New."
+msgstr "Nie ma jeszcze innych kolekcji. Utwórz ją przyciskiem + Nowa."
 
 #: cyberui/screens/collections.lua cyberui/screens/library.lua
 msgid "+ New"
