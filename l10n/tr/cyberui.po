@@ -821,11 +821,11 @@ msgstr "BUNU KULLANAMAZSIN"
 msgid "Button %d"
 msgstr "Düğme %d"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "LUMEN"
 msgstr "LÜMEN"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "TINT"
 msgstr "TON"
 
@@ -2888,6 +2888,10 @@ msgstr "Ön sürümleri bildir (test sürümleri, daha yeni ama daha az denenmi�
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+msgid "Close"
+msgstr "Kapat"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Kitap kapakları"
@@ -3143,10 +3147,6 @@ msgstr "KLASÖR // %d"
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
 msgstr "İptal"
-
-#: cyberui/ui/dialog.lua
-msgid "Close"
-msgstr "Kapat"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

@@ -821,11 +821,11 @@ msgstr "ΑΥΤΟ ΔΕΝ ΜΠΟΡΕΙ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΘΕΙ"
 msgid "Button %d"
 msgstr "Κουμπί %d"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "LUMEN"
 msgstr "LUMEN"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "TINT"
 msgstr "ΑΠΟΧΡΩΣΗ"
 
@@ -2888,6 +2888,10 @@ msgstr "Ειδοποίηση για προεκδόσεις (δοκιμαστικ
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+msgid "Close"
+msgstr "Κλείσιμο"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Εξώφυλλα βιβλίων"
@@ -3143,10 +3147,6 @@ msgstr "ΦΑΚΕΛΟΣ // %d"
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
 msgstr "Άκυρο"
-
-#: cyberui/ui/dialog.lua
-msgid "Close"
-msgstr "Κλείσιμο"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

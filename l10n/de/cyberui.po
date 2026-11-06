@@ -821,11 +821,11 @@ msgstr "DAS KANN NICHT VERWENDET WERDEN"
 msgid "Button %d"
 msgstr "Schaltfläche %d"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "LUMEN"
 msgstr "LUMEN"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "TINT"
 msgstr "FARBTON"
 
@@ -2888,6 +2888,10 @@ msgstr "Über Vorabversionen informieren (Testversionen, neuer, aber weniger erp
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+msgid "Close"
+msgstr "Schließen"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Buchcover"
@@ -3143,10 +3147,6 @@ msgstr "ORDNER // %d"
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
 msgstr "Abbrechen"
-
-#: cyberui/ui/dialog.lua
-msgid "Close"
-msgstr "Schließen"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

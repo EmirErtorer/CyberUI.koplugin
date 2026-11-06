@@ -830,11 +830,11 @@ msgstr "ЭТО ИСПОЛЬЗОВАТЬ НЕЛЬЗЯ"
 msgid "Button %d"
 msgstr "Кнопка %d"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "LUMEN"
 msgstr "ЛЮМЕН"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "TINT"
 msgstr "ОТТЕНОК"
 
@@ -2922,6 +2922,10 @@ msgstr "Сообщать о предвыпусках (тестовые сбор�
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+msgid "Close"
+msgstr "Закрыть"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Обложки книг"
@@ -3177,10 +3181,6 @@ msgstr "ПАПКА // %d"
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
 msgstr "Отмена"
-
-#: cyberui/ui/dialog.lua
-msgid "Close"
-msgstr "Закрыть"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

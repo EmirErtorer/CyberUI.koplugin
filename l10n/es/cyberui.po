@@ -821,11 +821,11 @@ msgstr "ESE NO SE PUEDE USAR"
 msgid "Button %d"
 msgstr "Botón %d"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "LUMEN"
 msgstr "LÚMENES"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "TINT"
 msgstr "TONO"
 
@@ -2888,6 +2888,10 @@ msgstr "Avisarme de prelanzamientos (versiones de prueba, más nuevas pero menos
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+msgid "Close"
+msgstr "Cerrar"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Portadas de libros"
@@ -3143,10 +3147,6 @@ msgstr "CARPETA // %d"
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
 msgstr "Cancelar"
-
-#: cyberui/ui/dialog.lua
-msgid "Close"
-msgstr "Cerrar"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

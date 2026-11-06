@@ -820,11 +820,11 @@ msgstr ""
 msgid "Button %d"
 msgstr ""
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "LUMEN"
 msgstr ""
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "TINT"
 msgstr ""
 
@@ -2887,6 +2887,10 @@ msgstr ""
 msgid "GITHUB // %s"
 msgstr ""
 
+#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+msgid "Close"
+msgstr ""
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr ""
@@ -3141,10 +3145,6 @@ msgstr ""
 
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
-msgstr ""
-
-#: cyberui/ui/dialog.lua
-msgid "Close"
 msgstr ""
 
 #: cyberui/ui/idcard.lua

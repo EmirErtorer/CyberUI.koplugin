@@ -821,11 +821,11 @@ msgstr "ESSE NÃO PODE SER UTILIZADO"
 msgid "Button %d"
 msgstr "Botão %d"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "LUMEN"
 msgstr "LÚMEN"
 
-#: cyberui/menu.lua cyberui/screens/diagnostics.lua
+#: cyberui/menu.lua cyberui/screens/diagnostics.lua cyberui/skin/frontlight.lua
 msgid "TINT"
 msgstr "TOM"
 
@@ -2888,6 +2888,10 @@ msgstr "Avisar sobre pré-lançamentos (versões de teste, mais recentes e menos
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+msgid "Close"
+msgstr "Fechar"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Capas de livros"
@@ -3143,10 +3147,6 @@ msgstr "PASTA // %d"
 #: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
 msgid "Cancel"
 msgstr "Cancelar"
-
-#: cyberui/ui/dialog.lua
-msgid "Close"
-msgstr "Fechar"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"
