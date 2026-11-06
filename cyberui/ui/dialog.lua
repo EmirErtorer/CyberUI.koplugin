@@ -123,9 +123,45 @@ function Dialog.choose(o, close, screen_w, screen_h)
         child = Layout.Column:new({ gap = th.space.s, children = kids }) })
 end
 
+-- Content docked to the top or bottom edge, the whole width, with an accent
+-- line on its inner edge: the look of the drop-down menu.
+function Dialog.docked(kids, dock, screen_w)
+    local th = Theme.get()
+    local body = Panel:new({ shape = "none", fill = "bg", pad = th.space.xl,
+        child = Layout.Column:new({ gap = th.space.s, children = kids }) })
+    local line = Deco.Divider:new({ color = "accent", height = Theme.px(3) })
+    local panel = Layout.Column:new({ width = screen_w, children = dock == "bottom" and { line, body } or { body, line } })
+    panel.dock = dock
+    return panel
+end
+
+-- Rows of buttons as KOReader's button dialogs describe them ({ text,
+-- callback, hold_callback, enabled }): a floating panel, or docked like the menu
+-- when `dock` is given. o: { rows, dock, title }.
+-- A tap runs the callback and nothing else: closing is the callback's job.
+function Dialog.rows(o, screen_w)
+    local th = Theme.get()
+    local kids = {}
+    if o.title then kids[#kids + 1] = Label:new({ text = o.title, kind = "title", lines = 2 }) end
+    for _i, row in ipairs(o.rows) do
+        local cells = {}
+        for _j, b in ipairs(row) do
+            local usable = b.enabled ~= false and b.callback ~= nil
+            cells[#cells + 1] = Button:new({
+                label = b.text_func and b.text_func() or b.text or "", grow = true, variant = "soft",
+                disabled = not usable, on_tap = usable and b.callback or nil, on_hold = b.hold_callback,
+            })
+        end
+        kids[#kids + 1] = Layout.Row:new({ gap = th.space.s, children = cells })
+    end
+    if o.dock then return Dialog.docked(kids, o.dock, screen_w) end
+    return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
+        child = Layout.Column:new({ gap = th.space.s, children = kids }) })
+end
+
 -- An action sheet: a title (and a line under it) over a grid of actions,
 -- each { icon, label, sub, on_tap, danger }, `cols` to a row (2 by default).
--- `dock = "top"` makes it a drop-down from the top edge, like the menu.
+-- `dock` ("top" or "bottom") makes it a drop-down from that edge, like the menu.
 function Dialog.sheet(o, close, screen_w)
     local th = Theme.get()
     local kids = { Label:new({ text = o.title, kind = "title", lines = 2 }) }
@@ -138,16 +174,7 @@ function Dialog.sheet(o, close, screen_w)
         })
     end)
     kids[#kids + 1] = Button:new({ label = o.cancel or _("Close"), variant = "ghost", on_tap = closing(close) })
-    if o.dock == "top" then
-        -- the drop-down look of the menu: the whole width from the top edge, an accent line under it
-        local panel = Layout.Column:new({ width = screen_w, children = {
-            Panel:new({ shape = "none", fill = "bg", pad = th.space.xl,
-                child = Layout.Column:new({ gap = th.space.s, children = kids }) }),
-            Deco.Divider:new({ color = "accent", height = Theme.px(3) }),
-        } })
-        panel.dock = "top"
-        return panel
-    end
+    if o.dock then return Dialog.docked(kids, o.dock, screen_w) end
     return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
         child = Layout.Column:new({ gap = th.space.s, children = kids }) })
 end

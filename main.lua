@@ -57,7 +57,10 @@ function CyberUI:init()
     require("cyberui/sleep").install()
     self.ui.menu:registerToMainMenu(self)
     self:onDispatcherRegisterActions()
-    if self.ui.document then self:styleReaderMenu() end
+    if self.ui.document then
+        self:styleReaderMenu()
+        require("cyberui/skin/buttondialog").install(self.ui)
+    end
 end
 
 -- Inside a book, the drop-down menu is CyberUI's too (unless the reader
