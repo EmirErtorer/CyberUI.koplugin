@@ -950,12 +950,16 @@ msgid "SAVE"
 msgstr "GUARDAR"
 
 #: cyberui/profileflow.lua
-msgid "Saved %s"
-msgstr "%s guardado"
+msgid "Save the card where?"
+msgstr "¿Dónde guardar la tarjeta?"
 
 #: cyberui/profileflow.lua
-msgid "The card could not be saved"
-msgstr "No se pudo guardar la tarjeta"
+msgid "Saved to %s"
+msgstr "Guardada en %s"
+
+#: cyberui/profileflow.lua
+msgid "That folder can't be written to"
+msgstr "No se puede escribir en esa carpeta"
 
 #: cyberui/screens/collections.lua
 msgid "Favorites always stays"
@@ -1378,12 +1382,28 @@ msgid "FOLDER"
 msgstr "CARPETA"
 
 #: cyberui/screens/filepick.lua
+msgid "SAVE HERE"
+msgstr "GUARDAR AQUÍ"
+
+#: cyberui/screens/filepick.lua
+msgid "No folders here."
+msgstr "No hay carpetas aquí."
+
+#: cyberui/screens/filepick.lua
 msgid "No pictures or folders here."
 msgstr "No hay imágenes ni carpetas aquí."
 
 #: cyberui/screens/filepick.lua
+msgid "Choose a folder"
+msgstr "Elige una carpeta"
+
+#: cyberui/screens/filepick.lua
 msgid "Choose a file"
 msgstr "Elegir un archivo"
+
+#: cyberui/screens/filepick.lua
+msgid "PICK // FOLDER"
+msgstr "ELEGIR // CARPETA"
 
 #: cyberui/screens/filepick.lua
 msgid "PICK // FILE"

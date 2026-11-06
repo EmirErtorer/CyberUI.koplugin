@@ -71,10 +71,7 @@ function ProfileFlow.card()
         local footer = Layout.Row:new({ gap = th.space.s, children = {
             Button:new({ icon = "image", label = _("PHOTO"), variant = "soft", grow = true, on_tap = then_card(ProfileFlow.photo) }),
             Button:new({ icon = "edit", label = _("HANDLE"), variant = "soft", grow = true, on_tap = then_card(ProfileFlow.editHandle) }),
-            Button:new({ icon = "download", label = _("SAVE"), variant = "soft", grow = true, on_tap = function()
-                local file, err = ProfileFlow.export(IdCard.full({}))
-                App.toast(file and string.format(_("Saved %s"), file:match("[^/]+$")) or err)
-            end }),
+            Button:new({ icon = "download", label = _("SAVE"), variant = "soft", grow = true, on_tap = then_card(ProfileFlow.save) }),
             Button:new({ icon = "close", variant = "icon", width = th.size.touch, on_tap = close }),
         } })
         return IdCard.full({ width = math.min(screen_w - 2 * th.space.xl, Theme.px(560)), footer = footer,
@@ -82,13 +79,35 @@ function ProfileFlow.card()
     end)
 end
 
--- Save the card as a picture in KOReader's screenshots folder (`ProfileFlow.dir`
--- when a test sets one); `card` is the
--- full card element. Returns the file, or nil and a reason.
-function ProfileFlow.export(card)
+-- Choose a folder anywhere on the device (starting where the card was last
+-- saved, else the library), save the card there as a picture, and remember the
+-- folder; after() runs when that is done.
+function ProfileFlow.save(after)
+    if type(after) ~= "function" then after = nil end
+    local start = Settings.get("card_dir")
+    if not (type(start) == "string" and lfs.attributes(start, "mode") == "directory") then start = Library.home() end
+    App.push("filepick", { dir = start, pick_dir = true, title = _("Save the card where?"), on_pick = function(dir)
+        App.pop()
+        local file, err = ProfileFlow.export(IdCard.full({}), dir)
+        if file then Settings.save("card_dir", dir) end
+        App.toast(file and string.format(_("Saved to %s"), file) or err)
+        App.update()
+        if after then after() end
+    end })
+end
+
+-- Save the card as a picture in `dir` (KOReader's screenshots folder when none
+-- is given, or `ProfileFlow.dir` when a test sets one); `card` is the full card
+-- element. The folder is made absolute and the file is checked once written, so
+-- a folder that can't be written to (some storage on Android) is reported, not
+-- silently lost. Returns the file's full path, or nil and a reason.
+function ProfileFlow.export(card, dir)
     local th = Theme.get()
-    local dir = ProfileFlow.dir or (DataStorage:getDataDir() .. "/screenshots")
-    lfs.mkdir(dir)
+    dir = dir or ProfileFlow.dir or (DataStorage:getDataDir() .. "/screenshots")
+    dir = dir:gsub("(.)/+$", "%1")
+    if lfs.attributes(dir, "mode") ~= "directory" then lfs.mkdir(dir) end
+    dir = require("ffi/util").realpath(dir) or dir
+    if lfs.attributes(dir, "mode") ~= "directory" then return nil, _("That folder can't be written to") end
     local width = require("device").screen:getWidth() - 2 * th.space.xl
     card:layout(width, nil)
     local pad = th.space.xl
@@ -98,7 +117,8 @@ function ProfileFlow.export(card)
     local file = string.format("%s/cyberui-id-%s.png", dir, Profile.id())
     local ok = pcall(bb.writePNG, bb, file)
     bb:free()
-    if not ok then return nil, _("The card could not be saved") end
+    local attr = ok and lfs.attributes(file)
+    if not (attr and attr.mode == "file" and attr.size > 0) then return nil, _("That folder can't be written to") end
     return file
 end
 

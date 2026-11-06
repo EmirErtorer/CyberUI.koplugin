@@ -950,12 +950,16 @@ msgid "SAVE"
 msgstr "KAYDET"
 
 #: cyberui/profileflow.lua
-msgid "Saved %s"
-msgstr "%s kaydedildi"
+msgid "Save the card where?"
+msgstr "Kart nereye kaydedilsin?"
 
 #: cyberui/profileflow.lua
-msgid "The card could not be saved"
-msgstr "Kart kaydedilemedi"
+msgid "Saved to %s"
+msgstr "Kaydedildi: %s"
+
+#: cyberui/profileflow.lua
+msgid "That folder can't be written to"
+msgstr "Bu klasöre yazılamıyor"
 
 #: cyberui/screens/collections.lua
 msgid "Favorites always stays"
@@ -1378,12 +1382,28 @@ msgid "FOLDER"
 msgstr "KLASÖR"
 
 #: cyberui/screens/filepick.lua
+msgid "SAVE HERE"
+msgstr "BURAYA KAYDET"
+
+#: cyberui/screens/filepick.lua
+msgid "No folders here."
+msgstr "Burada klasör yok."
+
+#: cyberui/screens/filepick.lua
 msgid "No pictures or folders here."
 msgstr "Burada resim ya da klasör yok."
 
 #: cyberui/screens/filepick.lua
+msgid "Choose a folder"
+msgstr "Bir klasör seçin"
+
+#: cyberui/screens/filepick.lua
 msgid "Choose a file"
 msgstr "Bir dosya seç"
+
+#: cyberui/screens/filepick.lua
+msgid "PICK // FOLDER"
+msgstr "SEÇ // KLASÖR"
 
 #: cyberui/screens/filepick.lua
 msgid "PICK // FILE"

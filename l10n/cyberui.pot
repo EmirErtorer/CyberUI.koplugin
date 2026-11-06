@@ -949,11 +949,15 @@ msgid "SAVE"
 msgstr ""
 
 #: cyberui/profileflow.lua
-msgid "Saved %s"
+msgid "Save the card where?"
 msgstr ""
 
 #: cyberui/profileflow.lua
-msgid "The card could not be saved"
+msgid "Saved to %s"
+msgstr ""
+
+#: cyberui/profileflow.lua
+msgid "That folder can't be written to"
 msgstr ""
 
 #: cyberui/screens/collections.lua
@@ -1377,11 +1381,27 @@ msgid "FOLDER"
 msgstr ""
 
 #: cyberui/screens/filepick.lua
+msgid "SAVE HERE"
+msgstr ""
+
+#: cyberui/screens/filepick.lua
+msgid "No folders here."
+msgstr ""
+
+#: cyberui/screens/filepick.lua
 msgid "No pictures or folders here."
 msgstr ""
 
 #: cyberui/screens/filepick.lua
+msgid "Choose a folder"
+msgstr ""
+
+#: cyberui/screens/filepick.lua
 msgid "Choose a file"
+msgstr ""
+
+#: cyberui/screens/filepick.lua
+msgid "PICK // FOLDER"
 msgstr ""
 
 #: cyberui/screens/filepick.lua

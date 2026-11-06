@@ -959,12 +959,16 @@ msgid "SAVE"
 msgstr "СОХРАНИТЬ"
 
 #: cyberui/profileflow.lua
-msgid "Saved %s"
-msgstr "%s сохранено"
+msgid "Save the card where?"
+msgstr "Куда сохранить карточку?"
 
 #: cyberui/profileflow.lua
-msgid "The card could not be saved"
-msgstr "Не удалось сохранить карту"
+msgid "Saved to %s"
+msgstr "Сохранено: %s"
+
+#: cyberui/profileflow.lua
+msgid "That folder can't be written to"
+msgstr "В эту папку нельзя записывать"
 
 #: cyberui/screens/collections.lua
 msgid "Favorites always stays"
@@ -1389,12 +1393,28 @@ msgid "FOLDER"
 msgstr "ПАПКА"
 
 #: cyberui/screens/filepick.lua
+msgid "SAVE HERE"
+msgstr "СОХРАНИТЬ ЗДЕСЬ"
+
+#: cyberui/screens/filepick.lua
+msgid "No folders here."
+msgstr "Здесь нет папок."
+
+#: cyberui/screens/filepick.lua
 msgid "No pictures or folders here."
 msgstr "Здесь нет изображений и папок."
 
 #: cyberui/screens/filepick.lua
+msgid "Choose a folder"
+msgstr "Выберите папку"
+
+#: cyberui/screens/filepick.lua
 msgid "Choose a file"
 msgstr "Выбрать файл"
+
+#: cyberui/screens/filepick.lua
+msgid "PICK // FOLDER"
+msgstr "ВЫБОР // ПАПКА"
 
 #: cyberui/screens/filepick.lua
 msgid "PICK // FILE"

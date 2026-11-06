@@ -194,6 +194,21 @@ do
     local file = ProfileFlow.export(IdCard.full({}))
     Kit.ok(file and require("libs/libkoreader-lfs").attributes(file, "size") > 1000, "the card is saved as a picture")
     if file then os.remove(file) end
+    -- into a folder the reader chose: made absolute, a trailing slash and a relative path are fine
+    local lfs = require("libs/libkoreader-lfs")
+    local base = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-card"
+    os.execute("rm -rf '" .. base .. "'; mkdir -p '" .. base .. "/pics'")
+    local there = ProfileFlow.export(IdCard.full({}), base .. "/pics/")
+    Kit.ok(there and there:sub(1, 1) == "/" and not there:find("//", 1, true) and lfs.attributes(there, "size") > 1000,
+        "the card is saved in the chosen folder, whatever its trailing slash")
+    local cwd = lfs.currentdir()
+    lfs.chdir(base)
+    local rel = ProfileFlow.export(IdCard.full({}), "pics")
+    lfs.chdir(cwd)
+    Kit.ok(rel and rel:sub(1, 1) == "/", "a relative folder gives a full path")
+    local bad, why = ProfileFlow.export(IdCard.full({}), "/proc/no/such/folder")
+    Kit.ok(bad == nil and why ~= nil, "a folder that can't be written to is reported, not lost")
+    os.execute("rm -rf '" .. base .. "'")
 end
 
 -- data shards and bounties
