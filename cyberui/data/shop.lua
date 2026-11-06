@@ -4,6 +4,7 @@
 -- one style per category.
 
 local Catalogue = require("cyberui/data/catalogue")
+local Economy = require("cyberui/data/economy")
 local Ledger = require("cyberui/data/ledger")
 local Settings = require("cyberui/settings")
 
@@ -36,9 +37,14 @@ function Shop.category(id)
     end
 end
 
--- Is the style the reader's: free, or bought?
-function Shop.owned(style)
+-- Was the style paid for (or is it free)? Only this ever counts for keeps.
+local function bought(style)
     return style.price == 0 or Ledger.has("s", style.id)
+end
+
+-- Is the style the reader's to wear: bought, or lent while the economy is off?
+function Shop.owned(style)
+    return bought(style) or not Economy.on()
 end
 
 -- The setting that holds the worn style of a category.
@@ -59,8 +65,19 @@ function Shop.wear(style)
     return true
 end
 
--- Buy a style: true, or false and why ("owned", "short").
+-- Put back the free style wherever a look that was never paid for is worn,
+-- and forget the choice, so it does not return if it is bought later.
+function Shop.revert()
+    for _i, cat in ipairs(Catalogue) do
+        local chosen = by_id[Settings.get(key(cat.id))]
+        if chosen and not bought(chosen) then Settings.set(key(cat.id), nil) end
+    end
+    Settings.flush()
+end
+
+-- Buy a style: true, or false and why ("off", "owned", "short").
 function Shop.buy(style)
+    if not Economy.on() then return false, "off" end
     if Shop.owned(style) then return false, "owned" end
     return Ledger.spend(style.id, style.price)
 end

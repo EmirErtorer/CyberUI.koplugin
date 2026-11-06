@@ -6,6 +6,7 @@
 -- quotes = { path -> { price, days, t, sig } }, seen = { path -> { bits, sig } }.
 
 local Books = require("cyberui/data/books")
+local Economy = require("cyberui/data/economy")
 local BookList = require("ui/widget/booklist")
 local Library = require("cyberui/data/library")
 local Settings = require("cyberui/settings")
@@ -86,6 +87,7 @@ end
 
 -- Every open gig, the oldest first: { path, days, pages, price }.
 function Gigs.board()
+    if not Economy.on() then return {} end
     local all = Library.all()
     if cache and cache.all == all and cache.revision == Books.revision then return cache.list end
     local skip, quotes = skipped(), data().quotes
@@ -138,6 +140,7 @@ end
 -- Take the gig on a book that is about to be opened for the first time: the
 -- price is fixed as the board showed it. Does nothing for any other book.
 function Gigs.accept(path)
+    if not Economy.on() then return end
     local d = data()
     if d.quotes[path] or skipped()[path] or BookList.hasBookBeenOpened(path) then return end
     local days = daysIdle(path)
@@ -170,6 +173,7 @@ end
 
 -- Start following the open book if it is an accepted gig. Cheap for any other.
 function Gigs.follow(path)
+    if not Economy.on() then cur = nil; return end
     if cur and cur.path == path then return end
     local q = Gigs.quote(path)
     cur = q and { path = path, quote = q, bits = loadBits(path), total = 0 } or nil
@@ -195,7 +199,7 @@ end
 -- Pay what the followed book has earned so far (the book is closed, or the
 -- device sleeps) and keep what was seen. Returns the eddies paid.
 function Gigs.settle()
-    if not cur then return 0 end
+    if not cur or not Economy.on() then return 0 end
     local d = data()
     local paid = Ledger.verified().paid
     local milestone, finish = Gigs.split(cur.quote.price)

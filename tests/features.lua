@@ -361,6 +361,63 @@ do
     Ledger.reload()
 end
 
+-- the switch: off lends every look and pays nothing; on again keeps only what was bought
+do
+    local Economy = require("cyberui/data/economy")
+    local Gigs = require("cyberui/data/gigs")
+    local Ledger = require("cyberui/data/ledger")
+    local Settings = require("cyberui/settings")
+    local Shop = require("cyberui/data/shop")
+    local lfs = require("libs/libkoreader-lfs")
+    local saved, was_on = Settings.get("gigs"), Settings.get("gigs_on")
+    Settings.set("gigs", nil)
+    Settings.set("gigs_on", nil)
+    for _, cat in ipairs(Shop.categories) do Settings.set("style_" .. cat.id, nil) end
+    Gigs.reload()
+    local notch, circuit = Shop.style("frame.notch"), Shop.style("frame.circuit")
+    local top = Shop.category("frame").styles[#Shop.category("frame").styles]
+    Ledger.add("m", "/book", 1, 150)
+    Ledger.save()
+    Shop.buy(notch)
+    Kit.ok(Economy.on() and Ledger.balance() == 50 and not Shop.owned(top), "on by default, with a style bought and the top one not owned")
+    Economy.set(false)
+    Kit.ok(not Economy.on() and Shop.owned(top) and Shop.owned(circuit), "off lends every look")
+    Kit.ok(Shop.wear(top) and Shop.worn("frame") == top, "and one can be worn")
+    Kit.ok(select(2, Shop.buy(circuit)) == "off" and Ledger.balance() == 50 and #Gigs.board() == 0, "nothing can be bought and the board is empty")
+    local tmp = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-switch"
+    os.execute("rm -rf '" .. tmp .. "'; mkdir -p '" .. tmp .. "'")
+    local book = tmp .. "/Long.epub"
+    local f = io.open(book, "w"); f:write(string.rep("x", 600 * 1024)); f:close()
+    local old = os.time() - 80 * 86400
+    lfs.touch(book, old, old)
+    Gigs.accept(book)
+    Gigs.follow(book)
+    for p = 1, 300 do Gigs.page(p, 300) end
+    Kit.ok(Gigs.quote(book) == nil and Gigs.settle() == 0 and Ledger.balance() == 50, "reading while off takes no gig and pays nothing")
+    Shop.wear(notch)
+    Economy.set(true)
+    Kit.ok(Economy.on() and Shop.worn("frame") == notch and Settings.get("style_frame") == "frame.notch", "back on, a bought look stays worn")
+    Economy.set(false)
+    Shop.wear(top)
+    Economy.set(true)
+    Kit.ok(Shop.worn("frame").id == "frame.standard" and Settings.get("style_frame") == nil, "back on, a borrowed look goes back to the free one")
+    Ledger.add("m", "/book", 2, 2000)
+    Ledger.save()
+    Shop.buy(top)
+    Kit.ok(Shop.owned(top) and Shop.worn("frame").id == "frame.standard", "buying it later does not bring the old choice back")
+    -- the settings file edited by hand: the switch flipped on with a borrowed look still chosen
+    Economy.set(false)
+    Shop.wear(circuit)
+    Settings.set("gigs_on", true)
+    Kit.ok(Shop.worn("frame").id == "frame.standard" and not Shop.owned(circuit), "a borrowed look is not worn once the switch is on, however it got there")
+    Settings.set("gigs", saved)
+    Settings.set("gigs_on", was_on)
+    for _, cat in ipairs(Shop.categories) do Settings.set("style_" .. cat.id, nil) end
+    Gigs.reload()
+    Ledger.reload()
+    os.execute("rm -rf '" .. tmp .. "'")
+end
+
 -- a drag that arrives after the photo window was closed does nothing (it crashed once)
 do
     local BB = require("ffi/blitbuffer")

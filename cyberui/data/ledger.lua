@@ -9,6 +9,7 @@
 -- negative amount, `p` the id of the style bought).
 -- Stored as { quotes = {}, seen = {}, ledger = { { k, p, n, a, t, sig } } }.
 
+local Economy = require("cyberui/data/economy")
 local Profile = require("cyberui/data/profile")
 local Settings = require("cyberui/settings")
 local sha2 = require("ffi/sha2")
@@ -101,13 +102,15 @@ function Ledger.add(kind, id, n, amount)
     return e
 end
 
--- Buy something for `price` eddies: false and a reason when it is already
--- owned or the balance would go below zero.
-function Ledger.spend(id, price)
+-- Spend `price` eddies on something: false and a reason when the economy is
+-- off, it was already bought (the same id and number) or the balance would
+-- go below zero.
+function Ledger.spend(id, price, n)
+    if not Economy.on() then return false, "off" end
     if type(price) ~= "number" or price <= 0 then return false, "price" end
-    if Ledger.has("s", id) then return false, "owned" end
+    if Ledger.has("s", id, n) then return false, "owned" end
     if verified().balance < price then return false, "short" end
-    Ledger.add("s", id, 0, -price)
+    Ledger.add("s", id, n or 0, -price)
     Ledger.save()
     return true
 end
