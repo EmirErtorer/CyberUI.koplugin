@@ -3,6 +3,7 @@
 -- the cache has not seen are read in the background and reported when done.
 
 local BookList = require("ui/widget/booklist")
+local CustomProps = require("cyberui/data/customprops")
 local DocumentRegistry = require("document/documentregistry")
 local UIManager = require("ui/uimanager")
 local util = require("util")
@@ -42,7 +43,43 @@ local function firstAuthor(authors)
     return authors:match("^[^\n]+")
 end
 
--- Title, author, series, pages and description of a book.
+-- The genres in a keywords text: one per line (or separated by semicolons).
+function Books.genres(keywords)
+    local out, seen = {}, {}
+    for part in (keywords or ""):gmatch("[^\n;]+") do
+        local g = util.trim(part)
+        if g ~= "" and not seen[g:lower()] then
+            seen[g:lower()] = true
+            out[#out + 1] = g
+        end
+    end
+    return out
+end
+
+-- The details the book itself holds, from CoverBrowser's cache.
+local function original(path, bi)
+    return {
+        title = bi.title, authors = bi.authors, series = bi.series, series_index = bi.series_index,
+        keywords = bi.keywords, language = bi.language, description = bi.description, pages = bi.pages,
+    }
+end
+
+-- Lay the reader's own changes over a book's details.
+local function withCustom(info, path)
+    local custom = CustomProps.read(path)
+    for key, value in pairs(custom) do
+        if key == "title" and value ~= "" then info.title = value
+        elseif key == "authors" then info.authors, info.author = value, firstAuthor(value)
+        elseif key == "series_index" then info.series_index = tonumber(value) or value
+        else info[key] = value end
+    end
+    info.genres = Books.genres(info.keywords)
+    info.custom = custom
+    return info
+end
+
+-- Title, author, series, genres, pages and description of a book. `custom`
+-- holds what the reader changed, `original` what the book itself says.
 function Books.info(path)
     local info = info_cache[path]
     if info then return info end
@@ -56,17 +93,19 @@ function Books.info(path)
             authors = bi.authors,
             series = bi.series,
             series_index = bi.series_index,
+            keywords = bi.keywords,
             pages = bi.pages,
             description = bi.description,
             language = bi.language,
+            original = original(path, bi),
             known = true,
         }
     else
         info = { path = path, title = fileTitle(path), known = bi ~= nil }
         if not bi and m then Books.queue(path) end
     end
-    info_cache[path] = info
-    return info
+    info_cache[path] = withCustom(info, path)
+    return info_cache[path]
 end
 
 -- Reading state: { status, percent, pages, opened, annotated }. Status is

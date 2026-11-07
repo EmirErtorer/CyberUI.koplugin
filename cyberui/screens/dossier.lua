@@ -130,6 +130,9 @@ function Dossier:build()
         Layout.Row:new({ gap = th.space.s, children = folder_row }),
         Layout.Row:new({ gap = th.space.s, children = {
             Button:new({ label = _("RENAME"), icon = "edit", grow = true, on_tap = function() Actions.rename(path, moved) end }),
+            Button:new({ label = _("EDIT INFO"), icon = "edit", grow = true, on_tap = function() Actions.editDetails(path) end }),
+        } }),
+        Layout.Row:new({ gap = th.space.s, children = {
             Button:new({ label = _("MOVE TO"), icon = "move", grow = true, on_tap = function() Actions.move(path, moved) end }),
             Button:new({ label = _("DELETE"), icon = "trash", variant = "danger", grow = true,
                 on_tap = function() Actions.delete(path, function() App.back() end) end }),

@@ -1003,4 +1003,60 @@ do
     Settings.set("library_views", nil)
 end
 
+-- editing a book's details: written as custom metadata, laid over the book's own, taken back by saving empty
+do
+    local Books = require("cyberui/data/books")
+    local Metadata = require("cyberui/data/metadata")
+    local Groups = require("cyberui/data/libgroups")
+    local Library = require("cyberui/data/library")
+    local root = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-meta"
+    os.execute("rm -rf '" .. root .. "'; mkdir -p '" .. root .. "'")
+    local a, b, c = root .. "/a.epub", root .. "/b.epub", root .. "/c.pdf"
+    for _, f in ipairs({ a, b, c }) do io.open(f, "w"):close() end
+    local home = G_reader_settings:readSetting("home_dir")
+    G_reader_settings:saveSetting("home_dir", root)
+    Library.reset()
+
+    Kit.ok(table.concat(Books.genres("Fantasia\nAventura;  fantasia ;\n"), "|") == "Fantasia|Aventura", "genres split on lines and semicolons, once each")
+    Kit.ok(Metadata.parse("keywords", " Fantasia ; Épico\n") == "Fantasia\nÉpico", "several values are kept one per line")
+    Kit.ok(Metadata.parse("title", "   ") == nil, "an empty text takes a change back")
+    Kit.ok(Metadata.parse("series_index", "4") == "4" and Metadata.parse("series_index", "2,5") == "2.5", "a series number is kept plain")
+    local _n, why = Metadata.parse("series_index", "four")
+    Kit.ok(_n == nil and why == "number", "a series number that is not a number is refused")
+    Kit.ok(Metadata.show("keywords", "Fantasia\nÉpico") == "Fantasia; Épico", "genres read side by side")
+
+    Kit.ok(Metadata.set(a, "title", "O Senhor dos Anéis"), "a title is saved")
+    Kit.ok(Books.info(a).title == "O Senhor dos Anéis" and Metadata.changed(a, "title"), "the book shows the new title at once")
+    Metadata.set(a, "keywords", "Fantasia\nÉpico")
+    Metadata.set(a, "series", "A Roda do Tempo")
+    Metadata.set(a, "series_index", "4")
+    Metadata.set(a, "authors", "J.R.R. Tolkien\nChristopher Tolkien")
+    local info = Books.info(a)
+    Kit.ok(info.author == "J.R.R. Tolkien" and info.series == "A Roda do Tempo" and info.series_index == 4, "authors, series and number follow")
+    Kit.ok(#info.genres == 2 and info.genres[2] == "Épico", "genres follow")
+    local lfs = require("libs/libkoreader-lfs")
+    Kit.ok(lfs.attributes(root .. "/a.sdr/custom_metadata.lua", "mode") == "file", "KOReader's own custom metadata file is written")
+    Kit.ok(Books.info(b).title == "b" and not Metadata.changed(b), "other books are left alone")
+
+    -- genres group a book under each of its genres, books without one under "No genre"
+    Metadata.set(b, "keywords", "fantasia")
+    local names = {}
+    for _i, g in ipairs(Groups.list("genre")) do names[g.name .. "=" .. g.count] = true end
+    Kit.ok(names["Fantasia=2"] and names["Épico=1"] and names["No genre=1"], "the Genre grouping counts each genre (case ignored) and the books with none")
+    Kit.ok(#Groups.books("genre", "fantasia") == 2 and #Groups.books("genre", "~") == 1, "and lists the books of one")
+    Kit.ok(Groups.KINDS[5] and Groups.KINDS[5][1] == "genre", "Genre is among the groupings")
+
+    -- saving a detail empty brings the book's own back; the file goes when nothing is left
+    Metadata.set(a, "title", nil)
+    Kit.ok(Books.info(a).title == "a" and not Metadata.changed(a, "title") and Metadata.changed(a, "series"), "one detail goes back to the book's own")
+    Metadata.reset(a)
+    Kit.ok(not Metadata.changed(a) and lfs.attributes(root .. "/a.sdr/custom_metadata.lua", "mode") == nil, "resetting all removes the file")
+    Metadata.set(b, "keywords", nil)
+    Kit.ok(lfs.attributes(root .. "/b.sdr", "mode") == nil, "and the empty .sdr folder")
+
+    G_reader_settings:saveSetting("home_dir", home)
+    Library.reset()
+    os.execute("rm -rf '" .. root .. "'")
+end
+
 Kit.finish("features")

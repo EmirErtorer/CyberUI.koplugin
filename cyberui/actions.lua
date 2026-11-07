@@ -60,6 +60,11 @@ function Actions.details(path)
     App.push("dossier", { path = path })
 end
 
+-- Edit the book's title, authors, series, genres and language.
+function Actions.editDetails(path)
+    App.push("metaedit", { path = path })
+end
+
 -- Set the reading status ("new" for unread, "reading", "complete", "abandoned").
 function Actions.setStatus(path, status)
     Actions.writeStatus(path, status)
@@ -301,6 +306,7 @@ function Actions.bookSheet(path)
         { icon = "check", label = _("Status"), sub = Actions.statusName(st.status), on_tap = function() Actions.statusSheet(path) end },
         { icon = "collections", label = _("Collections"), on_tap = function() Actions.collect(path) end },
         { icon = "edit", label = _("Rename"), on_tap = function() Actions.rename(path) end },
+        { icon = "edit", label = _("Edit info"), sub = _("Title, authors, genres"), on_tap = function() Actions.editDetails(path) end },
         { icon = "move", label = _("Move to"), on_tap = function() Actions.move(path) end },
         { icon = "trash", label = _("Delete"), danger = true, on_tap = function() Actions.delete(path) end },
     }

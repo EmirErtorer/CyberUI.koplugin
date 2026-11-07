@@ -1,5 +1,5 @@
 -- Ways to see the library beyond its folders: books grouped by author,
--- series, status, format or when they were added (each group acts as a
+-- series, genre, status, format or when they were added (each group acts as a
 -- virtual folder), and the extra filters (format, collection, with notes).
 
 local Books = require("cyberui/data/books")
@@ -14,7 +14,7 @@ local inSeriesOrder   -- defined below
 -- The groupings: id and name. "folder" is the real folders, "all" no grouping.
 Groups.KINDS = {
     { "folder", _("Folders") }, { "all", _("All books") }, { "author", _("Author") }, { "series", _("Series") },
-    { "status", _("Status") }, { "format", _("Format") }, { "added", _("Added") },
+    { "genre", _("Genre") }, { "status", _("Status") }, { "format", _("Format") }, { "added", _("Added") },
 }
 
 local STATUS_NAMES = { new = _("Unread"), reading = _("Reading"), abandoned = _("On hold"), complete = _("Done") }
@@ -44,19 +44,34 @@ local function keyOf(kind, path)
     return y, os.date("%B %Y", lfs.attributes(path, "modification") or 0)
 end
 
+-- The groups a book is in for a grouping: { { key, name }, ... }. Only a book
+-- with several genres is in more than one.
+local function keysOf(kind, path)
+    if kind ~= "genre" then
+        local key, name = keyOf(kind, path)
+        return { { key, name } }
+    end
+    local out = {}
+    for _i, g in ipairs(Books.info(path).genres or {}) do out[#out + 1] = { g:lower(), g } end
+    if #out == 0 then out[1] = { "~", _("No genre") } end
+    return out
+end
+
 -- The groups of the whole library for a grouping: { key, name, count, first }
 -- sorted by name (most recent first for "added").
 function Groups.list(kind)
     local by_key, out = {}, {}
     for _i, p in ipairs(Library.all()) do
-        local key, name = keyOf(kind, p)
-        local g = by_key[key]
-        if not g then
-            g = { key = key, name = name, count = 0, first = p }
-            by_key[key] = g
-            out[#out + 1] = g
+        for _j, k in ipairs(keysOf(kind, p)) do
+            local key, name = k[1], k[2]
+            local g = by_key[key]
+            if not g then
+                g = { key = key, name = name, count = 0, first = p }
+                by_key[key] = g
+                out[#out + 1] = g
+            end
+            g.count = g.count + 1
         end
-        g.count = g.count + 1
     end
     table.sort(out, function(a, b)
         if kind == "added" then return a.key > b.key end
@@ -69,7 +84,9 @@ end
 function Groups.books(kind, key)
     local out = {}
     for _i, p in ipairs(Library.all()) do
-        if (keyOf(kind, p)) == key then out[#out + 1] = p end
+        for _j, k in ipairs(keysOf(kind, p)) do
+            if k[1] == key then out[#out + 1] = p; break end
+        end
     end
     if kind == "series" then table.sort(out, inSeriesOrder) end
     return out
