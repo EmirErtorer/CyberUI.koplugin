@@ -3015,6 +3015,10 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
+#: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
+msgid "// INPUT"
+msgstr ""
+
 #: cyberui/skin/specs.lua
 msgid "// WARNING"
 msgstr ""
@@ -3493,10 +3497,6 @@ msgstr ""
 
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
-msgstr ""
-
-#: cyberui/ui/textinput.lua
-msgid "// INPUT"
 msgstr ""
 
 #: cyberui/update/updater.lua

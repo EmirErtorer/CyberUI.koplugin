@@ -148,8 +148,8 @@ function Drive:init()
     end
     -- The text being typed in CyberUI's input panel, or nil when none is open.
     function H.typed()
-        local field = H.findWhere(function(el) return el.state ~= nil and el.state.text ~= nil end)
-        return field and field.state.text
+        local field = H.findWhere(function(el) return type(el.get) == "function" and el.rows ~= nil end)
+        return field and table.concat((field.get())) or nil
     end
     -- Type `text` by tapping the keys of CyberUI's keyboard (space taps the
     -- space bar, capitals use shift), then tap `ok` when given.

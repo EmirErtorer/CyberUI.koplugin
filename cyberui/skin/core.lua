@@ -23,7 +23,8 @@ function Core.wanted()
     return Settings.get("styled_menu", true)
 end
 
--- Add a skin: { name, matches(widget) -> bool, present(widget) -> Popup options or nil }.
+-- Add a skin: { name, matches(widget) -> bool, present(widget) -> Popup options or nil,
+-- install() (optional: patches KOReader's classes once) }.
 function Core.register(skin)
     for i, s in ipairs(Core.skins) do
         if s.name == skin.name then Core.skins[i] = skin; return end
@@ -95,7 +96,8 @@ local function twin(real_show, widget, popup, opts, ...)
         if type(stock_close) == "function" then return stock_close(self, ...) end
     end
     local result = real_show(UIManager, widget, ...)
-    if not opts.hidden then popup:open() end
+    popup:open()
+    if opts.on_shown then opts.on_shown(widget, popup) end
     return result
 end
 
@@ -105,6 +107,12 @@ local installed
 function Core.install()
     if installed then return end
     installed = true
+    for _i, skin in ipairs(Core.skins) do
+        if skin.install then
+            local ok, err = pcall(skin.install)
+            if not ok then logger.warn("CyberUI skin " .. skin.name .. " (install):", err) end
+        end
+    end
     local real_show = UIManager.show
     UIManager.show = function(um, widget, ...)
         if type(widget) ~= "table" or widget._cyberui_skinned or widget.name == "cyberui_popup" or not Core.wanted() then

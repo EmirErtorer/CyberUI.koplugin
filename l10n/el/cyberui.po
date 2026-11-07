@@ -3016,6 +3016,10 @@ msgstr "GITHUB // %s"
 msgid "Close"
 msgstr "Κλείσιμο"
 
+#: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
+msgid "// INPUT"
+msgstr "// ΕΙΣΟΔΟΣ"
+
 #: cyberui/skin/specs.lua
 msgid "// WARNING"
 msgstr "// ΠΡΟΕΙΔΟΠΟΙΗΣΗ"
@@ -3495,10 +3499,6 @@ msgstr "Αποθηκευτικός χώρος"
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
 msgstr "Χρόνος λειτουργίας"
-
-#: cyberui/ui/textinput.lua
-msgid "// INPUT"
-msgstr "// ΕΙΣΟΔΟΣ"
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"

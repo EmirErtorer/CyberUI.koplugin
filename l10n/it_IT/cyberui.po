@@ -3016,6 +3016,10 @@ msgstr "GITHUB // %s"
 msgid "Close"
 msgstr "Chiudi"
 
+#: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
+msgid "// INPUT"
+msgstr "// INPUT"
+
 #: cyberui/skin/specs.lua
 msgid "// WARNING"
 msgstr "// ATTENZIONE"
@@ -3495,10 +3499,6 @@ msgstr "Archiviazione"
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
 msgstr "Tempo di attività"
-
-#: cyberui/ui/textinput.lua
-msgid "// INPUT"
-msgstr "// INPUT"
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"

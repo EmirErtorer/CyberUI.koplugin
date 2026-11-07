@@ -153,10 +153,11 @@ function Dialog.choose(o, close, screen_w, screen_h)
 end
 
 -- Content docked to the top or bottom edge, the whole width, with an accent
--- line on its inner edge: the look of the drop-down menu.
-function Dialog.docked(kids, dock, screen_w)
+-- line on its inner edge: the look of the drop-down menu (`pad` is the room
+-- around the content, a roomy default).
+function Dialog.docked(kids, dock, screen_w, pad)
     local th = Theme.get()
-    local body = Panel:new({ shape = "none", fill = "bg", pad = th.space.xl,
+    local body = Panel:new({ shape = "none", fill = "bg", pad = pad or th.space.xl,
         child = Layout.Column:new({ gap = th.space.s, children = kids }) })
     local line = Deco.Divider:new({ color = "accent", height = Theme.px(3) })
     local panel = Layout.Column:new({ width = screen_w, children = dock == "bottom" and { line, body } or { body, line } })

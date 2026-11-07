@@ -3,14 +3,13 @@
 -- state ({ text, layer, shift }) and redraws through the handlers in `o`.
 
 local Button = require("cyberui/ui/button")
-local Element = require("cyberui/ui/element")
+local InputField = require("cyberui/ui/inputfield")
 local Keyboard = require("cyberui/ui/keyboard")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
-local Paint = require("cyberui/gfx/paint")
 local Panel = require("cyberui/ui/panel")
-local Text = require("cyberui/gfx/text")
 local Theme = require("cyberui/theme")
+local util = require("util")
 local _ = require("cyberui/gettext")
 
 local TextInput = {}
@@ -22,45 +21,19 @@ function TextInput.nextShift(shift)
     return "lock"
 end
 
----------------------------------------------------------------- Field
-local Field = Element:extend({ placeholder = "" })
-TextInput.Field = Field
-
--- One line of mono text plus padding.
-function Field:naturalHeight()
-    return Text.height("mono") + 2 * Theme.get().space.m
-end
-
--- An outlined box with a prompt, the end of the text and a block cursor.
-function Field:draw(bb, x, y)
-    local th = Theme.get()
-    local pad = th.space.m
-    Paint.fill(bb, x, y, self.w, self.h, th.c.bg)
-    Paint.frame(bb, x, y, self.w, self.h, th.size.stroke, th.c.ink)
-    local prompt = "> "
-    local pw = Text.width("mono", prompt)
-    local ty = y + math.floor((self.h - Text.height("mono")) / 2)
-    Text.draw(bb, x + pad, ty, "mono", prompt, th.c.muted)
-    local cursor_w = Theme.px(9)
-    local avail = self.w - 2 * pad - pw - cursor_w - Theme.px(2)
-    local tx = x + pad + pw
-    if self.state.text == "" then
-        Text.draw(bb, tx + cursor_w + Theme.px(4), ty, "mono", Text.fit("mono", self.placeholder, avail), th.c.muted)
-        Paint.fill(bb, tx, ty, cursor_w, Text.height("mono"), th.c.ink)
-        return
-    end
-    local shown = Text.fitTail("mono", self.state.text, avail)
-    local w = Text.draw(bb, tx, ty, "mono", shown, th.c.ink)
-    Paint.fill(bb, tx + w + Theme.px(2), ty, cursor_w, Text.height("mono"), th.c.ink)
-end
-
 ---------------------------------------------------------------- Panel
 -- Build the docked input panel. o: { title, placeholder, ok_label, state,
 -- on_char, on_back, on_enter, on_cancel, on_layer, on_shift, screen_w }.
 -- Returns the panel and its field (to repaint alone while typing).
 function TextInput.build(o)
     local th = Theme.get()
-    local field = Field:new({ state = o.state, placeholder = o.placeholder or "" })
+    local field = InputField:new({
+        hint = o.placeholder,
+        get = function()
+            local chars = util.splitToChars(o.state.text)
+            return chars, #chars + 1
+        end,
+    })
     local header = Layout.Row:new({ gap = th.space.m, children = {
         Label:new({ text = o.title, kind = "title", grow = true }),
         Button:new({ label = _("Cancel"), variant = "ghost", on_tap = o.on_cancel }),
