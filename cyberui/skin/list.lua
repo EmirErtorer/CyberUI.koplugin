@@ -35,6 +35,23 @@ local function mark(item)
     return icon:find("expand", 1, true) and "\u{25B8}" or "\u{25E6}"
 end
 
+-- Saved items (the bookmarks list) show their kind by an icon: KOReader gives each item a `type`.
+local KIND_ICONS = { highlight = "pen", note = "notes", bookmark = "bookmark" }
+
+-- What a saved item says: the passage (or the note, for a note), and under it where it is.
+local function savedItem(item)
+    local title = (item.type == "note" and item.note) or item.text_orig or item.text or ""
+    local meta = {}
+    if item.chapter and item.chapter ~= "" then meta[#meta + 1] = item.chapter end
+    if item.datetime then meta[#meta + 1] = item.datetime:match("^%S+") or item.datetime end
+    return title, #meta > 0 and table.concat(meta, " // ") or nil
+end
+
+-- Is this item of a table of contents (a chapter with a depth and a page)?
+local function chapter(item)
+    return item.page ~= nil and item.depth ~= nil
+end
+
 -- One item as a list row. A tap on the title chooses the item; KOReader tells a tap on the
 -- opening mark from one on the title by where the tap fell (as it does for its own rows), so the
 -- mark sends the left edge and the title the middle.
@@ -46,15 +63,26 @@ local function row(menu, item, index)
     local Theme = require("cyberui/theme")
     item.idx = index
     local mandatory = item.mandatory_func and item.mandatory_func() or item.mandatory
+    local current = menu.item_table.current
+    local title, meta = Menu.getMenuText(item), nil
+    local icon = KIND_ICONS[item.type]
+    if icon then title, meta = savedItem(item) end
+    -- in a table of contents, the chapters already passed are dimmed and the one you are in is marked
+    local passed = chapter(item) and current and index < current
     local built = ListRow.build({
-        title = Menu.getMenuText(item), value = mandatory ~= nil and tostring(mandatory) or nil,
-        value_color = (item.mandatory_dim or item.dim) and "muted" or "ink", dim = item.dim,
-        title_kind = (menu.item_table.current == index or item.bold) and "title" or nil,
-        path = type(item.file) == "string" and item.file or nil,
+        title = title, meta = meta, icon = icon, value = mandatory ~= nil and tostring(mandatory) or nil,
+        value_color = (item.mandatory_dim or item.dim or passed) and "muted" or "ink", dim = item.dim or passed,
+        title_kind = (current == index or item.bold) and "title" or nil,
+        path = (not icon and type(item.file) == "string") and item.file or nil,
         on_tap = function() menu:onMenuSelect(item, { x = 0.5, y = 0.5 }) end,
         on_hold = function() menu:onMenuHold(item) end,
     })
     built.grow = true
+    -- the chapter you are in has a bar in the accent colour down its left edge
+    if chapter(item) and current == index then
+        local Panel = require("cyberui/ui/panel")
+        built = Panel:new({ shape = "rail", line = "accent", pad = { 0, 0, 0, Theme.px(14) }, grow = true, child = built })
+    end
     local parts = {}
     local indent = tonumber(item.indent)
     if indent and indent > 0 then parts[#parts + 1] = Layout.Spacer:new({ width = math.min(Theme.px(60), indent) }) end
