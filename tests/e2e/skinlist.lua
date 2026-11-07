@@ -60,6 +60,61 @@ H.step(S, function()
     H.check(container._cyber_popup == nil, "closing KOReader's list closes the popup")
 end)
 
+-- a list that opens and closes, as the table of contents does: the mark on a row toggles it through KOReader, the title chooses it
+local tree, tree_container, expanded
+H.step(S, function()
+    local Menu = require("ui/widget/menu")
+    local Screen = require("device").screen
+    local function build()
+        local items = {}
+        local function add(text, depth, parent)
+            local item = { text = text, indent = depth * 20, mandatory = "1" }
+            if parent then
+                item.state = require("ui/widget/button"):new({ icon = expanded and "control.collapse" or "control.expand", bordersize = 0,
+                    callback = function()
+                        expanded = not expanded
+                        tree:switchItemTable(nil, build())
+                    end })
+            end
+            items[#items + 1] = item
+        end
+        add("Part one", 0, true)
+        if expanded then add("Chapter 1.1", 1) add("Chapter 1.2", 1) end
+        add("Part two", 0, false)
+        return items
+    end
+    tree_container = require("ui/widget/container/centercontainer"):new({ dimen = Screen:getSize(), covers_fullscreen = true })
+    tree = Menu:new({ title = "Tree", item_table = build(), is_borderless = true, covers_fullscreen = true, show_parent = tree_container,
+        close_callback = function() ran.tree_closed = true end })
+    function tree:onMenuSelect(item, pos)
+        if item.state and pos and pos.x < 0.3 then item.state.callback() else ran.tree_chose = item.text end
+        return true
+    end
+    tree_container[1] = tree
+    UIManager:show(tree_container)
+end)
+H.step(S, function()
+    H.check(H.find("Chapter 1.1") == nil and H.findWhere(function(e) return e.label == "\u{25B8}" end) ~= nil, "a closed chapter shows an opening mark")
+    H.shot("5-tree-closed")
+    local mark = H.findWhere(function(e) return e.label == "\u{25B8}" end)
+    H.tapAt(mark.x + mark.w / 2, mark.y + mark.h / 2)
+end)
+H.step(S, function()
+    H.check(H.find("Chapter 1.1") ~= nil and H.find("Chapter 1.2") ~= nil, "the mark opens the chapter, through KOReader's own button")
+    H.check(H.findWhere(function(e) return e.label == "\u{25BE}" end) ~= nil, "and now points the other way")
+    H.shot("6-tree-open")
+    H.tap("Part one")
+end)
+H.step(S, function()
+    H.check(ran.tree_chose == "Part one", "a tap on the title chooses the item, not toggles it")
+    local mark = H.findWhere(function(e) return e.label == "\u{25BE}" end)
+    H.tapAt(mark.x + mark.w / 2, mark.y + mark.h / 2)
+end)
+H.step(S, function()
+    H.check(H.find("Chapter 1.1") == nil, "the mark closes it again")
+    UIManager:close(tree_container)
+end)
+
 -- the table of contents in a book
 H.step(1, function() H.app().openBook(require("cyberui/data/library").all()[1]) end)
 H.step(5, function()

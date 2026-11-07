@@ -27,8 +27,19 @@ local function startIndex(menu)
         or (((menu.page or 1) - 1) * (menu.perpage or 1) + 1)
 end
 
--- One item as a list row.
+-- The mark of an item that opens and closes (a chapter with sub-chapters): which way it points
+-- is read from KOReader's own button for it.
+local function mark(item)
+    local icon = type(item.state) == "table" and item.state.icon or ""
+    if icon:find("collapse", 1, true) then return "\u{25BE}" end
+    return icon:find("expand", 1, true) and "\u{25B8}" or "\u{25E6}"
+end
+
+-- One item as a list row. A tap on the title chooses the item; KOReader tells a tap on the
+-- opening mark from one on the title by where the tap fell (as it does for its own rows), so the
+-- mark sends the left edge and the title the middle.
 local function row(menu, item, index)
+    local Button = require("cyberui/ui/button")
     local ListRow = require("cyberui/ui/listrow")
     local Menu = require("ui/widget/menu")
     local Layout = require("cyberui/ui/layout")
@@ -40,15 +51,20 @@ local function row(menu, item, index)
         value_color = (item.mandatory_dim or item.dim) and "muted" or "ink", dim = item.dim,
         title_kind = (menu.item_table.current == index or item.bold) and "title" or nil,
         path = type(item.file) == "string" and item.file or nil,
-        on_tap = function() menu:onMenuSelect(item) end,
+        on_tap = function() menu:onMenuSelect(item, { x = 0.5, y = 0.5 }) end,
         on_hold = function() menu:onMenuHold(item) end,
     })
+    built.grow = true
+    local parts = {}
     local indent = tonumber(item.indent)
-    if indent and indent > 0 then
-        built = Layout.Row:new({ children = { Layout.Spacer:new({ width = math.min(Theme.px(60), indent) }), built } })
-        built.children[2].grow = true
+    if indent and indent > 0 then parts[#parts + 1] = Layout.Spacer:new({ width = math.min(Theme.px(60), indent) }) end
+    if item.state then
+        parts[#parts + 1] = Button:new({ label = mark(item), variant = "tab", kind = "title", width = Theme.get().size.touch,
+            on_tap = function() menu:onMenuSelect(item, { x = 0, y = 0.5 }) end })
     end
-    return built
+    if #parts == 0 then return built end
+    parts[#parts + 1] = built
+    return Layout.Row:new({ children = parts })
 end
 
 -- The whole list as it is now, on page `page` of the ones the screen holds.
@@ -105,14 +121,19 @@ Core.register({
         local state = {}
         state.redraw = function() Core.redraw(widget, page(menu, state)) end
         -- KOReader changes the items and the page: the list follows
-        for _i, name in ipairs({ "updateItems", "switchItemTable" }) do
-            local stock = menu[name]
-            menu[name] = function(self, ...)
-                local r = stock(self, ...)
-                if name == "switchItemTable" then state.page = nil end
-                if widget._cyber_popup then state.redraw() end
-                return r
-            end
+        local update_items, switch = menu.updateItems, menu.switchItemTable
+        menu.updateItems = function(self, ...)
+            local r = update_items(self, ...)
+            if widget._cyber_popup then state.redraw() end
+            return r
+        end
+        -- a new list starts on its first page (or the current item's); the same list changed (a chapter opened) stays
+        menu.switchItemTable = function(self, new_title, ...)
+            local before = self.title
+            local r = switch(self, new_title, ...)
+            if new_title ~= nil and new_title ~= before then state.page = nil end
+            if widget._cyber_popup then state.redraw() end
+            return r
         end
         return {
             element = page(menu, state),
