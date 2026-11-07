@@ -111,7 +111,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] "Παραμένει στον κάδο για %d ημέρα."
 msgstr[1] "Παραμένει στον κάδο για %d ημέρες."
 
-#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/skin/semantics.lua ...
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -3016,6 +3016,14 @@ msgstr "GITHUB // %s"
 msgid "// LOOKUP"
 msgstr "// ΑΝΑΖΗΤΗΣΗ"
 
+#: cyberui/skin/edithighlight.lua
+msgid "// ADJUST"
+msgstr "// ΡΥΘΜΙΣΗ"
+
+#: cyberui/skin/edithighlight.lua
+msgid "// HIGHLIGHT"
+msgstr "// ΕΠΙΣΗΜΑΝΣΗ"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Κλείσιμο"
@@ -3031,6 +3039,18 @@ msgstr "// ΕΙΣΟΔΟΣ"
 #: cyberui/skin/list.lua
 msgid "No items"
 msgstr "Κανένα στοιχείο"
+
+#: cyberui/skin/semantics.lua
+msgid "MORE"
+msgstr "ΠΕΡΙΣΣΟΤΕΡΑ"
+
+#: cyberui/skin/semantics.lua
+msgid "START"
+msgstr "ΑΡΧΗ"
+
+#: cyberui/skin/semantics.lua
+msgid "END"
+msgstr "ΤΕΛΟΣ"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

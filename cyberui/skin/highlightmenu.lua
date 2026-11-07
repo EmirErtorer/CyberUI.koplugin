@@ -11,6 +11,7 @@ local Core = require("cyberui/skin/core")
 local Device = require("device")
 local Semantics = require("cyberui/skin/semantics")
 local Specs = require("cyberui/skin/specs")
+local Tiles = require("cyberui/skin/tiles")
 
 local Screen = Device.screen
 
@@ -18,36 +19,6 @@ local Skin = {}
 
 local pending   -- the selection while KOReader builds the menu for it: { text }
 local tagged = setmetatable({}, { __mode = "k" })   -- slot functions already wrapped
-
--- One action as a tile: its icon over its name; a tile that cannot be used is plain and takes no taps.
-local function tile(b)
-    local Icon = require("cyberui/ui/icon")
-    local Label = require("cyberui/ui/label")
-    local Layout = require("cyberui/ui/layout")
-    local Panel = require("cyberui/ui/panel")
-    local Theme = require("cyberui/theme")
-    local th = Theme.get()
-    local s = Specs.read(b)
-    local usable = s.enabled and s.callback ~= nil
-    return Panel:new({
-        shape = usable and "chamfer" or "frame", corners = "r", cut = "cut_small", fill = usable and "soft" or nil, line = usable and "soft" or "line",
-        pad = { th.space.m, th.space.xs }, grow = true,
-        on_tap = usable and s.callback or nil, on_hold = s.enabled and s.hold_callback or nil,
-        child = Layout.Column:new({ gap = th.space.xs, align = "center", children = {
-            Icon:new({ name = b.sem.icon, size = 26, color = usable and "ink" or "muted", width = Theme.px(40) }),
-            Label:new({ text = s.label, kind = "micro", color = usable and "ink" or "muted", align = "center", lines = 2 }),
-        } }),
-    })
-end
-
--- The buttons of one group as a row of tiles.
-local function row(buttons)
-    local Layout = require("cyberui/ui/layout")
-    local Theme = require("cyberui/theme")
-    local tiles = {}
-    for _i, b in ipairs(buttons) do tiles[#tiles + 1] = tile(b) end
-    return Layout.Row:new({ gap = Theme.get().space.s, children = tiles })
-end
 
 -- The card for the menu `dialog` made for `selection`.
 local function card(dialog, selection)
@@ -58,17 +29,16 @@ local function card(dialog, selection)
         for _j, b in ipairs(line) do
             local sem = Semantics.highlight(b.sem)
             if sem then
-                b.sem = sem
                 local g = groups[sem.group]
-                g[#g + 1] = b
+                g[#g + 1] = { b, sem }
             else
                 rest[#rest + 1] = b
             end
         end
     end
     local rows = {}
-    if #groups.act > 0 then rows[#rows + 1] = row(groups.act) end
-    if #groups.lookup > 0 then rows[#rows + 1] = row(groups.lookup) end
+    if #groups.act > 0 then rows[#rows + 1] = Tiles.row(groups.act) end
+    if #groups.lookup > 0 then rows[#rows + 1] = Tiles.row(groups.lookup) end
     -- anything else: plain buttons, two to a line
     local lines = {}
     for i = 1, #rest, 2 do lines[#lines + 1] = { rest[i], rest[i + 1] } end

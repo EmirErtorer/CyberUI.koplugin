@@ -111,7 +111,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] "Es bleibt %d Tag im Papierkorb."
 msgstr[1] "Es bleibt %d Tage im Papierkorb."
 
-#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/skin/semantics.lua ...
 msgid "Delete"
 msgstr "Löschen"
 
@@ -3016,6 +3016,14 @@ msgstr "GITHUB // %s"
 msgid "// LOOKUP"
 msgstr "// NACHSCHLAGEN"
 
+#: cyberui/skin/edithighlight.lua
+msgid "// ADJUST"
+msgstr "// ANPASSEN"
+
+#: cyberui/skin/edithighlight.lua
+msgid "// HIGHLIGHT"
+msgstr "// MARKIERUNG"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Schließen"
@@ -3031,6 +3039,18 @@ msgstr "// EINGABE"
 #: cyberui/skin/list.lua
 msgid "No items"
 msgstr "Keine Einträge"
+
+#: cyberui/skin/semantics.lua
+msgid "MORE"
+msgstr "MEHR"
+
+#: cyberui/skin/semantics.lua
+msgid "START"
+msgstr "ANFANG"
+
+#: cyberui/skin/semantics.lua
+msgid "END"
+msgstr "ENDE"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

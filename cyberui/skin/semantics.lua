@@ -4,7 +4,17 @@
 -- plugin adds, or one KOReader adds later) simply has no entry: it is drawn
 -- plainly, as any other button, so nothing here has to keep up.
 
+local gettext = require("gettext")
+local _ = require("cyberui/gettext")
+
 local Semantics = {}
+
+-- A button's text as KOReader writes it in the reader's language: its own
+-- catalogue is asked for the English text (and context), so the match holds
+-- in every language, and simply fails when KOReader words something differently.
+local function koreader(msgid, ctx)
+    return ctx and gettext.pgettext(ctx, msgid) or gettext(msgid)
+end
 
 -- By the name of a highlight-menu slot (without its number): the icon and the
 -- group it belongs to ("act": what you do with the selection, "lookup": what
@@ -24,6 +34,30 @@ local HIGHLIGHT = {
 function Semantics.highlight(slot)
     local name = type(slot) == "string" and slot:match("^%d+_(.+)$")
     return name and HIGHLIGHT[name] or nil
+end
+
+-- The buttons of KOReader's dialog for a saved highlight (tapped on the page),
+-- found by their text as KOReader writes it: { text or glyph, context, then
+-- what they are }. The ones drawn as symbols are matched by the symbol.
+local EDIT = {
+    { glyph = "\u{F48E}", id = "delete", icon = "trash", danger = true, label = _("Delete") },
+    { msgid = "Style", ctx = "Highlight", id = "style", icon = "edit" },
+    { msgid = "Color", ctx = "Highlight", id = "color", icon = "wheel" },
+    { msgid = "Note", id = "note", icon = "notes" },
+    { msgid = "Details", id = "details", icon = "eye" },
+    { glyph = "\u{2026}", id = "more", icon = "menu", label = _("MORE") },
+    { glyph = "\u{25C1}\u{2592}\u{2592}", id = "start_earlier", icon = "back", label = _("START"), edge = true },
+    { glyph = "\u{25B7}\u{2613}\u{2592}", id = "start_later", icon = "forward", label = _("START"), edge = true },
+    { glyph = "\u{2592}\u{2613}\u{25C1}", id = "end_earlier", icon = "back", label = _("END"), edge = true },
+    { glyph = "\u{2592}\u{2592}\u{25B7}", id = "end_later", icon = "forward", label = _("END"), edge = true },
+}
+
+-- What a button of that dialog is, from its text, or nil when it is not one KOReader names.
+function Semantics.edit(text)
+    for _i, e in ipairs(EDIT) do
+        if (e.glyph and text == e.glyph) or (e.msgid and text == koreader(e.msgid, e.ctx)) then return e end
+    end
+    return nil
 end
 
 return Semantics

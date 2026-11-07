@@ -113,7 +113,7 @@ msgstr[0] "Пролежит в корзине %d день."
 msgstr[1] "Пролежит в корзине %d дня."
 msgstr[2] "Пролежит в корзине %d дней."
 
-#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/skin/semantics.lua ...
 msgid "Delete"
 msgstr "Удалить"
 
@@ -3050,6 +3050,14 @@ msgstr "GITHUB // %s"
 msgid "// LOOKUP"
 msgstr "// СЛОВАРЬ"
 
+#: cyberui/skin/edithighlight.lua
+msgid "// ADJUST"
+msgstr "// НАСТРОЙКА"
+
+#: cyberui/skin/edithighlight.lua
+msgid "// HIGHLIGHT"
+msgstr "// ВЫДЕЛЕНИЕ"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Закрыть"
@@ -3065,6 +3073,18 @@ msgstr "// ВВОД"
 #: cyberui/skin/list.lua
 msgid "No items"
 msgstr "Нет элементов"
+
+#: cyberui/skin/semantics.lua
+msgid "MORE"
+msgstr "ЕЩЁ"
+
+#: cyberui/skin/semantics.lua
+msgid "START"
+msgstr "НАЧАЛО"
+
+#: cyberui/skin/semantics.lua
+msgid "END"
+msgstr "КОНЕЦ"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

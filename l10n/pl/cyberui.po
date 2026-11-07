@@ -113,7 +113,7 @@ msgstr[0] "Poleży w koszu %d dzień."
 msgstr[1] "Poleży w koszu %d dni."
 msgstr[2] "Poleży w koszu %d dni."
 
-#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/skin/semantics.lua ...
 msgid "Delete"
 msgstr "Usuń"
 
@@ -3050,6 +3050,14 @@ msgstr "GITHUB // %s"
 msgid "// LOOKUP"
 msgstr "// SŁOWNIK"
 
+#: cyberui/skin/edithighlight.lua
+msgid "// ADJUST"
+msgstr "// DOSTOSUJ"
+
+#: cyberui/skin/edithighlight.lua
+msgid "// HIGHLIGHT"
+msgstr "// ZAKREŚLENIE"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Zamknij"
@@ -3065,6 +3073,18 @@ msgstr "// WEJŚCIE"
 #: cyberui/skin/list.lua
 msgid "No items"
 msgstr "Brak pozycji"
+
+#: cyberui/skin/semantics.lua
+msgid "MORE"
+msgstr "WIĘCEJ"
+
+#: cyberui/skin/semantics.lua
+msgid "START"
+msgstr "POCZĄTEK"
+
+#: cyberui/skin/semantics.lua
+msgid "END"
+msgstr "KONIEC"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

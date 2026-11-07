@@ -111,7 +111,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] "%d gün çöpte bekler."
 msgstr[1] "%d gün çöpte bekler."
 
-#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/skin/semantics.lua ...
 msgid "Delete"
 msgstr "Sil"
 
@@ -3016,6 +3016,14 @@ msgstr "GITHUB // %s"
 msgid "// LOOKUP"
 msgstr "// SÖZLÜK"
 
+#: cyberui/skin/edithighlight.lua
+msgid "// ADJUST"
+msgstr "// AYARLA"
+
+#: cyberui/skin/edithighlight.lua
+msgid "// HIGHLIGHT"
+msgstr "// VURGU"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Kapat"
@@ -3031,6 +3039,18 @@ msgstr "// GİRİŞ"
 #: cyberui/skin/list.lua
 msgid "No items"
 msgstr "Öğe yok"
+
+#: cyberui/skin/semantics.lua
+msgid "MORE"
+msgstr "DAHA FAZLA"
+
+#: cyberui/skin/semantics.lua
+msgid "START"
+msgstr "BAŞLANGIÇ"
+
+#: cyberui/skin/semantics.lua
+msgid "END"
+msgstr "SON"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"
