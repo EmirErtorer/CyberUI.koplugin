@@ -36,7 +36,7 @@ local function mark(item)
 end
 
 -- Saved items (the bookmarks list) show their kind by an icon: KOReader gives each item a `type`.
-local KIND_ICONS = { highlight = "pen", note = "notes", bookmark = "bookmark" }
+local KIND_ICONS = { highlight = "pen", note = "notes", bookmark = "bookmark" }   -- i18n: keep
 
 -- What a saved item says: the passage (or the note, for a note), and under it where it is.
 local function savedItem(item)
@@ -90,8 +90,7 @@ local function row(menu, item, index)
         parts[#parts + 1] = Button:new({ label = mark(item), variant = "tab", kind = "title", width = Theme.get().size.touch,
             on_tap = function() menu:onMenuSelect(item, { x = 0, y = 0.5 }) end })
     end
-    if #parts == 0 then return built end
-    parts[#parts + 1] = built
+    parts[#parts + 1] = built   -- (in a row always: `grow` of the row's content is about its width, never its height)
     return Layout.Row:new({ children = parts })
 end
 
