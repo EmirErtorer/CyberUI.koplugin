@@ -10,6 +10,9 @@ local Shop = require("cyberui/data/shop")
 local lfs = require("libs/libkoreader-lfs")
 
 local A, price
+-- pages are read at twenty seconds apiece, as a reader would (a page must stay on screen to count)
+local now = os.time()
+Gigs.clock = function() now = now + 20; return now end
 local function app() return H.app() end
 local function screen() return H.app().current() end
 
@@ -50,8 +53,7 @@ H.step(5, function()
     H.event("CyberUIHome")
 end)
 H.step(1, function()
-    local step = price / 20
-    H.check(Ledger.balance() == step * 3, "a third of the way paid three milestones: " .. Ledger.balance() .. " of " .. price)
+    H.check(Ledger.balance() == Gigs.paidAt(price, 3), "a third of the way paid three milestones: " .. Ledger.balance() .. " of " .. price)
     H.check(Gigs.takeReceipt() == nil, "the notice for it was shown")
     app().go("home")
 end)

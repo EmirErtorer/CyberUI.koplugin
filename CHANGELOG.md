@@ -22,6 +22,7 @@ versions marked *Prerelease* are test builds.
 - **Rename a collection.** Holding a collection now offers Rename and Delete. Saved filters and views that named it follow the new name.
 
 ### Changed
+- **Eddies are paid for reading, not for turning pages.** A page counts as read once it has been on screen for 15 seconds, so flipping through a book pays nothing. Pictures and files under 50 pages no longer pay or appear as gigs, and the guess of a never-opened book's length is capped at 800 pages. Prices are exact (no longer rounded to steps of 20): a 300-page book pays 30 eddies at the plain rate, and each tenth and the finish add up to the price to the eddy. Gigs already taken keep their price and what they paid.
 - **The keyboard has accented capitals and a locked Shift.** The accented layer now covers Portuguese, Spanish, French, German, Turkish and Polish letters (á, ã, õ, ê, ç, ñ, ł and more) and has its own Shift key. Tap Shift once for one capital, twice to lock it until tapped again; the lock stays across the letter and accented layers.
 - **The menu's lists are taller**, taking up to 80% of the screen (was half), so most tabs fit without turning pages. System > Home > Menu height sets it to 50, 65, 80 or 90%.
 - **Lumen and tint are sliders** (cyberpunk cells you tap or drag) in the Deck and Controls pages of the menu, and in KOReader's own frontlight window, instead of the + and - buttons.

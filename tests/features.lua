@@ -253,17 +253,28 @@ do
     Shards.file = nil
 
     local Gigs = require("cyberui/data/gigs")
+    -- reading goes at a steady pace of half a minute a page, unless a test sets another
+    local now = 1700000000
+    Gigs.clock = function() now = now + 30; return now end
     local board = Gigs.board()
     local last = 1e9
     for _, g in ipairs(board) do
         Kit.ok(g.days >= Gigs.GRACE_DAYS and g.price == Gigs.price(g.pages, g.days) and g.days <= last, "a gig is priced from its pages and days idle, oldest first")
         last = g.days
     end
-    Kit.ok(Gigs.price(300, 7) == 80 and Gigs.price(300, 28) == 120 and Gigs.price(300, 700) == 120, "a gig's price grows by a quarter a week and stops at double after four weeks")
-    Kit.ok(Gigs.price(1, 7) == 20 and Gigs.price(100, 14) % 20 == 0, "prices are whole steps of 20")
-    Kit.ok(Gigs.basePrice(300) == 40 and Gigs.basePrice(10) == 20, "any other book pays half the gig rate, in steps of 20")
-    local step, finish = Gigs.split(120)
-    Kit.ok(step == 6 and finish == 60 and step * 10 + finish == 120, "ten steps and the finish add up to the price")
+    Kit.ok(Gigs.price(300, 7) == 75 and Gigs.price(300, 28) == 120 and Gigs.price(300, 700) == 120, "a gig's price grows by a quarter a week and stops at double after four weeks")
+    Kit.ok(Gigs.price(1, 7) == 1 and Gigs.price(100, 14) == 30, "prices are whole eddies, not rounded up to a step")
+    Kit.ok(Gigs.basePrice(300) == 30 and Gigs.basePrice(10) == 1, "any other book pays half the gig rate")
+    local total = 0
+    for k = 1, 10 do total = total + Gigs.milestone(120, k) end
+    Kit.ok(Gigs.milestone(120, 1) == 6 and Gigs.finish(120) == 60 and total + Gigs.finish(120) == 120, "ten steps and the finish add up to the price")
+    total = 0
+    for k = 1, 10 do total = total + Gigs.milestone(75, k) end
+    Kit.ok(total == 37 and Gigs.finish(75) == 38 and Gigs.milestone(75, 10) > 0, "a price that does not divide still adds up, and the last tenth pays")
+    total = 0
+    for k = 1, 10 do total = total + Gigs.milestone(5, k) end
+    Kit.ok(total == 2 and Gigs.finish(5) == 3 and Gigs.milestone(5, 10) > 0, "even a tiny price pays out in full")
+    Kit.ok(not Gigs.eligible("/x/picture.png") and not Gigs.eligible("/x/scan.JPG"), "pictures never pay")
     Kit.ok(#board <= Gigs.slots(), "the board never holds more than its slots")
     if #board > 0 then
         Gigs.skip(board[1].path)
@@ -353,7 +364,7 @@ do
         lfs.touch(string.format("%s/Book%02d.epub", tmp, i), old, old)
     end
     local fresh = tmp .. "/Fresh.epub"
-    local f = io.open(fresh, "w"); f:write("x"); f:close()
+    local f = io.open(fresh, "w"); f:write(string.rep("x", 200 * 1024)); f:close()
     G_reader_settings:saveSetting("home_dir", tmp)
     Library.reset()
     Settings.set("gigs", nil); Settings.set("gig_slots", nil); Settings.set("gig_rotation", nil); Settings.set("bounty_skipped", nil)
@@ -407,6 +418,33 @@ do
     Kit.ok(#Gigs.active() == 1 and Gigs.active()[1].path == on, "the active list holds gigs only")
     local earned, done = Ledger.totals()
     Kit.ok(done == 0, "a plain book does not count as a gig done")
+    -- pictures and tiny files do not pay, at the plain rate or as gigs
+    local tiny, pic, steady = tmp .. "/Tiny.pdf", tmp .. "/Photo.png", tmp .. "/Steady.epub"
+    for _, path in ipairs({ tiny, pic }) do local h = io.open(path, "w"); h:write(string.rep("x", 20 * 1024)); h:close() end
+    local h = io.open(steady, "w"); h:write(string.rep("x", 600 * 1024)); h:close()
+    local before2 = Ledger.balance()
+    for _, path in ipairs({ tiny, pic }) do
+        Gigs.follow(path)
+        Gigs.page(1, 1)
+        Kit.ok(Gigs.quote(path) == nil and Gigs.settle() == 0, "a tiny file or a picture pays nothing: " .. path:match("[^/]+$"))
+    end
+    Kit.ok(Ledger.balance() == before2, "and no eddies appear")
+    -- turning pages without reading pays nothing: a page must stay on screen
+    local real = Gigs.clock
+    local t0 = 1800000000
+    Gigs.clock = function() return t0 end   -- time stands still: pages turned as fast as they come
+    Gigs.follow(steady)
+    for p = 1, 300 do Gigs.page(p, 300) end
+    Kit.ok(Gigs.quote(steady) ~= nil and Gigs.settle() == 0, "turning every page at once pays nothing")
+    t0 = 1800000000
+    Gigs.clock = function() t0 = t0 + 10; return t0 end   -- ten seconds a page: still too fast
+    Gigs.follow(steady)
+    for p = 1, 300 do Gigs.page(p, 300) end
+    Kit.ok(Gigs.settle() == 0, "ten seconds a page is still skimming")
+    Gigs.clock = function() t0 = t0 + 16; return t0 end   -- sixteen seconds a page counts
+    for p = 1, 300 do Gigs.page(p, 300) end
+    Kit.ok(Gigs.settle() == Gigs.basePrice(300), "sixteen seconds a page is reading: the whole plain price")
+    Gigs.clock = real
     Settings.set("gigs", saved[1]); Settings.set("gig_slots", saved[2]); Settings.set("gig_rotation", saved[3]); Settings.set("bounty_skipped", saved[4])
     G_reader_settings:saveSetting("home_dir", home)
     Library.reset()

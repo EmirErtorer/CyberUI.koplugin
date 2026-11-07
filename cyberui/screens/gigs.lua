@@ -70,7 +70,7 @@ end
 local function poster(g)
     local th = Theme.get()
     local info = Books.info(g.path)
-    local step, finish = Gigs.split(g.price)
+    local step, finish = Gigs.paidAt(g.price, 10) / 10, Gigs.finish(g.price)
     return Panel:new({ shape = "brackets", label = _("TOP_GIG"), pad = th.space.l, on_hold = function() holdSheet(g) end,
         child = Layout.Row:new({ gap = th.space.l, valign = "stretch", children = {
             Cover:new({ path = g.path, width = Theme.px(96), height = Theme.px(140), on_tap = function() Actions.details(g.path) end }),
@@ -138,14 +138,13 @@ function GigsScreen:activeTab()
     local grid = Grid:new({
         grow = true, items = list, page = self.page, cols = 1, cell_h = Theme.px(84), gap = 0, row_gap = 0,
         make = function(g)
-            local step = Gigs.split(g.price)
             return Panel:new({ shape = "none", pad = th.space.s, on_tap = function() Actions.open(g.path) end,
                 child = Layout.Row:new({ gap = th.space.m, valign = "center", children = {
                     Cover:new({ path = g.path, width = Theme.px(40), height = Theme.px(60) }),
                     Layout.Column:new({ grow = true, gap = th.space.xs, children = {
                         Label:new({ text = Books.info(g.path).title, kind = "body" }),
                         Progress:new({ value = g.milestones / 10, segments = 10 }),
-                        Label:new({ text = string.format(_("%s OF %s PAID"), Format.credits(g.milestones * step), Format.credits(g.price)),
+                        Label:new({ text = string.format(_("%s OF %s PAID"), Format.credits(Gigs.paidAt(g.price, g.milestones)), Format.credits(g.price)),
                             kind = "mono_small", color = "muted" }),
                     } }),
                 } }) })

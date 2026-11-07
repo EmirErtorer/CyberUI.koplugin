@@ -9,6 +9,9 @@ local Settings = require("cyberui/settings")
 local lfs = require("libs/libkoreader-lfs")
 
 local app = H.app
+-- pages are read at twenty seconds apiece, as a reader would (a page must stay on screen to count)
+local now = os.time()
+Gigs.clock = function() now = now + 20; return now end
 local books = {}
 local pos = {}   -- the last page read of each book
 
@@ -58,11 +61,11 @@ local function stage(kind, k)
     H.step(1.3, function()
         local q = Gigs.quote(book())
         local paid = Ledger.balance() - before
-        local step = q and q.price / 20 or -1
+        local step = q and Gigs.milestone(q.price, k) or -1
         if k == 0 then
             H.check(paid == 0 and shown == nil, kind .. ": a few pages pay nothing (paid " .. paid .. ")")
         else
-            local want = k < 10 and step or step + q.price / 2
+            local want = k < 10 and step or step + Gigs.finish(q.price)
             H.check(q ~= nil and paid == want, string.format("%s: tenth %d pays %s (paid %s)", kind, k, tostring(want), tostring(paid)))
             H.check(shown ~= nil, kind .. ": the notice says: " .. tostring(shown))
         end

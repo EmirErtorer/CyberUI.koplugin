@@ -27,12 +27,19 @@ Gigs.BASE_RATE = 0.1    -- eddies per page for any other book
 Gigs.ROLL_COST = 20     -- eddies to swap a gig on the board for another
 Gigs.SLOTS = { 3, 5, 10 }
 Gigs.ROTATIONS = { 3, 7, 14 }
-Gigs.STEP = 20          -- prices are whole multiples of this, so a tenth of the half is whole
 Gigs.NEEDED = 0.7       -- the share of a stretch of book that must have been seen to count as read
+Gigs.MIN_SECONDS = 15   -- a page counts as read only after it has been on screen this long
+Gigs.MIN_PAGES = 50     -- shorter files (pictures, one-page documents) are not books that pay
+Gigs.MAX_ESTIMATE = 800 -- the most pages guessed for a book from the size of its file
 
 -- Rough kilobytes of file per page, by kind of file, for books never opened.
 local KB_PER_PAGE = { pdf = 60, djvu = 60, djv = 60, cbz = 300, cbr = 300 }
 local TEXT_KB_PER_PAGE = 2
+-- Files that are pictures, not books: they never pay, whatever their size.
+local PICTURES = { png = true, jpg = true, jpeg = true, gif = true, webp = true, bmp = true, tif = true, tiff = true, svg = true }
+
+-- The time now in seconds (the tests replace it to set the pace of reading).
+Gigs.clock = os.time
 
 local cache         -- { all, revision, list }: the board
 local cur           -- the book being read: { path, bits (table of 100), total, quote }
@@ -66,29 +73,46 @@ function Gigs.pages(path)
     if known and known > 0 then return known end
     local ext = (path:match("%.(%w+)$") or ""):lower()
     local kb = (lfs.attributes(path, "size") or 0) / 1024
-    return math.max(30, math.min(1200, math.floor(kb / (KB_PER_PAGE[ext] or TEXT_KB_PER_PAGE) + 0.5)))
+    return math.min(Gigs.MAX_ESTIMATE, math.floor(kb / (KB_PER_PAGE[ext] or TEXT_KB_PER_PAGE) + 0.5))
 end
 
--- A price rounded to the nearest whole step, at least one step.
-local function stepped(eddies)
-    return math.max(Gigs.STEP, math.floor(eddies / Gigs.STEP + 0.5) * Gigs.STEP)
+-- Is this file a book that can pay: not a picture, and long enough?
+function Gigs.eligible(path)
+    local ext = (path:match("%.(%w+)$") or ""):lower()
+    return not PICTURES[ext] and Gigs.pages(path) >= Gigs.MIN_PAGES
+end
+
+-- A price in whole eddies, at least one.
+local function priced(eddies)
+    return math.max(1, math.floor(eddies + 0.5))
 end
 
 -- The price of a gig that has sat `days` days: its pages at the gig rate, up
 -- by a quarter for every idle week to twice at most.
 function Gigs.price(pages, days)
     local factor = math.min(Gigs.MAX_FACTOR, 1 + Gigs.WEEK_BONUS * math.floor(days / 7))
-    return stepped(pages * Gigs.PAGE_RATE * factor)
+    return priced(pages * Gigs.PAGE_RATE * factor)
 end
 
 -- What any other book pays in all: its pages at the plain rate.
 function Gigs.basePrice(pages)
-    return stepped(pages * Gigs.BASE_RATE)
+    return priced(pages * Gigs.BASE_RATE)
 end
 
--- What a price pays: each 10% of the book, and the finish.
-function Gigs.split(price)
-    return price / 20, price / 2
+-- What the first half of a price has paid once `n` of the ten tenths are read
+-- (whole eddies, spread as evenly as they go), and the rest, paid at the finish.
+function Gigs.paidAt(price, n)
+    return math.floor(n * math.floor(price / 2) / 10)
+end
+
+-- What tenth number `k` pays.
+function Gigs.milestone(price, k)
+    return Gigs.paidAt(price, k) - Gigs.paidAt(price, k - 1)
+end
+
+-- What finishing pays: the half of the price that the tenths did not.
+function Gigs.finish(price)
+    return price - math.floor(price / 2)
 end
 
 -- Days since a file was added.
@@ -114,7 +138,7 @@ local function candidates(all)
     local skip, quotes = skipped(), data().quotes
     local set, list = {}, {}
     for _i, path in ipairs(all) do
-        if not skip[path] and not quotes[path] and not BookList.hasBookBeenOpened(path) and daysIdle(path) >= Gigs.GRACE_DAYS then
+        if not skip[path] and not quotes[path] and not BookList.hasBookBeenOpened(path) and daysIdle(path) >= Gigs.GRACE_DAYS and Gigs.eligible(path) then
             set[path] = true
             list[#list + 1] = path
         end
@@ -269,7 +293,7 @@ end
 -- into before could never be paid for fairly.
 local function plainQuote(path)
     local state = Books.state(path)
-    if state.status == "complete" or state.percent > 0.1 then return nil end
+    if state.status == "complete" or state.percent > 0.1 or not Gigs.eligible(path) then return nil end
     local q = { price = Gigs.basePrice(Gigs.pages(path)), days = 0, t = os.time() }
     q.sig = sign(quoteText(path, q))
     local d = data()
@@ -287,13 +311,30 @@ function Gigs.follow(path)
     cur = q and { path = path, quote = q, bits = loadBits(path), total = 0 } or nil
 end
 
--- A page of the followed book was shown: mark the percents it covers.
-function Gigs.page(page, total)
-    if not cur or not total or total < 1 then return end
-    cur.total = total
+-- Mark the percents a page covers as seen.
+local function see(page, total)
     local lo = math.floor((page - 1) * 100 / total) + 1
     local hi = math.max(lo, math.floor(page * 100 / total))
     for i = math.max(1, lo), math.min(100, hi) do cur.bits[i] = true end
+end
+
+-- Count the page on screen if it stayed long enough to have been read.
+local function readIfStayed(shown, now)
+    if shown and not shown.counted and now - shown.t >= Gigs.MIN_SECONDS then
+        shown.counted = true
+        see(shown.page, shown.total)
+    end
+end
+
+-- A page of the followed book was shown. It counts as read once it has stayed
+-- on screen for MIN_SECONDS, so turning through a book pays nothing.
+function Gigs.page(page, total)
+    if not cur or not total or total < 1 then return end
+    cur.total = total
+    local now = Gigs.clock()
+    if cur.shown and cur.shown.page == page and cur.shown.total == total then return end
+    readIfStayed(cur.shown, now)
+    cur.shown = { page = page, total = total, t = now }
 end
 
 -- Has the first `upto` percent been reached, and enough of it seen to count
@@ -310,21 +351,25 @@ function Gigs.settle()
     if not cur or not Economy.on() then return 0 end
     local d = data()
     local paid = Ledger.verified().paid
-    local milestone, finish = Gigs.split(cur.quote.price)
+    readIfStayed(cur.shown, Gigs.clock())
+    local price = cur.quote.price
     local gig = cur.quote.days > 0
     local mk, fk = gig and "m" or "n", gig and "f" or "e"   -- the entry kinds: gig, or plain rate
     local total, finished = 0, false
     for k = 1, 10 do
         if not paid[mk .. "|" .. cur.path .. "|" .. k] and read(cur.bits, k * 10) then
-            Ledger.add(mk, cur.path, k, milestone)
-            total = total + milestone
-            paid[mk .. "|" .. cur.path .. "|" .. k] = true
+            local pay = Gigs.milestone(price, k)   -- a tenth of a small price can pay nothing: no entry then
+            if pay > 0 then
+                Ledger.add(mk, cur.path, k, pay)
+                total = total + pay
+                paid[mk .. "|" .. cur.path .. "|" .. k] = true
+            end
         end
     end
     local complete = Books.state(cur.path).status == "complete" or cur.bits[100] or cur.bits[99]
     if not paid[fk .. "|" .. cur.path .. "|0"] and paid[mk .. "|" .. cur.path .. "|10"] and complete then
-        Ledger.add(fk, cur.path, 0, finish)
-        total, finished = total + finish, true
+        Ledger.add(fk, cur.path, 0, Gigs.finish(price))
+        total, finished = total + Gigs.finish(price), true
     end
     local chars = {}
     for i = 1, 100 do chars[i] = cur.bits[i] and "1" or "0" end
