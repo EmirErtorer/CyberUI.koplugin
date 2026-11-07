@@ -3051,8 +3051,12 @@ msgid "// LOOKUP"
 msgstr "// СЛОВАРЬ"
 
 #: cyberui/skin/edithighlight.lua
-msgid "// ADJUST"
-msgstr "// НАСТРОЙКА"
+msgid "START"
+msgstr "НАЧАЛО"
+
+#: cyberui/skin/edithighlight.lua
+msgid "END"
+msgstr "КОНЕЦ"
 
 #: cyberui/skin/edithighlight.lua
 msgid "// HIGHLIGHT"
@@ -3077,14 +3081,6 @@ msgstr "Нет элементов"
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "ЕЩЁ"
-
-#: cyberui/skin/semantics.lua
-msgid "START"
-msgstr "НАЧАЛО"
-
-#: cyberui/skin/semantics.lua
-msgid "END"
-msgstr "КОНЕЦ"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

@@ -3017,8 +3017,12 @@ msgid "// LOOKUP"
 msgstr "// NACHSCHLAGEN"
 
 #: cyberui/skin/edithighlight.lua
-msgid "// ADJUST"
-msgstr "// ANPASSEN"
+msgid "START"
+msgstr "ANFANG"
+
+#: cyberui/skin/edithighlight.lua
+msgid "END"
+msgstr "ENDE"
 
 #: cyberui/skin/edithighlight.lua
 msgid "// HIGHLIGHT"
@@ -3043,14 +3047,6 @@ msgstr "Keine Einträge"
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "MEHR"
-
-#: cyberui/skin/semantics.lua
-msgid "START"
-msgstr "ANFANG"
-
-#: cyberui/skin/semantics.lua
-msgid "END"
-msgstr "ENDE"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

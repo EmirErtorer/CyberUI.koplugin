@@ -3017,8 +3017,12 @@ msgid "// LOOKUP"
 msgstr "// SÖZLÜK"
 
 #: cyberui/skin/edithighlight.lua
-msgid "// ADJUST"
-msgstr "// AYARLA"
+msgid "START"
+msgstr "BAŞLANGIÇ"
+
+#: cyberui/skin/edithighlight.lua
+msgid "END"
+msgstr "SON"
 
 #: cyberui/skin/edithighlight.lua
 msgid "// HIGHLIGHT"
@@ -3043,14 +3047,6 @@ msgstr "Öğe yok"
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "DAHA FAZLA"
-
-#: cyberui/skin/semantics.lua
-msgid "START"
-msgstr "BAŞLANGIÇ"
-
-#: cyberui/skin/semantics.lua
-msgid "END"
-msgstr "SON"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"
