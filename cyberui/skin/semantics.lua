@@ -64,7 +64,9 @@ end
 
 -- The buttons of KOReader's dialog for a saved highlight (tapped on the page),
 -- found by their text as KOReader writes it: { text or glyph, context, then
--- what they are }. The ones drawn as symbols are matched by the symbol.
+-- what they are }. The ones drawn as symbols are matched by the symbol; the four
+-- that move the highlight's edges keep that symbol (it shows the highlight
+-- growing or shrinking at one end), which is why they carry no icon.
 local EDIT = {
     { glyph = "\u{F48E}", id = "delete", icon = "trash", danger = true, label = _("Delete") },
     { msgid = "Style", ctx = "Highlight", id = "style", icon = "edit" },
@@ -72,10 +74,10 @@ local EDIT = {
     { msgid = "Note", id = "note", icon = "notes" },
     { msgid = "Details", id = "details", icon = "eye" },
     { glyph = "\u{2026}", id = "more", icon = "menu", label = _("MORE") },
-    { glyph = "\u{25C1}\u{2592}\u{2592}", id = "start_earlier", icon = "back", label = _("START"), edge = true },
-    { glyph = "\u{25B7}\u{2613}\u{2592}", id = "start_later", icon = "forward", label = _("START"), edge = true },
-    { glyph = "\u{2592}\u{2613}\u{25C1}", id = "end_earlier", icon = "back", label = _("END"), edge = true },
-    { glyph = "\u{2592}\u{2592}\u{25B7}", id = "end_later", icon = "forward", label = _("END"), edge = true },
+    { glyph = "\u{25C1}\u{2592}\u{2592}", symbol = "\u{25C1}\u{2592}\u{2592}", id = "start_earlier", edge = true },
+    { glyph = "\u{25B7}\u{2613}\u{2592}", symbol = "\u{25B7}\u{2613}\u{2592}", id = "start_later", edge = true },
+    { glyph = "\u{2592}\u{2613}\u{25C1}", symbol = "\u{2592}\u{2613}\u{25C1}", id = "end_earlier", edge = true },
+    { glyph = "\u{2592}\u{2592}\u{25B7}", symbol = "\u{2592}\u{2592}\u{25B7}", id = "end_later", edge = true },
 }
 
 -- What a button of that dialog is, from its text, or nil when it is not one KOReader names.

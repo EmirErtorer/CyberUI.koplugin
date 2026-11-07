@@ -31,6 +31,21 @@ function Tiles.tile(b, sem)
     })
 end
 
+-- One action as a slim tile showing a symbol KOReader itself draws for it (the
+-- arrows and hatching that show a highlight growing or shrinking), which says
+-- what the action does better than a word could.
+function Tiles.symbol(b, sem)
+    local th = Theme.get()
+    local s = Specs.read(b)
+    local usable = s.enabled and s.callback ~= nil
+    return Panel:new({
+        shape = usable and "chamfer" or "frame", corners = "r", cut = "cut_small", fill = usable and "soft" or nil, line = usable and "soft" or "line",
+        pad = { th.space.s, th.space.xs }, grow = true,
+        on_tap = usable and s.callback or nil, on_hold = s.enabled and s.hold_callback or nil,
+        child = Label:new({ text = sem.symbol, kind = "label", color = usable and "ink" or "muted", align = "center" }),
+    })
+end
+
 -- Tiles of a list of { button, sem } pairs side by side, sharing the width.
 function Tiles.row(pairs_)
     local tiles = {}

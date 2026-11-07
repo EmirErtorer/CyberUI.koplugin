@@ -1,10 +1,11 @@
 -- KOReader's dialog for a highlight already on the page (tap it): what it
 -- offers is sorted by what it does. Change how it looks (style, colour), add
--- or read about it (note, details) as icon tiles; move where it starts and
--- ends with four labelled arrows instead of KOReader's drawn symbols; delete
--- in the warning colour with the rest ("more") beside it. The buttons are
--- recognised by KOReader's own words for them, so an action not recognised is
--- still shown, plainly, under these.
+-- or read about it (note, details) as icon tiles; move where it starts and ends
+-- with KOReader's own symbols for it (they show the highlight growing or
+-- shrinking at an end, which says it better than words) under START and END;
+-- delete as a button in the warning colour with its name, "more" beside it.
+-- The buttons are recognised by KOReader's own words for them, so an action
+-- not recognised is still shown, plainly, under these.
 
 local Anatomy = require("cyberui/skin/anatomy")
 local Core = require("cyberui/skin/core")
@@ -41,24 +42,38 @@ local function isEditDialog(dialog)
     return sorted.delete ~= nil and #sorted.edges == 4
 end
 
+-- The button with the name of what it does in place of KOReader's symbol (a trash can).
+local function named(b, sem)
+    return setmetatable({ text = sem.label, text_func = false }, { __index = b })
+end
+
 local function card(dialog, highlight)
     local Dialog = require("cyberui/ui/dialog")
     local Label = require("cyberui/ui/label")
+    local Layout = require("cyberui/ui/layout")
+    local Theme = require("cyberui/theme")
     local _ = require("cyberui/gettext")
     local sorted = sort(dialog)
     local rows = {}
     if #sorted.tools > 0 then rows[#rows + 1] = Tiles.row(sorted.tools) end
-    rows[#rows + 1] = Label:new({ text = _("// ADJUST"), kind = "micro", color = "muted" })
-    rows[#rows + 1] = Tiles.row(sorted.edges)
-    local last = { sorted.delete }
-    if sorted.more then last[#last + 1] = sorted.more end
-    rows[#rows + 1] = Tiles.row(last)
+    -- the highlight's edges: START over the first two symbols, END over the last two
+    local symbols = {}
+    for _i, p in ipairs(sorted.edges) do symbols[#symbols + 1] = Tiles.symbol(p[1], p[2]) end
+    rows[#rows + 1] = Layout.Row:new({ gap = Theme.get().space.s, children = {
+        Label:new({ text = _("START"), kind = "micro", color = "muted", align = "center", grow = true }),
+        Label:new({ text = _("END"), kind = "micro", color = "muted", align = "center", grow = true }),
+    } })
+    rows[#rows + 1] = Layout.Row:new({ gap = Theme.get().space.s, children = symbols })
+    -- delete in the warning look, more beside it
+    local last = { Specs.button(named(sorted.delete[1], sorted.delete[2]), "danger", "trash") }
+    if sorted.more then last[#last + 1] = Specs.button(named(sorted.more[1], sorted.more[2]), nil, "menu") end
+    rows[#rows + 1] = Layout.Row:new({ gap = Theme.get().space.s, children = last })
     local plain = {}
     for i = 1, #sorted.rest, 2 do plain[#plain + 1] = { sorted.rest[i], sorted.rest[i + 1] } end
     for _i, r in ipairs(Specs.rows(plain)) do rows[#rows + 1] = r end
     local words = highlight and highlight.text and highlight.text:gsub("%s+", " ") or ""
-    if #words > 90 then words = words:sub(1, 90):gsub("[\128-\191]*$", "") .. "..." end
-    return Dialog.card({ tag = _("// HIGHLIGHT"), text = words ~= "" and ("\u{201C}" .. words .. "\u{201D}") or nil, lines = 2, rows = rows }, Screen:getWidth())
+    if #words > 70 then words = words:sub(1, 70):gsub("[\128-\191]*$", "") .. "..." end
+    return Dialog.card({ tag = _("// HIGHLIGHT"), text = words ~= "" and ("\u{201C}" .. words .. "\u{201D}") or nil, lines = 1, rows = rows }, Screen:getWidth())
 end
 
 Core.register({

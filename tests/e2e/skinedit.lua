@@ -16,8 +16,8 @@ H.step(5, function()
 end)
 H.step(S, function()
     H.check(dialog ~= nil and dialog._cyber_popup ~= nil, "the dialog is drawn by CyberUI")
-    H.check(H.find("// HIGHLIGHT") ~= nil and H.find("// ADJUST") ~= nil, "it says what it is and has an adjust section")
-    H.check(H.findWhere(function(e) return e.label == "\u{F48E}" or e.text == "\u{F48E}" or e.text == "\u{25C1}\u{2592}\u{2592}" end) == nil, "KOReader's drawn symbols are gone")
+    H.check(H.find("// HIGHLIGHT") ~= nil, "it says what it is")
+    H.check(H.findWhere(function(e) return e.label == "\u{F48E}" or e.text == "\u{F48E}" end) == nil, "KOReader's trash-can symbol is replaced by the word")
     H.check(H.find("Style") ~= nil and H.find("Note") ~= nil and H.find("Details") ~= nil, "style, note and details are named tiles")
     local seen, edges = {}, 0
     H.findWhere(function(e)
@@ -25,9 +25,16 @@ H.step(S, function()
         seen[e] = true
         return false
     end)
-    H.check(edges == 4, "four labelled edge tiles: " .. edges)
-    local delete = H.findWhere(function(e) return e.shape and e.line == "accent" end)
-    H.check(delete ~= nil and type(delete.on_tap) == "function", "delete is outlined in the warning colour and answers a tap")
+    H.check(edges == 2, "START and END captions: " .. edges)
+    local symbols, seen2 = 0, {}
+    H.findWhere(function(e)
+        if not seen2[e] and e.kind == "label" and (e.text == "\u{25C1}\u{2592}\u{2592}" or e.text == "\u{25B7}\u{2613}\u{2592}" or e.text == "\u{2592}\u{2613}\u{25C1}" or e.text == "\u{2592}\u{2592}\u{25B7}") then symbols = symbols + 1 end
+        seen2[e] = true
+        return false
+    end)
+    H.check(symbols == 4, "the four edge symbols KOReader draws are kept: " .. symbols)
+    local delete = H.find("Delete", nil, true)
+    H.check(delete ~= nil and type(delete.on_tap) == "function" and delete.variant == "danger", "delete is a button in the warning look and answers a tap")
     H.shot("1-edit-highlight")
     local note = H.find("Note", nil, true)
     H.check(note ~= nil and type(note.on_tap) == "function", "a tile carries KOReader's callback")
