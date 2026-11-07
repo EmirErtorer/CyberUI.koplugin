@@ -297,23 +297,44 @@ function Actions.deleteMany(paths, after)
     })
 end
 
+-- Every action on a book as a tile of a sheet: { icon, label, sub, danger, on_tap }.
+-- `after(new_path)` runs once a rename or move has put the book somewhere else.
+-- The hold sheet and the dossier's "more" sheet both pick from this list.
+local function bookTile(path, key, after)
+    local st = Books.state(path)
+    local tiles = {
+        open = { icon = "forward", label = _("Open"), on_tap = function() Actions.open(path) end },
+        details = { icon = "eye", label = _("Details"), on_tap = function() Actions.details(path) end },
+        status = { icon = "check", label = _("Status"), sub = Actions.statusName(st.status), on_tap = function() Actions.statusSheet(path) end },
+        collections = { icon = "collections", label = _("Collections"), on_tap = function() Actions.collect(path) end },
+        rename = { icon = "edit", label = _("Rename"), on_tap = function() Actions.rename(path, after) end },
+        edit = { icon = "edit", label = _("Edit info"), sub = _("Title, authors, genres"), on_tap = function() Actions.editDetails(path) end },
+        move = { icon = "move", label = _("Move to"), on_tap = function() Actions.move(path, after) end },
+        folder = { icon = "folder", label = _("Show folder"), on_tap = function() Actions.showFolder(path) end },
+        forget = { icon = "history", label = _("Forget"), sub = _("Remove from history"), on_tap = function() Actions.unhistory(path) end },
+        delete = { icon = "trash", label = _("Delete"), danger = true, on_tap = function() Actions.delete(path, after) end },
+    }
+    return tiles[key]
+end
+
+-- A sheet of the book's actions named by `keys`, in that order ("forget" only
+-- when the book is in the history).
+local function bookSheet(path, keys, after)
+    local actions = {}
+    for _i, key in ipairs(keys) do
+        if key ~= "forget" or History.lastOpened(path) then actions[#actions + 1] = bookTile(path, key, after) end
+    end
+    App.sheet({ title = Books.info(path).title, sub = filemanagerutil.abbreviate(Files.parent(path)), actions = actions })
+end
+
 -- The hold sheet of a book.
 function Actions.bookSheet(path)
-    local info, st = Books.info(path), Books.state(path)
-    local actions = {
-        { icon = "forward", label = _("Open"), on_tap = function() Actions.open(path) end },
-        { icon = "eye", label = _("Details"), on_tap = function() Actions.details(path) end },
-        { icon = "check", label = _("Status"), sub = Actions.statusName(st.status), on_tap = function() Actions.statusSheet(path) end },
-        { icon = "collections", label = _("Collections"), on_tap = function() Actions.collect(path) end },
-        { icon = "edit", label = _("Rename"), on_tap = function() Actions.rename(path) end },
-        { icon = "edit", label = _("Edit info"), sub = _("Title, authors, genres"), on_tap = function() Actions.editDetails(path) end },
-        { icon = "move", label = _("Move to"), on_tap = function() Actions.move(path) end },
-        { icon = "trash", label = _("Delete"), danger = true, on_tap = function() Actions.delete(path) end },
-    }
-    if History.lastOpened(path) then
-        table.insert(actions, 5, { icon = "history", label = _("Forget"), sub = _("Remove from history"), on_tap = function() Actions.unhistory(path) end })
-    end
-    App.sheet({ title = info.title, sub = filemanagerutil.abbreviate(Files.parent(path)), actions = actions })
+    bookSheet(path, { "open", "details", "status", "collections", "rename", "edit", "move", "forget", "delete" })
+end
+
+-- What the dossier keeps out of sight: the rest of the actions on the book.
+function Actions.moreSheet(path, after)
+    bookSheet(path, { "folder", "rename", "move", "forget", "delete" }, after)
 end
 
 -- The hold sheet of a folder; `open` goes into it.

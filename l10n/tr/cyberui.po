@@ -202,6 +202,10 @@ msgid "Title, authors, genres"
 msgstr "Başlık, yazarlar, türler"
 
 #: cyberui/actions.lua
+msgid "Show folder"
+msgstr "Klasörü göster"
+
+#: cyberui/actions.lua
 msgid "Forget"
 msgstr "Unut"
 
@@ -1342,44 +1346,16 @@ msgid "ON HOLD"
 msgstr "BEKLEMEDE"
 
 #: cyberui/screens/dossier.lua
-msgid "FORMAT"
-msgstr "BİÇİM"
-
-#: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
-msgid "PAGES"
-msgstr "SAYFA"
-
-#: cyberui/screens/dossier.lua
-msgid "ADDED"
-msgstr "EKLENME"
-
-#: cyberui/screens/dossier.lua
-msgid "OPENED"
-msgstr "AÇILMA"
-
-#: cyberui/screens/dossier.lua
-msgid "CACHES"
-msgstr "RAFLAR"
+msgid "ADDED %s // OPENED %s"
+msgstr "EKLENDİ %s // AÇILDI %s"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
 msgstr "ŞİFRESİ ÇÖZÜLDÜ %d%%"
 
 #: cyberui/screens/dossier.lua
-msgid "READ %s // %dD // %d PG/H%s"
-msgstr "OKUNAN %s // %dG // %d SYF/S%s"
-
-#: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // %s KALDI"
-
-#: cyberui/screens/dossier.lua
-msgid "SYNOPSIS"
-msgstr "ÖZET"
-
-#: cyberui/screens/dossier.lua
-msgid "No description in this book's details."
-msgstr "Bu kitabın ayrıntılarında açıklama yok."
 
 #: cyberui/screens/dossier.lua
 msgid "HIGHLIGHTS"
@@ -1393,17 +1369,25 @@ msgstr "NOTLAR"
 msgid "BOOKMARKS"
 msgstr "YER İMLERİ"
 
-#: cyberui/screens/dossier.lua
-msgid "SHOW FOLDER"
-msgstr "KLASÖRÜ GÖSTER"
+#: cyberui/screens/dossier.lua cyberui/screens/library.lua
+msgid "STATUS"
+msgstr "DURUM"
 
 #: cyberui/screens/dossier.lua
-msgid "FORGET"
-msgstr "UNUT"
+msgid "CACHES · %d"
+msgstr "KOLEKSİYONLAR · %d"
 
 #: cyberui/screens/dossier.lua
-msgid "remove from history"
-msgstr "geçmişten kaldır"
+msgid "+ CACHE"
+msgstr "+ KOLEKSİYON"
+
+#: cyberui/screens/dossier.lua
+msgid "SYNOPSIS"
+msgstr "ÖZET"
+
+#: cyberui/screens/dossier.lua
+msgid "No description in this book's details."
+msgstr "Bu kitabın ayrıntılarında açıklama yok."
 
 #: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
 msgid "TAKE GIG"
@@ -1413,29 +1397,13 @@ msgstr "GIG'İ AL"
 msgid "OPEN FILE"
 msgstr "DOSYAYI AÇ"
 
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "STATUS"
-msgstr "DURUM"
-
-#: cyberui/screens/dossier.lua
-msgid "COLLECTION +"
-msgstr "KOLEKSİYON +"
-
-#: cyberui/screens/dossier.lua
-msgid "RENAME"
-msgstr "YENİDEN ADLANDIR"
-
 #: cyberui/screens/dossier.lua
 msgid "EDIT INFO"
 msgstr "BİLGİLERİ DÜZENLE"
 
 #: cyberui/screens/dossier.lua
-msgid "MOVE TO"
-msgstr "ŞURAYA TAŞI"
-
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "DELETE"
-msgstr "SİL"
+msgid "MORE"
+msgstr "DAHA FAZLA"
 
 #: cyberui/screens/dossier.lua
 msgid "File dossier"
@@ -2021,6 +1989,10 @@ msgid "MOVE"
 msgstr "TAŞI"
 
 #: cyberui/screens/library.lua
+msgid "DELETE"
+msgstr "SİL"
+
+#: cyberui/screens/library.lua
 msgid "[X]"
 msgstr "[X]"
 
@@ -2059,6 +2031,10 @@ msgstr "SEKTÖR"
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr "NE ZAMAN OKURSUN // PZT-PAZ SAATE GÖRE // %s"
+
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/ui/idcard.lua
+msgid "PAGES"
+msgstr "SAYFA"
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
 msgid "TIME"

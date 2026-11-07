@@ -6,6 +6,7 @@ local App = require("cyberui/app")
 local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
 local Collections = require("cyberui/data/collections")
+local Deco = require("cyberui/ui/deco")
 local Cover = require("cyberui/ui/cover")
 local Format = require("cyberui/format")
 local Frame = require("cyberui/screens/frame")
@@ -14,7 +15,6 @@ local History = require("cyberui/data/history")
 local Insights = require("cyberui/data/insights")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
-local Panel = require("cyberui/ui/panel")
 local Progress = require("cyberui/ui/progress")
 local Screen = require("cyberui/screens/screen")
 local ScrollText = require("cyberui/ui/scrolltext")
@@ -43,14 +43,6 @@ local function annotationCounts(path)
     return counts
 end
 
--- A label / value pair for the facts table.
-local function fact(k, v)
-    return Layout.Row:new({ gap = Theme.get().space.s, children = {
-        Label:new({ text = k, kind = "mono_small", color = "muted", width = Theme.px(64) }),
-        Label:new({ text = v, kind = "mono_small", grow = true }),
-    } })
-end
-
 -- Swipe up and down to page through a long synopsis.
 function Dossier:onSwipe(dir)
     if not self.synopsis then return false end
@@ -59,89 +51,108 @@ function Dossier:onSwipe(dir)
     return false
 end
 
--- Build the dossier.
+-- One line of small grey facts.
+local function line(text)
+    return Label:new({ text = text, kind = "mono_small", color = "muted", lines = 2 })
+end
+
+-- Format, size and pages of the book on one line.
+local function formatLine(path, info, st)
+    local _dir, file = util.splitFilePathName(path)
+    local ext = (file:match("%.([^.]+)$") or "?"):upper()
+    local parts = { ext, Format.size((lfs.attributes(path) or {}).size) }
+    local pages = st.pages or info.pages
+    if pages then parts[#parts + 1] = string.format("%d PG", pages) end
+    return table.concat(parts, " \u{B7} ")
+end
+
+-- When the book was added and last opened.
+local function datesLine(path)
+    local added = (lfs.attributes(path) or {}).modification
+    return string.format(_("ADDED %s // OPENED %s"), added and os.date("%Y-%m-%d", added) or "?", Format.ago(History.lastOpened(path)))
+end
+
+-- How far the book is read: one line of numbers over the bar (nothing for a book not started).
+local function progress(path, st)
+    local th = Theme.get()
+    local pct = math.floor(st.percent * 100 + 0.5)
+    local text = string.format(_("DECRYPTED %d%%"), pct)
+    local t = Insights.book(path)
+    if t and t.seconds > 0 then
+        local left = st.status == "complete" and 0 or math.max(0, t.total_pages - t.pages) * t.per_page
+        text = text .. string.format(" // %s", Format.duration(t.seconds))
+        if left > 0 then text = text .. string.format(_(" // %s LEFT"), Format.duration(left)) end
+    end
+    local c = annotationCounts(path)
+    local marks = {}
+    for _i, m in ipairs({ { c.highlights, _("HIGHLIGHTS") }, { c.notes, _("NOTES") }, { c.bookmarks, _("BOOKMARKS") } }) do
+        if m[1] > 0 then marks[#marks + 1] = string.format("%02d %s", m[1], m[2]) end
+    end
+    return Layout.Column:new({ gap = th.space.xs, children = {
+        Label:new({ text = text, kind = "mono_small", lines = 2 }),
+        Progress:new({ value = st.percent, segments = 30, book = true }),
+        #marks > 0 and line(table.concat(marks, " \u{B7} ")) or nil,
+    } })
+end
+
+-- Build the dossier: who the book is, the synopsis with all the room that is left, and a short row of actions.
 function Dossier:build()
     local th = Theme.get()
     self.synopsis_page = self.synopsis_page or {}
     local path = self.params.path
     local info, st = Books.info(path), Books.state(path)
-    local dir, file = util.splitFilePathName(path)
-    local ext = (file:match("%.([^.]+)$") or "?"):upper()
-    local attr = lfs.attributes(path) or {}
+    local dir = util.splitFilePathName(path)
     local who = info.author or _("Unknown author")
-    if info.series then who = who .. " · " .. info.series .. (info.series_index and (" #" .. info.series_index) or "") end
+    if info.series then who = who .. " \u{B7} " .. info.series .. (info.series_index and (" #" .. info.series_index) or "") end
     local held = Collections.holding(path)
-
-    local head = Layout.Row:new({ gap = th.space.l, valign = "top", children = {
-        Cover:new({ path = path, width = Theme.px(128), height = Theme.px(188) }),
-        Layout.Column:new({ grow = true, gap = th.space.s, children = {
-            Label:new({ text = info.title, kind = "display", lines = 3 }),
-            Label:new({ text = who, kind = "body", color = "muted", lines = 2 }),
-            fact(_("FORMAT"), ext .. " // " .. Format.size(attr.size)),
-            fact(_("PAGES"), st.pages and tostring(st.pages) or (info.pages and tostring(info.pages)) or "?"),
-            fact(_("ADDED"), attr.modification and os.date("%Y-%m-%d", attr.modification) or "?"),
-            fact(_("OPENED"), Format.ago(History.lastOpened(path))),
-            fact(_("CACHES"), #held > 0 and table.concat(held, ", ") or "—"),
-        } }),
-    } })
-
-    local pct = math.floor(st.percent * 100 + 0.5)
-    local progress = Layout.Column:new({ gap = th.space.xs, children = {
-        Layout.Row:new({ children = {
-            Label:new({ text = string.format(_("DECRYPTED %d%%"), pct), kind = "mono", grow = true }),
-            Label:new({ text = STATUS[st.status] or "", kind = "mono", color = "muted" }),
-        } }),
-        Progress:new({ value = st.percent, segments = 30, book = true }),
-    } })
-    local t = Insights.book(path)
-    if t and t.seconds > 0 then
-        local left = st.status == "complete" and 0 or math.max(0, t.total_pages - t.pages) * t.per_page
-        progress.children[#progress.children + 1] = Label:new({ kind = "mono_small", color = "muted", lines = 2,
-            text = string.format(_("READ %s // %dD // %d PG/H%s"), Format.duration(t.seconds), t.days, math.floor(3600 / t.per_page + 0.5),
-                left > 0 and string.format(_(" // %s LEFT"), Format.duration(left)) or "") })
-    end
-
-    local synopsis = Panel:new({ shape = "brackets", label = _("SYNOPSIS"), pad = th.space.l, grow = true,
-        child = ScrollText:new({ text = info.description and util.htmlToPlainTextIfHtml(info.description) or _("No description in this book's details."),
-            color = info.description and "ink" or "muted", state = self.synopsis_page, on_turn = function() App.update() end }) })
-    self.synopsis = synopsis.child
-
-    local c = annotationCounts(path)
-    local function count(n, label) return Button:new({ label = string.format("%02d", n), sub = label, kind = "number", grow = true, height = Theme.px(64) }) end
-    local counts = Layout.Row:new({ gap = th.space.m, children = {
-        count(c.highlights, _("HIGHLIGHTS")), count(c.notes, _("NOTES")), count(c.bookmarks, _("BOOKMARKS")),
-    } })
-
     -- after a rename or move the dossier follows the book to its new path
     local function moved(to) self.params.path = to; App.update() end
-    local folder_row = { Button:new({ label = _("SHOW FOLDER"), grow = true, on_tap = function() Actions.showFolder(path) end }) }
-    if History.lastOpened(path) then
-        folder_row[2] = Button:new({ label = _("FORGET"), sub = _("remove from history"), grow = true, on_tap = function() Actions.unhistory(path) end })
-    end
-    local offer = Gigs.offer(path)
-    local actions = Layout.Column:new({ gap = th.space.s, children = {
-        offer and Button:new({ label = _("TAKE GIG"), sub = Format.credits(offer.price), icon = "forward", variant = "primary", corners = "tb",
-            height = Theme.px(64), on_tap = function() Actions.open(path) end })
-            or Button:new({ label = _("OPEN FILE"), icon = "forward", variant = "primary", corners = "tb", on_tap = function() Actions.open(path) end }),
-        Layout.Row:new({ gap = th.space.s, children = {
-            Button:new({ label = _("STATUS"), sub = STATUS[st.status], grow = true, on_tap = function() Actions.statusSheet(path) end }),
-            Button:new({ label = _("COLLECTION +"), grow = true, on_tap = function() Actions.collect(path) end }),
-        } }),
-        Layout.Row:new({ gap = th.space.s, children = folder_row }),
-        Layout.Row:new({ gap = th.space.s, children = {
-            Button:new({ label = _("RENAME"), icon = "edit", grow = true, on_tap = function() Actions.rename(path, moved) end }),
-            Button:new({ label = _("EDIT INFO"), icon = "edit", grow = true, on_tap = function() Actions.editDetails(path) end }),
-        } }),
-        Layout.Row:new({ gap = th.space.s, children = {
-            Button:new({ label = _("MOVE TO"), icon = "move", grow = true, on_tap = function() Actions.move(path, moved) end }),
-            Button:new({ label = _("DELETE"), icon = "trash", variant = "danger", grow = true,
-                on_tap = function() Actions.delete(path, function() App.back() end) end }),
-        } }),
+
+    local chips = Layout.Row:new({ gap = th.space.s, children = {
+        Button:new({ label = string.format("%s \u{B7} %s", _("STATUS"), STATUS[st.status] or ""), variant = "chip", kind = "mono_small",
+            on_tap = function() Actions.statusSheet(path) end }),
+        Button:new({ label = #held > 0 and string.format(_("CACHES \u{B7} %d"), #held) or _("+ CACHE"), variant = "chip", kind = "mono_small",
+            on_tap = function() Actions.collect(path) end }),
+    } })
+    local facts = { Label:new({ text = info.title, kind = "display", lines = 3 }),
+        Label:new({ text = who, kind = "body", color = "muted", lines = 2 }) }
+    if info.genres and #info.genres > 0 then facts[#facts + 1] = line(table.concat(info.genres, " \u{B7} "):upper()) end
+    facts[#facts + 1] = line(formatLine(path, info, st))
+    facts[#facts + 1] = line(datesLine(path))
+    facts[#facts + 1] = chips
+    local head = Layout.Row:new({ gap = th.space.l, valign = "top", children = {
+        Cover:new({ path = path, width = Theme.px(110), height = Theme.px(162) }),
+        Layout.Column:new({ grow = true, gap = th.space.s, children = facts }),
     } })
 
+    local synopsis = Layout.Column:new({ grow = true, gap = th.space.s, children = {
+        Layout.Row:new({ gap = th.space.m, children = {
+            Label:new({ text = _("SYNOPSIS"), kind = "micro", color = "muted" }),
+            Deco.Divider:new({ grow = true }),
+        } }),
+        ScrollText:new({ grow = true, text = info.description and util.htmlToPlainTextIfHtml(info.description) or _("No description in this book's details."),
+            color = info.description and "ink" or "muted", state = self.synopsis_page, on_turn = function() App.update() end }),
+    } })
+    self.synopsis = synopsis.children[2]
+
+    local offer = Gigs.offer(path)
+    local main = offer
+        and Button:new({ label = _("TAKE GIG"), sub = Format.credits(offer.price), icon = "forward", variant = "primary", corners = "tb", grow = true,
+            on_tap = function() Actions.open(path) end })
+        or Button:new({ label = _("OPEN FILE"), icon = "forward", variant = "primary", corners = "tb", grow = true, on_tap = function() Actions.open(path) end })
+    local actions = Layout.Row:new({ gap = th.space.s, height = Theme.px(64), children = {
+        main,
+        Button:new({ label = _("EDIT INFO"), icon = "edit", variant = "tab", kind = "mono_small", on_tap = function() Actions.editDetails(path) end }),
+        Button:new({ label = _("MORE"), icon = "menu", variant = "tab", kind = "mono_small", on_tap = function() Actions.moreSheet(path, moved) end }),
+    } })
+
+    local kids = { head }
+    if st.opened then kids[#kids + 1] = progress(path, st) end
+    kids[#kids + 1] = synopsis
+    kids[#kids + 1] = actions
     return Frame.page({
         screen = self, title = _("File dossier"), path = filemanagerutil.abbreviate(dir), tab = "library",
-        body = Layout.Column:new({ gap = th.space.l, children = { head, progress, synopsis, counts, actions } }),
+        body = Layout.Column:new({ gap = th.space.l, children = kids }),
     })
 end
 

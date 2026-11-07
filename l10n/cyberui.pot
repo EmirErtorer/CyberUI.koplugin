@@ -201,6 +201,10 @@ msgid "Title, authors, genres"
 msgstr ""
 
 #: cyberui/actions.lua
+msgid "Show folder"
+msgstr ""
+
+#: cyberui/actions.lua
 msgid "Forget"
 msgstr ""
 
@@ -1341,23 +1345,7 @@ msgid "ON HOLD"
 msgstr ""
 
 #: cyberui/screens/dossier.lua
-msgid "FORMAT"
-msgstr ""
-
-#: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
-msgid "PAGES"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "ADDED"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "OPENED"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "CACHES"
+msgid "ADDED %s // OPENED %s"
 msgstr ""
 
 #: cyberui/screens/dossier.lua
@@ -1365,19 +1353,7 @@ msgid "DECRYPTED %d%%"
 msgstr ""
 
 #: cyberui/screens/dossier.lua
-msgid "READ %s // %dD // %d PG/H%s"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "SYNOPSIS"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "No description in this book's details."
 msgstr ""
 
 #: cyberui/screens/dossier.lua
@@ -1392,16 +1368,24 @@ msgstr ""
 msgid "BOOKMARKS"
 msgstr ""
 
-#: cyberui/screens/dossier.lua
-msgid "SHOW FOLDER"
+#: cyberui/screens/dossier.lua cyberui/screens/library.lua
+msgid "STATUS"
 msgstr ""
 
 #: cyberui/screens/dossier.lua
-msgid "FORGET"
+msgid "CACHES · %d"
 msgstr ""
 
 #: cyberui/screens/dossier.lua
-msgid "remove from history"
+msgid "+ CACHE"
+msgstr ""
+
+#: cyberui/screens/dossier.lua
+msgid "SYNOPSIS"
+msgstr ""
+
+#: cyberui/screens/dossier.lua
+msgid "No description in this book's details."
 msgstr ""
 
 #: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
@@ -1412,28 +1396,12 @@ msgstr ""
 msgid "OPEN FILE"
 msgstr ""
 
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "STATUS"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "COLLECTION +"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "RENAME"
-msgstr ""
-
 #: cyberui/screens/dossier.lua
 msgid "EDIT INFO"
 msgstr ""
 
 #: cyberui/screens/dossier.lua
-msgid "MOVE TO"
-msgstr ""
-
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "DELETE"
+msgid "MORE"
 msgstr ""
 
 #: cyberui/screens/dossier.lua
@@ -2020,6 +1988,10 @@ msgid "MOVE"
 msgstr ""
 
 #: cyberui/screens/library.lua
+msgid "DELETE"
+msgstr ""
+
+#: cyberui/screens/library.lua
 msgid "[X]"
 msgstr ""
 
@@ -2057,6 +2029,10 @@ msgstr ""
 
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
+msgstr ""
+
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/ui/idcard.lua
+msgid "PAGES"
 msgstr ""
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua

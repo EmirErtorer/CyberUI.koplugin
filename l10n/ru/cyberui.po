@@ -211,6 +211,10 @@ msgid "Title, authors, genres"
 msgstr "Название, авторы, жанры"
 
 #: cyberui/actions.lua
+msgid "Show folder"
+msgstr "Показать папку"
+
+#: cyberui/actions.lua
 msgid "Forget"
 msgstr "Забыть"
 
@@ -1353,44 +1357,16 @@ msgid "ON HOLD"
 msgstr "ОТЛОЖЕНО"
 
 #: cyberui/screens/dossier.lua
-msgid "FORMAT"
-msgstr "ФОРМАТ"
-
-#: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
-msgid "PAGES"
-msgstr "СТР."
-
-#: cyberui/screens/dossier.lua
-msgid "ADDED"
-msgstr "ДОБАВЛ."
-
-#: cyberui/screens/dossier.lua
-msgid "OPENED"
-msgstr "ОТКРЫТО"
-
-#: cyberui/screens/dossier.lua
-msgid "CACHES"
-msgstr "СПИСКИ"
+msgid "ADDED %s // OPENED %s"
+msgstr "ДОБАВЛЕНО %s // ОТКРЫТО %s"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
 msgstr "РАСШИФРОВАНО %d%%"
 
 #: cyberui/screens/dossier.lua
-msgid "READ %s // %dD // %d PG/H%s"
-msgstr "ПРОЧИТАНО %s // %dД // %d СТР/Ч%s"
-
-#: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // ОСТАЛОСЬ %s"
-
-#: cyberui/screens/dossier.lua
-msgid "SYNOPSIS"
-msgstr "АННОТАЦИЯ"
-
-#: cyberui/screens/dossier.lua
-msgid "No description in this book's details."
-msgstr "В сведениях об этой книге нет описания."
 
 #: cyberui/screens/dossier.lua
 msgid "HIGHLIGHTS"
@@ -1404,17 +1380,25 @@ msgstr "ЗАМЕТКИ"
 msgid "BOOKMARKS"
 msgstr "ЗАКЛАДКИ"
 
-#: cyberui/screens/dossier.lua
-msgid "SHOW FOLDER"
-msgstr "ПОКАЗАТЬ ПАПКУ"
+#: cyberui/screens/dossier.lua cyberui/screens/library.lua
+msgid "STATUS"
+msgstr "СТАТУС"
 
 #: cyberui/screens/dossier.lua
-msgid "FORGET"
-msgstr "ЗАБЫТЬ"
+msgid "CACHES · %d"
+msgstr "ПОДБОРКИ · %d"
 
 #: cyberui/screens/dossier.lua
-msgid "remove from history"
-msgstr "убрать из истории"
+msgid "+ CACHE"
+msgstr "+ ПОДБОРКА"
+
+#: cyberui/screens/dossier.lua
+msgid "SYNOPSIS"
+msgstr "АННОТАЦИЯ"
+
+#: cyberui/screens/dossier.lua
+msgid "No description in this book's details."
+msgstr "В сведениях об этой книге нет описания."
 
 #: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
 msgid "TAKE GIG"
@@ -1424,29 +1408,13 @@ msgstr "ВЗЯТЬ GIG"
 msgid "OPEN FILE"
 msgstr "ОТКРЫТЬ ФАЙЛ"
 
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "STATUS"
-msgstr "СТАТУС"
-
-#: cyberui/screens/dossier.lua
-msgid "COLLECTION +"
-msgstr "ПОДБОРКА +"
-
-#: cyberui/screens/dossier.lua
-msgid "RENAME"
-msgstr "ПЕРЕИМЕНОВАТЬ"
-
 #: cyberui/screens/dossier.lua
 msgid "EDIT INFO"
 msgstr "ИЗМЕНИТЬ ДАННЫЕ"
 
 #: cyberui/screens/dossier.lua
-msgid "MOVE TO"
-msgstr "ПЕРЕМЕСТИТЬ В"
-
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "DELETE"
-msgstr "УДАЛИТЬ"
+msgid "MORE"
+msgstr "ЕЩЁ"
 
 #: cyberui/screens/dossier.lua
 msgid "File dossier"
@@ -2043,6 +2011,10 @@ msgid "MOVE"
 msgstr "ПЕРЕМЕСТИТЬ"
 
 #: cyberui/screens/library.lua
+msgid "DELETE"
+msgstr "УДАЛИТЬ"
+
+#: cyberui/screens/library.lua
 msgid "[X]"
 msgstr "[X]"
 
@@ -2081,6 +2053,10 @@ msgstr "СЕКТОР"
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr "КОГДА ВЫ ЧИТАЕТЕ // ПН-ВС ПО ЧАСАМ // %s"
+
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/ui/idcard.lua
+msgid "PAGES"
+msgstr "СТР."
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
 msgid "TIME"

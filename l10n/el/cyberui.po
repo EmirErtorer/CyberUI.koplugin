@@ -202,6 +202,10 @@ msgid "Title, authors, genres"
 msgstr "Τίτλος, συγγραφείς, είδη"
 
 #: cyberui/actions.lua
+msgid "Show folder"
+msgstr "Εμφάνιση φακέλου"
+
+#: cyberui/actions.lua
 msgid "Forget"
 msgstr "Ξεχάστε"
 
@@ -1342,44 +1346,16 @@ msgid "ON HOLD"
 msgstr "ΣΕ ΑΝΑΜΟΝΗ"
 
 #: cyberui/screens/dossier.lua
-msgid "FORMAT"
-msgstr "ΜΟΡΦΗ"
-
-#: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
-msgid "PAGES"
-msgstr "ΣΕΛΙΔΕΣ"
-
-#: cyberui/screens/dossier.lua
-msgid "ADDED"
-msgstr "ΠΡΟΣΘ."
-
-#: cyberui/screens/dossier.lua
-msgid "OPENED"
-msgstr "ΑΝΟΙΓΜΑ"
-
-#: cyberui/screens/dossier.lua
-msgid "CACHES"
-msgstr "ΣΥΛΛΟΓΕΣ"
+msgid "ADDED %s // OPENED %s"
+msgstr "ΠΡΟΣΤΕΘΗΚΕ %s // ΑΝΟΙΧΤΗΚΕ %s"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
 msgstr "ΑΠΟΚΡΥΠΤΟΓΡΑΦΗΘΗΚΕ %d%%"
 
 #: cyberui/screens/dossier.lua
-msgid "READ %s // %dD // %d PG/H%s"
-msgstr "ΑΝΑΓΝΩΣΗ %s // %dΗ // %d ΣΕΛ/Ω%s"
-
-#: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // ΑΠΟΜΕΝΟΥΝ %s"
-
-#: cyberui/screens/dossier.lua
-msgid "SYNOPSIS"
-msgstr "ΠΕΡΙΛΗΨΗ"
-
-#: cyberui/screens/dossier.lua
-msgid "No description in this book's details."
-msgstr "Δεν υπάρχει περιγραφή στις λεπτομέρειες αυτού του βιβλίου."
 
 #: cyberui/screens/dossier.lua
 msgid "HIGHLIGHTS"
@@ -1393,17 +1369,25 @@ msgstr "ΣΗΜΕΙΩΣΕΙΣ"
 msgid "BOOKMARKS"
 msgstr "ΣΕΛΙΔΟΔΕΙΚΤΕΣ"
 
-#: cyberui/screens/dossier.lua
-msgid "SHOW FOLDER"
-msgstr "ΕΜΦΑΝΙΣΗ ΦΑΚΕΛΟΥ"
+#: cyberui/screens/dossier.lua cyberui/screens/library.lua
+msgid "STATUS"
+msgstr "ΚΑΤΑΣΤΑΣΗ"
 
 #: cyberui/screens/dossier.lua
-msgid "FORGET"
-msgstr "ΞΕΧΑΣΤΕ"
+msgid "CACHES · %d"
+msgstr "ΣΥΛΛΟΓΕΣ · %d"
 
 #: cyberui/screens/dossier.lua
-msgid "remove from history"
-msgstr "αφαίρεση από το ιστορικό"
+msgid "+ CACHE"
+msgstr "+ ΣΥΛΛΟΓΗ"
+
+#: cyberui/screens/dossier.lua
+msgid "SYNOPSIS"
+msgstr "ΠΕΡΙΛΗΨΗ"
+
+#: cyberui/screens/dossier.lua
+msgid "No description in this book's details."
+msgstr "Δεν υπάρχει περιγραφή στις λεπτομέρειες αυτού του βιβλίου."
 
 #: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
 msgid "TAKE GIG"
@@ -1413,29 +1397,13 @@ msgstr "ΑΝΑΛΑΒΕ GIG"
 msgid "OPEN FILE"
 msgstr "ΑΝΟΙΓΜΑ ΑΡΧΕΙΟΥ"
 
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "STATUS"
-msgstr "ΚΑΤΑΣΤΑΣΗ"
-
-#: cyberui/screens/dossier.lua
-msgid "COLLECTION +"
-msgstr "ΣΥΛΛΟΓΗ +"
-
-#: cyberui/screens/dossier.lua
-msgid "RENAME"
-msgstr "ΜΕΤΟΝΟΜΑΣΙΑ"
-
 #: cyberui/screens/dossier.lua
 msgid "EDIT INFO"
 msgstr "ΑΛΛΑΓΗ ΣΤΟΙΧΕΙΩΝ"
 
 #: cyberui/screens/dossier.lua
-msgid "MOVE TO"
-msgstr "ΜΕΤΑΚΙΝΗΣΗ ΣΕ"
-
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "DELETE"
-msgstr "ΔΙΑΓΡΑΦΗ"
+msgid "MORE"
+msgstr "ΠΕΡΙΣΣΟΤΕΡΑ"
 
 #: cyberui/screens/dossier.lua
 msgid "File dossier"
@@ -2021,6 +1989,10 @@ msgid "MOVE"
 msgstr "ΜΕΤΑΚΙΝΗΣΗ"
 
 #: cyberui/screens/library.lua
+msgid "DELETE"
+msgstr "ΔΙΑΓΡΑΦΗ"
+
+#: cyberui/screens/library.lua
 msgid "[X]"
 msgstr "[X]"
 
@@ -2059,6 +2031,10 @@ msgstr "ΤΟΜΕΑΣ"
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr "ΠΟΤΕ ΔΙΑΒΑΖΕΤΕ // ΔΕΥ-ΚΥΡ ΑΝΑ ΩΡΑ // %s"
+
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/ui/idcard.lua
+msgid "PAGES"
+msgstr "ΣΕΛΙΔΕΣ"
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
 msgid "TIME"
