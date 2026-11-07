@@ -951,4 +951,56 @@ do
     os.execute("rm -rf '" .. root .. "'")
 end
 
+-- the keyboard: accented letters and Shift on both letter layers, a second tap locks it
+do
+    local Keyboard = require("cyberui/ui/keyboard")
+    local TextInput = require("cyberui/ui/textinput")
+    Kit.ok(TextInput.nextShift(false) == "once" and TextInput.nextShift("once") == "lock" and TextInput.nextShift("lock") == false,
+        "Shift goes off, one letter, locked, off")
+    local function labels(o)
+        local out = {}
+        local function walk(e)
+            if e.label then out[e.label] = true end
+            for _i, c in ipairs(e.children or {}) do walk(c) end
+        end
+        walk(Keyboard.build(o))
+        return out
+    end
+    local noop = function() end
+    local function with(extra) local o = { on_char = noop, on_back = noop, on_enter = noop, on_layer = noop, on_shift = noop }; for k, v in pairs(extra) do o[k] = v end; return o end
+    local acc = labels(with({ layer = "acc" }))
+    for _i, ch in ipairs({ "á", "ã", "à", "â", "ê", "õ", "ç", "ñ", "ü", "ł" }) do
+        Kit.ok(acc[ch], "the accented layer has " .. ch)
+    end
+    Kit.ok(acc["⇧"], "the accented layer has a Shift key")
+    local caps = labels(with({ layer = "acc", shift = "once" }))
+    Kit.ok(caps["Á"] and caps["Ã"] and not caps["á"], "Shift makes the accented letters capitals")
+    Kit.ok(labels(with({ layer = "abc", shift = "lock" }))["⇧⇧"], "a locked Shift looks different")
+    Kit.ok(not labels(with({ layer = "num" }))["⇧"], "the numbers have no Shift")
+end
+
+-- renaming a collection keeps its books and the places that name it
+do
+    local Collections = require("cyberui/data/collections")
+    local ReadCollection = require("readcollection")
+    Collections.create("Fantasia")
+    Collections.create("Clássicos")
+    Settings.set("library_extra", { collection = "Fantasia" })
+    Settings.set("library_views", { { name = "v", extra = { collection = "Fantasia" } } })
+    local ok = Collections.rename("Fantasia", "  Fantasy  ")
+    Kit.ok(ok and ReadCollection.coll["Fantasy"] and not ReadCollection.coll["Fantasia"], "a collection is renamed (the name is trimmed)")
+    Kit.ok(Settings.get("library_extra").collection == "Fantasy" and Settings.get("library_views")[1].extra.collection == "Fantasy",
+        "the saved filter and views follow the new name")
+    local _ok, why = Collections.rename("Fantasy", "Clássicos")
+    Kit.ok(not _ok and why == "exists", "a name already used is refused")
+    _ok, why = Collections.rename("Fantasy", "   ")
+    Kit.ok(not _ok and why == "empty", "an empty name is refused")
+    _ok, why = Collections.rename(ReadCollection.default_collection_name, "Mine")
+    Kit.ok(not _ok and why == "favorites", "Favorites keeps its name")
+    Collections.remove("Fantasy")
+    Collections.remove("Clássicos")
+    Settings.set("library_extra", nil)
+    Settings.set("library_views", nil)
+end
+
 Kit.finish("features")

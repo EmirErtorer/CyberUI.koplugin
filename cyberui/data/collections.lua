@@ -2,6 +2,7 @@
 -- books and making new ones.
 
 local ReadCollection = require("readcollection")
+local Settings = require("cyberui/settings")
 local _ = require("cyberui/gettext")
 
 local Collections = {}
@@ -70,6 +71,33 @@ function Collections.create(name)
         ReadCollection:addCollection(name)
         ReadCollection:write({ [name] = true })
     end
+end
+
+-- The library's saved filter and saved views name collections: they follow a
+-- renamed one.
+local function followRename(old, new)
+    local extra = Settings.get("library_extra")
+    if extra and extra.collection == old then extra.collection = new; Settings.set("library_extra", extra) end
+    for _i, view in ipairs(Settings.get("library_views", {})) do
+        if view.extra and view.extra.collection == old then view.extra.collection = new end
+    end
+    Settings.set("library_views", Settings.get("library_views", {}))
+    Settings.flush()
+end
+
+-- Rename a collection. Returns true, or false and why ("empty", "same",
+-- "exists", "favorites", "missing") when it was not renamed.
+function Collections.rename(old, new)
+    new = (new or ""):match("^%s*(.-)%s*$")
+    if old == ReadCollection.default_collection_name then return false, "favorites" end
+    if not ReadCollection.coll[old] then return false, "missing" end
+    if new == "" then return false, "empty" end
+    if new == old then return false, "same" end
+    if ReadCollection.coll[new] then return false, "exists" end
+    ReadCollection:renameCollection(old, new)
+    ReadCollection:write({ [new] = true })   -- the old name is dropped from the file by write
+    followRename(old, new)
+    return true
 end
 
 -- Delete a collection (its books stay in the library). Favorites cannot go.

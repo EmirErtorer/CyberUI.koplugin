@@ -15,6 +15,13 @@ local _ = require("cyberui/gettext")
 
 local TextInput = {}
 
+-- The shift state after a tap on the shift key: off, one letter, locked, off.
+function TextInput.nextShift(shift)
+    if not shift then return "once" end
+    if shift == "lock" then return false end
+    return "lock"
+end
+
 ---------------------------------------------------------------- Field
 local Field = Element:extend({ placeholder = "" })
 TextInput.Field = Field
@@ -63,7 +70,7 @@ function TextInput.build(o)
         on_char = o.on_char, on_back = o.on_back, on_enter = o.on_enter,
         on_layer = o.on_layer, on_shift = o.on_shift,
     })
-    local panel = Panel:new({ shape = "header", title = _("// INPUT"), title_right = o.state.layer == "acc" and "ÄÖÇ" or nil,
+    local panel = Panel:new({ shape = "header", title = _("// INPUT"), title_right = o.state.layer == "acc" and "ÁÃÇ" or nil,
         fill = "bg", width = o.screen_w, pad = { th.space.m, th.space.m, th.space.s, th.space.m },
         child = Layout.Column:new({ gap = th.space.m, children = { header, field, keyboard } }) })
     panel.dock = "bottom"

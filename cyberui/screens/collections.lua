@@ -1,6 +1,6 @@
 -- Collections ("caches"): Favorites pinned as a large card over a paged grid
 -- of every other collection, each showing a few of its covers. Tap one to
--- browse it, hold one to delete it; "+ New" makes a new collection.
+-- browse it, hold one to rename or delete it; "+ New" makes a new collection.
 
 local App = require("cyberui/app")
 local Button = require("cyberui/ui/button")
@@ -45,18 +45,46 @@ local function open(c)
     end
 end
 
--- Hold a collection: ask, then delete it (Favorites stays).
+-- Ask, then delete a collection.
 local function askRemove(c)
-    if c.series then return nil end   -- a series comes from the books themselves
+    App.confirm({ title = _("Delete this collection?"), text = c.title, danger = true, ok = _("Delete"), on_ok = function()
+        Collections.remove(c.name)
+        App.toast(_("Collection deleted"))
+        App.update()
+    end })
+end
+
+-- What went wrong renaming, in words.
+local RENAME_FAILED = {
+    exists = _("A collection with that name exists"),
+    empty = _("Type a name first"),
+}
+
+-- Type a new name for a collection.
+local function askRename(c)
+    App.input(_("Rename collection"), c.title, function(name)
+        local ok, why = Collections.rename(c.name, name)
+        if ok then
+            App.toast(_("Collection renamed"))
+            App.update()
+        elseif RENAME_FAILED[why] then
+            App.toast(RENAME_FAILED[why])
+        end
+    end, _("Rename"))
+end
+
+-- Hold a collection: rename or delete it (Favorites stays as it is, and a
+-- series comes from the books themselves).
+local function holdSheet(c)
+    if c.series then return nil end
     return function()
         if c.name == require("readcollection").default_collection_name then
             return App.toast(_("Favorites always stays"))
         end
-        App.confirm({ title = _("Delete this collection?"), text = c.title, danger = true, ok = _("Delete"), on_ok = function()
-            Collections.remove(c.name)
-            App.toast(_("Collection deleted"))
-            App.update()
-        end })
+        App.sheet({ title = c.title, sub = _("COLLECTION"), actions = {
+            { icon = "edit", label = _("Rename"), on_tap = function() askRename(c) end },
+            { icon = "trash", label = _("Delete"), danger = true, on_tap = function() askRemove(c) end },
+        } })
     end
 end
 
@@ -64,7 +92,7 @@ end
 local function card(c, _w, h)
     local th = Theme.get()
     local inner_h = h - 2 * th.space.s
-    return Panel:new({ shape = "frame", pad = th.space.s, on_tap = open(c), on_hold = askRemove(c), child = Layout.Row:new({ gap = th.space.m, children = {
+    return Panel:new({ shape = "frame", pad = th.space.s, on_tap = open(c), on_hold = holdSheet(c), child = Layout.Row:new({ gap = th.space.m, children = {
         mosaic(c.books, math.floor(inner_h * 0.75), inner_h),
         Layout.Column:new({ grow = true, gap = th.space.xs, children = {
             Label:new({ text = c.title, kind = "heading" }),
@@ -81,7 +109,7 @@ local function pinned(c)
         fan[i] = Cover:new({ path = c.books[i], width = Theme.px(70), height = Theme.px(100),
             place = "tl", dx = (i - 1) * Theme.px(22), dy = (i - 1) * Theme.px(3) })
     end
-    return Panel:new({ shape = "chamfer", corners = "tb", pad = th.space.l, on_tap = open(c), on_hold = askRemove(c), child = Layout.Row:new({ gap = th.space.l, children = {
+    return Panel:new({ shape = "chamfer", corners = "tb", pad = th.space.l, on_tap = open(c), on_hold = holdSheet(c), child = Layout.Row:new({ gap = th.space.l, children = {
         Layout.Overlay:new({ width = Theme.px(140), height = Theme.px(112), children = fan }),
         Layout.Column:new({ grow = true, gap = th.space.xs, children = {
             Label:new({ text = _("PINNED // QUEUE"), kind = "micro", color = "muted" }),

@@ -452,7 +452,7 @@ function App.input(title, value, on_done, ok_label, opts)
                 title = title, placeholder = opts.placeholder, ok_label = ok_label, state = state, screen_w = screen_w,
                 on_char = function(c)
                     state.text = state.text .. c
-                    if state.shift then state.shift = false; show() end
+                    if state.shift == true or state.shift == "once" then state.shift = false; show() end
                     changed()
                 end,
                 on_back = function()
@@ -461,8 +461,8 @@ function App.input(title, value, on_done, ok_label, opts)
                 end,
                 on_enter = function() UIManager:unschedule(live_task); close(); on_done(state.text) end,
                 on_cancel = function() UIManager:unschedule(live_task); close() end,
-                on_layer = function(layer) state.layer, state.shift = layer, false; show() end,
-                on_shift = function() state.shift = not state.shift; show() end,
+                on_layer = function(layer) state.layer, state.shift = layer, (state.shift == "lock" and "lock" or false); show() end,
+                on_shift = function() state.shift = TextInput.nextShift(state.shift); show() end,
             })
             return panel
         end)
