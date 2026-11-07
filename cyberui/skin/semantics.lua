@@ -36,6 +36,32 @@ function Semantics.highlight(slot)
     return name and HIGHLIGHT[name] or nil
 end
 
+-- Verbs that appear on KOReader's button dialogs (the hold menu of a book, its
+-- gesture and settings menus): what each looks like. They are matched by KOReader's own
+-- English word, in the reader's language through KOReader's catalogue, so an
+-- unlisted or reworded button is simply plain.
+local VERBS = {
+    { msgid = "Open", icon = "forward" },
+    { msgid = "Rename", icon = "edit" },
+    { msgid = "Move", icon = "move" },
+    { msgid = "Book information", icon = "eye" },
+    { msgid = "Collections", icon = "collections" },
+    { msgid = "Search", icon = "search" },
+    { msgid = "Settings", icon = "settings" },
+    { msgid = "Delete", icon = "trash", danger = true },
+    { msgid = "Remove", icon = "trash", danger = true },
+    { msgid = "Reset settings", icon = "restore", danger = true },
+    { msgid = "Clear", icon = "trash", danger = true },
+}
+
+-- What a button of a dialog looks like from its text: { icon, danger }, or nil when unknown.
+function Semantics.verb(text)
+    for _i, v in ipairs(VERBS) do
+        if text == koreader(v.msgid, v.ctx) then return v end
+    end
+    return nil
+end
+
 -- The buttons of KOReader's dialog for a saved highlight (tapped on the page),
 -- found by their text as KOReader writes it: { text or glyph, context, then
 -- what they are }. The ones drawn as symbols are matched by the symbol.
