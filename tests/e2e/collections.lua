@@ -1,4 +1,4 @@
--- Hold a collection to delete it; Favorites stays.
+-- Hold a collection for its sheet (rename or delete); Favorites stays.
 local H = ...
 local S = 0.8
 local Collections = require("cyberui/data/collections")
@@ -10,6 +10,10 @@ end)
 H.step(S, function()
     H.check(H.find("Zz test") ~= nil, "new collection listed")
     H.hold("Zz test")
+end)
+H.step(S, function()
+    H.check(H.find("Rename") ~= nil and H.find("Delete") ~= nil, "the hold sheet offers rename and delete")
+    H.tap("Delete")
 end)
 H.step(S, function()
     H.check(H.find("Delete this collection?") ~= nil, "asks before deleting")

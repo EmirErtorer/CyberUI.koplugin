@@ -121,4 +121,42 @@ do
     bb:free()
 end
 
+-- the keyboard in every layer and Shift state, and the details editor, paint on every kind of
+-- screen buffer devices use (colour 32 and 24 bit, 16 bit, and grey) in every scheme and mode
+do
+    local BB = require("ffi/blitbuffer")
+    local Paint = require("cyberui/gfx/paint")
+    local Keyboard = require("cyberui/ui/keyboard")
+    local Settings = require("cyberui/settings")
+    local noop = function() end
+    local types = { RGB32 = BB.TYPE_BBRGB32, RGB24 = BB.TYPE_BBRGB24, RGB16 = BB.TYPE_BBRGB16, GREY8 = BB.TYPE_BB8, GREY4 = BB.TYPE_BB4 }
+    for name, type_ in pairs(types) do
+        for _, s in ipairs(Registry.schemeList()) do
+            for _, mode in ipairs({ "light", "dark" }) do
+                Settings.set("scheme", s.id)
+                Settings.set("mode", mode)
+                Theme.refresh()
+                local ok, err = pcall(function()
+                    local bb = BB.new(W, H, type_)
+                    Paint.fill(bb, 0, 0, W, H, Theme.get().c.bg)
+                    for _, layer in ipairs({ "abc", "acc", "num" }) do
+                        for _, shift in ipairs({ false, "once", "lock" }) do
+                            local kb = Keyboard.build({ layer = layer, shift = shift, on_char = noop, on_back = noop,
+                                on_enter = noop, on_layer = noop, on_shift = noop })
+                            kb:layout(W, nil)
+                            kb:paint(bb, 0, 0)
+                        end
+                    end
+                    local edit = require("cyberui/screens/metaedit"):new({ path = require("cyberui/data/library").all()[1] })
+                    local root = edit:build({ w = W, h = H })
+                    root:layout(W, H)
+                    root:paint(bb, 0, 0)
+                    bb:free()
+                end)
+                Kit.ok(ok, name .. " " .. s.id .. "/" .. mode .. " keyboard and editor paint: " .. tostring(err))
+            end
+        end
+    end
+end
+
 Kit.finish("widgets")

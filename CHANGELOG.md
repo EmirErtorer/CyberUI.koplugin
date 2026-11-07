@@ -17,7 +17,12 @@ versions marked *Prerelease* are test builds.
 ### Added
 - **Series from the books' own details.** Collections has a Series switch listing every series found in the books' metadata (two or more books), each opening its books in series order. Series made in Calibre or EPUB3 show up by themselves.
 
+- **Edit a book's details.** EDIT INFO in a book's details (and Edit info in its hold sheet) changes the title, authors, series, series number, genres and language, one row each. Several authors or genres go between semicolons; holding a row, or saving it empty, brings back what the book itself says. Changes are KOReader's own custom metadata, so the book file is untouched and KOReader and other plugins show them too. CyberUI now shows custom details set from KOReader's own screens as well.
+- **Group the library by genre.** Group by > Genre uses the books' genres (a book with several appears under each; books without one go under "No genre").
+- **Rename a collection.** Holding a collection now offers Rename and Delete. Saved filters and views that named it follow the new name.
+
 ### Changed
+- **The keyboard has accented capitals and a locked Shift.** The accented layer now covers Portuguese, Spanish, French, German, Turkish and Polish letters (á, ã, õ, ê, ç, ñ, ł and more) and has its own Shift key. Tap Shift once for one capital, twice to lock it until tapped again; the lock stays across the letter and accented layers.
 - **The menu's lists are taller**, taking up to 80% of the screen (was half), so most tabs fit without turning pages. System > Home > Menu height sets it to 50, 65, 80 or 90%.
 - **Lumen and tint are sliders** (cyberpunk cells you tap or drag) in the Deck and Controls pages of the menu, and in KOReader's own frontlight window, instead of the + and - buttons.
 - **Saving the ID card asks where.** SAVE opens a folder picker (starting where you saved last) and writes the picture there; a folder that can't be written to is reported instead of failing silently.

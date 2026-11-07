@@ -57,7 +57,7 @@ function Books.genres(keywords)
 end
 
 -- The details the book itself holds, from CoverBrowser's cache.
-local function original(path, bi)
+local function original(bi)
     return {
         title = bi.title, authors = bi.authors, series = bi.series, series_index = bi.series_index,
         keywords = bi.keywords, language = bi.language, description = bi.description, pages = bi.pages,
@@ -97,7 +97,7 @@ function Books.info(path)
             pages = bi.pages,
             description = bi.description,
             language = bi.language,
-            original = original(path, bi),
+            original = original(bi),
             known = true,
         }
     else
