@@ -1,6 +1,9 @@
 -- KOReader's dictionary and Wikipedia window in CyberUI's style: the looked-up
--- word and the dictionary it came from over the definition, which pages with
--- a tap, and every button the window has. KOReader still does the looking up,
+-- word over the definition, which pages with a tap; the dictionary's name between
+-- arrows that go to the one before and after; the lookups and highlight as icon
+-- tiles, the main action (add to the vocabulary builder) as the main button and
+-- every other button the window has plainly (they are told apart by the ids
+-- KOReader gives them). KOReader still does the looking up,
 -- changing dictionary, highlighting, searching and closing. Results made of
 -- HTML (some dictionaries) are drawn by KOReader, as they need its renderer.
 
@@ -8,6 +11,7 @@ local Anatomy = require("cyberui/skin/anatomy")
 local Core = require("cyberui/skin/core")
 local Device = require("device")
 local Specs = require("cyberui/skin/specs")
+local Tiles = require("cyberui/skin/tiles")
 
 local Screen = Device.screen
 
@@ -38,6 +42,59 @@ local function liveRows(dict)
         rows[#rows + 1] = copy
     end
     return rows
+end
+
+-- The icon tiles of the window, by the id KOReader gives the button, in this order.
+local TOOLS = {
+    { id = "highlight", icon = "pen" },
+    { id = "wikipedia", icon = "library" },
+    { id = "translate", icon = "network" },
+    { id = "search", icon = "search" },
+}
+-- The buttons that are the point of the window (adding the word to a list).
+local MAIN = { vocabulary = true, save = true }
+
+-- Sort the window's buttons by id: { prev, next, tools, main, close, rest } (each button as KOReader has it now).
+local function sort(dict)
+    local out = { tools = {}, main = {}, rest = {} }
+    local by_id = {}
+    for _i, row in ipairs(liveRows(dict)) do
+        for _j, b in ipairs(row) do
+            if b.id then by_id[b.id] = b end
+            if b.id == "prev_dict" then out.prev = b
+            elseif b.id == "next_dict" then out.next = b
+            elseif b.id == "close" then out.close = b
+            elseif MAIN[b.id] then out.main[#out.main + 1] = b
+            else out.rest[#out.rest + 1] = b end
+        end
+    end
+    for _i, t in ipairs(TOOLS) do
+        local b = by_id[t.id]
+        if b then
+            out.tools[#out.tools + 1] = { b, { icon = t.icon } }
+            for k, r in ipairs(out.rest) do if r == b then table.remove(out.rest, k) break end end
+        end
+    end
+    return out
+end
+
+-- The dictionary's name between the arrows that go to the one before and after.
+local function dictionaryRow(dict, sorted)
+    local Button = require("cyberui/ui/button")
+    local Label = require("cyberui/ui/label")
+    local Layout = require("cyberui/ui/layout")
+    local Theme = require("cyberui/theme")
+    local function arrow(b, icon)
+        if not b then return Layout.Spacer:new({ width = Theme.get().size.touch }) end
+        local s = Specs.read(b)
+        local usable = s.enabled and s.callback ~= nil
+        return Button:new({ icon = icon, variant = "icon", width = Theme.get().size.touch, disabled = not usable, on_tap = usable and s.callback or nil })
+    end
+    return Layout.Row:new({ gap = Theme.get().space.s, children = {
+        arrow(sorted.prev, "back"),
+        Label:new({ text = tostring(dict.displaydictname or ""), kind = "mono_small", color = "muted", align = "center", grow = true, lines = 2 }),
+        arrow(sorted.next, "forward"),
+    } })
 end
 
 -- The word at a spot of the definition's current page, or nil.
@@ -94,13 +151,19 @@ local function card(dict, state)
         Label:new({ text = tostring(dict.displayword or ""), kind = "display", grow = true, lines = 2 }),
         dict.displaynb and Label:new({ text = tostring(dict.displaynb), kind = "mono_small", color = "muted" }) or nil,
     } })
+    local sorted = sort(dict)
     local kids = {
         Label:new({ text = _("// LOOKUP"), kind = "micro", color = "muted" }),
         head,
-        Label:new({ text = tostring(dict.displaydictname or ""), kind = "mono_small", color = "muted", lines = 2 }),
+        dictionaryRow(dict, sorted),
         body,
     }
-    for _i, row in ipairs(Specs.rows(liveRows(dict))) do kids[#kids + 1] = row end
+    if #sorted.tools > 0 then kids[#kids + 1] = Tiles.row(sorted.tools) end
+    for _i, b in ipairs(sorted.main) do kids[#kids + 1] = Specs.wide(b, "primary") end
+    local lines = {}
+    for i = 1, #sorted.rest, 2 do lines[#lines + 1] = { sorted.rest[i], sorted.rest[i + 1] } end
+    for _i, r in ipairs(Specs.rows(lines)) do kids[#kids + 1] = r end
+    if sorted.close then kids[#kids + 1] = Specs.wide(sorted.close, "ghost") end
     local width = math.min(Screen:getWidth() - 2 * th.space.m, Theme.px(large and 760 or 620))
     return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width,
         child = Layout.Column:new({ gap = th.space.s, children = kids }) })

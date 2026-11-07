@@ -45,6 +45,11 @@ function Specs.button(b, variant)
     })
 end
 
+-- A described button alone on its line, the whole width.
+function Specs.wide(b, variant)
+    return Layout.Row:new({ children = { Specs.button(b, variant) } })
+end
+
 -- The rows of described buttons as rows of CyberUI buttons; `pick(row, i, b)`
 -- may name another variant for a button.
 function Specs.rows(rows, pick)
