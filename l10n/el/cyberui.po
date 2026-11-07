@@ -3020,6 +3020,10 @@ msgstr "// ΑΝΑΖΗΤΗΣΗ"
 msgid "Close"
 msgstr "Κλείσιμο"
 
+#: cyberui/skin/highlightmenu.lua
+msgid "// SELECTION"
+msgstr "// ΕΠΙΛΟΓΗ"
+
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ΕΙΣΟΔΟΣ"

@@ -3054,6 +3054,10 @@ msgstr "// СЛОВАРЬ"
 msgid "Close"
 msgstr "Закрыть"
 
+#: cyberui/skin/highlightmenu.lua
+msgid "// SELECTION"
+msgstr "// ВЫДЕЛЕНИЕ"
+
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ВВОД"

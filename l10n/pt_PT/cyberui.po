@@ -3020,6 +3020,10 @@ msgstr "// CONSULTA"
 msgid "Close"
 msgstr "Fechar"
 
+#: cyberui/skin/highlightmenu.lua
+msgid "// SELECTION"
+msgstr "// SELEÇÃO"
+
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ENTRADA"

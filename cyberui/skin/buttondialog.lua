@@ -18,7 +18,7 @@ local Skin = {}
 -- KOReader's own dialog would be (its `anchor`: the middle by default, near the
 -- top or bottom, or by the selected text). The anchor asks the dialog for its
 -- height, which the unpainted original cannot give, so it is told the card's.
-local function placer(dialog)
+function Skin.placer(dialog)
     return function(el)
         local x, y = Core.centered(el)
         if type(dialog.anchor) == "function" then
@@ -57,7 +57,7 @@ Core.register({
     present = function(dialog)
         return {
             element = card(dialog),
-            place = placer(dialog),
+            place = Skin.placer(dialog),
             on_outside = function() Core.dismiss(dialog) end,
         }
     end,
