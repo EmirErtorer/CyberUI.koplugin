@@ -67,7 +67,7 @@ msgstr "Не получилось"
 msgid "OK"
 msgstr "ОК"
 
-#: cyberui/actions.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Rename"
 msgstr "Переименовать"
 
@@ -201,6 +201,14 @@ msgstr "Открыть"
 #: cyberui/actions.lua cyberui/screens/gigs.lua
 msgid "Details"
 msgstr "Подробно"
+
+#: cyberui/actions.lua
+msgid "Edit info"
+msgstr "Изменить данные"
+
+#: cyberui/actions.lua
+msgid "Title, authors, genres"
+msgstr "Название, авторы, жанры"
 
 #: cyberui/actions.lua
 msgid "Forget"
@@ -474,7 +482,7 @@ msgstr "CYBERDECK // %s // ДОСТУП ОПЕРАТОРА"
 msgid "NEW"
 msgstr "НОВАЯ"
 
-#: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
+#: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua cyberui/screens/metaedit.lua
 msgid "DONE"
 msgstr "ЗАВЕРШЕНО"
 
@@ -538,9 +546,13 @@ msgstr "Все книги"
 msgid "Author"
 msgstr "Автор"
 
-#: cyberui/data/libgroups.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
+#: cyberui/data/libgroups.lua cyberui/data/metadata.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
 msgid "Series"
 msgstr "Серия"
+
+#: cyberui/data/libgroups.lua
+msgid "Genre"
+msgstr "Жанр"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Format"
@@ -557,6 +569,30 @@ msgstr "Неизвестный автор"
 #: cyberui/data/libgroups.lua
 msgid "No series"
 msgstr "Без серии"
+
+#: cyberui/data/libgroups.lua
+msgid "No genre"
+msgstr "Без жанра"
+
+#: cyberui/data/metadata.lua cyberui/screens/libmenu.lua
+msgid "Title"
+msgstr "Название"
+
+#: cyberui/data/metadata.lua
+msgid "Authors"
+msgstr "Авторы"
+
+#: cyberui/data/metadata.lua
+msgid "Series number"
+msgstr "Номер в серии"
+
+#: cyberui/data/metadata.lua
+msgid "Genres"
+msgstr "Жанры"
+
+#: cyberui/data/metadata.lua cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Язык"
 
 #: cyberui/data/metric.lua
 msgid "PG"
@@ -942,7 +978,7 @@ msgstr "Ваше фото"
 msgid "Shown on your ID card"
 msgstr "Показывается на вашей ID-карте"
 
-#: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/settings.lua ...
+#: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/metaedit.lua ...
 msgid "Save"
 msgstr "Сохранить"
 
@@ -971,16 +1007,36 @@ msgid "That folder can't be written to"
 msgstr "В эту папку нельзя записывать"
 
 #: cyberui/screens/collections.lua
-msgid "Favorites always stays"
-msgstr "Избранное остаётся всегда"
-
-#: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Удалить эту коллекцию?"
 
 #: cyberui/screens/collections.lua
 msgid "Collection deleted"
 msgstr "Коллекция удалена"
+
+#: cyberui/screens/collections.lua
+msgid "A collection with that name exists"
+msgstr "Подборка с таким названием уже есть"
+
+#: cyberui/screens/collections.lua
+msgid "Type a name first"
+msgstr "Сначала введите название"
+
+#: cyberui/screens/collections.lua
+msgid "Rename collection"
+msgstr "Переименовать подборку"
+
+#: cyberui/screens/collections.lua
+msgid "Collection renamed"
+msgstr "Подборка переименована"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Избранное остаётся всегда"
+
+#: cyberui/screens/collections.lua
+msgid "COLLECTION"
+msgstr "ПОДБОРКА"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
@@ -1379,6 +1435,10 @@ msgstr "ПОДБОРКА +"
 #: cyberui/screens/dossier.lua
 msgid "RENAME"
 msgstr "ПЕРЕИМЕНОВАТЬ"
+
+#: cyberui/screens/dossier.lua
+msgid "EDIT INFO"
+msgstr "ИЗМЕНИТЬ ДАННЫЕ"
 
 #: cyberui/screens/dossier.lua
 msgid "MOVE TO"
@@ -1808,10 +1868,6 @@ msgstr "ДОБАВИТЬ // ПЕРЕМЕСТИТЬ // СКРЫТЬ // ИЗМЕН
 #: cyberui/screens/libmenu.lua
 msgid "Recent"
 msgstr "Недавние"
-
-#: cyberui/screens/libmenu.lua
-msgid "Title"
-msgstr "Название"
 
 #: cyberui/screens/libmenu.lua
 msgid "Progress"
@@ -2246,6 +2302,46 @@ msgstr "%dМИН // %d СТР"
 msgid "No reading recorded yet. Statistics must be on."
 msgstr "Чтение пока не записано. Статистика должна быть включена."
 
+#: cyberui/screens/metaedit.lua
+msgid "Saved"
+msgstr "Сохранено"
+
+#: cyberui/screens/metaedit.lua
+msgid "Back to the book's own"
+msgstr "Возвращено значение из книги"
+
+#: cyberui/screens/metaedit.lua
+msgid "Couldn't save these details"
+msgstr "Не удалось сохранить эти данные"
+
+#: cyberui/screens/metaedit.lua
+msgid "Type a number"
+msgstr "Введите число"
+
+#: cyberui/screens/metaedit.lua
+msgid "separate several with ;"
+msgstr "несколько значений разделяйте знаком ;"
+
+#: cyberui/screens/metaedit.lua
+msgid "Already the book's own"
+msgstr "Это уже значение из книги"
+
+#: cyberui/screens/metaedit.lua
+msgid "EDITED"
+msgstr "ИЗМЕНЕНО"
+
+#: cyberui/screens/metaedit.lua
+msgid "Tap a detail to change it. Hold it to bring back what the book says. The book file is not changed."
+msgstr "Нажмите на параметр, чтобы изменить его. Удерживайте, чтобы вернуть то, что указано в книге. Файл книги не меняется."
+
+#: cyberui/screens/metaedit.lua
+msgid "RESET ALL"
+msgstr "СБРОСИТЬ ВСЁ"
+
+#: cyberui/screens/metaedit.lua
+msgid "Edit details"
+msgstr "Изменение данных"
+
 #: cyberui/screens/photocrop.lua
 msgid "PICK // FRAME"
 msgstr "ВЫБОР // КАДР"
@@ -2666,10 +2762,6 @@ msgstr "ОТСКАНИРУЙТЕ ТЕЛЕФОНОМ"
 #: cyberui/screens/settings.lua
 msgid "Version"
 msgstr "Версия"
-
-#: cyberui/screens/settings.lua
-msgid "Language"
-msgstr "Язык"
 
 #: cyberui/screens/settings.lua
 msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."

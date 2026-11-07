@@ -67,7 +67,7 @@ msgstr "Olmadı"
 msgid "OK"
 msgstr "Tamam"
 
-#: cyberui/actions.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Rename"
 msgstr "Yeniden adlandır"
 
@@ -192,6 +192,14 @@ msgstr "Aç"
 #: cyberui/actions.lua cyberui/screens/gigs.lua
 msgid "Details"
 msgstr "Ayrıntılar"
+
+#: cyberui/actions.lua
+msgid "Edit info"
+msgstr "Bilgileri düzenle"
+
+#: cyberui/actions.lua
+msgid "Title, authors, genres"
+msgstr "Başlık, yazarlar, türler"
 
 #: cyberui/actions.lua
 msgid "Forget"
@@ -465,7 +473,7 @@ msgstr "CYBERDECK // %s // OPERATÖR ERİŞİMİ"
 msgid "NEW"
 msgstr "YENİ"
 
-#: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
+#: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua cyberui/screens/metaedit.lua
 msgid "DONE"
 msgstr "BİTTİ"
 
@@ -529,9 +537,13 @@ msgstr "Tüm kitaplar"
 msgid "Author"
 msgstr "Yazar"
 
-#: cyberui/data/libgroups.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
+#: cyberui/data/libgroups.lua cyberui/data/metadata.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
 msgid "Series"
 msgstr "Seri"
+
+#: cyberui/data/libgroups.lua
+msgid "Genre"
+msgstr "Tür"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Format"
@@ -548,6 +560,30 @@ msgstr "Bilinmeyen yazar"
 #: cyberui/data/libgroups.lua
 msgid "No series"
 msgstr "Serisiz"
+
+#: cyberui/data/libgroups.lua
+msgid "No genre"
+msgstr "Türü yok"
+
+#: cyberui/data/metadata.lua cyberui/screens/libmenu.lua
+msgid "Title"
+msgstr "Başlık"
+
+#: cyberui/data/metadata.lua
+msgid "Authors"
+msgstr "Yazarlar"
+
+#: cyberui/data/metadata.lua
+msgid "Series number"
+msgstr "Seri numarası"
+
+#: cyberui/data/metadata.lua
+msgid "Genres"
+msgstr "Türler"
+
+#: cyberui/data/metadata.lua cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Dil"
 
 #: cyberui/data/metric.lua
 msgid "PG"
@@ -933,7 +969,7 @@ msgstr "Fotoğrafın"
 msgid "Shown on your ID card"
 msgstr "Kimlik kartında görünür"
 
-#: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/settings.lua ...
+#: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/metaedit.lua ...
 msgid "Save"
 msgstr "Kaydet"
 
@@ -962,16 +998,36 @@ msgid "That folder can't be written to"
 msgstr "Bu klasöre yazılamıyor"
 
 #: cyberui/screens/collections.lua
-msgid "Favorites always stays"
-msgstr "Favoriler her zaman kalır"
-
-#: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Bu koleksiyon silinsin mi?"
 
 #: cyberui/screens/collections.lua
 msgid "Collection deleted"
 msgstr "Koleksiyon silindi"
+
+#: cyberui/screens/collections.lua
+msgid "A collection with that name exists"
+msgstr "Bu adda bir koleksiyon zaten var"
+
+#: cyberui/screens/collections.lua
+msgid "Type a name first"
+msgstr "Önce bir ad yazın"
+
+#: cyberui/screens/collections.lua
+msgid "Rename collection"
+msgstr "Koleksiyonu yeniden adlandır"
+
+#: cyberui/screens/collections.lua
+msgid "Collection renamed"
+msgstr "Koleksiyon yeniden adlandırıldı"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Favoriler her zaman kalır"
+
+#: cyberui/screens/collections.lua
+msgid "COLLECTION"
+msgstr "KOLEKSİYON"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
@@ -1368,6 +1424,10 @@ msgstr "KOLEKSİYON +"
 #: cyberui/screens/dossier.lua
 msgid "RENAME"
 msgstr "YENİDEN ADLANDIR"
+
+#: cyberui/screens/dossier.lua
+msgid "EDIT INFO"
+msgstr "BİLGİLERİ DÜZENLE"
 
 #: cyberui/screens/dossier.lua
 msgid "MOVE TO"
@@ -1789,10 +1849,6 @@ msgstr "EKLE // TAŞI // GİZLE // DÜZENLE"
 #: cyberui/screens/libmenu.lua
 msgid "Recent"
 msgstr "Son"
-
-#: cyberui/screens/libmenu.lua
-msgid "Title"
-msgstr "Başlık"
 
 #: cyberui/screens/libmenu.lua
 msgid "Progress"
@@ -2220,6 +2276,46 @@ msgstr "%dDK // %d SYF"
 msgid "No reading recorded yet. Statistics must be on."
 msgstr "Henüz okuma kaydı yok. İstatistikler açık olmalı."
 
+#: cyberui/screens/metaedit.lua
+msgid "Saved"
+msgstr "Kaydedildi"
+
+#: cyberui/screens/metaedit.lua
+msgid "Back to the book's own"
+msgstr "Kitabın kendi bilgisine dönüldü"
+
+#: cyberui/screens/metaedit.lua
+msgid "Couldn't save these details"
+msgstr "Bu bilgiler kaydedilemedi"
+
+#: cyberui/screens/metaedit.lua
+msgid "Type a number"
+msgstr "Bir sayı yazın"
+
+#: cyberui/screens/metaedit.lua
+msgid "separate several with ;"
+msgstr "birkaçını ; ile ayırın"
+
+#: cyberui/screens/metaedit.lua
+msgid "Already the book's own"
+msgstr "Zaten kitabın kendi bilgisi"
+
+#: cyberui/screens/metaedit.lua
+msgid "EDITED"
+msgstr "DÜZENLENDİ"
+
+#: cyberui/screens/metaedit.lua
+msgid "Tap a detail to change it. Hold it to bring back what the book says. The book file is not changed."
+msgstr "Değiştirmek için bir bilgiye dokunun. Kitabın söylediğine dönmek için basılı tutun. Kitap dosyası değiştirilmez."
+
+#: cyberui/screens/metaedit.lua
+msgid "RESET ALL"
+msgstr "HEPSİNİ SIFIRLA"
+
+#: cyberui/screens/metaedit.lua
+msgid "Edit details"
+msgstr "Ayrıntıları düzenle"
+
 #: cyberui/screens/photocrop.lua
 msgid "PICK // FRAME"
 msgstr "SEÇ // ÇERÇEVE"
@@ -2637,10 +2733,6 @@ msgstr "TELEFONUNLA TARA"
 #: cyberui/screens/settings.lua
 msgid "Version"
 msgstr "Sürüm"
-
-#: cyberui/screens/settings.lua
-msgid "Language"
-msgstr "Dil"
 
 #: cyberui/screens/settings.lua
 msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."

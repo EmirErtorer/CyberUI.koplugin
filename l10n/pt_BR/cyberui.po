@@ -67,7 +67,7 @@ msgstr "Não funcionou"
 msgid "OK"
 msgstr "OK"
 
-#: cyberui/actions.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Rename"
 msgstr "Renomear"
 
@@ -192,6 +192,14 @@ msgstr "Abrir"
 #: cyberui/actions.lua cyberui/screens/gigs.lua
 msgid "Details"
 msgstr "Detalhes"
+
+#: cyberui/actions.lua
+msgid "Edit info"
+msgstr "Editar informações"
+
+#: cyberui/actions.lua
+msgid "Title, authors, genres"
+msgstr "Título, autores, gêneros"
 
 #: cyberui/actions.lua
 msgid "Forget"
@@ -465,7 +473,7 @@ msgstr "CYBERDECK // %s // ACESSO DO OPERADOR"
 msgid "NEW"
 msgstr "NOVO"
 
-#: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
+#: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua cyberui/screens/metaedit.lua
 msgid "DONE"
 msgstr "LIDO"
 
@@ -529,9 +537,13 @@ msgstr "Todos os livros"
 msgid "Author"
 msgstr "Autor"
 
-#: cyberui/data/libgroups.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
+#: cyberui/data/libgroups.lua cyberui/data/metadata.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
 msgid "Series"
 msgstr "Série"
+
+#: cyberui/data/libgroups.lua
+msgid "Genre"
+msgstr "Gênero"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Format"
@@ -548,6 +560,30 @@ msgstr "Autor desconhecido"
 #: cyberui/data/libgroups.lua
 msgid "No series"
 msgstr "Sem série"
+
+#: cyberui/data/libgroups.lua
+msgid "No genre"
+msgstr "Sem gênero"
+
+#: cyberui/data/metadata.lua cyberui/screens/libmenu.lua
+msgid "Title"
+msgstr "Título"
+
+#: cyberui/data/metadata.lua
+msgid "Authors"
+msgstr "Autores"
+
+#: cyberui/data/metadata.lua
+msgid "Series number"
+msgstr "Número da série"
+
+#: cyberui/data/metadata.lua
+msgid "Genres"
+msgstr "Gêneros"
+
+#: cyberui/data/metadata.lua cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Idioma"
 
 #: cyberui/data/metric.lua
 msgid "PG"
@@ -933,7 +969,7 @@ msgstr "Sua foto"
 msgid "Shown on your ID card"
 msgstr "Aparece no seu cartão de ID"
 
-#: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/settings.lua ...
+#: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/metaedit.lua ...
 msgid "Save"
 msgstr "Salvar"
 
@@ -962,16 +998,36 @@ msgid "That folder can't be written to"
 msgstr "Não é possível gravar nessa pasta"
 
 #: cyberui/screens/collections.lua
-msgid "Favorites always stays"
-msgstr "Favoritos sempre permanece"
-
-#: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Excluir esta coleção?"
 
 #: cyberui/screens/collections.lua
 msgid "Collection deleted"
 msgstr "Coleção excluída"
+
+#: cyberui/screens/collections.lua
+msgid "A collection with that name exists"
+msgstr "Já existe uma coleção com esse nome"
+
+#: cyberui/screens/collections.lua
+msgid "Type a name first"
+msgstr "Digite um nome primeiro"
+
+#: cyberui/screens/collections.lua
+msgid "Rename collection"
+msgstr "Renomear coleção"
+
+#: cyberui/screens/collections.lua
+msgid "Collection renamed"
+msgstr "Coleção renomeada"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Favoritos sempre permanece"
+
+#: cyberui/screens/collections.lua
+msgid "COLLECTION"
+msgstr "COLEÇÃO"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
@@ -1368,6 +1424,10 @@ msgstr "COLEÇÃO +"
 #: cyberui/screens/dossier.lua
 msgid "RENAME"
 msgstr "RENOMEAR"
+
+#: cyberui/screens/dossier.lua
+msgid "EDIT INFO"
+msgstr "EDITAR INFO"
 
 #: cyberui/screens/dossier.lua
 msgid "MOVE TO"
@@ -1789,10 +1849,6 @@ msgstr "ADICIONAR // MOVER // OCULTAR // EDITAR"
 #: cyberui/screens/libmenu.lua
 msgid "Recent"
 msgstr "Recentes"
-
-#: cyberui/screens/libmenu.lua
-msgid "Title"
-msgstr "Título"
 
 #: cyberui/screens/libmenu.lua
 msgid "Progress"
@@ -2220,6 +2276,46 @@ msgstr "%dMIN // %d PÁG"
 msgid "No reading recorded yet. Statistics must be on."
 msgstr "Nenhuma leitura registrada ainda. As estatísticas precisam estar ligadas."
 
+#: cyberui/screens/metaedit.lua
+msgid "Saved"
+msgstr "Salvo"
+
+#: cyberui/screens/metaedit.lua
+msgid "Back to the book's own"
+msgstr "Voltou ao dado do livro"
+
+#: cyberui/screens/metaedit.lua
+msgid "Couldn't save these details"
+msgstr "Não foi possível salvar estas informações"
+
+#: cyberui/screens/metaedit.lua
+msgid "Type a number"
+msgstr "Digite um número"
+
+#: cyberui/screens/metaedit.lua
+msgid "separate several with ;"
+msgstr "separe vários com ;"
+
+#: cyberui/screens/metaedit.lua
+msgid "Already the book's own"
+msgstr "Já é o dado do livro"
+
+#: cyberui/screens/metaedit.lua
+msgid "EDITED"
+msgstr "EDITADO"
+
+#: cyberui/screens/metaedit.lua
+msgid "Tap a detail to change it. Hold it to bring back what the book says. The book file is not changed."
+msgstr "Toque em um dado para alterá-lo. Segure para voltar ao que o livro diz. O arquivo do livro não é alterado."
+
+#: cyberui/screens/metaedit.lua
+msgid "RESET ALL"
+msgstr "REDEFINIR TUDO"
+
+#: cyberui/screens/metaedit.lua
+msgid "Edit details"
+msgstr "Editar detalhes"
+
 #: cyberui/screens/photocrop.lua
 msgid "PICK // FRAME"
 msgstr "ESCOLHER // ENQUADRAR"
@@ -2637,10 +2733,6 @@ msgstr "ESCANEIE COM O CELULAR"
 #: cyberui/screens/settings.lua
 msgid "Version"
 msgstr "Versão"
-
-#: cyberui/screens/settings.lua
-msgid "Language"
-msgstr "Idioma"
 
 #: cyberui/screens/settings.lua
 msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."

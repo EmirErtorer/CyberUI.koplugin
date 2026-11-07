@@ -67,7 +67,7 @@ msgstr "Δεν λειτούργησε"
 msgid "OK"
 msgstr "OK"
 
-#: cyberui/actions.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua
 msgid "Rename"
 msgstr "Μετονομασία"
 
@@ -192,6 +192,14 @@ msgstr "Άνοιγμα"
 #: cyberui/actions.lua cyberui/screens/gigs.lua
 msgid "Details"
 msgstr "Λεπτομέρειες"
+
+#: cyberui/actions.lua
+msgid "Edit info"
+msgstr "Επεξεργασία στοιχείων"
+
+#: cyberui/actions.lua
+msgid "Title, authors, genres"
+msgstr "Τίτλος, συγγραφείς, είδη"
 
 #: cyberui/actions.lua
 msgid "Forget"
@@ -465,7 +473,7 @@ msgstr "CYBERDECK // %s // ΠΡΟΣΒΑΣΗ ΧΕΙΡΙΣΤΗ"
 msgid "NEW"
 msgstr "ΝΕΟ"
 
-#: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua
+#: cyberui/data/books.lua cyberui/screens/dossier.lua cyberui/screens/library.lua cyberui/screens/metaedit.lua
 msgid "DONE"
 msgstr "ΤΕΛΕΙΩΜΕΝΟ"
 
@@ -529,9 +537,13 @@ msgstr "Όλα τα βιβλία"
 msgid "Author"
 msgstr "Συγγραφέας"
 
-#: cyberui/data/libgroups.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
+#: cyberui/data/libgroups.lua cyberui/data/metadata.lua cyberui/screens/collections.lua cyberui/screens/libmenu.lua
 msgid "Series"
 msgstr "Σειρά"
+
+#: cyberui/data/libgroups.lua
+msgid "Genre"
+msgstr "Είδος"
 
 #: cyberui/data/libgroups.lua cyberui/screens/libmenu.lua
 msgid "Format"
@@ -548,6 +560,30 @@ msgstr "Άγνωστος συγγραφέας"
 #: cyberui/data/libgroups.lua
 msgid "No series"
 msgstr "Χωρίς σειρά"
+
+#: cyberui/data/libgroups.lua
+msgid "No genre"
+msgstr "Χωρίς είδος"
+
+#: cyberui/data/metadata.lua cyberui/screens/libmenu.lua
+msgid "Title"
+msgstr "Τίτλος"
+
+#: cyberui/data/metadata.lua
+msgid "Authors"
+msgstr "Συγγραφείς"
+
+#: cyberui/data/metadata.lua
+msgid "Series number"
+msgstr "Αριθμός σειράς"
+
+#: cyberui/data/metadata.lua
+msgid "Genres"
+msgstr "Είδη"
+
+#: cyberui/data/metadata.lua cyberui/screens/settings.lua
+msgid "Language"
+msgstr "Γλώσσα"
 
 #: cyberui/data/metric.lua
 msgid "PG"
@@ -933,7 +969,7 @@ msgstr "Η φωτογραφία σας"
 msgid "Shown on your ID card"
 msgstr "Εμφανίζεται στην κάρτα ID σας"
 
-#: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/settings.lua ...
+#: cyberui/profileflow.lua cyberui/screens/launchedit.lua cyberui/screens/libmenu.lua cyberui/screens/metaedit.lua ...
 msgid "Save"
 msgstr "Αποθήκευση"
 
@@ -962,16 +998,36 @@ msgid "That folder can't be written to"
 msgstr "Δεν είναι δυνατή η εγγραφή σε αυτόν τον φάκελο"
 
 #: cyberui/screens/collections.lua
-msgid "Favorites always stays"
-msgstr "Τα Αγαπημένα παραμένουν πάντα"
-
-#: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Διαγραφή αυτής της συλλογής;"
 
 #: cyberui/screens/collections.lua
 msgid "Collection deleted"
 msgstr "Η συλλογή διαγράφηκε"
+
+#: cyberui/screens/collections.lua
+msgid "A collection with that name exists"
+msgstr "Υπάρχει ήδη συλλογή με αυτό το όνομα"
+
+#: cyberui/screens/collections.lua
+msgid "Type a name first"
+msgstr "Πληκτρολογήστε πρώτα ένα όνομα"
+
+#: cyberui/screens/collections.lua
+msgid "Rename collection"
+msgstr "Μετονομασία συλλογής"
+
+#: cyberui/screens/collections.lua
+msgid "Collection renamed"
+msgstr "Η συλλογή μετονομάστηκε"
+
+#: cyberui/screens/collections.lua
+msgid "Favorites always stays"
+msgstr "Τα Αγαπημένα παραμένουν πάντα"
+
+#: cyberui/screens/collections.lua
+msgid "COLLECTION"
+msgstr "ΣΥΛΛΟΓΗ"
 
 #: cyberui/screens/collections.lua
 msgid "%d FILE"
@@ -1368,6 +1424,10 @@ msgstr "ΣΥΛΛΟΓΗ +"
 #: cyberui/screens/dossier.lua
 msgid "RENAME"
 msgstr "ΜΕΤΟΝΟΜΑΣΙΑ"
+
+#: cyberui/screens/dossier.lua
+msgid "EDIT INFO"
+msgstr "ΑΛΛΑΓΗ ΣΤΟΙΧΕΙΩΝ"
 
 #: cyberui/screens/dossier.lua
 msgid "MOVE TO"
@@ -1789,10 +1849,6 @@ msgstr "ΠΡΟΣΘΗΚΗ // ΜΕΤΑΚΙΝΗΣΗ // ΑΠΟΚΡΥΨΗ // ΕΠΕΞ
 #: cyberui/screens/libmenu.lua
 msgid "Recent"
 msgstr "Πρόσφατα"
-
-#: cyberui/screens/libmenu.lua
-msgid "Title"
-msgstr "Τίτλος"
 
 #: cyberui/screens/libmenu.lua
 msgid "Progress"
@@ -2220,6 +2276,46 @@ msgstr "%dΛΕΠ // %d ΣΕΛ"
 msgid "No reading recorded yet. Statistics must be on."
 msgstr "Δεν έχει καταγραφεί ακόμη ανάγνωση. Τα στατιστικά πρέπει να είναι ενεργά."
 
+#: cyberui/screens/metaedit.lua
+msgid "Saved"
+msgstr "Αποθηκεύτηκε"
+
+#: cyberui/screens/metaedit.lua
+msgid "Back to the book's own"
+msgstr "Επαναφορά στο στοιχείο του βιβλίου"
+
+#: cyberui/screens/metaedit.lua
+msgid "Couldn't save these details"
+msgstr "Δεν ήταν δυνατή η αποθήκευση των στοιχείων"
+
+#: cyberui/screens/metaedit.lua
+msgid "Type a number"
+msgstr "Πληκτρολογήστε αριθμό"
+
+#: cyberui/screens/metaedit.lua
+msgid "separate several with ;"
+msgstr "χωρίστε πολλά με ;"
+
+#: cyberui/screens/metaedit.lua
+msgid "Already the book's own"
+msgstr "Ήδη το στοιχείο του βιβλίου"
+
+#: cyberui/screens/metaedit.lua
+msgid "EDITED"
+msgstr "ΑΛΛΑΓΜΕΝΟ"
+
+#: cyberui/screens/metaedit.lua
+msgid "Tap a detail to change it. Hold it to bring back what the book says. The book file is not changed."
+msgstr "Πατήστε ένα στοιχείο για να το αλλάξετε. Κρατήστε το πατημένο για να επαναφέρετε αυτό που λέει το βιβλίο. Το αρχείο του βιβλίου δεν αλλάζει."
+
+#: cyberui/screens/metaedit.lua
+msgid "RESET ALL"
+msgstr "ΕΠΑΝΑΦΟΡΑ ΟΛΩΝ"
+
+#: cyberui/screens/metaedit.lua
+msgid "Edit details"
+msgstr "Επεξεργασία λεπτομερειών"
+
 #: cyberui/screens/photocrop.lua
 msgid "PICK // FRAME"
 msgstr "ΕΠΙΛΟΓΗ // ΚΑΔΡΑΡΙΣΜΑ"
@@ -2637,10 +2733,6 @@ msgstr "ΣΑΡΩΣΕ ΜΕ ΤΟ ΤΗΛΕΦΩΝΟ ΣΟΥ"
 #: cyberui/screens/settings.lua
 msgid "Version"
 msgstr "Έκδοση"
-
-#: cyberui/screens/settings.lua
-msgid "Language"
-msgstr "Γλώσσα"
 
 #: cyberui/screens/settings.lua
 msgid "CyberUI follows KOReader's language (set in KOReader's own settings). The texts are in the l10n folder and can be edited there."
