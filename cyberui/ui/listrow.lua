@@ -10,7 +10,7 @@ local Theme = require("cyberui/theme")
 
 local ListRow = {}
 
--- Build a row from { path, icon, title, meta, value, on_tap, on_hold, thumb,
+-- Build a row from { path, icon, title, meta, value, dim, on_tap, on_hold, thumb,
 -- thumb_w, thumb_h }: a small cover for a book path (thumb_w x thumb_h when
 -- given), or an icon.
 function ListRow.build(o)
@@ -26,7 +26,7 @@ function ListRow.build(o)
         if o.thumb_h then cw = math.floor(cw * fit / ch) end
         kids[#kids + 1] = Cover:new({ path = o.path, width = cw, height = fit })
     end
-    local lines = { Label:new({ text = o.title, kind = o.title_kind or "heading" }) }
+    local lines = { Label:new({ text = o.title, kind = o.title_kind or "heading", color = o.dim and "muted" or nil }) }
     if o.meta then lines[#lines + 1] = Label:new({ text = o.meta, kind = "mono_small", color = "muted" }) end
     kids[#kids + 1] = Layout.Column:new({ grow = true, children = lines })
     if o.value then kids[#kids + 1] = Label:new({ text = o.value, kind = "mono_small", color = o.value_color or "ink" }) end
