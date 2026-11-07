@@ -3046,6 +3046,10 @@ msgstr "Сообщать о предвыпусках (тестовые сбор�
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr "// СЛОВАРЬ"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Закрыть"
@@ -3053,6 +3057,10 @@ msgstr "Закрыть"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ВВОД"
+
+#: cyberui/skin/list.lua
+msgid "No items"
+msgstr "Нет элементов"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

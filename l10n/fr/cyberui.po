@@ -3012,6 +3012,10 @@ msgstr "Me prévenir des pré-versions (versions de test, plus récentes mais mo
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr "// RECHERCHE"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Fermer"
@@ -3019,6 +3023,10 @@ msgstr "Fermer"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ENTRÉE"
+
+#: cyberui/skin/list.lua
+msgid "No items"
+msgstr "Aucun élément"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

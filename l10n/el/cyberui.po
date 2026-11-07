@@ -3012,6 +3012,10 @@ msgstr "Ειδοποίηση για προεκδόσεις (δοκιμαστικ
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr "// ΑΝΑΖΗΤΗΣΗ"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Κλείσιμο"
@@ -3019,6 +3023,10 @@ msgstr "Κλείσιμο"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ΕΙΣΟΔΟΣ"
+
+#: cyberui/skin/list.lua
+msgid "No items"
+msgstr "Κανένα στοιχείο"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

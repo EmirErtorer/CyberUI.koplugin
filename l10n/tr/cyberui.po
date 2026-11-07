@@ -3012,6 +3012,10 @@ msgstr "Ön sürümleri bildir (test sürümleri, daha yeni ama daha az denenmi�
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr "// SÖZLÜK"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Kapat"
@@ -3019,6 +3023,10 @@ msgstr "Kapat"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// GİRİŞ"
+
+#: cyberui/skin/list.lua
+msgid "No items"
+msgstr "Öğe yok"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

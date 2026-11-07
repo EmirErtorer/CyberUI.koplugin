@@ -3046,6 +3046,10 @@ msgstr "Powiadamiaj o wersjach próbnych (wersje testowe, nowsze, ale mniej spra
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr "// SŁOWNIK"
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Zamknij"
@@ -3053,6 +3057,10 @@ msgstr "Zamknij"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// WEJŚCIE"
+
+#: cyberui/skin/list.lua
+msgid "No items"
+msgstr "Brak pozycji"
 
 #: cyberui/skin/specs.lua
 msgid "// WARNING"

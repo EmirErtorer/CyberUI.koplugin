@@ -3011,12 +3011,20 @@ msgstr ""
 msgid "GITHUB // %s"
 msgstr ""
 
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr ""
+
 #: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr ""
 
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
+msgstr ""
+
+#: cyberui/skin/list.lua
+msgid "No items"
 msgstr ""
 
 #: cyberui/skin/specs.lua
