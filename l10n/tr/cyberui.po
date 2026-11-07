@@ -3016,6 +3016,22 @@ msgstr "GITHUB // %s"
 msgid "Close"
 msgstr "Kapat"
 
+#: cyberui/skin/specs.lua
+msgid "// WARNING"
+msgstr "// UYARI"
+
+#: cyberui/skin/specs.lua
+msgid "// CONFIRM"
+msgstr "// ONAYLA"
+
+#: cyberui/skin/specs.lua
+msgid "// INFO"
+msgstr "// BİLGİ"
+
+#: cyberui/skin/specs.lua
+msgid "// MESSAGE"
+msgstr "// MESAJ"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Kitap kapakları"

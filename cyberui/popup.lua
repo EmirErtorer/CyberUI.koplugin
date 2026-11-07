@@ -22,10 +22,17 @@ local Popup = InputContainer:extend({
     on_back = nil,     -- the Back key; true when it was used
     on_swipe = nil,    -- a swipe anywhere: function(direction)
     place = nil,       -- function(element) -> x, y for an element that floats
+    passive = false,   -- a notice that takes no touches or keys (they go on to what is under it)
 })
 
 -- Touches anywhere on the screen come here (outside the element they close it).
 function Popup:init()
+    if self.passive then
+        self.ges_events, self.key_events = {}, {}
+        self.modal = false
+        self:setElement(self.element)
+        return
+    end
     local whole = function() return Geom:new({ x = 0, y = 0, w = Screen:getWidth(), h = Screen:getHeight() }) end
     self.ges_events = {
         Tap = { GestureRange:new({ ges = "tap", range = whole }) },

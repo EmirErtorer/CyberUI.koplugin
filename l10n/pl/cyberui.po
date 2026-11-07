@@ -3050,6 +3050,22 @@ msgstr "GITHUB // %s"
 msgid "Close"
 msgstr "Zamknij"
 
+#: cyberui/skin/specs.lua
+msgid "// WARNING"
+msgstr "// OSTRZEŻENIE"
+
+#: cyberui/skin/specs.lua
+msgid "// CONFIRM"
+msgstr "// POTWIERDŹ"
+
+#: cyberui/skin/specs.lua
+msgid "// INFO"
+msgstr "// INFO"
+
+#: cyberui/skin/specs.lua
+msgid "// MESSAGE"
+msgstr "// WIADOMOŚĆ"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Okładki książek"

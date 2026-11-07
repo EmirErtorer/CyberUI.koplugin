@@ -1,32 +1,26 @@
--- KOReader's own button dialogs, drawn in CyberUI's style: the highlight menu
--- (what appears after selecting text) and the one for changing a saved
--- highlight. KOReader builds them and everything they do stays KOReader's; this
--- only takes the dialog just made, shows its buttons as CyberUI's docked sheet
--- and keeps the original (unseen, unpainted) in KOReader's window stack, so the
--- calls that close or look at it still work and closing either closes both.
+-- KOReader's button dialogs in CyberUI's style: the highlight menu, the hold
+-- menus of lists, gesture and dispatcher menus, and the dialogs plugins make
+-- with ButtonDialog. The rows of buttons are read from the dialog itself
+-- (see Specs), so what KOReader or a plugin puts in them is drawn without a
+-- word about it here. A dialog that holds more than buttons and a title (it
+-- was given extra widgets) is left as KOReader draws it.
 
+local Anatomy = require("cyberui/skin/anatomy")
+local Core = require("cyberui/skin/core")
 local Device = require("device")
-local Geom = require("ui/geometry")
-local UIManager = require("ui/uimanager")
-local Settings = require("cyberui/settings")
+local Specs = require("cyberui/skin/specs")
 
 local Screen = Device.screen
 
 local Skin = {}
 
--- Is the styled look wanted? (System > Home, the same switch as the menu's.)
-function Skin.wanted()
-    return Settings.get("styled_menu", true)
-end
-
 -- Where a floating dialog sits: centred across, and down the screen where
 -- KOReader's own dialog would be (its `anchor`: the middle by default, near the
--- top or bottom, or by the selected text). A dialog is a list of rows and the
--- anchor asks for its height, which the unpainted original cannot give.
+-- top or bottom, or by the selected text). The anchor asks the dialog for its
+-- height, which the unpainted original cannot give, so it is told the card's.
 local function placer(dialog)
     return function(el)
-        local x = math.floor((Screen:getWidth() - el.w) / 2)
-        local y = math.floor((Screen:getHeight() - el.h) / 2)
+        local x, y = Core.centered(el)
         if type(dialog.anchor) == "function" then
             dialog.getContentSize = function() return { w = el.w, h = el.h } end
             local ok, anchor, pop_down = pcall(dialog.anchor)
@@ -39,78 +33,34 @@ local function placer(dialog)
     end
 end
 
--- Show `dialog` (a KOReader ButtonDialog just built) in CyberUI's style.
-function Skin.present(dialog)
+-- The card for one page of the dialog's buttons (all of them when they fit).
+local function card(dialog, page)
     local Dialog = require("cyberui/ui/dialog")
-    local Popup = require("cyberui/popup")
-    -- the original stays shown so it can be closed, but draws nothing and hears nothing
-    dialog.dimen = Geom:new({ x = 0, y = 0, w = 0, h = 0 })
-    dialog.paintTo = function() end
-    dialog.onShow = function() end
-    dialog.ges_events, dialog.key_events = {}, {}
-    local popup
-    local function dismiss()
-        if dialog.tap_close_callback then dialog.tap_close_callback() end
-        UIManager:close(dialog)
+    local rows = Anatomy.buttons(dialog)
+    local per = Dialog.rowsPerPage(Screen:getHeight())
+    local pages = math.max(1, math.ceil(#rows / per))
+    page = math.max(1, math.min(page or 1, pages))
+    local shown = {}
+    for i = (page - 1) * per + 1, math.min(page * per, #rows) do shown[#shown + 1] = rows[i] end
+    local built = Specs.rows(shown)
+    if pages > 1 then
+        built[#built + 1] = Dialog.pager(page, pages, function(p) Core.redraw(dialog, card(dialog, p)) end)
     end
-    dialog.onCloseWidget = function()
-        if popup then
-            local p = popup
-            popup = nil
-            UIManager:close(p, "ui", p:box())
-        end
-    end
-    popup = Popup:new({
-        element = Dialog.rows({ rows = dialog.buttons }, Screen:getWidth()),
-        place = placer(dialog),
-        on_outside = dismiss,
-    })
-    UIManager:show(dialog, "ui", dialog.dimen)
-    popup:open()
+    return Dialog.card({ title = dialog.title, rows = built }, Screen:getWidth())
 end
 
--- Is this one of the dialogs to restyle? (A built ButtonDialog: it has its rows.)
-local function isButtonDialog(widget)
-    return type(widget) == "table" and type(widget.buttons) == "table" and widget.buttontable ~= nil
-end
-
--- Wrap `host[method]` so a button dialog it shows is drawn by CyberUI instead.
--- Anything going wrong shows KOReader's own, as it would have been.
-local function restyle(host, method)
-    local orig = host[method]
-    if type(orig) ~= "function" then return end
-    host[method] = function(self, ...)
-        if not Skin.wanted() then return orig(self, ...) end
-        local real_show = UIManager.show
-        local held
-        UIManager.show = function(um, widget, ...)
-            if not held and isButtonDialog(widget) then
-                held = { widget, ... }
-                return
-            end
-            return real_show(um, widget, ...)
-        end
-        local ok, result = pcall(orig, self, ...)
-        UIManager.show = real_show
-        if not ok then error(result, 0) end
-        if held then
-            local shown, err = pcall(Skin.present, held[1])
-            if not shown then
-                require("logger").warn("CyberUI dialog:", err)
-                real_show(UIManager, unpack(held))
-            end
-        end
-        return result
-    end
-end
-
--- Style the highlight dialogs of a reader (`ui` is the ReaderUI).
-function Skin.install(ui)
-    local highlight = ui and ui.highlight
-    if not highlight or highlight._cyberui_skin then return end
-    highlight._cyberui_skin = true
-    restyle(highlight, "onShowHighlightMenu")
-    restyle(highlight, "showHighlightDialog")
-end
+Core.register({
+    name = "buttondialog",
+    matches = function(widget)
+        return type(widget.buttons) == "table" and widget.buttontable ~= nil and not widget._added_widgets
+    end,
+    present = function(dialog)
+        return {
+            element = card(dialog),
+            place = placer(dialog),
+            on_outside = function() Core.dismiss(dialog) end,
+        }
+    end,
+})
 
 return Skin

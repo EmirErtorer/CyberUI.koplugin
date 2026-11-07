@@ -17,6 +17,13 @@ local function width(w)
     return math.min(w - 2 * Theme.get().space.xl, Theme.px(460))
 end
 
+-- The floating panel every dialog is: a chamfered card of `kids` in a column.
+local function floating(kids, screen_w, gap, align)
+    local th = Theme.get()
+    return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
+        child = Layout.Column:new({ gap = gap or th.space.s, align = align, children = kids }) })
+end
+
 -- Wrap an action so the dialog closes first.
 local function closing(close, fn)
     return function()
@@ -25,34 +32,54 @@ local function closing(close, fn)
     end
 end
 
--- A question with cancel and confirm; `danger` adds the warning look, `icon`
--- a large icon over the title. o: { title, text, detail, ok, cancel, danger,
--- icon, on_ok }
-function Dialog.confirm(o, close, screen_w)
+-- The card every message and question is: a small tag, a large icon (when
+-- there is one, or the warning look), a title, a boxed detail, the text and
+-- rows of buttons (elements). `dock` ("top" or "bottom") makes it a drop-down
+-- from that edge instead of a floating card.
+-- o: { tag, icon, title, text, detail, rows, danger, lines, dock }
+function Dialog.card(o, screen_w)
     local th = Theme.get()
     local kids = {}
-    local centred = o.danger or o.icon
+    local centred = (o.danger or o.icon) and not o.dock
+    if o.tag then
+        kids[#kids + 1] = Label:new({ text = o.tag, kind = "micro", color = o.danger and "accent" or "muted", align = centred and "center" or "left" })
+    end
     if centred then
-        kids[#kids + 1] = Icon:new({ name = o.icon or "warning", size = 44, color = o.danger and "accent" or "ink",
-            width = width(screen_w) - 2 * th.space.xl })
-        kids[#kids + 1] = Label:new({ text = o.title or _("Attention"), kind = "display", color = o.danger and "accent" or "ink",
-            align = "center" })
-    else
-        kids[#kids + 1] = Label:new({ text = o.title, kind = "title" })
+        if o.icon then
+            kids[#kids + 1] = Icon:new({ name = o.icon, size = 44, color = o.danger and "accent" or "ink",
+                width = width(screen_w) - 2 * th.space.xl })
+        end
+        if o.title then
+            kids[#kids + 1] = Label:new({ text = o.title, kind = "display", color = o.danger and "accent" or "ink", align = "center", lines = 2 })
+        end
+    elseif o.title then
+        kids[#kids + 1] = Label:new({ text = o.title, kind = "title", lines = 2 })
     end
     if o.detail then
         kids[#kids + 1] = Panel:new({ shape = "frame", pad = { th.space.xs, th.space.m }, child =
             Label:new({ text = o.detail, kind = "mono", align = "center" }) })
     end
-    if o.text then
-        kids[#kids + 1] = Label:new({ text = o.text, kind = "body", lines = 9, align = centred and "center" or "left" })
+    if o.text and o.text ~= "" then
+        kids[#kids + 1] = Label:new({ text = o.text, kind = "body", lines = o.lines or 9, align = centred and "center" or "left" })
     end
-    kids[#kids + 1] = Layout.Row:new({ gap = th.space.m, children = {
-        Button:new({ label = o.cancel or _("Cancel"), grow = true, on_tap = closing(close, o.on_cancel) }),
-        Button:new({ label = o.ok or _("OK"), variant = "primary", grow = true, on_tap = closing(close, o.on_ok) }),
-    } })
-    return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
-        child = Layout.Column:new({ gap = th.space.m, align = centred and "center" or "stretch", children = kids }) })
+    for _i, row in ipairs(o.rows or {}) do kids[#kids + 1] = row end
+    if o.dock then return Dialog.docked(kids, o.dock, screen_w) end
+    return floating(kids, screen_w, th.space.m, centred and "center" or "stretch")
+end
+
+-- A question with cancel and confirm; `danger` adds the warning look, `icon`
+-- a large icon over the title. o: { title, text, detail, ok, cancel, danger,
+-- icon, on_ok }
+function Dialog.confirm(o, close, screen_w)
+    local th = Theme.get()
+    return Dialog.card({
+        title = o.title or (o.danger and _("Attention") or nil), icon = o.icon or (o.danger and "warning" or nil),
+        danger = o.danger, detail = o.detail, text = o.text,
+        rows = { Layout.Row:new({ gap = th.space.m, children = {
+            Button:new({ label = o.cancel or _("Cancel"), grow = true, on_tap = closing(close, o.on_cancel) }),
+            Button:new({ label = o.ok or _("OK"), variant = "primary", grow = true, on_tap = closing(close, o.on_ok) }),
+        } }) },
+    }, screen_w)
 end
 
 -- Lay `items` out `cols` to a row, each made into a button by make(item),
@@ -81,22 +108,32 @@ end
 
 -- How many rows of choices fit on one page of the list: what is left of the
 -- screen once the title, the buttons under the list and the padding are taken.
-local function rowsPerPage(screen_h)
+function Dialog.rowsPerPage(screen_h)
     local th = Theme.get()
     local row = th.size.touch + th.space.s
     local fixed = 2 * th.space.xl + 3 * row + Theme.px(24)   -- title, paging row, Close
     return math.max(3, math.floor((screen_h * 0.92 - fixed) / row))
 end
 
+-- The row that pages through a long list: back, "3 / 7", forward; show(page) opens a page.
+function Dialog.pager(page, pages, show)
+    local th = Theme.get()
+    local function go(p) return function() show(p) end end
+    return Layout.Row:new({ gap = th.space.s, children = {
+        Button:new({ label = "<", grow = true, variant = page > 1 and "soft" or "ghost", on_tap = page > 1 and go(page - 1) or nil }),
+        Label:new({ text = page .. " / " .. pages, kind = "mono", align = "center" }),
+        Button:new({ label = ">", grow = true, variant = page < pages and "soft" or "ghost", on_tap = page < pages and go(page + 1) or nil }),
+    } })
+end
+
 -- A list of choices; options are { label, sub, icon, on_tap, checked },
 -- `cols` to a row (1 by default). A list too long for the screen is paged: `page`
 -- is the one showing and show(page) opens another (App.choose supplies it).
 function Dialog.choose(o, close, screen_w, screen_h)
-    local th = Theme.get()
     local cols = o.cols or 1
     local kids = { Label:new({ text = o.title, kind = "title" }) }
     local options, pages = o.options, 1
-    local per = rowsPerPage(screen_h or Theme.px(900)) * cols
+    local per = Dialog.rowsPerPage(screen_h or Theme.px(900)) * cols
     if o.show and #options > per then
         pages = math.ceil(#options / per)
         o.page = math.min(math.max(o.page or 1, 1), pages)
@@ -110,17 +147,9 @@ function Dialog.choose(o, close, screen_w, screen_h)
             variant = opt.checked and "chip_on" or "soft", on_tap = closing(close, opt.on_tap),
         })
     end)
-    if pages > 1 then
-        local function go(page) return function() o.show(page) end end
-        kids[#kids + 1] = Layout.Row:new({ gap = th.space.s, children = {
-            Button:new({ label = "<", grow = true, variant = o.page > 1 and "soft" or "ghost", on_tap = o.page > 1 and go(o.page - 1) or nil }),
-            Label:new({ text = o.page .. " / " .. pages, kind = "mono", align = "center" }),
-            Button:new({ label = ">", grow = true, variant = o.page < pages and "soft" or "ghost", on_tap = o.page < pages and go(o.page + 1) or nil }),
-        } })
-    end
+    if pages > 1 then kids[#kids + 1] = Dialog.pager(o.page, pages, o.show) end
     kids[#kids + 1] = Button:new({ label = o.cancel or _("Close"), variant = "ghost", on_tap = closing(close) })
-    return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
-        child = Layout.Column:new({ gap = th.space.s, children = kids }) })
+    return floating(kids, screen_w)
 end
 
 -- Content docked to the top or bottom edge, the whole width, with an accent
@@ -135,35 +164,10 @@ function Dialog.docked(kids, dock, screen_w)
     return panel
 end
 
--- Rows of buttons as KOReader's button dialogs describe them ({ text,
--- callback, hold_callback, enabled }): a floating panel, or docked like the menu
--- when `dock` is given. o: { rows, dock, title }.
--- A tap runs the callback and nothing else: closing is the callback's job.
-function Dialog.rows(o, screen_w)
-    local th = Theme.get()
-    local kids = {}
-    if o.title then kids[#kids + 1] = Label:new({ text = o.title, kind = "title", lines = 2 }) end
-    for _i, row in ipairs(o.rows) do
-        local cells = {}
-        for _j, b in ipairs(row) do
-            local usable = b.enabled ~= false and b.callback ~= nil
-            cells[#cells + 1] = Button:new({
-                label = b.text_func and b.text_func() or b.text or "", grow = true, variant = "soft",
-                disabled = not usable, on_tap = usable and b.callback or nil, on_hold = b.hold_callback,
-            })
-        end
-        kids[#kids + 1] = Layout.Row:new({ gap = th.space.s, children = cells })
-    end
-    if o.dock then return Dialog.docked(kids, o.dock, screen_w) end
-    return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
-        child = Layout.Column:new({ gap = th.space.s, children = kids }) })
-end
-
 -- An action sheet: a title (and a line under it) over a grid of actions,
 -- each { icon, label, sub, on_tap, danger }, `cols` to a row (2 by default).
 -- `dock` ("top" or "bottom") makes it a drop-down from that edge, like the menu.
 function Dialog.sheet(o, close, screen_w)
-    local th = Theme.get()
     local kids = { Label:new({ text = o.title, kind = "title", lines = 2 }) }
     if o.sub then kids[#kids + 1] = Label:new({ text = o.sub, kind = "small", color = "muted" }) end
     tiles(kids, o.actions, o.cols or 2, function(a)
@@ -175,19 +179,17 @@ function Dialog.sheet(o, close, screen_w)
     end)
     kids[#kids + 1] = Button:new({ label = o.cancel or _("Close"), variant = "ghost", on_tap = closing(close) })
     if o.dock then return Dialog.docked(kids, o.dock, screen_w) end
-    return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
-        child = Layout.Column:new({ gap = th.space.s, children = kids }) })
+    return floating(kids, screen_w)
 end
 
 -- A step of a longer task (no buttons): a title, the step and a striped bar.
 function Dialog.progress(o, screen_w)
     local th = Theme.get()
-    return Panel:new({ shape = "chamfer", corners = "tb", fill = "bg", pad = th.space.xl, width = width(screen_w),
-        child = Layout.Column:new({ gap = th.space.m, children = {
-            Label:new({ text = o.title, kind = "title" }),
-            Label:new({ text = o.text, kind = "mono", lines = 2 }),
-            Deco.Stripes:new({ dir = "d", height = Theme.px(14), color = "ink" }),
-        } }) })
+    return floating({
+        Label:new({ text = o.title, kind = "title" }),
+        Label:new({ text = o.text, kind = "mono", lines = 2 }),
+        Deco.Stripes:new({ dir = "d", height = Theme.px(14), color = "ink" }),
+    }, screen_w, th.space.m)
 end
 
 -- A short notice shown near the bottom of the screen.

@@ -3016,6 +3016,22 @@ msgstr "GITHUB // %s"
 msgid "Close"
 msgstr "Cerrar"
 
+#: cyberui/skin/specs.lua
+msgid "// WARNING"
+msgstr "// AVISO"
+
+#: cyberui/skin/specs.lua
+msgid "// CONFIRM"
+msgstr "// CONFIRMAR"
+
+#: cyberui/skin/specs.lua
+msgid "// INFO"
+msgstr "// INFO"
+
+#: cyberui/skin/specs.lua
+msgid "// MESSAGE"
+msgstr "// MENSAJE"
+
 #: cyberui/sleep.lua
 msgid "Book covers"
 msgstr "Portadas de libros"
