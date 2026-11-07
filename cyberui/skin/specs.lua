@@ -33,12 +33,13 @@ function Specs.read(b)
 end
 
 -- A CyberUI button for a described one. `variant` is the look when it is
--- neither primary nor disabled.
-function Specs.button(b, variant)
+-- neither primary nor disabled, `icon` one to show beside the label (a button
+-- KOReader marks checked shows a check instead).
+function Specs.button(b, variant, icon)
     local s = Specs.read(b)
     local usable = s.enabled and s.callback ~= nil
     return Button:new({
-        label = s.label, icon = s.checked and "check" or nil, grow = true,
+        label = s.label, icon = s.checked and "check" or icon, grow = true,
         variant = s.primary and "primary" or variant or "soft",
         disabled = not usable, on_tap = usable and s.callback or nil,
         on_hold = s.enabled and s.hold_callback or nil,
@@ -51,14 +52,15 @@ function Specs.wide(b, variant)
 end
 
 -- The rows of described buttons as rows of CyberUI buttons; `pick(row, i, b)`
--- may name another variant for a button.
+-- may name another variant for a button, and an icon after it.
 function Specs.rows(rows, pick)
     local out = {}
     for _i, row in ipairs(rows) do
         local cells = {}
         for j, b in ipairs(row) do
-            local variant = pick and pick(row, j, b) or nil
-            cells[#cells + 1] = Specs.button(b, variant)
+            local variant, icon
+            if pick then variant, icon = pick(row, j, b) end
+            cells[#cells + 1] = Specs.button(b, variant, icon)
         end
         out[#out + 1] = Layout.Row:new({ gap = Theme.get().space.s, children = cells })
     end

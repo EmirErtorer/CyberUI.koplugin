@@ -12,9 +12,11 @@ local Screen = Device.screen
 
 local Skin = {}
 
--- A pair of buttons ends in the one that goes ahead: it is the main button.
-local function lastOfPair(row, i)
-    if #row == 2 and i == 2 then return "primary" end
+-- A question's buttons: the first is the way out (a quiet button with a cross), and in
+-- a pair the second is the one that goes ahead (the main button, with a tick).
+local function ways(row, i)
+    if i == 1 then return "ghost", "close" end
+    if #row == 2 then return "primary", "check" end
 end
 
 local function takes(widget)
@@ -29,7 +31,7 @@ Core.register({
         local kind = Specs.kind(Anatomy.icon(widget))
         local element = Dialog.card({
             tag = kind.tag, icon = kind.icon, danger = kind.danger, text = Anatomy.text(widget),
-            rows = Specs.rows(Anatomy.buttons(widget), lastOfPair),
+            rows = Specs.rows(Anatomy.buttons(widget), ways),
         }, Screen:getWidth())
         return {
             element = element,
