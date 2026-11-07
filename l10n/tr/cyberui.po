@@ -1001,6 +1001,34 @@ msgstr "Kaydedildi: %s"
 msgid "That folder can't be written to"
 msgstr "Bu klasöre yazılamıyor"
 
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "HIGHLIGHTS"
+msgstr "VURGULAR"
+
+#: cyberui/screens/annotations.lua
+msgid "No highlights in this book yet. Select text while reading and choose Highlight."
+msgstr "Bu kitapta henüz vurgu yok. Okurken metni seçin ve Vurgula'yı seçin."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "NOTES"
+msgstr "NOTLAR"
+
+#: cyberui/screens/annotations.lua
+msgid "No notes in this book yet. Add a note to a highlight while reading."
+msgstr "Bu kitapta henüz not yok. Okurken bir vurguya not ekleyin."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "BOOKMARKS"
+msgstr "YER İMLERİ"
+
+#: cyberui/screens/annotations.lua
+msgid "No bookmarks in this book yet. Tap the top corner of a page while reading to add one."
+msgstr "Bu kitapta henüz yer imi yok. Eklemek için okurken sayfanın üst köşesine dokunun."
+
+#: cyberui/screens/annotations.lua cyberui/screens/library.lua
+msgid "SECTOR"
+msgstr "SEKTÖR"
+
 #: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Bu koleksiyon silinsin mi?"
@@ -1356,18 +1384,6 @@ msgstr "ŞİFRESİ ÇÖZÜLDÜ %d%%"
 #: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // %s KALDI"
-
-#: cyberui/screens/dossier.lua
-msgid "HIGHLIGHTS"
-msgstr "VURGULAR"
-
-#: cyberui/screens/dossier.lua
-msgid "NOTES"
-msgstr "NOTLAR"
-
-#: cyberui/screens/dossier.lua
-msgid "BOOKMARKS"
-msgstr "YER İMLERİ"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "STATUS"
@@ -2023,10 +2039,6 @@ msgstr "EŞLEŞME YOK"
 #: cyberui/screens/library.lua
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
 msgstr "Henüz burada bir şey yok. Kitapları kopyala ya da + Yeni ile klasör oluştur."
-
-#: cyberui/screens/library.lua
-msgid "SECTOR"
-msgstr "SEKTÖR"
 
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"

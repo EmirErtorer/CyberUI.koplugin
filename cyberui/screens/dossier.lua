@@ -1,7 +1,8 @@
--- A book's dossier: cover and facts, progress, synopsis, annotation counts
--- and every action on the book (open, status, collections, folder, delete).
+-- A book's dossier: who the book is, the synopsis with the room that is left, the
+-- saved highlights, notes and bookmarks as buttons to their lists, and the actions.
 
 local Actions = require("cyberui/actions")
+local Annotations = require("cyberui/data/annotations")
 local App = require("cyberui/app")
 local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
@@ -28,20 +29,6 @@ local Dossier = Screen:extend()
 
 -- Reading status as the dossier names it.
 local STATUS = { new = _("NEW"), reading = _("READING"), complete = _("DONE"), abandoned = _("ON HOLD") }
-
--- Highlights, notes and bookmarks saved for the book.
-local function annotationCounts(path)
-    local counts = { highlights = 0, notes = 0, bookmarks = 0 }
-    if not Books.state(path).opened then return counts end
-    local DocSettings = require("docsettings")
-    local ok, ds = pcall(DocSettings.open, DocSettings, path)
-    local list = ok and ds:readSetting("annotations") or {}
-    for _i, a in ipairs(list) do
-        if a.drawer then counts.highlights = counts.highlights + 1 else counts.bookmarks = counts.bookmarks + 1 end
-        if a.note and a.note ~= "" then counts.notes = counts.notes + 1 end
-    end
-    return counts
-end
 
 -- Swipe up and down to page through a long synopsis.
 function Dossier:onSwipe(dir)
@@ -83,15 +70,9 @@ local function progress(path, st)
         text = text .. string.format(" // %s", Format.duration(t.seconds))
         if left > 0 then text = text .. string.format(_(" // %s LEFT"), Format.duration(left)) end
     end
-    local c = annotationCounts(path)
-    local marks = {}
-    for _i, m in ipairs({ { c.highlights, _("HIGHLIGHTS") }, { c.notes, _("NOTES") }, { c.bookmarks, _("BOOKMARKS") } }) do
-        if m[1] > 0 then marks[#marks + 1] = string.format("%02d %s", m[1], m[2]) end
-    end
     return Layout.Column:new({ gap = th.space.xs, children = {
         Label:new({ text = text, kind = "mono_small", lines = 2 }),
         Progress:new({ value = st.percent, segments = 30, book = true }),
-        #marks > 0 and line(table.concat(marks, " \u{B7} ")) or nil,
     } })
 end
 
@@ -135,6 +116,16 @@ function Dossier:build()
     } })
     self.synopsis = synopsis.children[2]
 
+    -- the saved items as three buttons, each opening its list
+    local kinds = Annotations.kinds(path)
+    local function count(kind, label)
+        return Button:new({ label = string.format("%02d", #kinds[kind]), sub = label, kind = "number", grow = true, height = Theme.px(64),
+            on_tap = function() App.push("annotations", { path = path, kind = kind }) end })
+    end
+    local counts = Layout.Row:new({ gap = th.space.m, children = {
+        count("highlights", _("HIGHLIGHTS")), count("notes", _("NOTES")), count("bookmarks", _("BOOKMARKS")),
+    } })
+
     local offer = Gigs.offer(path)
     local main = offer
         and Button:new({ label = _("TAKE GIG"), sub = Format.credits(offer.price), icon = "forward", variant = "primary", corners = "tb", grow = true,
@@ -149,6 +140,7 @@ function Dossier:build()
     local kids = { head }
     if st.opened then kids[#kids + 1] = progress(path, st) end
     kids[#kids + 1] = synopsis
+    kids[#kids + 1] = counts
     kids[#kids + 1] = actions
     return Frame.page({
         screen = self, title = _("File dossier"), path = filemanagerutil.abbreviate(dir), tab = "library",

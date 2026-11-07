@@ -1000,6 +1000,34 @@ msgstr ""
 msgid "That folder can't be written to"
 msgstr ""
 
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "HIGHLIGHTS"
+msgstr ""
+
+#: cyberui/screens/annotations.lua
+msgid "No highlights in this book yet. Select text while reading and choose Highlight."
+msgstr ""
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "NOTES"
+msgstr ""
+
+#: cyberui/screens/annotations.lua
+msgid "No notes in this book yet. Add a note to a highlight while reading."
+msgstr ""
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "BOOKMARKS"
+msgstr ""
+
+#: cyberui/screens/annotations.lua
+msgid "No bookmarks in this book yet. Tap the top corner of a page while reading to add one."
+msgstr ""
+
+#: cyberui/screens/annotations.lua cyberui/screens/library.lua
+msgid "SECTOR"
+msgstr ""
+
 #: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr ""
@@ -1354,18 +1382,6 @@ msgstr ""
 
 #: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "HIGHLIGHTS"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "NOTES"
-msgstr ""
-
-#: cyberui/screens/dossier.lua
-msgid "BOOKMARKS"
 msgstr ""
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
@@ -2021,10 +2037,6 @@ msgstr ""
 
 #: cyberui/screens/library.lua
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
-msgstr ""
-
-#: cyberui/screens/library.lua
-msgid "SECTOR"
 msgstr ""
 
 #: cyberui/screens/log/calendar.lua

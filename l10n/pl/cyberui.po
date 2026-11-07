@@ -1010,6 +1010,34 @@ msgstr "Zapisano w %s"
 msgid "That folder can't be written to"
 msgstr "Nie można zapisać w tym folderze"
 
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "HIGHLIGHTS"
+msgstr "ZAZNACZENIA"
+
+#: cyberui/screens/annotations.lua
+msgid "No highlights in this book yet. Select text while reading and choose Highlight."
+msgstr "W tej książce nie ma jeszcze zakreśleń. Zaznacz tekst podczas czytania i wybierz Zakreśl."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "NOTES"
+msgstr "NOTATKI"
+
+#: cyberui/screens/annotations.lua
+msgid "No notes in this book yet. Add a note to a highlight while reading."
+msgstr "W tej książce nie ma jeszcze notatek. Dodaj notatkę do zakreślenia podczas czytania."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "BOOKMARKS"
+msgstr "ZAKŁADKI"
+
+#: cyberui/screens/annotations.lua
+msgid "No bookmarks in this book yet. Tap the top corner of a page while reading to add one."
+msgstr "W tej książce nie ma jeszcze zakładek. Dotknij górnego rogu strony podczas czytania, aby dodać zakładkę."
+
+#: cyberui/screens/annotations.lua cyberui/screens/library.lua
+msgid "SECTOR"
+msgstr "SEKTOR"
+
 #: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Usunąć tę kolekcję?"
@@ -1367,18 +1395,6 @@ msgstr "ODSZYFROWANO %d%%"
 #: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // POZOSTAŁO %s"
-
-#: cyberui/screens/dossier.lua
-msgid "HIGHLIGHTS"
-msgstr "ZAZNACZENIA"
-
-#: cyberui/screens/dossier.lua
-msgid "NOTES"
-msgstr "NOTATKI"
-
-#: cyberui/screens/dossier.lua
-msgid "BOOKMARKS"
-msgstr "ZAKŁADKI"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "STATUS"
@@ -2045,10 +2061,6 @@ msgstr "BRAK WYNIKÓW"
 #: cyberui/screens/library.lua
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
 msgstr "Na razie nic tu nie ma. Skopiuj książki albo utwórz folder przyciskiem + Nowa."
-
-#: cyberui/screens/library.lua
-msgid "SECTOR"
-msgstr "SEKTOR"
 
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"

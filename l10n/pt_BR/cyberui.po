@@ -1001,6 +1001,34 @@ msgstr "Salvo em %s"
 msgid "That folder can't be written to"
 msgstr "Não é possível gravar nessa pasta"
 
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "HIGHLIGHTS"
+msgstr "DESTAQUES"
+
+#: cyberui/screens/annotations.lua
+msgid "No highlights in this book yet. Select text while reading and choose Highlight."
+msgstr "Ainda não há destaques neste livro. Selecione texto enquanto lê e escolha Destacar."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "NOTES"
+msgstr "NOTAS"
+
+#: cyberui/screens/annotations.lua
+msgid "No notes in this book yet. Add a note to a highlight while reading."
+msgstr "Ainda não há notas neste livro. Adicione uma nota a um destaque enquanto lê."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "BOOKMARKS"
+msgstr "MARCADORES"
+
+#: cyberui/screens/annotations.lua
+msgid "No bookmarks in this book yet. Tap the top corner of a page while reading to add one."
+msgstr "Ainda não há marcadores neste livro. Toque no canto superior de uma página enquanto lê para adicionar um."
+
+#: cyberui/screens/annotations.lua cyberui/screens/library.lua
+msgid "SECTOR"
+msgstr "SETOR"
+
 #: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Excluir esta coleção?"
@@ -1356,18 +1384,6 @@ msgstr "DESCRIPTOGRAFADO %d%%"
 #: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // %s RESTANTES"
-
-#: cyberui/screens/dossier.lua
-msgid "HIGHLIGHTS"
-msgstr "DESTAQUES"
-
-#: cyberui/screens/dossier.lua
-msgid "NOTES"
-msgstr "NOTAS"
-
-#: cyberui/screens/dossier.lua
-msgid "BOOKMARKS"
-msgstr "MARCADORES"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "STATUS"
@@ -2023,10 +2039,6 @@ msgstr "SEM RESULTADOS"
 #: cyberui/screens/library.lua
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
 msgstr "Nada aqui ainda. Copie livros ou crie uma pasta com + Nova."
-
-#: cyberui/screens/library.lua
-msgid "SECTOR"
-msgstr "SETOR"
 
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"

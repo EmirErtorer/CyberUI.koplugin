@@ -1001,6 +1001,34 @@ msgstr "Enregistrée dans %s"
 msgid "That folder can't be written to"
 msgstr "Impossible d'écrire dans ce dossier"
 
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "HIGHLIGHTS"
+msgstr "SURLIGNAGES"
+
+#: cyberui/screens/annotations.lua
+msgid "No highlights in this book yet. Select text while reading and choose Highlight."
+msgstr "Aucun surlignage dans ce livre pour l'instant. Sélectionnez du texte en lisant et choisissez Surligner."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "NOTES"
+msgstr "NOTES"
+
+#: cyberui/screens/annotations.lua
+msgid "No notes in this book yet. Add a note to a highlight while reading."
+msgstr "Aucune note dans ce livre pour l'instant. Ajoutez une note à un surlignage en lisant."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "BOOKMARKS"
+msgstr "SIGNETS"
+
+#: cyberui/screens/annotations.lua
+msgid "No bookmarks in this book yet. Tap the top corner of a page while reading to add one."
+msgstr "Aucun marque-page dans ce livre pour l'instant. Touchez le coin supérieur d'une page en lisant pour en ajouter un."
+
+#: cyberui/screens/annotations.lua cyberui/screens/library.lua
+msgid "SECTOR"
+msgstr "SECTEUR"
+
 #: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Supprimer cette collection ?"
@@ -1356,18 +1384,6 @@ msgstr "DÉCHIFFRÉ %d%%"
 #: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // %s RESTANTES"
-
-#: cyberui/screens/dossier.lua
-msgid "HIGHLIGHTS"
-msgstr "SURLIGNAGES"
-
-#: cyberui/screens/dossier.lua
-msgid "NOTES"
-msgstr "NOTES"
-
-#: cyberui/screens/dossier.lua
-msgid "BOOKMARKS"
-msgstr "SIGNETS"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "STATUS"
@@ -2023,10 +2039,6 @@ msgstr "AUCUN RÉSULTAT"
 #: cyberui/screens/library.lua
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
 msgstr "Rien ici pour l'instant. Copiez des livres ou créez un dossier avec + Nouvelle."
-
-#: cyberui/screens/library.lua
-msgid "SECTOR"
-msgstr "SECTEUR"
 
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"

@@ -1010,6 +1010,34 @@ msgstr "Сохранено: %s"
 msgid "That folder can't be written to"
 msgstr "В эту папку нельзя записывать"
 
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "HIGHLIGHTS"
+msgstr "ВЫДЕЛЕНИЯ"
+
+#: cyberui/screens/annotations.lua
+msgid "No highlights in this book yet. Select text while reading and choose Highlight."
+msgstr "В этой книге пока нет выделений. Выделите текст при чтении и выберите «Выделить»."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "NOTES"
+msgstr "ЗАМЕТКИ"
+
+#: cyberui/screens/annotations.lua
+msgid "No notes in this book yet. Add a note to a highlight while reading."
+msgstr "В этой книге пока нет заметок. Добавьте заметку к выделению при чтении."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "BOOKMARKS"
+msgstr "ЗАКЛАДКИ"
+
+#: cyberui/screens/annotations.lua
+msgid "No bookmarks in this book yet. Tap the top corner of a page while reading to add one."
+msgstr "В этой книге пока нет закладок. Коснитесь верхнего угла страницы при чтении, чтобы добавить закладку."
+
+#: cyberui/screens/annotations.lua cyberui/screens/library.lua
+msgid "SECTOR"
+msgstr "СЕКТОР"
+
 #: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Удалить эту коллекцию?"
@@ -1367,18 +1395,6 @@ msgstr "РАСШИФРОВАНО %d%%"
 #: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // ОСТАЛОСЬ %s"
-
-#: cyberui/screens/dossier.lua
-msgid "HIGHLIGHTS"
-msgstr "ВЫДЕЛЕНИЯ"
-
-#: cyberui/screens/dossier.lua
-msgid "NOTES"
-msgstr "ЗАМЕТКИ"
-
-#: cyberui/screens/dossier.lua
-msgid "BOOKMARKS"
-msgstr "ЗАКЛАДКИ"
 
 #: cyberui/screens/dossier.lua cyberui/screens/library.lua
 msgid "STATUS"
@@ -2045,10 +2061,6 @@ msgstr "НЕТ СОВПАДЕНИЙ"
 #: cyberui/screens/library.lua
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
 msgstr "Пока здесь пусто. Скопируйте книги или создайте папку кнопкой + Новая."
-
-#: cyberui/screens/library.lua
-msgid "SECTOR"
-msgstr "СЕКТОР"
 
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
