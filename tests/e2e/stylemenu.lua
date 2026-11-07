@@ -1,5 +1,5 @@
 -- KOReader's drop-down menu in CyberUI's style: drops down over CyberUI
--- (30-50% of the screen), switches tabs, goes into a submenu, toggles a
+-- (up to 80% of the screen), switches tabs, goes into a submenu, toggles a
 -- checkbox in place and goes back up.
 local H = ...
 local S = 0.8
@@ -11,7 +11,7 @@ H.step(S, function()
     local m = menu()
     local h = m and m.panel.h / require("device").screen:getHeight()
     H.check(m ~= nil, "the styled menu drops down over CyberUI")
-    H.check(h and h >= 0.29 and h <= 0.51, "and covers 30-50% of the screen: " .. tostring(h))
+    H.check(h and h >= 0.6 and h <= 0.85, "and covers 60-85% of the screen: " .. tostring(h))
     H.shot("sm01-menu")
     for i, tab in ipairs(m.tabs) do
         if tab.icon == "appbar.settings" then m:switchTab(i) end
