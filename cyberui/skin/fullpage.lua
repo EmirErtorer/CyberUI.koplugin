@@ -9,15 +9,16 @@ local Screen = Device.screen
 local Fullpage = {}
 
 -- How much height is left for rows: the screen less the status bar, the header,
--- the paging row and the padding.
-function Fullpage.room()
+-- the paging row, `footer_rows` rows of buttons and the padding.
+function Fullpage.room(footer_rows)
     local Theme = require("cyberui/theme")
     local th = Theme.get()
-    return Screen:getHeight() - 2 * th.space.s - 4 * th.size.touch - 2 * th.space.m
+    return Screen:getHeight() - 2 * th.space.s - (4 + (footer_rows or 0)) * th.size.touch - (2 + (footer_rows or 0)) * th.space.m
 end
 
 -- The page from { title, path, on_back, actions = { buttons }, rows = { elements },
--- empty (what to say with no rows), page, pages, show(page) }.
+-- empty (what to say with no rows), page, pages, show(page), footer = { elements
+-- under the paging row } }.
 function Fullpage.build(o)
     local Dialog = require("cyberui/ui/dialog")
     local Header = require("cyberui/ui/header")
@@ -39,6 +40,7 @@ function Fullpage.build(o)
         kids[#kids + 1] = Layout.Column:new({ grow = true, children = o.rows })
     end
     if (o.pages or 1) > 1 then kids[#kids + 1] = Dialog.pager(o.page, o.pages, o.show) end
+    for _i, el in ipairs(o.footer or {}) do kids[#kids + 1] = el end
     return Panel:new({ shape = "none", fill = "bg", pad = { th.space.s, side, th.space.m, side }, width = Screen:getWidth(), height = Screen:getHeight(),
         child = Layout.Column:new({ gap = th.space.m, children = kids }) })
 end

@@ -102,6 +102,14 @@ scene("keyvalue-info", true, function()
     return kvpage
 end)
 
+local sorter
+scene("sort", true, function()
+    local items = { { text = "Wi-Fi", checked_func = function() return true end, callback = cb }, { text = "Bookmarks" }, { text = "Statistics", checked_func = function() return false end, callback = cb },
+        { text = "Reading goals" }, { text = "Calendar" } }
+    sorter = require("ui/widget/sortwidget"):new({ title = "Arrange menu", item_table = items, callback = cb })
+    return sorter
+end)
+
 -- behaviour, in the styled mode only
 local function behaviour()
     -- the text viewer pages a long text, runs KOReader's callbacks and closes with Back or Close
@@ -253,6 +261,45 @@ local function behaviour()
         H.tap(nil, "back")
     end)
     H.step(0.8, function() H.check(gone(kvpage), "the back button closes the list and its popup") end)
+
+    -- a sorting window: a step moves an item in KOReader's own list, Done passes it on, Cancel puts it back
+    local order = { { text = "One" }, { text = "Two" }, { text = "Three" } }
+    H.step(0.8, function()
+        sorter = require("ui/widget/sortwidget"):new({ title = "Arrange", item_table = order, callback = function() ran.sorted = order[1].text .. order[2].text .. order[3].text end })
+        UIManager:show(sorter)
+    end)
+    H.step(0.8, function()
+        local downs, seen = {}, {}
+        H.findWhere(function(el)
+            if el.icon == "down" and el.on_tap and not seen[el] then seen[el] = true; downs[#downs + 1] = el end
+            return false
+        end)
+        H.check(#downs >= 1, "each row has a step down")
+        if downs[1] then H.tapAt(downs[1].x + downs[1].w / 2, downs[1].y + downs[1].h / 2) end
+    end)
+    H.step(0.8, function()
+        H.check(order[1].text == "Two" and order[2].text == "One", "a step moves the item in KOReader's own list: " .. order[1].text .. order[2].text)
+        H.tap("Done")
+    end)
+    H.step(0.8, function()
+        H.check(ran.sorted == "TwoOneThree", "Done passes the new order on: " .. tostring(ran.sorted))
+        H.check(gone(sorter), "and closes the window")
+    end)
+    H.step(0.8, function()
+        sorter = require("ui/widget/sortwidget"):new({ title = "Arrange", item_table = order, callback = function() ran.sorted = "no" end })
+        UIManager:show(sorter)
+    end)
+    H.step(0.8, function()
+        local down = H.find(nil, "down", true)
+        if down then H.tapAt(down.x + down.w / 2, down.y + down.h / 2) end
+    end)
+    H.step(0.8, function()
+        H.check(order[1].text == "One", "another step moved the first item: " .. order[1].text)
+        H.tap("Cancel")
+    end)
+    H.step(0.8, function()
+        H.check(order[1].text == "Two" and ran.sorted == "TwoOneThree" and gone(sorter), "Cancel puts the order back and closes without passing it on")
+    end)
 
 end
 if mode == "new" then behaviour() end

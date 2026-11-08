@@ -35,7 +35,7 @@ msgstr "A ler"
 msgid "On hold"
 msgstr "Em espera"
 
-#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
+#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua cyberui/skin/sort.lua
 msgid "Done"
 msgstr "Lido"
 
@@ -3084,6 +3084,10 @@ msgstr "SEG"
 msgid "MORE"
 msgstr "MAIS"
 
+#: cyberui/skin/sort.lua cyberui/ui/dialog.lua cyberui/ui/textinput.lua
+msgid "Cancel"
+msgstr "Cancelar"
+
 #: cyberui/skin/specs.lua
 msgid "// WARNING"
 msgstr "// AVISO"
@@ -3355,10 +3359,6 @@ msgstr "As fontes do próprio KOReader, para a leitura mais simples"
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "PASTA // %d"
-
-#: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
-msgid "Cancel"
-msgstr "Cancelar"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

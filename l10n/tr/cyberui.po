@@ -35,7 +35,7 @@ msgstr "Okunuyor"
 msgid "On hold"
 msgstr "Beklemede"
 
-#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
+#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua cyberui/skin/sort.lua
 msgid "Done"
 msgstr "Bitti"
 
@@ -3084,6 +3084,10 @@ msgstr "SN."
 msgid "MORE"
 msgstr "DAHA FAZLA"
 
+#: cyberui/skin/sort.lua cyberui/ui/dialog.lua cyberui/ui/textinput.lua
+msgid "Cancel"
+msgstr "İptal"
+
 #: cyberui/skin/specs.lua
 msgid "// WARNING"
 msgstr "// UYARI"
@@ -3355,10 +3359,6 @@ msgstr "KOReader'ın kendi yazı tipleri, en sade okuma için"
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "KLASÖR // %d"
-
-#: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
-msgid "Cancel"
-msgstr "İptal"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"
