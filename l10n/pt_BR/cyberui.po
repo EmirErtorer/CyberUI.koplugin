@@ -3040,7 +3040,7 @@ msgstr "FIM"
 msgid "// HIGHLIGHT"
 msgstr "// DESTAQUE"
 
-#: cyberui/skin/frontlight.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Fechar"
 
@@ -3087,6 +3087,10 @@ msgstr "SEG"
 #: cyberui/skin/progress.lua
 msgid "// WORKING"
 msgstr "// TRABALHANDO"
+
+#: cyberui/skin/qr.lua
+msgid "// SCAN"
+msgstr "// ESCANEAR"
 
 #: cyberui/skin/semantics.lua
 msgid "MORE"

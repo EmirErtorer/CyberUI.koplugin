@@ -3040,7 +3040,7 @@ msgstr "ΤΕΛΟΣ"
 msgid "// HIGHLIGHT"
 msgstr "// ΕΠΙΣΗΜΑΝΣΗ"
 
-#: cyberui/skin/frontlight.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -3087,6 +3087,10 @@ msgstr "ΔΕΥΤ."
 #: cyberui/skin/progress.lua
 msgid "// WORKING"
 msgstr "// ΣΕ ΕΞΕΛΙΞΗ"
+
+#: cyberui/skin/qr.lua
+msgid "// SCAN"
+msgstr "// ΣΑΡΩΣΗ"
 
 #: cyberui/skin/semantics.lua
 msgid "MORE"

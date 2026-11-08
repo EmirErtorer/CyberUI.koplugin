@@ -1,5 +1,5 @@
--- KOReader's window for choosing one of several things (sort by, a mode, a
--- language) in CyberUI's style: a list of choices with the chosen one ticked, a
+-- KOReader's window for choosing one of several things (sort by, a mode, the
+-- keyboard's language) in CyberUI's style: a list of choices with the chosen one ticked, a
 -- tap on one chooses it through KOReader's own radio table, and the dialog's
 -- buttons (Close, Apply, and any extra) under it. A long list is paged.
 
@@ -12,9 +12,25 @@ local Screen = Device.screen
 
 local Skin = {}
 
+-- The windows that choose one of a list, by KOReader's class.
+local CLASSES = { "ui/widget/radiobuttonwidget", "ui/widget/keyboardlayoutdialog" }
+
+local function takes(widget)
+    for _i, class in ipairs(CLASSES) do
+        if Anatomy.is(widget, class) then return true end
+    end
+    return false
+end
+
 -- KOReader's table of radio buttons inside the dialog, or nil.
 local function radios(widget)
+    if widget.radio_button_table then return widget.radio_button_table end
     return Anatomy.find(widget, function(t) return t.radio_buttons_layout ~= nil and t.checkButton ~= nil end)
+end
+
+-- What the window is called: the title it was given, else the one in its title bar.
+local function titleOf(widget)
+    return widget.title_text or (widget.title_bar and widget.title_bar.title) or ""
 end
 
 -- The card for one page of the choices.
@@ -29,6 +45,12 @@ local function card(widget, state)
     end
     local per = Dialog.rowsPerPage(Screen:getHeight()) - 1
     local pages = math.max(1, math.ceil(#choices / per))
+    if not state.page then
+        -- open on the page that has the chosen one
+        for i, button in ipairs(choices) do
+            if button.checked then state.page = math.ceil(i / per); break end
+        end
+    end
     state.page = math.max(1, math.min(state.page or 1, pages))
     local rows = {}
     if type(widget.info_text) == "string" and widget.info_text ~= "" then
@@ -49,13 +71,13 @@ local function card(widget, state)
     end
     local buttons = Anatomy.buttons(widget)
     for _i, row in ipairs(Specs.rows(buttons, Specs.outcome(buttons))) do rows[#rows + 1] = row end
-    return Dialog.card({ tag = _("// CHOOSE"), title = widget.title_text, rows = rows }, Screen:getWidth())
+    return Dialog.card({ tag = _("// CHOOSE"), title = titleOf(widget), rows = rows }, Screen:getWidth())
 end
 
 Core.register({
     name = "choice",
     matches = function(widget)
-        return Anatomy.is(widget, "ui/widget/radiobuttonwidget") and not widget._added_widgets and radios(widget) ~= nil
+        return takes(widget) and not widget._added_widgets and radios(widget) ~= nil
     end,
     present = function(widget)
         local state = {}

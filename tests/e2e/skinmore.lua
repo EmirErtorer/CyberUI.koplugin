@@ -11,16 +11,16 @@ G_reader_settings:saveSetting("virtual_keyboard_enabled", true)
 local cb = function() end
 local current
 local n = 0
--- One scene: make() builds a widget, which is shown, photographed and closed. `styled`: it must be CyberUI's.
+-- One scene: make() builds a widget (and says with a second value that it showed it), which is shown, photographed and closed. `styled`: it must be CyberUI's.
 -- `extra(widget)` runs before the photo (taps, scrolling...).
 local function scene(name, styled, make, extra)
     n = n + 1
     local label = string.format("%02d-%s", n, name)
     H.step(0.8, function()
-        local ok, w = pcall(make)
-        if not ok then H.check(false, name .. " builds: " .. tostring(w)); current = nil; return end
+        local ok, w, shown = pcall(make)
+        if not ok or not w then H.check(false, name .. " builds: " .. tostring(w)); current = nil; return end
         current = w
-        UIManager:show(w)
+        if not shown then UIManager:show(w) end
     end)
     H.step(0.8, function()
         local w = current
@@ -122,6 +122,28 @@ scene("progress", true, function()
     prog = require("ui/widget/progressbardialog"):new({ title = "Downloading", subtitle = "dune.epub", progress_max = 200, refresh_time_seconds = 1 })
     return prog
 end, function() prog:reportProgress(80) ; prog:redrawProgressbar() end)
+
+scene("qr", true, function()
+    return require("ui/widget/qrmessage"):new({ text = "https://example.com/some/page?with=a&longer=link", width = 400, height = 400 })
+end)
+local layouts_input
+scene("keyboard-layout", true, function()
+    G_reader_settings:saveSetting("keyboard_layouts", {})
+    layouts_input = require("ui/widget/inputdialog"):new({ title = "Search", input = "", buttons = { { { text = "Cancel", callback = cb } } } })
+    UIManager:show(layouts_input)
+    layouts_input:onShowKeyboard()
+    -- the globe key opens it when held
+    local vk = layouts_input._input_widget.keyboard
+    for _i, row in ipairs(vk.layout) do
+        for _j, key in ipairs(row) do
+            if key.label == "\u{1F310}" and key.hold_callback then
+                key.hold_callback()
+                return key.keyboard_layout_dialog, true   -- (KOReader showed it)
+            end
+        end
+    end
+end)
+H.step(0.3, function() if layouts_input then UIManager:close(layouts_input); layouts_input = nil end end)
 
 -- behaviour, in the styled mode only
 local function behaviour()

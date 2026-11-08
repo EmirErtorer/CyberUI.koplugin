@@ -3040,7 +3040,7 @@ msgstr "SON"
 msgid "// HIGHLIGHT"
 msgstr "// VURGU"
 
-#: cyberui/skin/frontlight.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Kapat"
 
@@ -3087,6 +3087,10 @@ msgstr "SN."
 #: cyberui/skin/progress.lua
 msgid "// WORKING"
 msgstr "// ÇALIŞIYOR"
+
+#: cyberui/skin/qr.lua
+msgid "// SCAN"
+msgstr "// TARA"
 
 #: cyberui/skin/semantics.lua
 msgid "MORE"
