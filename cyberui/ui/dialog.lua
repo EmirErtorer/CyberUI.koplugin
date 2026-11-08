@@ -17,6 +17,11 @@ local function width(w)
     return math.min(w - 2 * Theme.get().space.xl, Theme.px(460))
 end
 
+-- The room inside a floating dialog, where its rows of buttons lie.
+function Dialog.inner(w)
+    return width(w) - 2 * Theme.get().space.xl
+end
+
 -- The floating panel every dialog is: a chamfered card of `kids` in a column.
 local function floating(kids, screen_w, gap, align)
     local th = Theme.get()

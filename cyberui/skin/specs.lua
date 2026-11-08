@@ -7,6 +7,8 @@ local Layout = require("cyberui/ui/layout")
 local Theme = require("cyberui/theme")
 local _ = require("cyberui/gettext")
 
+local Screen = require("device").screen
+
 local Specs = {}
 
 -- Run a function KOReader gave, without letting it break the drawing.
@@ -51,9 +53,44 @@ function Specs.wide(b, variant)
     return Layout.Row:new({ children = { Specs.button(b, variant) } })
 end
 
+-- Share a line of buttons out: equal widths when every label fits in its share,
+-- else each by what its label needs, so a short button ("▲") does not take
+-- room a long one ("Cancel") needs. `room` is the width the line has.
+local function share(cells, room, gap)
+    local widest, total = 0, gap * (#cells - 1)
+    for _i, c in ipairs(cells) do
+        local w = c:naturalWidth()
+        c.need = w
+        widest = math.max(widest, w)
+        total = total + w
+    end
+    if widest * #cells + gap * (#cells - 1) <= room then return end
+    for _i, c in ipairs(cells) do c.grow = c.need end
+end
+
+-- Cells that cannot share one line of `room` go on as many lines as they need,
+-- in order, each line as full as it can be.
+local function lines(cells, room, gap)
+    local out, line, used = {}, {}, 0
+    for _i, c in ipairs(cells) do
+        local w = c:naturalWidth()
+        if #line > 0 and used + gap + w > room then
+            out[#out + 1] = line
+            line, used = {}, 0
+        end
+        used = used + (#line > 0 and gap or 0) + w
+        line[#line + 1] = c
+    end
+    if #line > 0 then out[#out + 1] = line end
+    return out
+end
+
 -- The rows of described buttons as rows of CyberUI buttons; `pick(row, i, b)`
--- may name another variant for a button, and an icon after it.
-function Specs.rows(rows, pick)
+-- may name another variant for a button, and an icon after it. A row too
+-- long for `room` (the inside of the card, by default) goes on to a second line.
+function Specs.rows(rows, pick, room)
+    local gap = Theme.get().space.s
+    room = room or require("cyberui/ui/dialog").inner(Screen:getWidth())
     local out = {}
     for _i, row in ipairs(rows) do
         local cells = {}
@@ -62,7 +99,10 @@ function Specs.rows(rows, pick)
             if pick then variant, icon = pick(row, j, b) end
             cells[#cells + 1] = Specs.button(b, variant, icon)
         end
-        out[#out + 1] = Layout.Row:new({ gap = Theme.get().space.s, children = cells })
+        for _j, line in ipairs(lines(cells, room, gap)) do
+            share(line, room, gap)
+            out[#out + 1] = Layout.Row:new({ gap = gap, children = line })
+        end
     end
     return out
 end
