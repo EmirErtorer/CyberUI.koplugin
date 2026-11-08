@@ -1,11 +1,5 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: CyberUI\n"
-"Language: el\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n!=1;\n"
 
 #: _meta.lua main.lua
 msgid "CyberUI"
@@ -35,7 +29,7 @@ msgstr "Υπό ανάγνωση"
 msgid "On hold"
 msgstr "Σε αναμονή"
 
-#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
+#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua cyberui/skin/sort.lua
 msgid "Done"
 msgstr "Τελειωμένο"
 
@@ -111,7 +105,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] "Παραμένει στον κάδο για %d ημέρα."
 msgstr[1] "Παραμένει στον κάδο για %d ημέρες."
 
-#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/skin/semantics.lua ...
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -593,7 +587,7 @@ msgstr "Γλώσσα"
 msgid "PG"
 msgstr "ΣΕΛ"
 
-#: cyberui/data/metric.lua
+#: cyberui/data/metric.lua cyberui/skin/numbers.lua
 msgid "MIN"
 msgstr "ΛΕΠ"
 
@@ -613,7 +607,7 @@ msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΔΙΑΒΑΣΤΗΚΑΝ // 12 ΕΒΔΟΜΑΔΕΣ"
 msgid "MINUTES READ // 12 WEEKS"
 msgstr "ΛΕΠΤΑ ΑΝΑΓΝΩΣΗΣ // 12 ΕΒΔΟΜΑΔΕΣ"
 
-#: cyberui/data/metric.lua cyberui/screens/log/period.lua
+#: cyberui/data/metric.lua cyberui/screens/log/period.lua cyberui/skin/bookstatus.lua
 msgid "PAGES READ"
 msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΔΙΑΒΑΣΤΗΚΑΝ"
 
@@ -1417,7 +1411,7 @@ msgstr "ΑΝΟΙΓΜΑ ΑΡΧΕΙΟΥ"
 msgid "EDIT INFO"
 msgstr "ΑΛΛΑΓΗ ΣΤΟΙΧΕΙΩΝ"
 
-#: cyberui/screens/dossier.lua
+#: cyberui/screens/dossier.lua cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "ΠΕΡΙΣΣΟΤΕΡΑ"
 
@@ -1441,7 +1435,7 @@ msgstr "Δεν υπάρχουν φάκελοι εδώ."
 msgid "No pictures or folders here."
 msgstr "Δεν υπάρχουν εικόνες ή φάκελοι εδώ."
 
-#: cyberui/screens/filepick.lua
+#: cyberui/screens/filepick.lua cyberui/skin/list.lua
 msgid "Choose a folder"
 msgstr "Επιλέξτε φάκελο"
 
@@ -1609,7 +1603,7 @@ msgstr "ΤΕΛΕΙΩΣΕ ΤΟ GIG"
 msgid "BOOK FINISHED"
 msgstr "ΤΕΛΕΙΩΣΕ ΤΟ ΒΙΒΛΙΟ"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/skin/bookstatus.lua
 msgid "%d%% READ"
 msgstr "ΔΙΑΒΑΣΤΗΚΕ %d%%"
 
@@ -1730,7 +1724,7 @@ msgstr "ΠΟΤΕ ΑΝΟΙΧΤΟ"
 msgid "RESUME"
 msgstr "ΣΥΝΕΧΕΙΑ"
 
-#: cyberui/screens/home.lua
+#: cyberui/screens/home.lua cyberui/skin/network.lua
 msgid "OPEN"
 msgstr "ΑΝΟΙΓΜΑ"
 
@@ -1770,7 +1764,7 @@ msgstr "Χάθηκε"
 msgid "Name"
 msgstr "Όνομα"
 
-#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua
+#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua cyberui/skin/network.lua
 msgid "Edit"
 msgstr "Επεξεργασία"
 
@@ -2048,7 +2042,7 @@ msgstr "ΠΟΤΕ ΔΙΑΒΑΖΕΤΕ // ΔΕΥ-ΚΥΡ ΑΝΑ ΩΡΑ // %s"
 msgid "PAGES"
 msgstr "ΣΕΛΙΔΕΣ"
 
-#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/skin/bookstatus.lua
 msgid "TIME"
 msgstr "ΧΡΟΝΟΣ"
 
@@ -2587,6 +2581,14 @@ msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down fr
 msgstr "Στο στιλ του CyberUI (ανενεργό: το δικό του του KOReader)· ανοίγει και με σύρσιμο προς τα κάτω από την κορυφή"
 
 #: cyberui/screens/settings.lua
+msgid "KOReader dialogs"
+msgstr "Διάλογοι KOReader"
+
+#: cyberui/screens/settings.lua
+msgid "Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"
+msgstr "Ειδοποιήσεις, διάλογοι, λίστες, πληκτρολόγιο, μενού επισήμανσης και λεξικό με το στυλ του CyberUI (ανενεργό: του KOReader)"
+
+#: cyberui/screens/settings.lua
 msgid "Menu height"
 msgstr "Ύψος μενού"
 
@@ -3000,9 +3002,153 @@ msgstr "Ειδοποίηση για προεκδόσεις (δοκιμαστικ
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
-#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+#: cyberui/skin/bookstatus.lua
+msgid "DAYS"
+msgstr "ΗΜΕΡΕΣ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// RATING"
+msgstr "// ΒΑΘΜΟΛΟΓΙΑ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATISTICS"
+msgstr "// ΣΤΑΤΙΣΤΙΚΑ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// REVIEW"
+msgstr "// ΚΡΙΤΙΚΗ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATUS"
+msgstr "// ΚΑΤΑΣΤΑΣΗ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "Book status"
+msgstr "Κατάσταση βιβλίου"
+
+#: cyberui/skin/choice.lua
+msgid "// CHOOSE"
+msgstr "// ΕΠΙΛΟΓΗ"
+
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr "// ΑΝΑΖΗΤΗΣΗ"
+
+#: cyberui/skin/edithighlight.lua
+msgid "START"
+msgstr "ΑΡΧΗ"
+
+#: cyberui/skin/edithighlight.lua
+msgid "END"
+msgstr "ΤΕΛΟΣ"
+
+#: cyberui/skin/edithighlight.lua
+msgid "// HIGHLIGHT"
+msgstr "// ΕΠΙΣΗΜΑΝΣΗ"
+
+#: cyberui/skin/frontlight.lua cyberui/skin/network.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua ...
 msgid "Close"
 msgstr "Κλείσιμο"
+
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr "Κανένα στοιχείο"
+
+#: cyberui/skin/highlightmenu.lua
+msgid "// SELECTION"
+msgstr "// ΕΠΙΛΟΓΗ"
+
+#: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
+msgid "// INPUT"
+msgstr "// ΕΙΣΟΔΟΣ"
+
+#: cyberui/skin/list.lua
+msgid "Choose this folder"
+msgstr "Επιλογή αυτού του φακέλου"
+
+#: cyberui/skin/network.lua
+msgid "SECURED"
+msgstr "ΑΣΦΑΛΕΣ"
+
+#: cyberui/skin/network.lua
+msgid "CONNECTED"
+msgstr "ΣΥΝΔΕΔΕΜΕΝΟ"
+
+#: cyberui/skin/network.lua
+msgid "Disconnect"
+msgstr "Αποσύνδεση"
+
+#: cyberui/skin/network.lua
+msgid "No networks found"
+msgstr "Δεν βρέθηκαν δίκτυα"
+
+#: cyberui/skin/network.lua
+msgid "Retry"
+msgstr "Επανάληψη"
+
+#: cyberui/skin/network.lua
+msgid "// WI-FI"
+msgstr "// WI-FI"
+
+#: cyberui/skin/network.lua
+msgid "Wi-Fi networks"
+msgstr "Δίκτυα Wi-Fi"
+
+#: cyberui/skin/numbers.lua
+msgid "// SET"
+msgstr "// ΡΥΘΜΙΣΗ"
+
+#: cyberui/skin/numbers.lua
+msgid "YEAR"
+msgstr "ΕΤΟΣ"
+
+#: cyberui/skin/numbers.lua
+msgid "MONTH"
+msgstr "ΜΗΝΑΣ"
+
+#: cyberui/skin/numbers.lua
+msgid "DAY"
+msgstr "ΗΜΕΡΑ"
+
+#: cyberui/skin/numbers.lua
+msgid "HOUR"
+msgstr "ΩΡΑ"
+
+#: cyberui/skin/numbers.lua
+msgid "SEC"
+msgstr "ΔΕΥΤ."
+
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr "// ΣΕ ΕΞΕΛΙΞΗ"
+
+#: cyberui/skin/qr.lua
+msgid "// SCAN"
+msgstr "// ΣΑΡΩΣΗ"
+
+#: cyberui/skin/sort.lua cyberui/ui/dialog.lua cyberui/ui/textinput.lua
+msgid "Cancel"
+msgstr "Άκυρο"
+
+#: cyberui/skin/specs.lua
+msgid "// WARNING"
+msgstr "// ΠΡΟΕΙΔΟΠΟΙΗΣΗ"
+
+#: cyberui/skin/specs.lua
+msgid "// CONFIRM"
+msgstr "// ΕΠΙΒΕΒΑΙΩΣΗ"
+
+#: cyberui/skin/specs.lua
+msgid "// INFO"
+msgstr "// ΠΛΗΡΟΦΟΡΙΑ"
+
+#: cyberui/skin/specs.lua
+msgid "// MESSAGE"
+msgstr "// ΜΗΝΥΜΑ"
+
+#: cyberui/skin/textviewer.lua
+msgid "// TEXT"
+msgstr "// ΚΕΙΜΕΝΟ"
 
 #: cyberui/sleep.lua
 msgid "Book covers"
@@ -3256,10 +3402,6 @@ msgstr "Οι δικές του γραμματοσειρές του KOReader, γ�
 msgid "FOLDER // %d"
 msgstr "ΦΑΚΕΛΟΣ // %d"
 
-#: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
-msgid "Cancel"
-msgstr "Άκυρο"
-
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"
 msgstr "EDDIES"
@@ -3467,10 +3609,6 @@ msgstr "Αποθηκευτικός χώρος"
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
 msgstr "Χρόνος λειτουργίας"
-
-#: cyberui/ui/textinput.lua
-msgid "// INPUT"
-msgstr "// ΕΙΣΟΔΟΣ"
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"

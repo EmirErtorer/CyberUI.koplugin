@@ -57,11 +57,9 @@ function CyberUI:init()
     require("cyberui/sleep").install()
     self.ui.menu:registerToMainMenu(self)
     self:onDispatcherRegisterActions()
-    require("cyberui/skin/frontlight").install()
+    require("cyberui/skin/all").install()
     if self.ui.document then
         self:styleReaderMenu()
-        require("cyberui/skin/buttondialog").install(self.ui)
-        require("cyberui/skin/configdialog").install()
     end
 end
 

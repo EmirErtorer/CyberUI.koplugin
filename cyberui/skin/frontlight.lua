@@ -7,16 +7,11 @@
 local Device = require("device")
 local Geom = require("ui/geometry")
 local UIManager = require("ui/uimanager")
-local Settings = require("cyberui/settings")
+local Core = require("cyberui/skin/core")
 
 local Screen = Device.screen
 
 local Skin = {}
-
--- Is the styled look wanted? (System > Home, the same switch as the menu's.)
-function Skin.wanted()
-    return Settings.get("styled_menu", true)
-end
 
 -- The card for the window `w`: its title, the sliders and the buttons.
 local function build(w, popup_of)
@@ -60,7 +55,7 @@ function Skin.install()
     local init, on_show, on_close_widget = FrontLightWidget.init, FrontLightWidget.onShow, FrontLightWidget.onCloseWidget
     FrontLightWidget.init = function(self, ...)
         init(self, ...)
-        if not Skin.wanted() then return end
+        if not Core.wanted() then return end
         local Popup = require("cyberui/popup")
         local ok, element = pcall(build, self, function() return self._cyber_popup end)
         if not ok then
@@ -74,9 +69,7 @@ function Skin.install()
         self.ges_events, self.key_events = {}, {}
         self._cyber_popup = Popup:new({
             element = element,
-            place = function(el)
-                return math.floor((Screen:getWidth() - el.w) / 2), math.floor((Screen:getHeight() - el.h) / 2)
-            end,
+            place = Core.centered,
             on_outside = function() UIManager:close(self) end,
         })
     end

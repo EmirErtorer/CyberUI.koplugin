@@ -1,11 +1,5 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: CyberUI\n"
-"Language: it_IT\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n!=1;\n"
 
 #: _meta.lua main.lua
 msgid "CyberUI"
@@ -35,7 +29,7 @@ msgstr "In lettura"
 msgid "On hold"
 msgstr "In attesa"
 
-#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
+#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua cyberui/skin/sort.lua
 msgid "Done"
 msgstr "Finito"
 
@@ -111,7 +105,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] "Resta %d giorno nel cestino."
 msgstr[1] "Resta %d giorni nel cestino."
 
-#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/skin/semantics.lua ...
 msgid "Delete"
 msgstr "Elimina"
 
@@ -593,7 +587,7 @@ msgstr "Lingua"
 msgid "PG"
 msgstr "PAG"
 
-#: cyberui/data/metric.lua
+#: cyberui/data/metric.lua cyberui/skin/numbers.lua
 msgid "MIN"
 msgstr "MIN"
 
@@ -613,7 +607,7 @@ msgstr "PAGINE LETTE // 12 SETTIMANE"
 msgid "MINUTES READ // 12 WEEKS"
 msgstr "MINUTI LETTI // 12 SETTIMANE"
 
-#: cyberui/data/metric.lua cyberui/screens/log/period.lua
+#: cyberui/data/metric.lua cyberui/screens/log/period.lua cyberui/skin/bookstatus.lua
 msgid "PAGES READ"
 msgstr "PAGINE LETTE"
 
@@ -1417,7 +1411,7 @@ msgstr "APRI FILE"
 msgid "EDIT INFO"
 msgstr "MODIFICA INFO"
 
-#: cyberui/screens/dossier.lua
+#: cyberui/screens/dossier.lua cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "ALTRO"
 
@@ -1441,7 +1435,7 @@ msgstr "Nessuna cartella qui."
 msgid "No pictures or folders here."
 msgstr "Nessuna immagine o cartella qui."
 
-#: cyberui/screens/filepick.lua
+#: cyberui/screens/filepick.lua cyberui/skin/list.lua
 msgid "Choose a folder"
 msgstr "Scegli una cartella"
 
@@ -1609,7 +1603,7 @@ msgstr "GIG COMPLETATO"
 msgid "BOOK FINISHED"
 msgstr "LIBRO FINITO"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/skin/bookstatus.lua
 msgid "%d%% READ"
 msgstr "%d%% LETTO"
 
@@ -1730,7 +1724,7 @@ msgstr "MAI APERTO"
 msgid "RESUME"
 msgstr "RIPRENDI"
 
-#: cyberui/screens/home.lua
+#: cyberui/screens/home.lua cyberui/skin/network.lua
 msgid "OPEN"
 msgstr "APRI"
 
@@ -1770,7 +1764,7 @@ msgstr "Sparito"
 msgid "Name"
 msgstr "Nome"
 
-#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua
+#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua cyberui/skin/network.lua
 msgid "Edit"
 msgstr "Modifica"
 
@@ -2048,7 +2042,7 @@ msgstr "QUANDO LEGGI // LUN-DOM PER ORA // %s"
 msgid "PAGES"
 msgstr "PAGINE"
 
-#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/skin/bookstatus.lua
 msgid "TIME"
 msgstr "TEMPO"
 
@@ -2587,6 +2581,14 @@ msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down fr
 msgstr "Nello stile di CyberUI (disattivato: quello di KOReader); si apre anche con uno scorrimento verso il basso dall'alto"
 
 #: cyberui/screens/settings.lua
+msgid "KOReader dialogs"
+msgstr "Finestre di KOReader"
+
+#: cyberui/screens/settings.lua
+msgid "Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"
+msgstr "Avvisi, finestre, elenchi, tastiera, menu di evidenziazione e dizionario nello stile di CyberUI (disattivato: quelli di KOReader)"
+
+#: cyberui/screens/settings.lua
 msgid "Menu height"
 msgstr "Altezza del menu"
 
@@ -3000,9 +3002,153 @@ msgstr "Avvisami dei pre-rilasci (versioni di prova, più recenti ma meno provat
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
-#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+#: cyberui/skin/bookstatus.lua
+msgid "DAYS"
+msgstr "GIORNI"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// RATING"
+msgstr "// VOTO"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATISTICS"
+msgstr "// STATISTICHE"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// REVIEW"
+msgstr "// RECENSIONE"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATUS"
+msgstr "// STATO"
+
+#: cyberui/skin/bookstatus.lua
+msgid "Book status"
+msgstr "Stato del libro"
+
+#: cyberui/skin/choice.lua
+msgid "// CHOOSE"
+msgstr "// SCEGLI"
+
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr "// RICERCA"
+
+#: cyberui/skin/edithighlight.lua
+msgid "START"
+msgstr "INIZIO"
+
+#: cyberui/skin/edithighlight.lua
+msgid "END"
+msgstr "FINE"
+
+#: cyberui/skin/edithighlight.lua
+msgid "// HIGHLIGHT"
+msgstr "// EVIDENZIAZIONE"
+
+#: cyberui/skin/frontlight.lua cyberui/skin/network.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua ...
 msgid "Close"
 msgstr "Chiudi"
+
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr "Nessun elemento"
+
+#: cyberui/skin/highlightmenu.lua
+msgid "// SELECTION"
+msgstr "// SELEZIONE"
+
+#: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
+msgid "// INPUT"
+msgstr "// INPUT"
+
+#: cyberui/skin/list.lua
+msgid "Choose this folder"
+msgstr "Scegli questa cartella"
+
+#: cyberui/skin/network.lua
+msgid "SECURED"
+msgstr "PROTETTA"
+
+#: cyberui/skin/network.lua
+msgid "CONNECTED"
+msgstr "CONNESSA"
+
+#: cyberui/skin/network.lua
+msgid "Disconnect"
+msgstr "Disconnetti"
+
+#: cyberui/skin/network.lua
+msgid "No networks found"
+msgstr "Nessuna rete trovata"
+
+#: cyberui/skin/network.lua
+msgid "Retry"
+msgstr "Riprova"
+
+#: cyberui/skin/network.lua
+msgid "// WI-FI"
+msgstr "// WI-FI"
+
+#: cyberui/skin/network.lua
+msgid "Wi-Fi networks"
+msgstr "Reti Wi-Fi"
+
+#: cyberui/skin/numbers.lua
+msgid "// SET"
+msgstr "// IMPOSTA"
+
+#: cyberui/skin/numbers.lua
+msgid "YEAR"
+msgstr "ANNO"
+
+#: cyberui/skin/numbers.lua
+msgid "MONTH"
+msgstr "MESE"
+
+#: cyberui/skin/numbers.lua
+msgid "DAY"
+msgstr "GIORNO"
+
+#: cyberui/skin/numbers.lua
+msgid "HOUR"
+msgstr "ORA"
+
+#: cyberui/skin/numbers.lua
+msgid "SEC"
+msgstr "SEC"
+
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr "// IN CORSO"
+
+#: cyberui/skin/qr.lua
+msgid "// SCAN"
+msgstr "// SCANSIONA"
+
+#: cyberui/skin/sort.lua cyberui/ui/dialog.lua cyberui/ui/textinput.lua
+msgid "Cancel"
+msgstr "Annulla"
+
+#: cyberui/skin/specs.lua
+msgid "// WARNING"
+msgstr "// ATTENZIONE"
+
+#: cyberui/skin/specs.lua
+msgid "// CONFIRM"
+msgstr "// CONFERMA"
+
+#: cyberui/skin/specs.lua
+msgid "// INFO"
+msgstr "// INFO"
+
+#: cyberui/skin/specs.lua
+msgid "// MESSAGE"
+msgstr "// MESSAGGIO"
+
+#: cyberui/skin/textviewer.lua
+msgid "// TEXT"
+msgstr "// TESTO"
 
 #: cyberui/sleep.lua
 msgid "Book covers"
@@ -3256,10 +3402,6 @@ msgstr "I font di KOReader, per la lettura più semplice"
 msgid "FOLDER // %d"
 msgstr "CARTELLA // %d"
 
-#: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
-msgid "Cancel"
-msgstr "Annulla"
-
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"
 msgstr "EDDIES"
@@ -3467,10 +3609,6 @@ msgstr "Archiviazione"
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
 msgstr "Tempo di attività"
-
-#: cyberui/ui/textinput.lua
-msgid "// INPUT"
-msgstr "// INPUT"
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"

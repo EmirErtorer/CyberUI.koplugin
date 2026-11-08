@@ -8,19 +8,14 @@
 -- Anything unexpected falls back to KOReader's own drawing.
 
 local Device = require("device")
+local Core = require("cyberui/skin/core")
 local Geom = require("ui/geometry")
 local UIManager = require("ui/uimanager")
 local Format = require("cyberui/format")
-local Settings = require("cyberui/settings")
 
 local Screen = Device.screen
 
 local Skin = {}
-
--- Is the styled look wanted? (System > Home, the same switch as the menu's.)
-function Skin.wanted()
-    return Settings.get("styled_menu", true)
-end
 
 -- Is a stock colour a "selected" one (anything but white)?
 local function dark(color)
@@ -197,7 +192,7 @@ function Skin.install()
     ConfigDialog._cyberui_skin = true
     local init, update, on_close_widget = ConfigDialog.init, ConfigDialog.update, ConfigDialog.onCloseWidget
     ConfigDialog.init = function(self, ...)
-        self._cyber = Skin.wanted()
+        self._cyber = Core.wanted()
         return init(self, ...)
     end
     ConfigDialog.update = function(self, ...)

@@ -242,6 +242,8 @@ function SettingsScreen:home()
                 Controls.Toggle:new({ on = Settings.get("styled_menu", true), on_change = function(on) save("styled_menu", on) end }),
                 Button:new({ label = _("Open"), on_tap = function() App.koreaderMenu() end }),
             } })),
+        row(_("KOReader dialogs"), _("Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"),
+            Controls.Toggle:new({ on = Settings.get("styled_widgets", true), on_change = function(on) save("styled_widgets", on) end })),
         row(_("Menu height"), _("How much of the screen KOReader's menu may take: taller shows more entries and needs fewer pages"),
             Controls.Segmented({ options = { { "50%", 0.5 }, { "65%", 0.65 }, { "80%", 0.8 }, { "90%", 0.9 } }, value = Settings.get("menu_height", 0.8),
                 on_change = function(v) save("menu_height", v) end })),

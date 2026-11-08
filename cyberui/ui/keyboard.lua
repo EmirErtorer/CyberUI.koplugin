@@ -35,47 +35,64 @@ local function chars(row)
     return out
 end
 
+-- Rows of keys from descriptions, drawn as the style's keyboard. A key is
+-- { label, icon, kind, variant, width, weight, on_tap, on_hold }: `width` is
+-- fixed, otherwise it takes a share of the row by `weight` (1 by default).
+-- o: { gap, key_h, pad }.
+function Keyboard.grid(rows, o)
+    local th = Theme.get()
+    o = o or {}
+    local key_h = o.key_h or Theme.px(46)
+    local gap = o.gap or Theme.px(4)
+    local out = {}
+    for _i, row in ipairs(rows) do
+        local keys = {}
+        for _j, k in ipairs(row) do
+            keys[#keys + 1] = Button:new({
+                label = k.label, icon = k.icon, kind = k.kind, variant = k.variant or "soft", height = key_h,
+                width = k.width, grow = not k.width and (k.weight or true) or nil,
+                on_tap = k.on_tap, on_hold = k.on_hold, disabled = k.disabled,
+            })
+        end
+        out[#out + 1] = Layout.Row:new({ gap = gap, children = keys })
+    end
+    return Layout.Column:new({ gap = gap, pad = o.pad or { th.space.s, th.space.s }, children = out })
+end
+
 -- Build the keyboard. o: { layer, shift (true or "once" for one letter,
 -- "lock" until tapped again), enter_label, on_char, on_back, on_enter,
 -- on_layer(layer), on_shift() }.
 function Keyboard.build(o)
-    local th = Theme.get()
     local layer = LAYERS[o.layer] and o.layer or "abc"
-    local key_h = Theme.px(46)
-    local gap = Theme.px(4)
-    local function key(label, on_tap, extra)
-        local b = { label = label, variant = "soft", kind = "label", height = key_h, grow = true, on_tap = on_tap }
-        for k, v in pairs(extra or {}) do b[k] = v end
-        return Button:new(b)
-    end
+    local edge = Theme.px(54)
     local rows = {}
     for i, row in ipairs(LAYERS[layer]) do
         local keys = {}
         if i == edgeRow(layer) and SHIFTS[layer] then
             local locked = o.shift == "lock"
-            keys[#keys + 1] = key(locked and "⇧⇧" or "⇧", o.on_shift,
-                { variant = locked and "primary" or (o.shift and "chip_on" or "soft"), grow = false, width = Theme.px(54) })
+            keys[#keys + 1] = { label = locked and "\u{21E7}\u{21E7}" or "\u{21E7}", on_tap = o.on_shift, width = edge,
+                variant = locked and "primary" or (o.shift and "chip_on" or "soft") }
         end
         for _i, ch in ipairs(chars(row)) do
             local shown = o.shift and Utf8Proc.uppercase_dumb(ch) or ch
-            keys[#keys + 1] = key(shown, function() o.on_char(shown) end, { kind = "mono" })
+            keys[#keys + 1] = { label = shown, kind = "mono", on_tap = function() o.on_char(shown) end }
         end
         if i == edgeRow(layer) then
-            keys[#keys + 1] = key(nil, o.on_back, { icon = "backspace", grow = false, width = Theme.px(54), variant = "icon_on" })
+            keys[#keys + 1] = { icon = "backspace", on_tap = o.on_back, width = edge, variant = "icon_on" }
         end
-        rows[#rows + 1] = Layout.Row:new({ gap = gap, children = keys })
-    end
-    local function layerKey(id, label)
-        return key(label, function() o.on_layer(id) end, { grow = false, width = Theme.px(62), variant = "seg" })
+        rows[#rows + 1] = keys
     end
     local bottom = {}
-    if layer ~= "abc" then bottom[#bottom + 1] = layerKey("abc", "abc") end
-    if layer ~= "num" then bottom[#bottom + 1] = layerKey("num", "?123") end
-    if layer ~= "acc" then bottom[#bottom + 1] = layerKey("acc", "áãç") end
-    bottom[#bottom + 1] = key(_("space"), function() o.on_char(" ") end, { variant = "secondary", kind = "mono_small" })
-    bottom[#bottom + 1] = key(o.enter_label or _("OK"), o.on_enter, { variant = "primary", grow = false, width = Theme.px(110) })
-    rows[#rows + 1] = Layout.Row:new({ gap = gap, children = bottom })
-    return Layout.Column:new({ gap = gap, pad = { th.space.s, th.space.s }, children = rows })
+    local function layerKey(id, label)
+        bottom[#bottom + 1] = { label = label, on_tap = function() o.on_layer(id) end, width = Theme.px(62), variant = "seg" }
+    end
+    if layer ~= "abc" then layerKey("abc", "abc") end
+    if layer ~= "num" then layerKey("num", "?123") end
+    if layer ~= "acc" then layerKey("acc", "\u{E1}\u{E3}\u{E7}") end
+    bottom[#bottom + 1] = { label = _("space"), on_tap = function() o.on_char(" ") end, variant = "secondary", kind = "mono_small" }
+    bottom[#bottom + 1] = { label = o.enter_label or _("OK"), on_tap = o.on_enter, variant = "primary", width = Theme.px(110) }
+    rows[#rows + 1] = bottom
+    return Keyboard.grid(rows)
 end
 
 return Keyboard

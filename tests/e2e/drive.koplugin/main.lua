@@ -54,10 +54,23 @@ function Drive:init()
     end
 
     -- The first element (dialog first, then screen) for which pred(el) is true.
-    function H.findWhere(pred)
+    -- The element trees on screen, topmost first: CyberUI's popups (over KOReader's own
+    -- widgets, or the menu), then the CyberUI window's dialog and screen.
+    local function roots()
+        local out = {}
         local host
-        for _i, e in ipairs(UIManager._window_stack) do if e.widget.name == "cyberui" then host = e.widget end end
-        if not host then return nil end
+        for i = #UIManager._window_stack, 1, -1 do
+            local w = UIManager._window_stack[i].widget
+            if w.name == "cyberui_popup" and w.element then out[#out + 1] = w.element
+            elseif w.name == "cyberui" and not host then host = w end
+        end
+        if host then
+            if host.overlay then out[#out + 1] = host.overlay end
+            out[#out + 1] = host.root
+        end
+        return out
+    end
+    function H.findWhere(pred)
         local function walk(el)
             if type(el) ~= "table" then return nil end
             if el.x and pred(el) then return el end
@@ -67,7 +80,11 @@ function Drive:init()
             end
             if el.child then return walk(el.child) end
         end
-        return (host.overlay and walk(host.overlay)) or walk(host.root)
+        for _i, root in ipairs(roots()) do
+            local f = walk(root)
+            if f then return f end
+        end
+        return nil
     end
 
     -- Find the first element in the shown tree (dialog first) whose label,
@@ -88,11 +105,9 @@ function Drive:init()
             for _i, c in ipairs(el.children or {}) do walk(c, around) end
             if el.child then walk(el.child, around) end
         end
-        for _i, e in ipairs(UIManager._window_stack) do
-            if e.widget.name == "cyberui" then
-                if e.widget.overlay then walk(e.widget.overlay) end
-                if not found then walk(e.widget.root) end
-            end
+        for _i, root in ipairs(roots()) do
+            walk(root)
+            if found then break end
         end
         return found
     end
@@ -140,8 +155,8 @@ function Drive:init()
     end
     -- The text being typed in CyberUI's input panel, or nil when none is open.
     function H.typed()
-        local field = H.findWhere(function(el) return el.state ~= nil and el.state.text ~= nil end)
-        return field and field.state.text
+        local field = H.findWhere(function(el) return type(el.get) == "function" and el.rows ~= nil end)
+        return field and table.concat((field.get())) or nil
     end
     -- Type `text` by tapping the keys of CyberUI's keyboard (space taps the
     -- space bar, capitals use shift), then tap `ok` when given.

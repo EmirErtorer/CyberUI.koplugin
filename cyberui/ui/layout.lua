@@ -100,6 +100,11 @@ end
 local Row = Element:extend()
 Layout.Row = Row
 
+-- How much of the spare width a growing child takes: `grow = 2` takes twice what `grow = true` does.
+local function weight(c)
+    return type(c.grow) == "number" and c.grow or 1
+end
+
 -- Size children left to right; `grow` children share the width left over.
 function Row:layout(w, h)
     local pt, pr, pb, pl = pads(self.pad)
@@ -127,9 +132,12 @@ function Row:layout(w, h)
         end
     end
     local left = math.max(0, inner_w - used)
-    local each = #growers > 0 and math.floor(left / #growers) or 0
+    local total = 0
+    for _i, c in ipairs(growers) do total = total + weight(c) end
+    local given = 0
     for i, c in ipairs(growers) do
-        local share = (i == #growers) and (left - each * (#growers - 1)) or each
+        local share = (i == #growers) and (left - given) or math.floor(left * weight(c) / total)
+        given = given + share
         c:layout(share, c.height or (stretch and inner_h) or nil)
     end
     if not h then

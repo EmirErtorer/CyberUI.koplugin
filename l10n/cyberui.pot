@@ -34,7 +34,7 @@ msgstr ""
 msgid "On hold"
 msgstr ""
 
-#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua
+#: cyberui/actions.lua cyberui/data/libgroups.lua cyberui/screens/library.lua cyberui/skin/sort.lua
 msgid "Done"
 msgstr ""
 
@@ -110,7 +110,7 @@ msgid_plural "It waits in the trash for %d days."
 msgstr[0] ""
 msgstr[1] ""
 
-#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/ui/launcher.lua
+#: cyberui/actions.lua cyberui/screens/collections.lua cyberui/screens/trash.lua cyberui/skin/semantics.lua ...
 msgid "Delete"
 msgstr ""
 
@@ -592,7 +592,7 @@ msgstr ""
 msgid "PG"
 msgstr ""
 
-#: cyberui/data/metric.lua
+#: cyberui/data/metric.lua cyberui/skin/numbers.lua
 msgid "MIN"
 msgstr ""
 
@@ -612,7 +612,7 @@ msgstr ""
 msgid "MINUTES READ // 12 WEEKS"
 msgstr ""
 
-#: cyberui/data/metric.lua cyberui/screens/log/period.lua
+#: cyberui/data/metric.lua cyberui/screens/log/period.lua cyberui/skin/bookstatus.lua
 msgid "PAGES READ"
 msgstr ""
 
@@ -1416,7 +1416,7 @@ msgstr ""
 msgid "EDIT INFO"
 msgstr ""
 
-#: cyberui/screens/dossier.lua
+#: cyberui/screens/dossier.lua cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr ""
 
@@ -1440,7 +1440,7 @@ msgstr ""
 msgid "No pictures or folders here."
 msgstr ""
 
-#: cyberui/screens/filepick.lua
+#: cyberui/screens/filepick.lua cyberui/skin/list.lua
 msgid "Choose a folder"
 msgstr ""
 
@@ -1608,7 +1608,7 @@ msgstr ""
 msgid "BOOK FINISHED"
 msgstr ""
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/skin/bookstatus.lua
 msgid "%d%% READ"
 msgstr ""
 
@@ -1729,7 +1729,7 @@ msgstr ""
 msgid "RESUME"
 msgstr ""
 
-#: cyberui/screens/home.lua
+#: cyberui/screens/home.lua cyberui/skin/network.lua
 msgid "OPEN"
 msgstr ""
 
@@ -1769,7 +1769,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua
+#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua cyberui/skin/network.lua
 msgid "Edit"
 msgstr ""
 
@@ -2047,7 +2047,7 @@ msgstr ""
 msgid "PAGES"
 msgstr ""
 
-#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/skin/bookstatus.lua
 msgid "TIME"
 msgstr ""
 
@@ -2586,6 +2586,14 @@ msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down fr
 msgstr ""
 
 #: cyberui/screens/settings.lua
+msgid "KOReader dialogs"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"
+msgstr ""
+
+#: cyberui/screens/settings.lua
 msgid "Menu height"
 msgstr ""
 
@@ -2999,8 +3007,152 @@ msgstr ""
 msgid "GITHUB // %s"
 msgstr ""
 
-#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+#: cyberui/skin/bookstatus.lua
+msgid "DAYS"
+msgstr ""
+
+#: cyberui/skin/bookstatus.lua
+msgid "// RATING"
+msgstr ""
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATISTICS"
+msgstr ""
+
+#: cyberui/skin/bookstatus.lua
+msgid "// REVIEW"
+msgstr ""
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATUS"
+msgstr ""
+
+#: cyberui/skin/bookstatus.lua
+msgid "Book status"
+msgstr ""
+
+#: cyberui/skin/choice.lua
+msgid "// CHOOSE"
+msgstr ""
+
+#: cyberui/skin/dictionary.lua
+msgid "// LOOKUP"
+msgstr ""
+
+#: cyberui/skin/edithighlight.lua
+msgid "START"
+msgstr ""
+
+#: cyberui/skin/edithighlight.lua
+msgid "END"
+msgstr ""
+
+#: cyberui/skin/edithighlight.lua
+msgid "// HIGHLIGHT"
+msgstr ""
+
+#: cyberui/skin/frontlight.lua cyberui/skin/network.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua ...
 msgid "Close"
+msgstr ""
+
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr ""
+
+#: cyberui/skin/highlightmenu.lua
+msgid "// SELECTION"
+msgstr ""
+
+#: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
+msgid "// INPUT"
+msgstr ""
+
+#: cyberui/skin/list.lua
+msgid "Choose this folder"
+msgstr ""
+
+#: cyberui/skin/network.lua
+msgid "SECURED"
+msgstr ""
+
+#: cyberui/skin/network.lua
+msgid "CONNECTED"
+msgstr ""
+
+#: cyberui/skin/network.lua
+msgid "Disconnect"
+msgstr ""
+
+#: cyberui/skin/network.lua
+msgid "No networks found"
+msgstr ""
+
+#: cyberui/skin/network.lua
+msgid "Retry"
+msgstr ""
+
+#: cyberui/skin/network.lua
+msgid "// WI-FI"
+msgstr ""
+
+#: cyberui/skin/network.lua
+msgid "Wi-Fi networks"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "// SET"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "YEAR"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "MONTH"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "DAY"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "HOUR"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "SEC"
+msgstr ""
+
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr ""
+
+#: cyberui/skin/qr.lua
+msgid "// SCAN"
+msgstr ""
+
+#: cyberui/skin/sort.lua cyberui/ui/dialog.lua cyberui/ui/textinput.lua
+msgid "Cancel"
+msgstr ""
+
+#: cyberui/skin/specs.lua
+msgid "// WARNING"
+msgstr ""
+
+#: cyberui/skin/specs.lua
+msgid "// CONFIRM"
+msgstr ""
+
+#: cyberui/skin/specs.lua
+msgid "// INFO"
+msgstr ""
+
+#: cyberui/skin/specs.lua
+msgid "// MESSAGE"
+msgstr ""
+
+#: cyberui/skin/textviewer.lua
+msgid "// TEXT"
 msgstr ""
 
 #: cyberui/sleep.lua
@@ -3255,10 +3407,6 @@ msgstr ""
 msgid "FOLDER // %d"
 msgstr ""
 
-#: cyberui/ui/dialog.lua cyberui/ui/textinput.lua
-msgid "Cancel"
-msgstr ""
-
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"
 msgstr ""
@@ -3465,10 +3613,6 @@ msgstr ""
 
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
-msgstr ""
-
-#: cyberui/ui/textinput.lua
-msgid "// INPUT"
 msgstr ""
 
 #: cyberui/update/updater.lua
