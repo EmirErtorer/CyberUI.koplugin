@@ -84,6 +84,14 @@ scene("radio", true, function()
         { { text = "Last read", provider = "read" } } }, ok_text = "Apply", callback = function(w) ran.radio = w.provider end })
 end)
 
+local multi
+scene("multi-input", true, function()
+    multi = require("ui/widget/multiinputdialog"):new({ title = "Set margins", fields = {
+        { description = "Left margin", text = "10", hint = "mm" }, { description = "Right margin", text = "12", hint = "mm" }, { description = "Top margin, a number", text = "", hint = "mm", input_type = "number" } },
+        buttons = { { { text = "Cancel", callback = function() UIManager:close(multi) end }, { text = "Apply", callback = function() ran.multi = multi:getFields(); UIManager:close(multi) end } } } })
+    return multi
+end)
+
 -- behaviour, in the styled mode only
 local function behaviour()
     -- the text viewer pages a long text, runs KOReader's callbacks and closes with Back or Close
@@ -180,6 +188,32 @@ local function behaviour()
     H.step(0.8, function()
         H.check(ran.radio == "a", "the choice chosen is the one KOReader's callback gets: " .. tostring(ran.radio))
         UIManager:close(radio)
+    end)
+
+    -- a form: a tap on another field moves the typing there, and Apply gets every field
+    H.step(0.8, function()
+        multi = require("ui/widget/multiinputdialog"):new({ title = "Set margins", fields = { { description = "Left", text = "10", hint = "mm" }, { description = "Right", text = "12", hint = "mm" } },
+            buttons = { { { text = "Cancel", callback = function() UIManager:close(multi) end }, { text = "Apply", callback = function() ran.multi = multi:getFields(); UIManager:close(multi) end } } } })
+        UIManager:show(multi)
+    end)
+    H.step(0.8, function()
+        H.check(multi._input_widget == multi.input_fields[1], "the first field has the typing")
+        -- the second field: the input fields in the shown tree, in order
+        local seen, fields = {}, {}
+        H.findWhere(function(el)
+            if el.chars and el.get and not seen[el] then seen[el] = true; fields[#fields + 1] = el end
+            return false
+        end)
+        H.check(#fields == 2, "both fields are drawn: " .. #fields)
+        if fields[2] then H.tapAt(fields[2].x + fields[2].w - 12, fields[2].y + fields[2].h / 2) end
+    end)
+    H.step(1, function()
+        H.check(multi._input_widget == multi.input_fields[2], "a tap on the second field moves KOReader's typing there")
+        multi._input_widget:addChars("5")
+    end)
+    H.step(0.8, function() H.tap("Apply") end)
+    H.step(0.8, function()
+        H.check(ran.multi and ran.multi[1] == "10" and ran.multi[2] == "125", "Apply gets both fields as typed: " .. tostring(ran.multi and (ran.multi[1] .. "," .. ran.multi[2])))
     end)
 
 end

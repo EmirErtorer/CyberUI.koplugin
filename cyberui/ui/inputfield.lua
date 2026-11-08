@@ -1,7 +1,8 @@
 -- A text field in the style: an outlined box with a prompt, the text wrapped
 -- over as many lines as it is given, and a block cursor. It owns no text: the
 -- owner says what the text is and where the cursor is (`get`), and what a tap
--- on a spot of the text means (`on_caret`). Used for typing on CyberUI's own
+-- on a spot of the text means (`on_caret`). With `active` (a function) the
+-- field is drawn lit while it is the one being typed into. Used for typing on CyberUI's own
 -- keyboard and for KOReader's input dialogs.
 
 local Element = require("cyberui/ui/element")
@@ -111,7 +112,8 @@ function InputField:draw(bb, x, y)
     local th = Theme.get()
     local lh = Text.height(self.kind)
     Paint.fill(bb, x, y, self.w, self.h, th.c.bg)
-    Paint.frame(bb, x, y, self.w, self.h, th.size.stroke, self.readonly and th.c.muted or th.c.ink)
+    local lit = self.active and self.active()   -- the field the keyboard types into, among several
+    Paint.frame(bb, x, y, self.w, self.h, th.size.stroke * (lit and 2 or 1), self.readonly and th.c.muted or (lit and th.c.accent or th.c.ink))
     local tx, ty = x + self.text_x, y + padding()
     if self.prompt then Text.draw(bb, x + padding(), ty, self.kind, self.prompt, th.c.muted) end
     local cursor_w = Theme.px(9)
