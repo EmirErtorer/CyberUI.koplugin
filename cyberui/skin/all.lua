@@ -5,7 +5,7 @@
 local Skin = {}
 
 -- The skins, in the order they are asked about a widget.
-local SKINS = { "message", "confirm", "highlightmenu", "edithighlight", "buttondialog", "keyboard", "inputdialog", "list", "dictionary", "textviewer", "numbers", "choice", "keyvalue", "sort", "progress", "qr" }
+local SKINS = { "message", "confirm", "highlightmenu", "edithighlight", "buttondialog", "keyboard", "inputdialog", "list", "dictionary", "textviewer", "numbers", "choice", "keyvalue", "sort", "progress", "qr", "network" }
 
 -- Style everything. Safe to call every time KOReader starts a reader.
 function Skin.install()

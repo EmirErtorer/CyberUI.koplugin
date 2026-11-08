@@ -1746,7 +1746,7 @@ msgstr "ΠΟΤΕ ΑΝΟΙΧΤΟ"
 msgid "RESUME"
 msgstr "ΣΥΝΕΧΕΙΑ"
 
-#: cyberui/screens/home.lua
+#: cyberui/screens/home.lua cyberui/skin/network.lua
 msgid "OPEN"
 msgstr "ΑΝΟΙΓΜΑ"
 
@@ -1786,7 +1786,7 @@ msgstr "Χάθηκε"
 msgid "Name"
 msgstr "Όνομα"
 
-#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua
+#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua cyberui/skin/network.lua
 msgid "Edit"
 msgstr "Επεξεργασία"
 
@@ -3040,7 +3040,7 @@ msgstr "ΤΕΛΟΣ"
 msgid "// HIGHLIGHT"
 msgstr "// ΕΠΙΣΗΜΑΝΣΗ"
 
-#: cyberui/skin/frontlight.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/network.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua ...
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -3059,6 +3059,30 @@ msgstr "// ΕΙΣΟΔΟΣ"
 #: cyberui/skin/list.lua
 msgid "Choose this folder"
 msgstr "Επιλογή αυτού του φακέλου"
+
+#: cyberui/skin/network.lua
+msgid "SECURED"
+msgstr "ΑΣΦΑΛΕΣ"
+
+#: cyberui/skin/network.lua
+msgid "CONNECTED"
+msgstr "ΣΥΝΔΕΔΕΜΕΝΟ"
+
+#: cyberui/skin/network.lua
+msgid "Disconnect"
+msgstr "Αποσύνδεση"
+
+#: cyberui/skin/network.lua
+msgid "No networks found"
+msgstr "Δεν βρέθηκαν δίκτυα"
+
+#: cyberui/skin/network.lua
+msgid "// WI-FI"
+msgstr "// WI-FI"
+
+#: cyberui/skin/network.lua
+msgid "Wi-Fi networks"
+msgstr "Δίκτυα Wi-Fi"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

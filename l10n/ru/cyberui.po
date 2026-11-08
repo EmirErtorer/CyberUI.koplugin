@@ -1765,7 +1765,7 @@ msgstr "НИКОГДА НЕ ОТКРЫВАЛАСЬ"
 msgid "RESUME"
 msgstr "ПРОДОЛЖИТЬ"
 
-#: cyberui/screens/home.lua
+#: cyberui/screens/home.lua cyberui/skin/network.lua
 msgid "OPEN"
 msgstr "ОТКРЫТЬ"
 
@@ -1805,7 +1805,7 @@ msgstr "Пропала"
 msgid "Name"
 msgstr "Название"
 
-#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua
+#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua cyberui/skin/network.lua
 msgid "Edit"
 msgstr "Изменить"
 
@@ -3074,7 +3074,7 @@ msgstr "КОНЕЦ"
 msgid "// HIGHLIGHT"
 msgstr "// ВЫДЕЛЕНИЕ"
 
-#: cyberui/skin/frontlight.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/network.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua ...
 msgid "Close"
 msgstr "Закрыть"
 
@@ -3093,6 +3093,30 @@ msgstr "// ВВОД"
 #: cyberui/skin/list.lua
 msgid "Choose this folder"
 msgstr "Выбрать эту папку"
+
+#: cyberui/skin/network.lua
+msgid "SECURED"
+msgstr "ЗАЩИЩЕНА"
+
+#: cyberui/skin/network.lua
+msgid "CONNECTED"
+msgstr "ПОДКЛЮЧЕНО"
+
+#: cyberui/skin/network.lua
+msgid "Disconnect"
+msgstr "Отключить"
+
+#: cyberui/skin/network.lua
+msgid "No networks found"
+msgstr "Сети не найдены"
+
+#: cyberui/skin/network.lua
+msgid "// WI-FI"
+msgstr "// WI-FI"
+
+#: cyberui/skin/network.lua
+msgid "Wi-Fi networks"
+msgstr "Сети Wi-Fi"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

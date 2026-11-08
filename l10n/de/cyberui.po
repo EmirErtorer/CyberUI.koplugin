@@ -1746,7 +1746,7 @@ msgstr "NIE GEÖFFNET"
 msgid "RESUME"
 msgstr "FORTSETZEN"
 
-#: cyberui/screens/home.lua
+#: cyberui/screens/home.lua cyberui/skin/network.lua
 msgid "OPEN"
 msgstr "ÖFFNEN"
 
@@ -1786,7 +1786,7 @@ msgstr "Weg"
 msgid "Name"
 msgstr "Name"
 
-#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua
+#: cyberui/screens/launchedit.lua cyberui/screens/settings.lua cyberui/screens/topbar.lua cyberui/skin/network.lua
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -3040,7 +3040,7 @@ msgstr "ENDE"
 msgid "// HIGHLIGHT"
 msgstr "// MARKIERUNG"
 
-#: cyberui/skin/frontlight.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/network.lua cyberui/skin/qr.lua cyberui/skin/textviewer.lua ...
 msgid "Close"
 msgstr "Schließen"
 
@@ -3059,6 +3059,30 @@ msgstr "// EINGABE"
 #: cyberui/skin/list.lua
 msgid "Choose this folder"
 msgstr "Diesen Ordner wählen"
+
+#: cyberui/skin/network.lua
+msgid "SECURED"
+msgstr "GESICHERT"
+
+#: cyberui/skin/network.lua
+msgid "CONNECTED"
+msgstr "VERBUNDEN"
+
+#: cyberui/skin/network.lua
+msgid "Disconnect"
+msgstr "Trennen"
+
+#: cyberui/skin/network.lua
+msgid "No networks found"
+msgstr "Keine Netzwerke gefunden"
+
+#: cyberui/skin/network.lua
+msgid "// WI-FI"
+msgstr "// WLAN"
+
+#: cyberui/skin/network.lua
+msgid "Wi-Fi networks"
+msgstr "WLAN-Netzwerke"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

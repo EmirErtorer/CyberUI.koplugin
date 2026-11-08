@@ -145,6 +145,14 @@ scene("keyboard-layout", true, function()
 end)
 H.step(0.3, function() if layouts_input then UIManager:close(layouts_input); layouts_input = nil end end)
 
+scene("wifi", true, function()
+    return require("ui/widget/networksetting"):new({ network_list = {
+        { ssid = "Home-5G", signal_quality = 88, flags = "[WPA2-PSK-CCMP][ESS]", signal_level = -40, connected = true, password = "x" },
+        { ssid = "Neighbour", signal_quality = 61, flags = "[WPA2-PSK-CCMP][ESS]", signal_level = -60, password = "y" },
+        { ssid = "Cafe guest", signal_quality = 34, flags = "[ESS]", signal_level = -78 },
+        { ssid = "Far away", signal_quality = 9, flags = "[WPA2-PSK-CCMP][ESS]", signal_level = -90 } } })
+end)
+
 -- behaviour, in the styled mode only
 local function behaviour()
     -- the text viewer pages a long text, runs KOReader's callbacks and closes with Back or Close
@@ -368,6 +376,28 @@ local function behaviour()
         H.tapAt(8, 8)
     end)
     H.step(0.8, function() H.check(gone(prog), "a tap outside dismisses it as KOReader's window would") end)
+
+    -- Wi-Fi: a tap on a new network goes to KOReader's own row, which asks for the password; a WEP one warns
+    local wifi
+    H.step(0.8, function()
+        wifi = require("ui/widget/networksetting"):new({ network_list = {
+            { ssid = "Cafe guest", signal_quality = 50, flags = "[WPA2-PSK-CCMP][ESS]", signal_level = -60 },
+            { ssid = "Old router", signal_quality = 40, flags = "[WEP][ESS]", signal_level = -70 } } })
+        UIManager:show(wifi)
+    end)
+    H.step(0.8, function() H.tap("Old router") end)
+    H.step(0.8, function()
+        H.check(H.find("// INFO") ~= nil or H.find("// MESSAGE") ~= nil, "a WEP network gets KOReader's own warning")
+        for _i, e in ipairs(UIManager._window_stack) do
+            if e.widget.text and tostring(e.widget.text):find("WEP") then UIManager:close(e.widget) end
+        end
+        H.tap("Cafe guest")
+    end)
+    H.step(1, function()
+        H.check(H.find("// INPUT") ~= nil, "a new network asks for its password through KOReader's own dialog")
+        H.tap("Cancel")
+    end)
+    H.step(0.8, function() UIManager:close(wifi) end)
 
 end
 if mode == "new" then behaviour() end
