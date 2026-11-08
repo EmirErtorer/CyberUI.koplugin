@@ -609,7 +609,7 @@ msgstr "OKUNAN SAYFA // 12 HAFTA"
 msgid "MINUTES READ // 12 WEEKS"
 msgstr "OKUNAN DAKİKA // 12 HAFTA"
 
-#: cyberui/data/metric.lua cyberui/screens/log/period.lua
+#: cyberui/data/metric.lua cyberui/screens/log/period.lua cyberui/skin/bookstatus.lua
 msgid "PAGES READ"
 msgstr "OKUNAN SAYFA"
 
@@ -1625,7 +1625,7 @@ msgstr "GIG BİTTİ"
 msgid "BOOK FINISHED"
 msgstr "KİTAP BİTTİ"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/skin/bookstatus.lua
 msgid "%d%% READ"
 msgstr "%%%d OKUNDU"
 
@@ -2060,7 +2060,7 @@ msgstr "SEKTÖR"
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr "NE ZAMAN OKURSUN // PZT-PAZ SAATE GÖRE // %s"
 
-#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/skin/bookstatus.lua
 msgid "TIME"
 msgstr "SÜRE"
 
@@ -3019,6 +3019,30 @@ msgstr "Ön sürümleri bildir (test sürümleri, daha yeni ama daha az denenmi�
 #: cyberui/screens/updates.lua
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
+
+#: cyberui/skin/bookstatus.lua
+msgid "DAYS"
+msgstr "GÜN"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// RATING"
+msgstr "// PUAN"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATISTICS"
+msgstr "// İSTATİSTİKLER"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// REVIEW"
+msgstr "// YORUM"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATUS"
+msgstr "// DURUM"
+
+#: cyberui/skin/bookstatus.lua
+msgid "Book status"
+msgstr "Kitap durumu"
 
 #: cyberui/skin/choice.lua
 msgid "// CHOOSE"

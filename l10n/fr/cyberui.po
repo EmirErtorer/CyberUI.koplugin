@@ -609,7 +609,7 @@ msgstr "PAGES LUES // 12 SEMAINES"
 msgid "MINUTES READ // 12 WEEKS"
 msgstr "MINUTES LUES // 12 SEMAINES"
 
-#: cyberui/data/metric.lua cyberui/screens/log/period.lua
+#: cyberui/data/metric.lua cyberui/screens/log/period.lua cyberui/skin/bookstatus.lua
 msgid "PAGES READ"
 msgstr "PAGES LUES"
 
@@ -1625,7 +1625,7 @@ msgstr "GIG TERMINÉ"
 msgid "BOOK FINISHED"
 msgstr "LIVRE TERMINÉ"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/skin/bookstatus.lua
 msgid "%d%% READ"
 msgstr "%d %% LU"
 
@@ -2060,7 +2060,7 @@ msgstr "SECTEUR"
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr "QUAND VOUS LISEZ // LUN-DIM PAR HEURE // %s"
 
-#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/skin/bookstatus.lua
 msgid "TIME"
 msgstr "TEMPS"
 
@@ -3019,6 +3019,30 @@ msgstr "Me prévenir des pré-versions (versions de test, plus récentes mais mo
 #: cyberui/screens/updates.lua
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
+
+#: cyberui/skin/bookstatus.lua
+msgid "DAYS"
+msgstr "JOURS"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// RATING"
+msgstr "// NOTE"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATISTICS"
+msgstr "// STATISTIQUES"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// REVIEW"
+msgstr "// AVIS"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATUS"
+msgstr "// STATUT"
+
+#: cyberui/skin/bookstatus.lua
+msgid "Book status"
+msgstr "Statut du livre"
 
 #: cyberui/skin/choice.lua
 msgid "// CHOOSE"

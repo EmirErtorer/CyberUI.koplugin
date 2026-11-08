@@ -609,7 +609,7 @@ msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΔΙΑΒΑΣΤΗΚΑΝ // 12 ΕΒΔΟΜΑΔΕΣ"
 msgid "MINUTES READ // 12 WEEKS"
 msgstr "ΛΕΠΤΑ ΑΝΑΓΝΩΣΗΣ // 12 ΕΒΔΟΜΑΔΕΣ"
 
-#: cyberui/data/metric.lua cyberui/screens/log/period.lua
+#: cyberui/data/metric.lua cyberui/screens/log/period.lua cyberui/skin/bookstatus.lua
 msgid "PAGES READ"
 msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΔΙΑΒΑΣΤΗΚΑΝ"
 
@@ -1625,7 +1625,7 @@ msgstr "ΤΕΛΕΙΩΣΕ ΤΟ GIG"
 msgid "BOOK FINISHED"
 msgstr "ΤΕΛΕΙΩΣΕ ΤΟ ΒΙΒΛΙΟ"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/skin/bookstatus.lua
 msgid "%d%% READ"
 msgstr "ΔΙΑΒΑΣΤΗΚΕ %d%%"
 
@@ -2060,7 +2060,7 @@ msgstr "ΤΟΜΕΑΣ"
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr "ΠΟΤΕ ΔΙΑΒΑΖΕΤΕ // ΔΕΥ-ΚΥΡ ΑΝΑ ΩΡΑ // %s"
 
-#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/skin/bookstatus.lua
 msgid "TIME"
 msgstr "ΧΡΟΝΟΣ"
 
@@ -3019,6 +3019,30 @@ msgstr "Ειδοποίηση για προεκδόσεις (δοκιμαστικ
 #: cyberui/screens/updates.lua
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
+
+#: cyberui/skin/bookstatus.lua
+msgid "DAYS"
+msgstr "ΗΜΕΡΕΣ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// RATING"
+msgstr "// ΒΑΘΜΟΛΟΓΙΑ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATISTICS"
+msgstr "// ΣΤΑΤΙΣΤΙΚΑ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// REVIEW"
+msgstr "// ΚΡΙΤΙΚΗ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "// STATUS"
+msgstr "// ΚΑΤΑΣΤΑΣΗ"
+
+#: cyberui/skin/bookstatus.lua
+msgid "Book status"
+msgstr "Κατάσταση βιβλίου"
 
 #: cyberui/skin/choice.lua
 msgid "// CHOOSE"
