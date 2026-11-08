@@ -3078,6 +3078,10 @@ msgstr "// ВЫДЕЛЕНИЕ"
 msgid "Close"
 msgstr "Закрыть"
 
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr "Нет элементов"
+
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"
 msgstr "// ВЫДЕЛЕНИЕ"
@@ -3085,10 +3089,6 @@ msgstr "// ВЫДЕЛЕНИЕ"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ВВОД"
-
-#: cyberui/skin/list.lua
-msgid "No items"
-msgstr "Нет элементов"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

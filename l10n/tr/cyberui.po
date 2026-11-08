@@ -3044,6 +3044,10 @@ msgstr "// VURGU"
 msgid "Close"
 msgstr "Kapat"
 
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr "Öğe yok"
+
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"
 msgstr "// SEÇİM"
@@ -3051,10 +3055,6 @@ msgstr "// SEÇİM"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// GİRİŞ"
-
-#: cyberui/skin/list.lua
-msgid "No items"
-msgstr "Öğe yok"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

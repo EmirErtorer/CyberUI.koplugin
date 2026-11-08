@@ -92,6 +92,16 @@ scene("multi-input", true, function()
     return multi
 end)
 
+local kvpage
+scene("keyvalue-info", true, function()
+    kvpage = require("ui/widget/keyvaluepage"):new({ title = "Book information", kv_pairs = {
+        { "Title", "Dune" }, { "Authors", "Frank Herbert" }, { "Series", "Dune #1" }, { "Pages", "612" }, { "Language", "en" }, { "File size", "1.4 MB", separator = true },
+        { "Description", "Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides, heir to a noble family tasked with ruling an inhospitable world where the only thing of value is the spice melange, a drug capable of extending life and enhancing consciousness. Coveted across the known universe, melange is a prize worth killing for." },
+        { "Open file", "tap to open", callback = function() ran.kvopen = true end },
+        { "Remove me", "hold to remove", hold_callback = function(page, item) page:removeKeyValueItem(item) end } } })
+    return kvpage
+end)
+
 -- behaviour, in the styled mode only
 local function behaviour()
     -- the text viewer pages a long text, runs KOReader's callbacks and closes with Back or Close
@@ -215,6 +225,34 @@ local function behaviour()
     H.step(0.8, function()
         H.check(ran.multi and ran.multi[1] == "10" and ran.multi[2] == "125", "Apply gets both fields as typed: " .. tostring(ran.multi and (ran.multi[1] .. "," .. ran.multi[2])))
     end)
+
+    -- an information list: callbacks get the page and an item, a hold can remove a pair, a long value shows in full
+    H.step(0.8, function()
+        kvpage = require("ui/widget/keyvaluepage"):new({ title = "Info", kv_pairs = { { "Open file", "tap", callback = function(p, item) ran.kvopen = item.key end },
+            { "Gone soon", "x", hold_callback = function(p, item) p:removeKeyValueItem(item) end }, { "Long", string.rep("long words ", 60) } } })
+        UIManager:show(kvpage)
+    end)
+    H.step(0.8, function()
+        H.check(H.find("Open file") ~= nil, "the pairs are listed")
+        H.tap("Open file")
+    end)
+    H.step(0.8, function()
+        H.check(ran.kvopen == "Open file", "a tap runs the pair's callback with the item: " .. tostring(ran.kvopen))
+        H.hold("Gone soon")
+    end)
+    H.step(0.8, function()
+        H.check(#kvpage.kv_pairs == 2 and H.find("Gone soon") == nil, "a hold callback may remove the pair and the list follows")
+        H.tap("Long")
+    end)
+    H.step(0.8, function()
+        H.check(H.find("// TEXT") ~= nil, "a tap on a cut value shows all of it in the viewer")
+        H.tap("Close")
+    end)
+    H.step(0.8, function()
+        H.tap("Open file")   -- (still the list on top)
+        H.tap(nil, "back")
+    end)
+    H.step(0.8, function() H.check(gone(kvpage), "the back button closes the list and its popup") end)
 
 end
 if mode == "new" then behaviour() end

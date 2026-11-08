@@ -3044,6 +3044,10 @@ msgstr "// MARKIERUNG"
 msgid "Close"
 msgstr "Schließen"
 
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr "Keine Einträge"
+
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"
 msgstr "// AUSWAHL"
@@ -3051,10 +3055,6 @@ msgstr "// AUSWAHL"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// EINGABE"
-
-#: cyberui/skin/list.lua
-msgid "No items"
-msgstr "Keine Einträge"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

@@ -3078,6 +3078,10 @@ msgstr "// ZAKREŚLENIE"
 msgid "Close"
 msgstr "Zamknij"
 
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr "Brak pozycji"
+
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"
 msgstr "// ZAZNACZENIE"
@@ -3085,10 +3089,6 @@ msgstr "// ZAZNACZENIE"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// WEJŚCIE"
-
-#: cyberui/skin/list.lua
-msgid "No items"
-msgstr "Brak pozycji"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

@@ -3044,6 +3044,10 @@ msgstr "// ΕΠΙΣΗΜΑΝΣΗ"
 msgid "Close"
 msgstr "Κλείσιμο"
 
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr "Κανένα στοιχείο"
+
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"
 msgstr "// ΕΠΙΛΟΓΗ"
@@ -3051,10 +3055,6 @@ msgstr "// ΕΠΙΛΟΓΗ"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ΕΙΣΟΔΟΣ"
-
-#: cyberui/skin/list.lua
-msgid "No items"
-msgstr "Κανένα στοιχείο"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

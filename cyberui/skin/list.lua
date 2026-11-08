@@ -6,9 +6,6 @@
 
 local Anatomy = require("cyberui/skin/anatomy")
 local Core = require("cyberui/skin/core")
-local Device = require("device")
-
-local Screen = Device.screen
 
 local Skin = {}
 
@@ -97,47 +94,28 @@ end
 -- The whole list as it is now, on page `page` of the ones the screen holds.
 local function page(menu, state)
     local Button = require("cyberui/ui/button")
-    local Dialog = require("cyberui/ui/dialog")
-    local Header = require("cyberui/ui/header")
-    local Label = require("cyberui/ui/label")
-    local Layout = require("cyberui/ui/layout")
-    local Panel = require("cyberui/ui/panel")
-    local StatusBar = require("cyberui/ui/statusbar")
+    local Fullpage = require("cyberui/skin/fullpage")
     local Theme = require("cyberui/theme")
-    local _ = require("cyberui/gettext")
     local th = Theme.get()
-    local side = th.space.xl
     local items = menu.item_table
     local row_h = Theme.px(54)
-    local room = Screen:getHeight() - 2 * th.space.s - 4 * th.size.touch - 2 * th.space.m
-    local per = math.max(3, math.floor(room / row_h))
+    local per = math.max(3, math.floor(Fullpage.room() / row_h))
     local pages = math.max(1, math.ceil(#items / per))
     state.page = math.max(1, math.min(state.page or math.ceil(startIndex(menu) / per), pages))
     local rows = {}
     for i = (state.page - 1) * per + 1, math.min(state.page * per, #items) do rows[#rows + 1] = row(menu, items[i], i) end
-    local status = StatusBar.build()
     local actions = {}
     if menu.title_bar_left_icon and menu.onLeftButtonTap then
         actions[1] = Button:new({ icon = "menu", variant = "icon", width = th.size.touch, on_tap = function() menu:onLeftButtonTap() end })
     end
     local back = (menu.onReturn and menu.paths and #menu.paths > 0) and function() menu:onReturn() end or function() menu:onClose() end
-    local kids = {
-        status,
-        Header.build({ title = tostring(menu.title or ""), path = menu.subtitle and tostring(menu.subtitle) or nil, on_back = back, actions = actions }),
-    }
-    if #rows == 0 then
-        kids[#kids + 1] = Label:new({ text = _("No items"), kind = "body", color = "muted", align = "center", grow = true })
-    else
-        kids[#kids + 1] = Layout.Column:new({ grow = true, children = rows })
-    end
-    if pages > 1 then
-        kids[#kids + 1] = Dialog.pager(state.page, pages, function(p)
+    return Fullpage.build({
+        title = tostring(menu.title or ""), path = menu.subtitle and tostring(menu.subtitle) or nil, on_back = back, actions = actions,
+        rows = rows, page = state.page, pages = pages, show = function(p)
             state.page = p
             if state.redraw then state.redraw() end
-        end)
-    end
-    return Panel:new({ shape = "none", fill = "bg", pad = { th.space.s, side, th.space.m, side }, width = Screen:getWidth(), height = Screen:getHeight(),
-        child = Layout.Column:new({ gap = th.space.m, children = kids }) })
+        end,
+    })
 end
 
 Core.register({

@@ -3043,16 +3043,16 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr ""
+
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"
 msgstr ""
 
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
-msgstr ""
-
-#: cyberui/skin/list.lua
-msgid "No items"
 msgstr ""
 
 #: cyberui/skin/numbers.lua

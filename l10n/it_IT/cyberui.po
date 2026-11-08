@@ -3044,6 +3044,10 @@ msgstr "// EVIDENZIAZIONE"
 msgid "Close"
 msgstr "Chiudi"
 
+#: cyberui/skin/fullpage.lua
+msgid "No items"
+msgstr "Nessun elemento"
+
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"
 msgstr "// SELEZIONE"
@@ -3051,10 +3055,6 @@ msgstr "// SELEZIONE"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// INPUT"
-
-#: cyberui/skin/list.lua
-msgid "No items"
-msgstr "Nessun elemento"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"
