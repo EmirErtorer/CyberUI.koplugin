@@ -589,7 +589,7 @@ msgstr "Γλώσσα"
 msgid "PG"
 msgstr "ΣΕΛ"
 
-#: cyberui/data/metric.lua
+#: cyberui/data/metric.lua cyberui/skin/numbers.lua
 msgid "MIN"
 msgstr "ΛΕΠ"
 
@@ -3020,6 +3020,10 @@ msgstr "Ειδοποίηση για προεκδόσεις (δοκιμαστικ
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/choice.lua
+msgid "// CHOOSE"
+msgstr "// ΕΠΙΛΟΓΗ"
+
 #: cyberui/skin/dictionary.lua
 msgid "// LOOKUP"
 msgstr "// ΑΝΑΖΗΤΗΣΗ"
@@ -3051,6 +3055,30 @@ msgstr "// ΕΙΣΟΔΟΣ"
 #: cyberui/skin/list.lua
 msgid "No items"
 msgstr "Κανένα στοιχείο"
+
+#: cyberui/skin/numbers.lua
+msgid "// SET"
+msgstr "// ΡΥΘΜΙΣΗ"
+
+#: cyberui/skin/numbers.lua
+msgid "YEAR"
+msgstr "ΕΤΟΣ"
+
+#: cyberui/skin/numbers.lua
+msgid "MONTH"
+msgstr "ΜΗΝΑΣ"
+
+#: cyberui/skin/numbers.lua
+msgid "DAY"
+msgstr "ΗΜΕΡΑ"
+
+#: cyberui/skin/numbers.lua
+msgid "HOUR"
+msgstr "ΩΡΑ"
+
+#: cyberui/skin/numbers.lua
+msgid "SEC"
+msgstr "ΔΕΥΤ."
 
 #: cyberui/skin/semantics.lua
 msgid "MORE"

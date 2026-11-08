@@ -12,13 +12,6 @@ local Screen = Device.screen
 
 local Skin = {}
 
--- A question's buttons: the first is the way out (a quiet button with a cross), and in
--- a pair the second is the one that goes ahead (the main button, with a tick).
-local function ways(row, i)
-    if i == 1 then return "ghost", "close" end
-    if #row == 2 then return "primary", "check" end
-end
-
 local function takes(widget)
     return Anatomy.is(widget, "ui/widget/confirmbox") or Anatomy.is(widget, "ui/widget/multiconfirmbox")
 end
@@ -31,7 +24,7 @@ Core.register({
         local kind = Specs.kind(Anatomy.icon(widget))
         local element = Dialog.card({
             tag = kind.tag, icon = kind.icon, danger = kind.danger, text = Anatomy.text(widget),
-            rows = Specs.rows(Anatomy.buttons(widget), ways),
+            rows = Specs.rows(Anatomy.buttons(widget), Specs.ways),
         }, Screen:getWidth())
         return {
             element = element,

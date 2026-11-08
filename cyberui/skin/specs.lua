@@ -116,6 +116,23 @@ function Specs.verbs(_row, _i, b)
     if verb then return (verb.danger and "danger") or (verb.main and "primary") or nil, verb.icon end
 end
 
+-- A question's buttons: the first is the way out (a quiet button with a cross), and in
+-- a pair the second is the one that goes ahead (the main button, with a tick).
+function Specs.ways(row, i)
+    if i == 1 then return "ghost", "close" end
+    if #row == 2 then return "primary", "check" end
+end
+
+-- For Specs.rows of a dialog whose last row is the way out and the way ahead (a
+-- picker: Close, Apply): that row looks so, the others by what their buttons say.
+function Specs.outcome(rows)
+    local last = rows[#rows]
+    return function(row, i, b)
+        if row == last then return Specs.ways(row, i) end
+        return Specs.verbs(row, i, b)
+    end
+end
+
 -- What a message says about itself from the icon KOReader gave it: the tag over
 -- its text, and whether it warns. Icons it does not know are plain messages.
 local KINDS = {

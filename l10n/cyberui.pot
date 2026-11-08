@@ -588,7 +588,7 @@ msgstr ""
 msgid "PG"
 msgstr ""
 
-#: cyberui/data/metric.lua
+#: cyberui/data/metric.lua cyberui/skin/numbers.lua
 msgid "MIN"
 msgstr ""
 
@@ -3019,6 +3019,10 @@ msgstr ""
 msgid "GITHUB // %s"
 msgstr ""
 
+#: cyberui/skin/choice.lua
+msgid "// CHOOSE"
+msgstr ""
+
 #: cyberui/skin/dictionary.lua
 msgid "// LOOKUP"
 msgstr ""
@@ -3049,6 +3053,30 @@ msgstr ""
 
 #: cyberui/skin/list.lua
 msgid "No items"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "// SET"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "YEAR"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "MONTH"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "DAY"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "HOUR"
+msgstr ""
+
+#: cyberui/skin/numbers.lua
+msgid "SEC"
 msgstr ""
 
 #: cyberui/skin/semantics.lua

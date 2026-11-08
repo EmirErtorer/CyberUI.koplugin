@@ -589,7 +589,7 @@ msgstr "Idioma"
 msgid "PG"
 msgstr "PÁG"
 
-#: cyberui/data/metric.lua
+#: cyberui/data/metric.lua cyberui/skin/numbers.lua
 msgid "MIN"
 msgstr "MIN"
 
@@ -3020,6 +3020,10 @@ msgstr "Avisarme de prelanzamientos (versiones de prueba, más nuevas pero menos
 msgid "GITHUB // %s"
 msgstr "GITHUB // %s"
 
+#: cyberui/skin/choice.lua
+msgid "// CHOOSE"
+msgstr "// ELEGIR"
+
 #: cyberui/skin/dictionary.lua
 msgid "// LOOKUP"
 msgstr "// CONSULTA"
@@ -3051,6 +3055,30 @@ msgstr "// ENTRADA"
 #: cyberui/skin/list.lua
 msgid "No items"
 msgstr "Sin elementos"
+
+#: cyberui/skin/numbers.lua
+msgid "// SET"
+msgstr "// AJUSTAR"
+
+#: cyberui/skin/numbers.lua
+msgid "YEAR"
+msgstr "AÑO"
+
+#: cyberui/skin/numbers.lua
+msgid "MONTH"
+msgstr "MES"
+
+#: cyberui/skin/numbers.lua
+msgid "DAY"
+msgstr "DÍA"
+
+#: cyberui/skin/numbers.lua
+msgid "HOUR"
+msgstr "HORA"
+
+#: cyberui/skin/numbers.lua
+msgid "SEC"
+msgstr "SEG"
 
 #: cyberui/skin/semantics.lua
 msgid "MORE"

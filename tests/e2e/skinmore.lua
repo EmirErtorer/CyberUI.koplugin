@@ -59,6 +59,31 @@ scene("textviewer-plain", true, function()
     return require("ui/widget/textviewer"):new({ title = "About", text = "Plain long text.\n\nSecond paragraph of the text viewer, used for book descriptions, help and licences." })
 end)
 
+scene("spin-page", true, function()
+    return require("ui/widget/spinwidget"):new({ title_text = "Go to page", info_text = "Page numbers run from 1 to 300.", value = 120, value_min = 1, value_max = 300, value_step = 1,
+        value_hold_step = 10, ok_text = "Go", callback = function(w) ran.spin = w.value end })
+end)
+scene("spin-defaults", true, function()
+    return require("ui/widget/spinwidget"):new({ title_text = "Font size", value = 22, value_min = 12, value_max = 40, value_step = 1, value_hold_step = 4, unit = "pt",
+        default_value = 20, extra_text = "Reset to book", extra_callback = cb, ok_text = "Apply", callback = cb })
+end)
+scene("doublespin", true, function()
+    return require("ui/widget/doublespinwidget"):new({ title_text = "Page margins", info_text = "In millimetres.", left_text = "Left", left_value = 8, left_min = 0, left_max = 40, left_step = 1, left_hold_step = 5,
+        right_text = "Right", right_value = 12, right_min = 0, right_max = 40, right_step = 1, right_hold_step = 5, ok_text = "Apply", callback = function(l, r) ran.dbl = { l, r } end })
+end)
+scene("datetime-time", true, function()
+    return require("ui/widget/datetimewidget"):new({ title_text = "Set time", info_text = "Night mode starts at this hour.", hour = 22, min = 30, ok_text = "Set time",
+        callback = function(t) ran.time = t end })
+end)
+scene("datetime-date", true, function()
+    return require("ui/widget/datetimewidget"):new({ title_text = "Set date", year = 2026, month = 11, day = 8, ok_text = "Set date", callback = function(t) ran.date = t end })
+end)
+scene("radio", true, function()
+    return require("ui/widget/radiobuttonwidget"):new({ title_text = "Sort by", info_text = "How the list is ordered.", radio_buttons = {
+        { { text = "Title", checked = true, provider = "title" } }, { { text = "Author", provider = "author" } }, { { text = "Date added", provider = "date" } },
+        { { text = "Last read", provider = "read" } } }, ok_text = "Apply", callback = function(w) ran.radio = w.provider end })
+end)
+
 -- behaviour, in the styled mode only
 local function behaviour()
     -- the text viewer pages a long text, runs KOReader's callbacks and closes with Back or Close
@@ -83,6 +108,79 @@ local function behaviour()
         H.tap("Close")
     end)
     H.step(0.8, function() H.check(gone(viewer), "Close closes the viewer and its popup") end)
+
+    -- the number picker steps, follows the slider and applies what KOReader's picker holds
+    local spin
+    H.step(0.8, function()
+        spin = require("ui/widget/spinwidget"):new({ title_text = "Go to page", value = 120, value_min = 1, value_max = 300, value_step = 1, value_hold_step = 10,
+            ok_text = "Go", callback = function(w) ran.spin = w.value end })
+        UIManager:show(spin)
+    end)
+    H.step(0.8, function()
+        H.check(H.find("120") ~= nil or H.findWhere(function(el) return el.text_fn and el.text_fn() == "120" end) ~= nil, "the picker shows its value")
+        H.tap("+")
+    end)
+    H.step(0.8, function()
+        H.check(spin.value_widget.value == 121, "a tap on + steps KOReader's picker: " .. tostring(spin.value_widget.value))
+        H.tap("\u{2212}10")
+    end)
+    H.step(0.8, function()
+        H.check(spin.value_widget.value == 111, "the small button takes the long step: " .. tostring(spin.value_widget.value))
+        H.tap("Go")
+    end)
+    H.step(0.8, function()
+        H.check(ran.spin == 111, "Apply runs KOReader's callback with the value: " .. tostring(ran.spin))
+        UIManager:close(spin)
+        spin = require("ui/widget/spinwidget"):new({ title_text = "Go to page", value = 10, value_min = 1, value_max = 300, value_step = 1, value_hold_step = 10,
+            ok_text = "Go", callback = function(w) ran.spin = w.value end })
+        UIManager:show(spin)
+    end)
+    H.step(0.8, function()
+        local slider = H.findWhere(function(el) return el.trackWidth and el.on_tap end)
+        H.check(slider ~= nil, "a wide range has a slider")
+        if slider then H.tapAt(slider.x + slider:trackWidth() / 2, slider.y + slider.h / 2) end
+    end)
+    H.step(0.8, function()
+        local v = spin.value_widget.value
+        H.check(v > 120 and v < 180, "a tap in the middle of the slider sets KOReader's picker to about half the range: " .. tostring(v))
+        H.tap("Go")
+    end)
+    H.step(0.8, function()
+        H.check(ran.spin and ran.spin > 120 and ran.spin < 180, "and Apply is enabled and applies it: " .. tostring(ran.spin))
+        UIManager:close(spin)
+    end)
+    -- a time: the hour steps up and rolls over
+    local clock
+    H.step(0.8, function()
+        clock = require("ui/widget/datetimewidget"):new({ title_text = "Set time", hour = 23, min = 5, ok_text = "Set time", callback = function(t) ran.clock = t end })
+        UIManager:show(clock)
+    end)
+    H.step(0.8, function()
+        local up = H.find(nil, "up", true)
+        H.check(up ~= nil, "the time has step-up arrows")
+        if up then H.tapAt(up.x + up.w / 2, up.y + up.h / 2) end
+    end)
+    H.step(0.8, function()
+        H.check(clock.hour_widget.value == 0, "the hour rolled over to midnight: " .. tostring(clock.hour_widget.value))
+        H.tap("Set time")
+    end)
+    H.step(0.8, function()
+        H.check(ran.clock ~= nil and ran.clock.hour == 0 and ran.clock.min == 5, "Set time hands KOReader's callback the time")
+        UIManager:close(clock)
+    end)
+    -- a choice
+    local radio
+    H.step(0.8, function()
+        radio = require("ui/widget/radiobuttonwidget"):new({ title_text = "Sort by", radio_buttons = { { { text = "Title", checked = true, provider = "t" } },
+            { { text = "Author", provider = "a" } } }, ok_text = "Apply", callback = function(w) ran.radio = w.provider end })
+        UIManager:show(radio)
+    end)
+    H.step(0.8, function() H.check(H.tap("Author"), "the choices are tappable") end)
+    H.step(0.8, function() H.tap("Apply") end)
+    H.step(0.8, function()
+        H.check(ran.radio == "a", "the choice chosen is the one KOReader's callback gets: " .. tostring(ran.radio))
+        UIManager:close(radio)
+    end)
 
 end
 if mode == "new" then behaviour() end

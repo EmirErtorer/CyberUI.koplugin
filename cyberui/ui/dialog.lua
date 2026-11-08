@@ -131,6 +131,16 @@ function Dialog.pager(page, pages, show)
     } })
 end
 
+-- One choice of a list as a button: the label (and a small line), a tick when it is
+-- the one chosen. `short` makes room for the small line in a narrow column.
+function Dialog.option(opt, short, on_tap)
+    return Button:new({
+        label = opt.label, sub = opt.sub, align = "left", icon = opt.checked and "check" or opt.icon,
+        height = short and opt.sub and Theme.px(58) or nil,
+        variant = opt.checked and "chip_on" or "soft", on_tap = on_tap,
+    })
+end
+
 -- A list of choices; options are { label, sub, icon, on_tap, checked },
 -- `cols` to a row (1 by default). A list too long for the screen is paged: `page`
 -- is the one showing and show(page) opens another (App.choose supplies it).
@@ -146,11 +156,7 @@ function Dialog.choose(o, close, screen_w, screen_h)
         for i = (o.page - 1) * per + 1, math.min(o.page * per, #o.options) do options[#options + 1] = o.options[i] end
     end
     tiles(kids, options, cols, function(opt)
-        return Button:new({
-            label = opt.label, sub = opt.sub, align = "left", icon = opt.checked and "check" or opt.icon,
-            height = cols > 1 and opt.sub and Theme.px(58) or nil,
-            variant = opt.checked and "chip_on" or "soft", on_tap = closing(close, opt.on_tap),
-        })
+        return Dialog.option(opt, cols > 1, closing(close, opt.on_tap))
     end)
     if pages > 1 then kids[#kids + 1] = Dialog.pager(o.page, pages, o.show) end
     kids[#kids + 1] = Button:new({ label = o.cancel or _("Close"), variant = "ghost", on_tap = closing(close) })
