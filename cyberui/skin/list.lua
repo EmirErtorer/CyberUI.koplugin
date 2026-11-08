@@ -72,14 +72,16 @@ local function row(menu, item, index)
     local title, meta = Menu.getMenuText(item), nil
     local icon = KIND_ICONS[item.type]
     if icon then title, meta = savedItem(item) end
-    if not icon and type(item.path) == "string" and Anatomy.is(menu, "ui/widget/filechooser") then icon = item.is_file and "files" or "folder" end
+    -- (a file shows the cover CyberUI draws for it, in the reader's chosen cover style; a folder an icon)
+    local chosen = not icon and type(item.path) == "string" and Anatomy.is(menu, "ui/widget/filechooser")
+    if chosen and not item.is_file then icon = "folder" end
     -- in a table of contents, the chapters already passed are dimmed and the one you are in is marked
     local passed = chapter(item) and current and index < current
     local built = ListRow.build({
         title = title, meta = meta, icon = icon, value = mandatory ~= nil and tostring(mandatory) or nil,
         value_color = (item.mandatory_dim or item.dim or passed) and "muted" or "ink", dim = item.dim or passed,
         title_kind = (current == index or item.bold) and "title" or nil,
-        path = (not icon and type(item.file) == "string") and item.file or nil,
+        path = (not icon and (type(item.file) == "string" and item.file or (chosen and item.is_file and item.path))) or nil,
         on_tap = function() menu:onMenuSelect(item, { x = 0.5, y = 0.5 }) end,
         on_hold = function() menu:onMenuHold(item) end,
     })
