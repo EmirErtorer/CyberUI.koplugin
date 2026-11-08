@@ -23,6 +23,32 @@ local function rows(widget)
     return list and list.items or {}
 end
 
+-- The buttons KOReader's window has besides its rows (a retry, a rescan: whatever
+-- this version of KOReader puts in the window or its title bar), found by what they are
+-- so none goes missing: { text or icon, callback }. The close cross is not one.
+local function extras(widget)
+    local out, seen = {}, {}
+    local list = rows(widget)
+    local inside = {}
+    for _i, item in ipairs(list) do inside[item] = true end
+    local function walk(t, depth)
+        if type(t) ~= "table" or seen[t] or inside[t] or depth > 9 then return end
+        seen[t] = true
+        if Anatomy.is(t, "ui/widget/button") and type(t.callback) == "function" then
+            local icon = type(t.icon) == "string" and t.icon or nil
+            if not (icon and (icon:find("close", 1, true) or icon:find("exit", 1, true) or icon:find("cancel", 1, true))) then
+                out[#out + 1] = { text = t.text, icon = icon, callback = t.callback, enabled = t.enabled ~= false }
+            end
+            return
+        end
+        for k, v in pairs(t) do
+            if k ~= "setting_ui" and k ~= "show_parent" and k ~= "parent" and type(v) == "table" then walk(v, depth + 1) end
+        end
+    end
+    walk(widget, 0)
+    return out
+end
+
 -- Hand KOReader's row a tap at a place that means this: the row decides from where a tap fell
 -- whether it is on its disconnect text, its edit mark or the network itself, so those are given
 -- places of their own and the tap is sent to the one meant.
@@ -34,6 +60,13 @@ local function tapRow(item, what)
     item:onTapSelect(nil, { pos = Geom:new({ x = at.x, y = at.y, w = 0, h = 0 }) })
 end
 
+-- KOReader's own icon for a network's strength, open or secured (the same steps it uses).
+function Skin.signalIcon(info, secure)
+    local q = tonumber(info.signal_quality) or 0
+    local step = q > 80 and 100 or q > 55 and 75 or q > 30 and 50 or q > 5 and 25 or 0
+    return string.format("ko:wifi.%s.%d.svg", secure and "secure" or "open", step)
+end
+
 -- The card for one page of the networks.
 local function card(widget, state)
     local Button = require("cyberui/ui/button")
@@ -43,7 +76,12 @@ local function card(widget, state)
     local Theme = require("cyberui/theme")
     local _ = require("cyberui/gettext")
     local th = Theme.get()
-    local items = rows(widget)
+    -- the network you are on first (KOReader's own row for it, wherever it keeps it), then the rest
+    local items, connected = {}, widget.connected_item
+    if connected then items[1] = connected end
+    for _i, item in ipairs(rows(widget)) do
+        if item ~= connected then items[#items + 1] = item end
+    end
     local per = math.max(3, Dialog.rowsPerPage(Screen:getHeight()) - 1)
     local pages = math.max(1, math.ceil(#items / per))
     state.page = math.max(1, math.min(state.page or 1, pages))
@@ -65,13 +103,23 @@ local function card(widget, state)
         elseif info.password then
             line[#line + 1] = Button:new({ label = _("Edit"), variant = "chip", on_tap = function() tapRow(item, "edit") end })
         end
-        table.insert(line, 1, Button:new({ icon = "network", variant = info.connected and "chip_on" or "soft", width = th.size.touch,
+        table.insert(line, 1, Button:new({ icon = Skin.signalIcon(info, secure), variant = info.connected and "chip_on" or "soft", width = th.size.touch,
             on_tap = function() tapRow(item); state.redraw() end }))
         local row = Layout.Row:new({ gap = th.space.m, height = Theme.px(64), children = line })
         body[#body + 1] = Layout.Column:new({ on_tap = function() tapRow(item); state.redraw() end, children = { row } })
     end
     if #items == 0 then body[#body + 1] = Label:new({ text = _("No networks found"), kind = "body", color = "muted" }) end
     if pages > 1 then body[#body + 1] = Dialog.pager(state.page, pages, function(p) state.page = p; state.redraw() end) end
+    local more = extras(widget)
+    if #more > 0 then
+        local buttons = {}
+        for _i, b in ipairs(more) do
+            local refresh = b.icon and (b.icon:find("refresh", 1, true) or b.icon:find("reload", 1, true) or b.icon:find("restart", 1, true) or b.icon:find("rotate", 1, true))
+            buttons[#buttons + 1] = Button:new({ label = b.text or (refresh and _("Retry")) or nil, icon = b.icon and (refresh and "restore" or "forward") or nil,
+                variant = "soft", grow = true, disabled = not b.enabled, on_tap = b.enabled and function() b.callback(); state.redraw() end or nil })
+        end
+        body[#body + 1] = Layout.Row:new({ gap = th.space.s, children = buttons })
+    end
     body[#body + 1] = Specs.wide({ text = _("Close"), callback = function() Core.dismiss(widget) end }, "ghost", "close")
     return Dialog.card({ tag = _("// WI-FI"), title = _("Wi-Fi networks"), rows = body }, Screen:getWidth())
 end

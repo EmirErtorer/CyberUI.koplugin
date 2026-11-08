@@ -3101,6 +3101,10 @@ msgid "No networks found"
 msgstr "Ağ bulunamadı"
 
 #: cyberui/skin/network.lua
+msgid "Retry"
+msgstr "Yeniden dene"
+
+#: cyberui/skin/network.lua
 msgid "// WI-FI"
 msgstr "// WI-FI"
 

@@ -3100,6 +3100,10 @@ msgid "No networks found"
 msgstr ""
 
 #: cyberui/skin/network.lua
+msgid "Retry"
+msgstr ""
+
+#: cyberui/skin/network.lua
 msgid "// WI-FI"
 msgstr ""
 
