@@ -1456,7 +1456,7 @@ msgstr ""
 msgid "No pictures or folders here."
 msgstr ""
 
-#: cyberui/screens/filepick.lua
+#: cyberui/screens/filepick.lua cyberui/skin/list.lua
 msgid "Choose a folder"
 msgstr ""
 
@@ -3053,6 +3053,10 @@ msgstr ""
 
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
+msgstr ""
+
+#: cyberui/skin/list.lua
+msgid "Choose this folder"
 msgstr ""
 
 #: cyberui/skin/numbers.lua

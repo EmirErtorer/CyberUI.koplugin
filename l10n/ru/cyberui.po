@@ -1468,7 +1468,7 @@ msgstr "Здесь нет папок."
 msgid "No pictures or folders here."
 msgstr "Здесь нет изображений и папок."
 
-#: cyberui/screens/filepick.lua
+#: cyberui/screens/filepick.lua cyberui/skin/list.lua
 msgid "Choose a folder"
 msgstr "Выберите папку"
 
@@ -3089,6 +3089,10 @@ msgstr "// ВЫДЕЛЕНИЕ"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ВВОД"
+
+#: cyberui/skin/list.lua
+msgid "Choose this folder"
+msgstr "Выбрать эту папку"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

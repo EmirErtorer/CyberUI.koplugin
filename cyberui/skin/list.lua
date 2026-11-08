@@ -2,7 +2,8 @@
 -- and highlights, history, collections, and every other list a plugin makes
 -- with KOReader's Menu. KOReader keeps the items, what a tap or a hold on one
 -- does, and what happens to the list as items change; the list only shows the
--- page of them the screen has room for. File browsers are left to KOReader.
+-- page of them the screen has room for. File browsers are left to KOReader, but the
+-- window for choosing a folder gets a button for choosing the one it is in.
 
 local Anatomy = require("cyberui/skin/anatomy")
 local Core = require("cyberui/skin/core")
@@ -13,7 +14,8 @@ local Skin = {}
 local function menuOf(widget)
     local function is(w) return type(w) == "table" and Anatomy.is(w, "ui/widget/menu") and type(w.item_table) == "table" end
     local menu = is(widget) and widget or (is(widget[1]) and widget[1]) or nil
-    if menu and Anatomy.is(menu, "ui/widget/filechooser") then return nil end
+    -- the file browser is KOReader's (CyberUI has its own library); choosing a folder is a list like any other
+    if menu and Anatomy.is(menu, "ui/widget/filechooser") and not Anatomy.is(menu, "ui/widget/pathchooser") then return nil end
     return menu
 end
 
@@ -44,6 +46,12 @@ local function savedItem(item)
     return title, #meta > 0 and table.concat(meta, " // ") or nil
 end
 
+-- The row KOReader's folder chooser adds for the folder it is in ("long-press to choose it"): a
+-- visible button does that here, so the row is not shown.
+local function currentFolderRow(menu, item)
+    return menu.select_directory and menu.show_current_dir_for_hold and type(item.path) == "string" and item.path:sub(-2) == "/."
+end
+
 -- Is this item of a table of contents (a chapter with a depth and a page)?
 local function chapter(item)
     return item.page ~= nil and item.depth ~= nil
@@ -64,6 +72,7 @@ local function row(menu, item, index)
     local title, meta = Menu.getMenuText(item), nil
     local icon = KIND_ICONS[item.type]
     if icon then title, meta = savedItem(item) end
+    if not icon and type(item.path) == "string" and Anatomy.is(menu, "ui/widget/filechooser") then icon = item.is_file and "files" or "folder" end
     -- in a table of contents, the chapters already passed are dimmed and the one you are in is marked
     local passed = chapter(item) and current and index < current
     local built = ListRow.build({
@@ -91,27 +100,64 @@ local function row(menu, item, index)
     return Layout.Row:new({ children = parts })
 end
 
+-- What the window says it is: KOReader's title of a folder chooser ("Long-press folder's name to
+-- choose it") is about a way of choosing the button here makes plain, so it says what the window is for.
+local function titleOf(menu)
+    local title = tostring(menu.title or "")
+    local gettext = require("gettext")
+    local _ = require("cyberui/gettext")
+    if menu.select_directory and not menu.select_file and title == gettext("Long-press folder's name to choose it") then
+        return _("Choose a folder")
+    end
+    return title
+end
+
+-- The items to show, as { item, index in KOReader's list } pairs.
+local function visible(menu)
+    local out = {}
+    for i, item in ipairs(menu.item_table) do
+        if not currentFolderRow(menu, item) then out[#out + 1] = { item, i } end
+    end
+    return out
+end
+
+-- Under the list: what a list can do beyond its rows. Choosing the folder that is open is
+-- the one thing a folder chooser is for, so it gets a button.
+local function footer(menu)
+    local Specs = require("cyberui/skin/specs")
+    local _ = require("cyberui/gettext")
+    if not (menu.select_directory and menu.show_current_dir_for_hold and menu.onMenuHold and menu.path) then return {} end
+    return { Specs.wide({ text = _("Choose this folder"), is_enter_default = true,
+        callback = function() menu:onMenuHold({ path = menu.path .. "/." }) end }, nil, "check") }
+end
+
 -- The whole list as it is now, on page `page` of the ones the screen holds.
 local function page(menu, state)
     local Button = require("cyberui/ui/button")
     local Fullpage = require("cyberui/skin/fullpage")
     local Theme = require("cyberui/theme")
     local th = Theme.get()
-    local items = menu.item_table
+    local items = visible(menu)
+    local extra = footer(menu)
     local row_h = Theme.px(54)
-    local per = math.max(3, math.floor(Fullpage.room() / row_h))
+    local per = math.max(3, math.floor(Fullpage.room(#extra) / row_h))
     local pages = math.max(1, math.ceil(#items / per))
-    state.page = math.max(1, math.min(state.page or math.ceil(startIndex(menu) / per), pages))
+    -- a folder chooser that went into another folder starts at its first page
+    if state.path ~= menu.path then state.path, state.page = menu.path, nil end
+    local first = 1
+    for k, pair in ipairs(items) do if pair[2] >= startIndex(menu) then first = k; break end end
+    state.page = math.max(1, math.min(state.page or math.ceil(first / per), pages))
     local rows = {}
-    for i = (state.page - 1) * per + 1, math.min(state.page * per, #items) do rows[#rows + 1] = row(menu, items[i], i) end
+    for k = (state.page - 1) * per + 1, math.min(state.page * per, #items) do rows[#rows + 1] = row(menu, items[k][1], items[k][2]) end
     local actions = {}
     if menu.title_bar_left_icon and menu.onLeftButtonTap then
-        actions[1] = Button:new({ icon = "menu", variant = "icon", width = th.size.touch, on_tap = function() menu:onLeftButtonTap() end })
+        actions[1] = Button:new({ icon = menu.title_bar_left_icon == "home" and "home" or "menu", variant = "icon", width = th.size.touch,
+            on_tap = function() menu:onLeftButtonTap() end, on_hold = menu.onLeftButtonHold and function() menu:onLeftButtonHold() end or nil })
     end
     local back = (menu.onReturn and menu.paths and #menu.paths > 0) and function() menu:onReturn() end or function() menu:onClose() end
     return Fullpage.build({
-        title = tostring(menu.title or ""), path = menu.subtitle and tostring(menu.subtitle) or nil, on_back = back, actions = actions,
-        rows = rows, page = state.page, pages = pages, show = function(p)
+        title = titleOf(menu), path = menu.subtitle and tostring(menu.subtitle) or (#extra > 0 and menu.path) or nil, on_back = back, actions = actions,
+        rows = rows, page = state.page, pages = pages, footer = extra, show = function(p)
             state.page = p
             if state.redraw then state.redraw() end
         end,

@@ -110,6 +110,13 @@ scene("sort", true, function()
     return sorter
 end)
 
+local chooser
+local function home() return G_reader_settings:readSetting("home_dir") or "/" end
+scene("path-chooser", true, function()
+    chooser = require("ui/widget/pathchooser"):new({ select_directory = true, select_file = false, path = home(), onConfirm = function(p) ran.chosen = p end })
+    return chooser
+end)
+
 -- behaviour, in the styled mode only
 local function behaviour()
     -- the text viewer pages a long text, runs KOReader's callbacks and closes with Back or Close
@@ -299,6 +306,25 @@ local function behaviour()
     end)
     H.step(0.8, function()
         H.check(order[1].text == "Two" and ran.sorted == "TwoOneThree" and gone(sorter), "Cancel puts the order back and closes without passing it on")
+    end)
+
+    -- a folder chooser: a visible button chooses the open folder, through KOReader's own confirmation
+    H.step(0.8, function()
+        chooser = require("ui/widget/pathchooser"):new({ select_directory = true, select_file = false, path = home(), onConfirm = function(p) ran.chosen = p end })
+        UIManager:show(chooser)
+    end)
+    H.step(0.8, function()
+        H.check(H.find("Choose this folder") ~= nil, "the folder chooser has a Choose this folder button")
+        H.check(H.find("Choose a folder") ~= nil, "and the title says what the window is for, not how to long-press")
+        H.tap("Choose this folder")
+    end)
+    H.step(0.8, function()
+        H.check(H.find("Choose", nil, true) ~= nil, "KOReader asks to confirm: " .. tostring(H.find("// CONFIRM") ~= nil))
+        H.tap("Choose")
+    end)
+    H.step(0.8, function()
+        H.check(ran.chosen ~= nil and ran.chosen:find(home():gsub("/$", ""), 1, true) ~= nil, "Choose passes the folder to KOReader's callback: " .. tostring(ran.chosen))
+        UIManager:close(chooser)
     end)
 
 end

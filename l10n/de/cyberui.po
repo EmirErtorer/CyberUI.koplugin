@@ -1457,7 +1457,7 @@ msgstr "Hier gibt es keine Ordner."
 msgid "No pictures or folders here."
 msgstr "Hier gibt es keine Bilder oder Ordner."
 
-#: cyberui/screens/filepick.lua
+#: cyberui/screens/filepick.lua cyberui/skin/list.lua
 msgid "Choose a folder"
 msgstr "Ordner wählen"
 
@@ -3055,6 +3055,10 @@ msgstr "// AUSWAHL"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// EINGABE"
+
+#: cyberui/skin/list.lua
+msgid "Choose this folder"
+msgstr "Diesen Ordner wählen"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"

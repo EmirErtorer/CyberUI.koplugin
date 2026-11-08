@@ -1457,7 +1457,7 @@ msgstr "Δεν υπάρχουν φάκελοι εδώ."
 msgid "No pictures or folders here."
 msgstr "Δεν υπάρχουν εικόνες ή φάκελοι εδώ."
 
-#: cyberui/screens/filepick.lua
+#: cyberui/screens/filepick.lua cyberui/skin/list.lua
 msgid "Choose a folder"
 msgstr "Επιλέξτε φάκελο"
 
@@ -3055,6 +3055,10 @@ msgstr "// ΕΠΙΛΟΓΗ"
 #: cyberui/skin/inputdialog.lua cyberui/ui/textinput.lua
 msgid "// INPUT"
 msgstr "// ΕΙΣΟΔΟΣ"
+
+#: cyberui/skin/list.lua
+msgid "Choose this folder"
+msgstr "Επιλογή αυτού του φακέλου"
 
 #: cyberui/skin/numbers.lua
 msgid "// SET"
