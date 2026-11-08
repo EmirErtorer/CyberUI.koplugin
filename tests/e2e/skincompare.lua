@@ -4,7 +4,7 @@ local H = ...
 local UIManager = require("ui/uimanager")
 local S = 1.6
 local mode = os.getenv("CYBERUI_SKINMODE") or "new"
-require("cyberui/settings").set("styled_menu", mode == "new")
+require("cyberui/settings").set("styled_widgets", mode == "new")
 G_reader_settings:saveSetting("virtual_keyboard_enabled", true)
 
 local n = 0

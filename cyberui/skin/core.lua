@@ -18,9 +18,10 @@ local logger = require("logger")
 
 local Core = { skins = {} }
 
--- Is the styled look wanted? (System > Home, the same switch as the menu's.)
+-- Is the styled look wanted? (System > Home, its own switch: the menu has another.)
+-- Asked each time a widget is shown, so the switch works at once.
 function Core.wanted()
-    return Settings.get("styled_menu", true)
+    return Settings.get("styled_widgets", true)
 end
 
 -- Add a skin: { name, matches(widget) -> bool, present(widget) -> Popup options or nil,

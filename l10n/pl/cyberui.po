@@ -2626,6 +2626,14 @@ msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down fr
 msgstr "W stylu CyberUI (wyłączone: własne menu KOReadera); otwiera się także przeciągnięciem w dół od góry"
 
 #: cyberui/screens/settings.lua
+msgid "KOReader dialogs"
+msgstr "Okna dialogowe KOReader"
+
+#: cyberui/screens/settings.lua
+msgid "Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"
+msgstr "Powiadomienia, okna, listy, klawiatura, menu zakreślenia i słownik w stylu CyberUI (wyłączone: własne KOReadera)"
+
+#: cyberui/screens/settings.lua
 msgid "Menu height"
 msgstr "Wysokość menu"
 

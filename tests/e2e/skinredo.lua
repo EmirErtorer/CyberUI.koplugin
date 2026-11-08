@@ -4,7 +4,7 @@ local H = ...
 local UIManager = require("ui/uimanager")
 local S = 1.8
 local mode = os.getenv("CYBERUI_SKINMODE") or "styled"
-require("cyberui/settings").set("styled_menu", mode ~= "stock")
+require("cyberui/settings").set("styled_widgets", mode ~= "stock")
 local n, current, ui = 0, nil, nil
 
 -- One scene: make() shows a widget and returns it; photographed, then closed.
