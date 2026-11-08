@@ -3036,7 +3036,7 @@ msgstr "ΤΕΛΟΣ"
 msgid "// HIGHLIGHT"
 msgstr "// ΕΠΙΣΗΜΑΝΣΗ"
 
-#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -3071,6 +3071,10 @@ msgstr "// ΠΛΗΡΟΦΟΡΙΑ"
 #: cyberui/skin/specs.lua
 msgid "// MESSAGE"
 msgstr "// ΜΗΝΥΜΑ"
+
+#: cyberui/skin/textviewer.lua
+msgid "// TEXT"
+msgstr "// ΚΕΙΜΕΝΟ"
 
 #: cyberui/sleep.lua
 msgid "Book covers"

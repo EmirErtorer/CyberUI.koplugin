@@ -4,6 +4,7 @@
 
 local Button = require("cyberui/ui/button")
 local Layout = require("cyberui/ui/layout")
+local Semantics = require("cyberui/skin/semantics")
 local Theme = require("cyberui/theme")
 local _ = require("cyberui/gettext")
 
@@ -49,8 +50,8 @@ function Specs.button(b, variant, icon)
 end
 
 -- A described button alone on its line, the whole width.
-function Specs.wide(b, variant)
-    return Layout.Row:new({ children = { Specs.button(b, variant) } })
+function Specs.wide(b, variant, icon)
+    return Layout.Row:new({ children = { Specs.button(b, variant, icon) } })
 end
 
 -- Share a line of buttons out: equal widths when every label fits in its share,
@@ -105,6 +106,14 @@ function Specs.rows(rows, pick, room)
         end
     end
     return out
+end
+
+-- For Specs.rows: the look a button of a dialog has from what it says (see
+-- Semantics.verb): an icon, the warning look for what deletes, the main look
+-- for what the dialog is mostly for. Buttons it does not know stay plain.
+function Specs.verbs(_row, _i, b)
+    local verb = Semantics.verb(Specs.read(b).label)
+    if verb then return (verb.danger and "danger") or (verb.main and "primary") or nil, verb.icon end
 end
 
 -- What a message says about itself from the icon KOReader gave it: the tag over

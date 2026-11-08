@@ -52,6 +52,11 @@ local VERBS = {
     { msgid = "Remove", icon = "trash", danger = true },
     { msgid = "Reset settings", icon = "restore", danger = true },
     { msgid = "Clear", icon = "trash", danger = true },
+    { msgid = "Edit note", icon = "edit", main = true },
+    { msgid = "Delete note", icon = "trash", danger = true },
+    { msgid = "Delete highlight", icon = "trash", danger = true },
+    { msgid = "Highlight menu", icon = "menu" },
+    { msgid = "Close", icon = "close" },
 }
 
 -- What a button of a dialog looks like from its text: { icon, danger }, or nil when unknown.

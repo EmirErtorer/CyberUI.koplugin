@@ -18,8 +18,8 @@ local function width(w)
 end
 
 -- The room inside a floating dialog, where its rows of buttons lie.
-function Dialog.inner(w)
-    return width(w) - 2 * Theme.get().space.xl
+function Dialog.inner(w, wide)
+    return width(w, wide) - 2 * Theme.get().space.xl
 end
 
 -- The floating panel every dialog is: a chamfered card of `kids` in a column.
@@ -41,7 +41,7 @@ end
 -- there is one, or the warning look), a title, a boxed detail, the text and
 -- rows of buttons (elements). `dock` ("top" or "bottom") makes it a drop-down
 -- from that edge instead of a floating card.
--- o: { tag, icon, title, text, detail, rows, danger, lines, dock }
+-- o: { tag, icon, title, text, detail, rows, danger, lines, dock, wide }
 function Dialog.card(o, screen_w)
     local th = Theme.get()
     local kids = {}
@@ -69,7 +69,7 @@ function Dialog.card(o, screen_w)
     end
     for _i, row in ipairs(o.rows or {}) do kids[#kids + 1] = row end
     if o.dock then return Dialog.docked(kids, o.dock, screen_w) end
-    return floating(kids, screen_w, th.space.m, centred and "center" or "stretch")
+    return floating(kids, screen_w, th.space.m, centred and "center" or "stretch", o.wide)
 end
 
 -- A question with cancel and confirm; `danger` adds the warning look, `icon`

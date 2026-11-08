@@ -3035,7 +3035,7 @@ msgstr ""
 msgid "// HIGHLIGHT"
 msgstr ""
 
-#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr ""
 
@@ -3069,6 +3069,10 @@ msgstr ""
 
 #: cyberui/skin/specs.lua
 msgid "// MESSAGE"
+msgstr ""
+
+#: cyberui/skin/textviewer.lua
+msgid "// TEXT"
 msgstr ""
 
 #: cyberui/sleep.lua

@@ -8,7 +8,6 @@
 local Anatomy = require("cyberui/skin/anatomy")
 local Core = require("cyberui/skin/core")
 local Device = require("device")
-local Semantics = require("cyberui/skin/semantics")
 local Specs = require("cyberui/skin/specs")
 
 local Screen = Device.screen
@@ -43,10 +42,7 @@ local function card(dialog, page)
     page = math.max(1, math.min(page or 1, pages))
     local shown = {}
     for i = (page - 1) * per + 1, math.min(page * per, #rows) do shown[#shown + 1] = rows[i] end
-    local built = Specs.rows(shown, function(_row, _i, b)
-        local verb = Semantics.verb(Specs.read(b).label)
-        if verb then return verb.danger and "danger" or nil, verb.icon end
-    end)
+    local built = Specs.rows(shown, Specs.verbs)
     if pages > 1 then
         built[#built + 1] = Dialog.pager(page, pages, function(p) Core.redraw(dialog, card(dialog, p)) end)
     end

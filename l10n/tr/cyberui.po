@@ -3036,7 +3036,7 @@ msgstr "SON"
 msgid "// HIGHLIGHT"
 msgstr "// VURGU"
 
-#: cyberui/skin/frontlight.lua cyberui/ui/dialog.lua
+#: cyberui/skin/frontlight.lua cyberui/skin/textviewer.lua cyberui/ui/dialog.lua
 msgid "Close"
 msgstr "Kapat"
 
@@ -3071,6 +3071,10 @@ msgstr "// BİLGİ"
 #: cyberui/skin/specs.lua
 msgid "// MESSAGE"
 msgstr "// MESAJ"
+
+#: cyberui/skin/textviewer.lua
+msgid "// TEXT"
+msgstr "// METİN"
 
 #: cyberui/sleep.lua
 msgid "Book covers"
