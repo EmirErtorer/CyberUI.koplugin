@@ -3083,6 +3083,10 @@ msgstr ""
 msgid "SEC"
 msgstr ""
 
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr ""
+
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr ""

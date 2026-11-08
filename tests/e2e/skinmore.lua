@@ -117,6 +117,12 @@ scene("path-chooser", true, function()
     return chooser
 end)
 
+local prog
+scene("progress", true, function()
+    prog = require("ui/widget/progressbardialog"):new({ title = "Downloading", subtitle = "dune.epub", progress_max = 200, refresh_time_seconds = 1 })
+    return prog
+end, function() prog:reportProgress(80) ; prog:redrawProgressbar() end)
+
 -- behaviour, in the styled mode only
 local function behaviour()
     -- the text viewer pages a long text, runs KOReader's callbacks and closes with Back or Close
@@ -326,6 +332,20 @@ local function behaviour()
         H.check(ran.chosen ~= nil and ran.chosen:find(home():gsub("/$", ""), 1, true) ~= nil, "Choose passes the folder to KOReader's callback: " .. tostring(ran.chosen))
         UIManager:close(chooser)
     end)
+
+    -- progress: the bar follows what KOReader reports and a tap outside asks KOReader's own question (here: closes)
+    H.step(0.8, function()
+        prog = require("ui/widget/progressbardialog"):new({ title = "Working", progress_max = 10, refresh_time_seconds = 1 })
+        UIManager:show(prog)
+    end)
+    H.step(0.8, function()
+        prog:reportProgress(10)
+    end)
+    H.step(0.8, function()
+        H.check(H.findWhere(function(el) return type(el.text) == "string" and el.text == "100%" end) ~= nil, "the window shows the progress KOReader reports")
+        H.tapAt(8, 8)
+    end)
+    H.step(0.8, function() H.check(gone(prog), "a tap outside dismisses it as KOReader's window would") end)
 
 end
 if mode == "new" then behaviour() end

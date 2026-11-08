@@ -3084,6 +3084,10 @@ msgstr "ORA"
 msgid "SEC"
 msgstr "SEC"
 
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr "// IN CORSO"
+
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "ALTRO"

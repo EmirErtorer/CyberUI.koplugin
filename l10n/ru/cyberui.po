@@ -3118,6 +3118,10 @@ msgstr "ЧАС"
 msgid "SEC"
 msgstr "СЕК"
 
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr "// РАБОТАЮ"
+
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "ЕЩЁ"

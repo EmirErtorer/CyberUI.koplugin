@@ -3084,6 +3084,10 @@ msgstr "SAAT"
 msgid "SEC"
 msgstr "SN."
 
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr "// ÇALIŞIYOR"
+
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "DAHA FAZLA"

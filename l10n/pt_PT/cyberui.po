@@ -3084,6 +3084,10 @@ msgstr "HORA"
 msgid "SEC"
 msgstr "SEG"
 
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr "// A TRABALHAR"
+
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "MAIS"

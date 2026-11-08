@@ -3118,6 +3118,10 @@ msgstr "GODZ."
 msgid "SEC"
 msgstr "SEK."
 
+#: cyberui/skin/progress.lua
+msgid "// WORKING"
+msgstr "// PRACUJE"
+
 #: cyberui/skin/semantics.lua
 msgid "MORE"
 msgstr "WIĘCEJ"

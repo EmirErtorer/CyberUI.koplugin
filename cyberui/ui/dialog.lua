@@ -194,14 +194,23 @@ function Dialog.sheet(o, close, screen_w)
     return floating(kids, screen_w)
 end
 
--- A step of a longer task (no buttons): a title, the step and a striped bar.
+-- A step of a longer task (no buttons): a tag, a title, the step and a bar: filled
+-- to `value` (0 to 1) with its percentage, or striped while the end is not known.
+-- o: { tag, title, text, value }
 function Dialog.progress(o, screen_w)
     local th = Theme.get()
-    return floating({
-        Label:new({ text = o.title, kind = "title" }),
-        Label:new({ text = o.text, kind = "mono", lines = 2 }),
-        Deco.Stripes:new({ dir = "d", height = Theme.px(14), color = "ink" }),
-    }, screen_w, th.space.m)
+    local kids = {}
+    if o.tag then kids[#kids + 1] = Label:new({ text = o.tag, kind = "micro", color = "muted" }) end
+    if o.title then kids[#kids + 1] = Label:new({ text = o.title, kind = "title", lines = 2 }) end
+    if o.text and o.text ~= "" then kids[#kids + 1] = Label:new({ text = o.text, kind = "mono", lines = 2 }) end
+    if o.value then
+        local Progress = require("cyberui/ui/progress")
+        kids[#kids + 1] = Progress:new({ value = o.value, segments = 24, cell_h = 16, color = "accent" })
+        kids[#kids + 1] = Label:new({ text = string.format("%d%%", math.floor(o.value * 100 + 0.5)), kind = "mono", align = "right" })
+    else
+        kids[#kids + 1] = Deco.Stripes:new({ dir = "d", height = Theme.px(14), color = "ink" })
+    end
+    return floating(kids, screen_w, th.space.m)
 end
 
 -- A short notice shown near the bottom of the screen.
