@@ -115,6 +115,13 @@ function Drive:init()
         H.tapAt(el.x + el.w / 2, el.y + el.h / 2)
         return true
     end
+    -- Tap the middle of the first element whose label matches a Lua pattern; false when missing.
+    function H.tapLabel(pattern)
+        local el = H.findWhere(function(e) return type(e.label) == "string" and e.label:find(pattern) ~= nil end)
+        if not el then H.check(false, "found a label like '" .. pattern .. "' to tap"); return false end
+        H.tapAt(el.x + el.w / 2, el.y + el.h / 2)
+        return true
+    end
     -- Hold on a point, then lift.
     function H.holdAt(x, y)
         send({ ges = "hold", pos = at(x, y) })

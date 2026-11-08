@@ -202,6 +202,10 @@ msgid "Title, authors, genres"
 msgstr "Başlık, yazarlar, türler"
 
 #: cyberui/actions.lua
+msgid "Show folder"
+msgstr "Klasörü göster"
+
+#: cyberui/actions.lua
 msgid "Forget"
 msgstr "Unut"
 
@@ -997,6 +1001,34 @@ msgstr "Kaydedildi: %s"
 msgid "That folder can't be written to"
 msgstr "Bu klasöre yazılamıyor"
 
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "HIGHLIGHTS"
+msgstr "VURGULAR"
+
+#: cyberui/screens/annotations.lua
+msgid "No highlights in this book yet. Select text while reading and choose Highlight."
+msgstr "Bu kitapta henüz vurgu yok. Okurken metni seçin ve Vurgula'yı seçin."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "NOTES"
+msgstr "NOTLAR"
+
+#: cyberui/screens/annotations.lua
+msgid "No notes in this book yet. Add a note to a highlight while reading."
+msgstr "Bu kitapta henüz not yok. Okurken bir vurguya not ekleyin."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "BOOKMARKS"
+msgstr "YER İMLERİ"
+
+#: cyberui/screens/annotations.lua
+msgid "No bookmarks in this book yet. Tap the top corner of a page while reading to add one."
+msgstr "Bu kitapta henüz yer imi yok. Eklemek için okurken sayfanın üst köşesine dokunun."
+
+#: cyberui/screens/annotations.lua cyberui/screens/library.lua
+msgid "SECTOR"
+msgstr "SEKTÖR"
+
 #: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "Bu koleksiyon silinsin mi?"
@@ -1342,36 +1374,28 @@ msgid "ON HOLD"
 msgstr "BEKLEMEDE"
 
 #: cyberui/screens/dossier.lua
-msgid "FORMAT"
-msgstr "BİÇİM"
-
-#: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
-msgid "PAGES"
-msgstr "SAYFA"
-
-#: cyberui/screens/dossier.lua
-msgid "ADDED"
-msgstr "EKLENME"
-
-#: cyberui/screens/dossier.lua
-msgid "OPENED"
-msgstr "AÇILMA"
-
-#: cyberui/screens/dossier.lua
-msgid "CACHES"
-msgstr "RAFLAR"
+msgid "ADDED %s // OPENED %s"
+msgstr "EKLENDİ %s // AÇILDI %s"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
 msgstr "ŞİFRESİ ÇÖZÜLDÜ %d%%"
 
 #: cyberui/screens/dossier.lua
-msgid "READ %s // %dD // %d PG/H%s"
-msgstr "OKUNAN %s // %dG // %d SYF/S%s"
-
-#: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // %s KALDI"
+
+#: cyberui/screens/dossier.lua cyberui/screens/library.lua
+msgid "STATUS"
+msgstr "DURUM"
+
+#: cyberui/screens/dossier.lua
+msgid "CACHES · %d"
+msgstr "KOLEKSİYONLAR · %d"
+
+#: cyberui/screens/dossier.lua
+msgid "+ CACHE"
+msgstr "+ KOLEKSİYON"
 
 #: cyberui/screens/dossier.lua
 msgid "SYNOPSIS"
@@ -1381,30 +1405,6 @@ msgstr "ÖZET"
 msgid "No description in this book's details."
 msgstr "Bu kitabın ayrıntılarında açıklama yok."
 
-#: cyberui/screens/dossier.lua
-msgid "HIGHLIGHTS"
-msgstr "VURGULAR"
-
-#: cyberui/screens/dossier.lua
-msgid "NOTES"
-msgstr "NOTLAR"
-
-#: cyberui/screens/dossier.lua
-msgid "BOOKMARKS"
-msgstr "YER İMLERİ"
-
-#: cyberui/screens/dossier.lua
-msgid "SHOW FOLDER"
-msgstr "KLASÖRÜ GÖSTER"
-
-#: cyberui/screens/dossier.lua
-msgid "FORGET"
-msgstr "UNUT"
-
-#: cyberui/screens/dossier.lua
-msgid "remove from history"
-msgstr "geçmişten kaldır"
-
 #: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
 msgid "TAKE GIG"
 msgstr "GIG'İ AL"
@@ -1413,29 +1413,13 @@ msgstr "GIG'İ AL"
 msgid "OPEN FILE"
 msgstr "DOSYAYI AÇ"
 
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "STATUS"
-msgstr "DURUM"
-
-#: cyberui/screens/dossier.lua
-msgid "COLLECTION +"
-msgstr "KOLEKSİYON +"
-
-#: cyberui/screens/dossier.lua
-msgid "RENAME"
-msgstr "YENİDEN ADLANDIR"
-
 #: cyberui/screens/dossier.lua
 msgid "EDIT INFO"
 msgstr "BİLGİLERİ DÜZENLE"
 
 #: cyberui/screens/dossier.lua
-msgid "MOVE TO"
-msgstr "ŞURAYA TAŞI"
-
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "DELETE"
-msgstr "SİL"
+msgid "MORE"
+msgstr "DAHA FAZLA"
 
 #: cyberui/screens/dossier.lua
 msgid "File dossier"
@@ -2021,6 +2005,10 @@ msgid "MOVE"
 msgstr "TAŞI"
 
 #: cyberui/screens/library.lua
+msgid "DELETE"
+msgstr "SİL"
+
+#: cyberui/screens/library.lua
 msgid "[X]"
 msgstr "[X]"
 
@@ -2052,13 +2040,13 @@ msgstr "EŞLEŞME YOK"
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
 msgstr "Henüz burada bir şey yok. Kitapları kopyala ya da + Yeni ile klasör oluştur."
 
-#: cyberui/screens/library.lua
-msgid "SECTOR"
-msgstr "SEKTÖR"
-
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr "NE ZAMAN OKURSUN // PZT-PAZ SAATE GÖRE // %s"
+
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/ui/idcard.lua
+msgid "PAGES"
+msgstr "SAYFA"
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
 msgid "TIME"

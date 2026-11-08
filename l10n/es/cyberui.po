@@ -202,6 +202,10 @@ msgid "Title, authors, genres"
 msgstr "Título, autores, géneros"
 
 #: cyberui/actions.lua
+msgid "Show folder"
+msgstr "Mostrar carpeta"
+
+#: cyberui/actions.lua
 msgid "Forget"
 msgstr "Olvidar"
 
@@ -997,6 +1001,34 @@ msgstr "Guardada en %s"
 msgid "That folder can't be written to"
 msgstr "No se puede escribir en esa carpeta"
 
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "HIGHLIGHTS"
+msgstr "SUBRAYADOS"
+
+#: cyberui/screens/annotations.lua
+msgid "No highlights in this book yet. Select text while reading and choose Highlight."
+msgstr "Aún no hay subrayados en este libro. Selecciona texto mientras lees y elige Subrayar."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "NOTES"
+msgstr "NOTAS"
+
+#: cyberui/screens/annotations.lua
+msgid "No notes in this book yet. Add a note to a highlight while reading."
+msgstr "Aún no hay notas en este libro. Añade una nota a un subrayado mientras lees."
+
+#: cyberui/screens/annotations.lua cyberui/screens/dossier.lua
+msgid "BOOKMARKS"
+msgstr "MARCADORES"
+
+#: cyberui/screens/annotations.lua
+msgid "No bookmarks in this book yet. Tap the top corner of a page while reading to add one."
+msgstr "Aún no hay marcadores en este libro. Toca la esquina superior de una página mientras lees para añadir uno."
+
+#: cyberui/screens/annotations.lua cyberui/screens/library.lua
+msgid "SECTOR"
+msgstr "SECTOR"
+
 #: cyberui/screens/collections.lua
 msgid "Delete this collection?"
 msgstr "¿Eliminar esta colección?"
@@ -1342,36 +1374,28 @@ msgid "ON HOLD"
 msgstr "EN ESPERA"
 
 #: cyberui/screens/dossier.lua
-msgid "FORMAT"
-msgstr "FORMATO"
-
-#: cyberui/screens/dossier.lua cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua ...
-msgid "PAGES"
-msgstr "PÁGINAS"
-
-#: cyberui/screens/dossier.lua
-msgid "ADDED"
-msgstr "AÑADIDO"
-
-#: cyberui/screens/dossier.lua
-msgid "OPENED"
-msgstr "ABIERTO"
-
-#: cyberui/screens/dossier.lua
-msgid "CACHES"
-msgstr "LISTAS"
+msgid "ADDED %s // OPENED %s"
+msgstr "AÑADIDO %s // ABIERTO %s"
 
 #: cyberui/screens/dossier.lua
 msgid "DECRYPTED %d%%"
 msgstr "DESCIFRADO %d%%"
 
 #: cyberui/screens/dossier.lua
-msgid "READ %s // %dD // %d PG/H%s"
-msgstr "LEÍDO %s // %dD // %d PÁG/H%s"
-
-#: cyberui/screens/dossier.lua
 msgid " // %s LEFT"
 msgstr " // %s RESTANTES"
+
+#: cyberui/screens/dossier.lua cyberui/screens/library.lua
+msgid "STATUS"
+msgstr "ESTADO"
+
+#: cyberui/screens/dossier.lua
+msgid "CACHES · %d"
+msgstr "COLECCIONES · %d"
+
+#: cyberui/screens/dossier.lua
+msgid "+ CACHE"
+msgstr "+ COLECCIÓN"
 
 #: cyberui/screens/dossier.lua
 msgid "SYNOPSIS"
@@ -1381,30 +1405,6 @@ msgstr "SINOPSIS"
 msgid "No description in this book's details."
 msgstr "No hay descripción en los detalles de este libro."
 
-#: cyberui/screens/dossier.lua
-msgid "HIGHLIGHTS"
-msgstr "SUBRAYADOS"
-
-#: cyberui/screens/dossier.lua
-msgid "NOTES"
-msgstr "NOTAS"
-
-#: cyberui/screens/dossier.lua
-msgid "BOOKMARKS"
-msgstr "MARCADORES"
-
-#: cyberui/screens/dossier.lua
-msgid "SHOW FOLDER"
-msgstr "MOSTRAR CARPETA"
-
-#: cyberui/screens/dossier.lua
-msgid "FORGET"
-msgstr "OLVIDAR"
-
-#: cyberui/screens/dossier.lua
-msgid "remove from history"
-msgstr "quitar del historial"
-
 #: cyberui/screens/dossier.lua cyberui/screens/gigs.lua
 msgid "TAKE GIG"
 msgstr "ACEPTAR GIG"
@@ -1413,29 +1413,13 @@ msgstr "ACEPTAR GIG"
 msgid "OPEN FILE"
 msgstr "ABRIR ARCHIVO"
 
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "STATUS"
-msgstr "ESTADO"
-
-#: cyberui/screens/dossier.lua
-msgid "COLLECTION +"
-msgstr "COLECCIÓN +"
-
-#: cyberui/screens/dossier.lua
-msgid "RENAME"
-msgstr "RENOMBRAR"
-
 #: cyberui/screens/dossier.lua
 msgid "EDIT INFO"
 msgstr "EDITAR DATOS"
 
 #: cyberui/screens/dossier.lua
-msgid "MOVE TO"
-msgstr "MOVER A"
-
-#: cyberui/screens/dossier.lua cyberui/screens/library.lua
-msgid "DELETE"
-msgstr "ELIMINAR"
+msgid "MORE"
+msgstr "MÁS"
 
 #: cyberui/screens/dossier.lua
 msgid "File dossier"
@@ -2021,6 +2005,10 @@ msgid "MOVE"
 msgstr "MOVER"
 
 #: cyberui/screens/library.lua
+msgid "DELETE"
+msgstr "ELIMINAR"
+
+#: cyberui/screens/library.lua
 msgid "[X]"
 msgstr "[X]"
 
@@ -2052,13 +2040,13 @@ msgstr "SIN COINCIDENCIAS"
 msgid "Nothing here yet. Copy books in, or make a folder with + New."
 msgstr "Aún no hay nada aquí. Copia libros o crea una carpeta con + Nueva."
 
-#: cyberui/screens/library.lua
-msgid "SECTOR"
-msgstr "SECTOR"
-
 #: cyberui/screens/log/calendar.lua
 msgid "WHEN YOU READ // MON-SUN BY HOUR // %s"
 msgstr "CUÁNDO LEES // LUN-DOM POR HORA // %s"
+
+#: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua cyberui/ui/idcard.lua
+msgid "PAGES"
+msgstr "PÁGINAS"
 
 #: cyberui/screens/log/calendar.lua cyberui/screens/log/period.lua cyberui/screens/log/week.lua
 msgid "TIME"
