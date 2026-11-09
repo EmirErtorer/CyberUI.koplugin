@@ -45,20 +45,26 @@ local function describe(key, after)
     local function has(set) return type(set) == "table" and (set[label] ~= nil or (key.key and set[key.key] ~= nil)) end
     if has(kb.shiftmode_keys) then
         k.label = "\u{21E7}"
+        if k.variant ~= "chip_on" then k.variant = "secondary" end
     elseif has(kb.symbolmode_keys) then
         k.label = key.alt_label or "SYM"
+        if k.variant ~= "chip_on" then k.variant = "secondary" end
     elseif has(kb.utf8mode_keys) then
         k.label = "\u{25CE}"
     elseif key.key == "\n" then
         k.icon = "forward"
         k.variant = "primary"
     elseif key.key == " " then
-        k.label = require("cyberui/gettext")("space")
+        k.label = "// " .. require("cyberui/gettext")("space") .. " //"
         k.kind = "mono_small"
+        k.variant = "ghost"
     elseif ICONS[label] then
         k.icon = ICONS[label]
+        if ICONS[label] == "backspace" then k.variant = "danger" end   -- the key that takes things away
     else
         k.label = label
+        -- the digits are outlined plates, the letters filled ones
+        if type(label) == "string" and label:match("^%d$") and k.variant == "soft" then k.variant = "chip" end
     end
     -- holding a key shows its other letters, placed by where the key is
     if key.hold_callback then
@@ -88,10 +94,31 @@ local function keyboard(vk, redraw)
     local Dialog = require("cyberui/ui/dialog")
     local Theme = require("cyberui/theme")
     local layout = vk.layout
-    local el = Dialog.docked({ grid(vk, function()
+    local th = Theme.get()
+    local keys = grid(vk, function()
         if vk.layout ~= layout then redraw() end   -- a layer or language change made new keys
-    end) }, "bottom", Screen:getWidth(), Theme.get().space.s)
-    return el
+    end)
+    -- a slim strip over the keys: what it is, and a handle that puts the keyboard away
+    local Button = require("cyberui/ui/button")
+    local Label = require("cyberui/ui/label")
+    local Layout = require("cyberui/ui/layout")
+    local _ = require("cyberui/gettext")
+    local strip = Layout.Row:new({ gap = th.space.s, pad = { 0, th.space.s }, children = {
+        Label:new({ text = _("// KEYBOARD"), kind = "micro", color = "muted", grow = true }),
+        Button:new({ label = _("HIDE"), icon = "down", variant = "chip", icon_size = 16, kind = "micro", height = Theme.px(34),
+            on_tap = function() Skin.hide(vk) end }),
+    } })
+    return Dialog.docked({ strip, keys }, "bottom", Screen:getWidth(), th.space.s)
+end
+
+-- Put the keyboard away, as a tap beside it does: the window it types into stays.
+function Skin.hide(vk)
+    local parent = vk.inputbox and vk.inputbox.parent
+    if parent and parent.onCloseKeyboard and not parent.deny_keyboard_hiding then
+        parent:onCloseKeyboard()
+    elseif vk.onClose then
+        vk:onClose()
+    end
 end
 
 Core.register({

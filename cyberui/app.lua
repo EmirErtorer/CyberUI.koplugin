@@ -461,9 +461,15 @@ function App.input(title, value, on_done, ok_label, opts)
                 end,
                 on_enter = function() UIManager:unschedule(live_task); close(); on_done(state.text) end,
                 on_cancel = function() UIManager:unschedule(live_task); close() end,
+                on_collapse = function() state.collapsed = true; show() end,
+                on_expand = function() state.collapsed = nil; show() end,
                 on_layer = function(layer) state.layer, state.shift = layer, (state.shift == "lock" and "lock" or false); show() end,
                 on_shift = function() state.shift = TextInput.nextShift(state.shift); show() end,
             })
+            -- a tap beside the keyboard puts it away (the text stays); a tap beside the bare field leaves
+            panel.on_outside = function()
+                if state.collapsed then UIManager:unschedule(live_task); close() else state.collapsed = true; show() end
+            end
             return panel
         end)
     end

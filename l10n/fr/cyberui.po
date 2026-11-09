@@ -3164,6 +3164,14 @@ msgstr "// SÉLECTION"
 msgid "// INPUT"
 msgstr "// ENTRÉE"
 
+#: cyberui/skin/keyboard.lua
+msgid "// KEYBOARD"
+msgstr "// CLAVIER"
+
+#: cyberui/skin/keyboard.lua
+msgid "HIDE"
+msgstr "MASQUER"
+
 #: cyberui/skin/list.lua
 msgid "Choose this folder"
 msgstr "Choisir ce dossier"

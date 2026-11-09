@@ -157,8 +157,9 @@ function Host:target(pos, handler)
     local el
     if self.overlay then
         el = self.overlay:hit(pos.x, pos.y, handler)
-        if not el and not self.overlay:contains(pos.x, pos.y) and handler == "on_tap" and self.on_outside then
-            self.on_outside()
+        local outside = self.overlay.on_outside or self.on_outside   -- (a dialog may answer a tap beside it itself)
+        if not el and not self.overlay:contains(pos.x, pos.y) and handler == "on_tap" and outside then
+            outside()
         end
     else
         el = self.root and self.root:hit(pos.x, pos.y, handler)

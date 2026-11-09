@@ -48,7 +48,9 @@ function Keyboard.grid(rows, o)
     for _i, row in ipairs(rows) do
         local keys = {}
         for _j, k in ipairs(row) do
+            -- the cut corner alternates from key to key, so a row reads as a zigzag of plates
             keys[#keys + 1] = Button:new({
+                corners = k.corners or ((_j % 2 == 0) and "l" or "r"),
                 label = k.label, icon = k.icon, kind = k.kind, variant = k.variant or "soft", height = key_h,
                 width = k.width, grow = not k.width and (k.weight or true) or nil,
                 on_tap = k.on_tap, on_hold = k.on_hold, disabled = k.disabled,
@@ -75,10 +77,10 @@ function Keyboard.build(o)
         end
         for _i, ch in ipairs(chars(row)) do
             local shown = o.shift and Utf8Proc.uppercase_dumb(ch) or ch
-            keys[#keys + 1] = { label = shown, kind = "mono", on_tap = function() o.on_char(shown) end }
+            keys[#keys + 1] = { label = shown, kind = "mono", variant = shown:match("^%d$") and "chip" or nil, on_tap = function() o.on_char(shown) end }
         end
         if i == edgeRow(layer) then
-            keys[#keys + 1] = { icon = "backspace", on_tap = o.on_back, width = edge, variant = "icon_on" }
+            keys[#keys + 1] = { icon = "backspace", on_tap = o.on_back, width = edge, variant = "danger", corners = "r" }
         end
         rows[#rows + 1] = keys
     end
@@ -89,7 +91,7 @@ function Keyboard.build(o)
     if layer ~= "abc" then layerKey("abc", "abc") end
     if layer ~= "num" then layerKey("num", "?123") end
     if layer ~= "acc" then layerKey("acc", "\u{E1}\u{E3}\u{E7}") end
-    bottom[#bottom + 1] = { label = _("space"), on_tap = function() o.on_char(" ") end, variant = "secondary", kind = "mono_small" }
+    bottom[#bottom + 1] = { label = table.concat({ "//", _("space"), "//" }, " "), on_tap = function() o.on_char(" ") end, variant = "ghost", kind = "mono_small" }
     bottom[#bottom + 1] = { label = o.enter_label or _("OK"), on_tap = o.on_enter, variant = "primary", width = Theme.px(110) }
     rows[#rows + 1] = bottom
     return Keyboard.grid(rows)
