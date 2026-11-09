@@ -10,6 +10,29 @@ G_reader_settings:saveSetting("virtual_keyboard_enabled", true)
 
 local cb = function() end
 local current
+-- CYBERUI_BACKDROP=1: the windows are shown over a plain page of text instead of CyberUI's home (for pictures to share)
+if os.getenv("CYBERUI_BACKDROP") then
+    H.step(0.5, function()
+        local Blitbuffer = require("ffi/blitbuffer")
+        local Device = require("device")
+        local Geom = require("ui/geometry")
+        local Widget = require("ui/widget/widget")
+        local Screen = Device.screen
+        local Backdrop = Widget:extend({ covers_fullscreen = true })
+        function Backdrop:paintTo(bb)
+            local w, h = Screen:getWidth(), Screen:getHeight()
+            bb:paintRect(0, 0, w, h, Blitbuffer.COLOR_WHITE)
+            local y = math.floor(h * 0.06)
+            while y < h * 0.96 do
+                bb:paintRect(math.floor(w * 0.08), y, math.floor(w * 0.84 * (0.82 + 0.18 * ((y * 7) % 5) / 5)), math.max(2, math.floor(h * 0.004)), Blitbuffer.gray(0.55))
+                y = y + math.floor(h * 0.032)
+            end
+        end
+        local b = Backdrop:new({ dimen = Geom:new({ x = 0, y = 0, w = Screen:getWidth(), h = Screen:getHeight() }) })
+        UIManager:show(b)
+    end)
+    H.step(0.8, function() H.shot("00-backdrop") end)
+end
 local n = 0
 -- One scene: make() builds a widget (and says with a second value that it showed it), which is shown, photographed and closed. `styled`: it must be CyberUI's.
 -- `extra(widget)` runs before the photo (taps, scrolling...).
