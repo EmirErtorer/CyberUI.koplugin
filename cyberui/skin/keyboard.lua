@@ -54,7 +54,8 @@ local function describe(key, after)
     elseif key.key == "\n" then
         k.icon = "forward"
         k.variant = "primary"
-    elseif key.key == " " then
+    elseif key.key == " " and (label == nil or label == "" or label == "_" or label == "\u{2423}") then
+        -- (only the bar KOReader draws as a space: another keyboard's keys that insert a word and a space keep their words)
         k.label = "// " .. require("cyberui/gettext")("space") .. " //"
         k.kind = "mono_small"
         k.variant = "ghost"
@@ -95,8 +96,21 @@ local function keyboard(vk, redraw)
     local Theme = require("cyberui/theme")
     local layout = vk.layout
     local th = Theme.get()
+    -- what the keys say now: a keyboard from a plugin may change its keys' words (suggestions) as one types
+    local function words()
+        local out = {}
+        for _i, row in ipairs(vk.layout or {}) do
+            for _j, key in ipairs(row) do out[#out + 1] = tostring(key.label) end
+        end
+        return table.concat(out, "\1")
+    end
+    local shown = words()
+    local function changed()
+        if vk.layout ~= layout or words() ~= shown then redraw() end   -- new keys, or new words on them
+    end
     local keys = grid(vk, function()
-        if vk.layout ~= layout then redraw() end   -- a layer or language change made new keys
+        changed()
+        UIManager:scheduleIn(0.25, function() if vk._cyber_popup then changed() end end)   -- (a plugin may update a moment later)
     end)
     -- a slim strip over the keys: what it is, and a handle that puts the keyboard away
     local Button = require("cyberui/ui/button")
