@@ -29,7 +29,7 @@ Everything since 1.1.2: KOReader's own windows in CyberUI's style, a rebuilt boo
 - **Eddies are paid for reading, not for turning pages.** A page counts once it has been on screen for 15 seconds. Pictures and files under 50 pages no longer pay or appear as gigs, and a never-opened book's length is capped at 800 pages. Prices are exact: a 300-page book pays 30 eddies at the plain rate. Gigs already taken keep their price and what they paid.
 - **The keyboard has accented capitals and a locked Shift.** The accented layer covers Portuguese, Spanish, French, German, Turkish and Polish letters and has its own Shift; tap it twice to lock it.
 - **Buttons never lose their words or icons.** Button rows size to their labels and wrap (Cancel and Paste were being cut off), a button that has only an icon keeps it, known verbs (open, rename, delete) get icons and destructive ones the warning look, and plugin lists keep the glyphs, switches, arrows and small lines their entries carry (ZenOS's settings, for one).
-- **Keyboards from other plugins keep working.** Keys that type a word (suggestions) keep their words and follow them as they change.
+- **Keyboards from other plugins keep working.** Keys that type a word (suggestions) keep their words.
 - **The menu's lists are taller**, up to 80% of the screen; System > Home > Menu height sets 50, 65, 80 or 90%.
 - **Lumen and tint are sliders** in the menu's Deck and Controls pages and in KOReader's frontlight window.
 - **Saving the ID card asks where**, with a folder picker, and reports a folder that cannot be written to.
