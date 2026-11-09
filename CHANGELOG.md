@@ -6,6 +6,12 @@ All notable changes to CyberUI are listed here, newest first. Versions follow
 is on its [GitHub release](https://github.com/EmirErtorer/CyberUI.koplugin/releases);
 versions marked *Prerelease* are test builds.
 
+## [1.3.1] - 2026-11-09
+
+### Fixed
+
+- The reader's bottom settings panel: the step bars (line spacing and the other bars made of steps) did not react to taps. They now call KOReader's own control directly, so every step, the fine-tune and the "more" buttons work.
+
 ## [1.3.0] - 2026-11-09
 
 Everything since 1.1.2: KOReader's own windows in CyberUI's style, a rebuilt book details page, eddies that pay for reading, and a lot of smaller fixes.

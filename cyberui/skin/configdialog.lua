@@ -75,26 +75,22 @@ local function control(group)
             end
             return #els == 1 and els[1] or Layout.Column:new({ gap = Theme.get().space.s, children = els })
         elseif w.num_buttons then
-            -- steps (and fine tune - / + and "more" at the ends): the widget's own buttons
-            local btns = w.layout and w.layout[1] or {}
-            local function press(i, field)
-                local b = btns[i]
-                local fn = b and (b[field] or (b[1] and b[1][field]))
-                return fn
-            end
-            local off = w.fine_tune and 1 or 0
+            -- steps (and fine tune - / + and "more" at the ends): the widget's own callback, as its buttons call it
             local cells = {}
-            local function add(i, label, on)
+            local function add(id, label, on)
+                local live = w.enabled ~= false and w.callback
                 cells[#cells + 1] = Button:new({ label = label, grow = true, height = Theme.px(38), kind = "mono_small",
                     variant = on and "chip_on" or "chip", disabled = w.enabled == false,
-                    on_tap = w.enabled ~= false and press(i, "callback") or nil,
-                    on_hold = w.enabled ~= false and press(i, "hold_callback") or nil })
+                    on_tap = live and function()
+                        w.callback(id)
+                        if type(id) == "number" then w.position = id; w:update() end
+                    end or nil,
+                    on_hold = (live and w.hold_callback) and function() w.hold_callback(id) end or nil })
             end
-            if w.fine_tune then add(1, "-", false) end
-            for i = 1, w.num_buttons do add(i + off, "", i <= (w.position or 0)) end
-            local nxt = off + w.num_buttons + 1
-            if w.fine_tune then add(nxt, "+", false); nxt = nxt + 1 end
-            if w.more_options then add(nxt, "...", false) end
+            if w.fine_tune then add("-", "-", false) end
+            for i = 1, w.num_buttons do add(i, "", i <= (w.position or 0)) end
+            if w.fine_tune then add("+", "+", false) end
+            if w.more_options then add("\u{22EE}", "...", false) end
             return Layout.Row:new({ gap = Theme.px(3), children = cells })
         end
     end
