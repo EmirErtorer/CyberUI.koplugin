@@ -34,3 +34,26 @@ end)
 H.step(S, function()
     H.check(ui.highlight.ran and not UIManager:isWidgetShown(dialog) and dialog._cyber_popup == nil, "a tap runs KOReader's callback, which closes the menu")
 end)
+
+-- a KOReader that builds its menu another way (no slot names, a row of icon-only buttons, words only on others): the
+-- menu is still recognised, the lookups and actions are tiles by their words, and the icon-only buttons keep their icons
+local other
+H.step(S, function()
+    local cb = function() end
+    ui.highlight.selected_text = { text = "One word", sboxes = { { x = 100, y = 400, w = 50, h = 30 } } }
+    other = require("ui/widget/buttondialog"):new({ buttons = {
+        { { icon = "appbar.search", callback = cb }, { icon = "appbar.settings", callback = cb } },
+        { { text = require("gettext")("Dictionary"), callback = cb }, { text = require("gettext")("Wikipedia"), callback = cb } },
+        { { text = "Hardcover quote", callback = cb } } } })
+    ui.highlight.highlight_dialog = other
+    UIManager:show(other)
+end)
+H.step(S, function()
+    H.check(other._cyber_popup ~= nil and H.find("// SELECTION") ~= nil, "the menu is the selected-text menu even when it was not built through the usual path")
+    H.check(H.find(nil, "ko:appbar.search.svg") ~= nil or H.findWhere(function(e) return type(e.icon) == "string" and e.icon:find("appbar.search", 1, true) end) ~= nil, "an icon-only button keeps its icon")
+    local icons = {}
+    H.findWhere(function(e) if e.name and e.size then icons[#icons + 1] = e.name end return false end)
+    H.check(#icons >= 4, "and the words that KOReader names become tiles with icons: " .. #icons)
+    H.shot("2-highlight-other")
+    UIManager:close(other)
+end)
