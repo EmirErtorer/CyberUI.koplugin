@@ -57,6 +57,25 @@ local function chapter(item)
     return item.page ~= nil and item.depth ~= nil
 end
 
+-- The mark at the end of a row: a switch for a setting that is on or off (a tick when it is one of
+-- several to choose from), an arrow for one that opens a submenu.
+function Skin.trailing(item)
+    local Controls = require("cyberui/ui/controls")
+    local Icon = require("cyberui/ui/icon")
+    local Theme = require("cyberui/theme")
+    local function call(fn) local ok, v = pcall(fn); return ok and v end
+    if type(item.checked_func) == "function" then
+        local on = call(item.checked_func) == true
+        if item.radio then return Icon:new({ name = on and "check" or "plus", size = 20, width = Theme.px(26), color = on and "accent" or "muted" }) end
+        return Controls.Toggle:new({ on = on, on_tap = false })   -- (only shows the state: the tap belongs to the row)
+    end
+    if item.checked == true then return Icon:new({ name = "check", size = 20, width = Theme.px(26), color = "accent" }) end
+    if item.sub_item_table ~= nil or type(item.sub_item_table_func) == "function" or item._zen_has_submenu then
+        return Icon:new({ name = "forward", size = 18, width = Theme.px(26) })
+    end
+    return nil
+end
+
 -- One item as a list row. A tap on the title chooses the item; KOReader tells a tap on the
 -- opening mark from one on the title by where the tap fell (as it does for its own rows), so the
 -- mark sends the left edge and the title the middle.
@@ -77,7 +96,14 @@ local function row(menu, item, index)
     if chosen and not item.is_file then icon = "folder" end
     -- in a table of contents, the chapters already passed are dimmed and the one you are in is marked
     local passed = chapter(item) and current and index < current
+    -- what a plugin's own entries carry (ZenOS: a glyph in front, a switch or a tick for a setting that is
+    -- on or off, an arrow for a submenu, a small line under the name) is kept, not dropped
+    if type(item._zen_display_text) == "string" then title = item._zen_display_text end
+    if type(item._zen_settings_breadcrumb) == "string" and item._zen_settings_breadcrumb ~= "" then meta = item._zen_settings_breadcrumb end
+    local trailing = Skin.trailing(item)
+    if trailing then title = title:gsub("%s*\u{25B8}$", "") end   -- (the arrow at the end of the row says it)
     local built = ListRow.build({
+        glyph = type(item.icon_glyph) == "string" and not icon and item.icon_glyph or nil, trailing = trailing,
         title = title, meta = meta, icon = icon, value = mandatory ~= nil and tostring(mandatory) or nil,
         value_color = (item.mandatory_dim or item.dim or passed) and "muted" or "ink", dim = item.dim or passed,
         title_kind = (current == index or item.bold) and "title" or nil,

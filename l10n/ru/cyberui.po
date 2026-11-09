@@ -1376,6 +1376,26 @@ msgstr "Диагностика"
 msgid "RESCAN"
 msgstr "СКАНИРОВАТЬ ЗАНОВО"
 
+#: cyberui/screens/dialogs.lua
+msgid "All KOReader dialogs"
+msgstr "Все диалоги KOReader"
+
+#: cyberui/screens/dialogs.lua
+msgid "The main switch: off, every window is KOReader's own, whatever the kinds below say"
+msgstr "Главный переключатель: выключен — все окна стандартные от KOReader, что бы ни говорили виды ниже"
+
+#: cyberui/screens/dialogs.lua
+msgid "THE MAIN SWITCH IS OFF"
+msgstr "ГЛАВНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ВЫКЛЮЧЕН"
+
+#: cyberui/screens/dialogs.lua cyberui/screens/settings.lua
+msgid "KOReader dialogs"
+msgstr "Диалоги KOReader"
+
+#: cyberui/screens/dialogs.lua
+msgid "SWITCH EACH KIND"
+msgstr "ПЕРЕКЛЮЧАТЕЛЬ ДЛЯ КАЖДОГО ВИДА"
+
 #: cyberui/screens/dossier.lua
 msgid "READING"
 msgstr "ЧИТАЮ"
@@ -2614,12 +2634,8 @@ msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down fr
 msgstr "В стиле CyberUI (выкл.: собственное меню KOReader); также открывается свайпом вниз от верхнего края"
 
 #: cyberui/screens/settings.lua
-msgid "KOReader dialogs"
-msgstr "Диалоги KOReader"
-
-#: cyberui/screens/settings.lua
-msgid "Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"
-msgstr "Уведомления, диалоги, списки, клавиатура, меню выделения и словарь в стиле CyberUI (выкл.: стандартные от KOReader)"
+msgid "Notices, menus, lists, the keyboard, pickers and more in CyberUI's style; each kind has its own switch (off: KOReader's own)"
+msgstr "Уведомления, меню, списки, клавиатура, выбор значений и другое в стиле CyberUI; у каждого вида свой переключатель (выкл.: стандартные от KOReader)"
 
 #: cyberui/screens/settings.lua
 msgid "Menu height"
@@ -3093,6 +3109,86 @@ msgstr "Закрыть"
 #: cyberui/skin/fullpage.lua
 msgid "No items"
 msgstr "Нет элементов"
+
+#: cyberui/skin/groups.lua
+msgid "Notices and questions"
+msgstr "Уведомления и вопросы"
+
+#: cyberui/skin/groups.lua
+msgid "Messages, questions and the small notices at the bottom"
+msgstr "Сообщения, вопросы и небольшие уведомления внизу"
+
+#: cyberui/skin/groups.lua
+msgid "Selected text menu"
+msgstr "Меню выделенного текста"
+
+#: cyberui/skin/groups.lua
+msgid "The menu after selecting words, and the one for a saved highlight"
+msgstr "Меню после выделения слов и меню сохранённого выделения"
+
+#: cyberui/skin/groups.lua
+msgid "Button menus"
+msgstr "Меню кнопок"
+
+#: cyberui/skin/groups.lua
+msgid "The menus of buttons (long-press menus, gestures, plugins)"
+msgstr "Меню кнопок (долгое нажатие, жесты, плагины)"
+
+#: cyberui/skin/groups.lua
+msgid "Keyboard and text entry"
+msgstr "Клавиатура и ввод текста"
+
+#: cyberui/skin/groups.lua
+msgid "The on-screen keyboard and the windows you type into"
+msgstr "Экранная клавиатура и окна, в которые вы вводите текст"
+
+#: cyberui/skin/groups.lua
+msgid "Lists"
+msgstr "Списки"
+
+#: cyberui/skin/groups.lua
+msgid "Contents, bookmarks, history, details lists, sorting and the folder chooser"
+msgstr "Оглавление, закладки, история, списки сведений, сортировка и выбор папки"
+
+#: cyberui/skin/groups.lua
+msgid "Dictionary"
+msgstr "Словарь"
+
+#: cyberui/skin/groups.lua
+msgid "The pop-up with a word's meaning"
+msgstr "Окно со значением слова"
+
+#: cyberui/skin/groups.lua
+msgid "Pickers"
+msgstr "Выбор значений"
+
+#: cyberui/skin/groups.lua
+msgid "Choosing a number, a date, a time or one of several"
+msgstr "Выбор числа, даты, времени или одного из нескольких"
+
+#: cyberui/skin/groups.lua
+msgid "Viewers"
+msgstr "Просмотр"
+
+#: cyberui/skin/groups.lua
+msgid "Notes, texts, QR codes, progress and the book status page"
+msgstr "Заметки, тексты, QR-коды, прогресс и страница статуса книги"
+
+#: cyberui/skin/groups.lua
+msgid "Wi-Fi list"
+msgstr "Список Wi-Fi"
+
+#: cyberui/skin/groups.lua
+msgid "The list of networks"
+msgstr "Список сетей"
+
+#: cyberui/skin/groups.lua
+msgid "Reader panels"
+msgstr "Панели чтения"
+
+#: cyberui/skin/groups.lua
+msgid "The settings panel at the bottom of a book and the frontlight window"
+msgstr "Панель настроек внизу книги и окно подсветки"
 
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"

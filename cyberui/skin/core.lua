@@ -18,10 +18,13 @@ local logger = require("logger")
 
 local Core = { skins = {} }
 
--- Is the styled look wanted? (System > Home, its own switch: the menu has another.)
--- Asked each time a widget is shown, so the switch works at once.
-function Core.wanted()
-    return Settings.get("styled_widgets", true)
+-- Is the styled look wanted? The main switch (System > Dialogs) and, for a skin in a group, the
+-- group's own. Asked each time a widget is shown, so a switch works at once.
+function Core.wanted(skin_name)
+    if not Settings.get("styled_widgets", true) then return false end
+    local Groups = require("cyberui/skin/groups")
+    local group = skin_name and Groups.of(skin_name)
+    return not group or Settings.get(Groups.key(group), true)
 end
 
 -- Add a skin: { name, matches(widget) -> bool, present(widget) -> Popup options or nil,
@@ -123,11 +126,15 @@ function Core.install()
             -- ask the skin and build its popup before touching the widget: any failure shows KOReader's own
             local ok, popup, opts = pcall(function()
                 if not skin.matches(widget) then return nil end
+                -- a skin that is switched off still owns its widget: it shows as KOReader made it, not in another skin
+                if not Core.wanted(skin.name) then return false end
                 local o = skin.present(widget)
                 return o and require("cyberui/popup"):new(o), o
             end)
             if not ok then
                 logger.warn("CyberUI skin " .. skin.name .. ":", popup)
+            elseif popup == false then
+                return real_show(um, widget, ...)
             elseif popup then
                 return twin(real_show, widget, popup, opts, ...)
             end

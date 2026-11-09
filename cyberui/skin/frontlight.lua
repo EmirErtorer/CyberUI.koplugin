@@ -55,7 +55,7 @@ function Skin.install()
     local init, on_show, on_close_widget = FrontLightWidget.init, FrontLightWidget.onShow, FrontLightWidget.onCloseWidget
     FrontLightWidget.init = function(self, ...)
         init(self, ...)
-        if not Core.wanted() then return end
+        if not Core.wanted("frontlight") then return end
         local Popup = require("cyberui/popup")
         local ok, element = pcall(build, self, function() return self._cyber_popup end)
         if not ok then

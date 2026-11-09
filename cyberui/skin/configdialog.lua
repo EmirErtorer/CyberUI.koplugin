@@ -192,7 +192,7 @@ function Skin.install()
     ConfigDialog._cyberui_skin = true
     local init, update, on_close_widget = ConfigDialog.init, ConfigDialog.update, ConfigDialog.onCloseWidget
     ConfigDialog.init = function(self, ...)
-        self._cyber = Core.wanted()
+        self._cyber = Core.wanted("configdialog")
         return init(self, ...)
     end
     ConfigDialog.update = function(self, ...)

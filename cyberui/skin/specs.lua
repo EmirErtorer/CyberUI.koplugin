@@ -19,6 +19,17 @@ local function call(fn)
     if ok then return value end
 end
 
+-- A KOReader icon (a name such as "appbar.search") as an icon CyberUI can draw: KOReader's own
+-- drawing of it, so a button that has an icon and no words keeps it. nil when there is no such icon.
+function Specs.koIcon(name)
+    if type(name) ~= "string" or name == "" then return nil end
+    local lfs = require("libs/libkoreader-lfs")
+    if lfs.attributes("resources/icons/mdlight/" .. name .. ".svg", "mode") == "file" then return "ko:" .. name .. ".svg" end
+    local DataStorage = require("datastorage")
+    if lfs.attributes(DataStorage:getDataDir() .. "/icons/" .. name .. ".svg", "mode") == "file" then return "reader:" .. name .. ".svg" end
+    return nil
+end
+
 -- The label, state and handlers of one described button.
 function Specs.read(b)
     local label = b.text
@@ -27,6 +38,7 @@ function Specs.read(b)
     if enabled and b.enabled_func then enabled = call(b.enabled_func) ~= false end
     return {
         label = label or "",
+        icon = Specs.koIcon(b.icon),
         enabled = enabled,
         checked = b.checked_func and call(b.checked_func) or false,
         callback = b.callback,
@@ -42,7 +54,8 @@ function Specs.button(b, variant, icon)
     local s = Specs.read(b)
     local usable = s.enabled and s.callback ~= nil
     return Button:new({
-        label = s.label, icon = s.checked and "check" or icon, grow = true,
+        -- (a button KOReader gave an icon and no words keeps its icon)
+        label = s.label ~= "" and s.label or nil, icon = s.checked and "check" or icon or s.icon, grow = true,
         variant = s.primary and "primary" or variant or "soft",
         disabled = not usable, on_tap = usable and s.callback or nil,
         on_hold = s.enabled and s.hold_callback or nil,

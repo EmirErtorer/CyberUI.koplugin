@@ -1365,6 +1365,26 @@ msgstr "Diagnóstico"
 msgid "RESCAN"
 msgstr "ESCANEAR DE NUEVO"
 
+#: cyberui/screens/dialogs.lua
+msgid "All KOReader dialogs"
+msgstr "Todos los diálogos de KOReader"
+
+#: cyberui/screens/dialogs.lua
+msgid "The main switch: off, every window is KOReader's own, whatever the kinds below say"
+msgstr "El interruptor principal: apagado, todas las ventanas son las de KOReader, digan lo que digan los tipos de abajo"
+
+#: cyberui/screens/dialogs.lua
+msgid "THE MAIN SWITCH IS OFF"
+msgstr "EL INTERRUPTOR PRINCIPAL ESTÁ APAGADO"
+
+#: cyberui/screens/dialogs.lua cyberui/screens/settings.lua
+msgid "KOReader dialogs"
+msgstr "Diálogos de KOReader"
+
+#: cyberui/screens/dialogs.lua
+msgid "SWITCH EACH KIND"
+msgstr "UN INTERRUPTOR PARA CADA TIPO"
+
 #: cyberui/screens/dossier.lua
 msgid "READING"
 msgstr "EN LECTURA"
@@ -2587,12 +2607,8 @@ msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down fr
 msgstr "Con el estilo de CyberUI (desactivado: el propio de KOReader); también se abre deslizando hacia abajo desde arriba"
 
 #: cyberui/screens/settings.lua
-msgid "KOReader dialogs"
-msgstr "Diálogos de KOReader"
-
-#: cyberui/screens/settings.lua
-msgid "Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"
-msgstr "Avisos, diálogos, listas, el teclado, el menú de subrayado y el diccionario con el estilo de CyberUI (desactivado: los de KOReader)"
+msgid "Notices, menus, lists, the keyboard, pickers and more in CyberUI's style; each kind has its own switch (off: KOReader's own)"
+msgstr "Avisos, menús, listas, el teclado, selectores y más con el estilo de CyberUI; cada tipo tiene su propio interruptor (desactivado: los de KOReader)"
 
 #: cyberui/screens/settings.lua
 msgid "Menu height"
@@ -3059,6 +3075,86 @@ msgstr "Cerrar"
 #: cyberui/skin/fullpage.lua
 msgid "No items"
 msgstr "Sin elementos"
+
+#: cyberui/skin/groups.lua
+msgid "Notices and questions"
+msgstr "Avisos y preguntas"
+
+#: cyberui/skin/groups.lua
+msgid "Messages, questions and the small notices at the bottom"
+msgstr "Mensajes, preguntas y los avisos pequeños de abajo"
+
+#: cyberui/skin/groups.lua
+msgid "Selected text menu"
+msgstr "Menú del texto seleccionado"
+
+#: cyberui/skin/groups.lua
+msgid "The menu after selecting words, and the one for a saved highlight"
+msgstr "El menú tras seleccionar palabras y el de un subrayado guardado"
+
+#: cyberui/skin/groups.lua
+msgid "Button menus"
+msgstr "Menús de botones"
+
+#: cyberui/skin/groups.lua
+msgid "The menus of buttons (long-press menus, gestures, plugins)"
+msgstr "Los menús de botones (menús de pulsación larga, gestos, complementos)"
+
+#: cyberui/skin/groups.lua
+msgid "Keyboard and text entry"
+msgstr "Teclado y entrada de texto"
+
+#: cyberui/skin/groups.lua
+msgid "The on-screen keyboard and the windows you type into"
+msgstr "El teclado en pantalla y las ventanas donde escribes"
+
+#: cyberui/skin/groups.lua
+msgid "Lists"
+msgstr "Listas"
+
+#: cyberui/skin/groups.lua
+msgid "Contents, bookmarks, history, details lists, sorting and the folder chooser"
+msgstr "Contenido, marcadores, historial, listas de detalles, ordenar y el selector de carpetas"
+
+#: cyberui/skin/groups.lua
+msgid "Dictionary"
+msgstr "Diccionario"
+
+#: cyberui/skin/groups.lua
+msgid "The pop-up with a word's meaning"
+msgstr "La ventana con el significado de una palabra"
+
+#: cyberui/skin/groups.lua
+msgid "Pickers"
+msgstr "Selectores"
+
+#: cyberui/skin/groups.lua
+msgid "Choosing a number, a date, a time or one of several"
+msgstr "Elegir un número, una fecha, una hora o una entre varias"
+
+#: cyberui/skin/groups.lua
+msgid "Viewers"
+msgstr "Visores"
+
+#: cyberui/skin/groups.lua
+msgid "Notes, texts, QR codes, progress and the book status page"
+msgstr "Notas, textos, códigos QR, progreso y la página de estado del libro"
+
+#: cyberui/skin/groups.lua
+msgid "Wi-Fi list"
+msgstr "Lista de Wi-Fi"
+
+#: cyberui/skin/groups.lua
+msgid "The list of networks"
+msgstr "La lista de redes"
+
+#: cyberui/skin/groups.lua
+msgid "Reader panels"
+msgstr "Paneles del lector"
+
+#: cyberui/skin/groups.lua
+msgid "The settings panel at the bottom of a book and the frontlight window"
+msgstr "El panel de ajustes en la parte inferior de un libro y la ventana de la luz frontal"
 
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"

@@ -20,6 +20,26 @@ local Skin = {}
 local pending   -- the selection while KOReader builds the menu for it: { text }
 local tagged = setmetatable({}, { __mode = "k" })   -- slot functions already wrapped
 
+-- The reader's highlight module, when a book is open.
+local function highlighter()
+    local ReaderUI = _G.package.loaded["apps/reader/readerui"]
+    local ui = type(ReaderUI) == "table" and ReaderUI.instance
+    return ui and ui.highlight
+end
+
+-- Is this the menu KOReader made for the selection? Asked by what KOReader keeps, so the menu is
+-- drawn so even when this KOReader builds it by another path than the one hooked below.
+function Skin.isHighlightDialog(widget)
+    local h = highlighter()
+    return h ~= nil and h.highlight_dialog == widget
+end
+
+-- The selection the menu is for, when it was not noted as the menu was built.
+function Skin.selection()
+    local h = highlighter()
+    return { text = h and h.selected_text and h.selected_text.text }
+end
+
 -- The card for the menu `dialog` made for `selection`.
 local function card(dialog, selection)
     local Dialog = require("cyberui/ui/dialog")
@@ -27,7 +47,7 @@ local function card(dialog, selection)
     local groups, rest = { act = {}, lookup = {} }, {}
     for _i, line in ipairs(Anatomy.buttons(dialog)) do
         for _j, b in ipairs(line) do
-            local sem = Semantics.highlight(b.sem)
+            local sem = Semantics.highlight(b.sem) or (b.text and Semantics.highlightByText(b.text))
             if sem then
                 local g = groups[sem.group]
                 g[#g + 1] = { b, sem }
@@ -74,10 +94,10 @@ Core.register({
         end
     end,
     matches = function(widget)
-        return pending ~= nil and type(widget.buttons) == "table" and widget.buttontable ~= nil and not widget._added_widgets
+        return (pending ~= nil or Skin.isHighlightDialog(widget)) and type(widget.buttons) == "table" and widget.buttontable ~= nil and not widget._added_widgets
     end,
     present = function(dialog)
-        local selection = pending
+        local selection = pending or Skin.selection()
         return {
             element = card(dialog, selection),
             place = require("cyberui/skin/buttondialog").placer(dialog),

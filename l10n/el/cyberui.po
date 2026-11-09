@@ -1365,6 +1365,26 @@ msgstr "Διαγνωστικά"
 msgid "RESCAN"
 msgstr "ΝΕΑ ΣΑΡΩΣΗ"
 
+#: cyberui/screens/dialogs.lua
+msgid "All KOReader dialogs"
+msgstr "Όλοι οι διάλογοι KOReader"
+
+#: cyberui/screens/dialogs.lua
+msgid "The main switch: off, every window is KOReader's own, whatever the kinds below say"
+msgstr "Ο κύριος διακόπτης: όταν είναι κλειστός, κάθε παράθυρο είναι του KOReader, ό,τι κι αν λένε οι παρακάτω"
+
+#: cyberui/screens/dialogs.lua
+msgid "THE MAIN SWITCH IS OFF"
+msgstr "Ο ΚΥΡΙΟΣ ΔΙΑΚΟΠΤΗΣ ΕΙΝΑΙ ΚΛΕΙΣΤΟΣ"
+
+#: cyberui/screens/dialogs.lua cyberui/screens/settings.lua
+msgid "KOReader dialogs"
+msgstr "Διάλογοι KOReader"
+
+#: cyberui/screens/dialogs.lua
+msgid "SWITCH EACH KIND"
+msgstr "ΔΙΑΚΟΠΤΗΣ ΓΙΑ ΚΑΘΕ ΕΙΔΟΣ"
+
 #: cyberui/screens/dossier.lua
 msgid "READING"
 msgstr "ΥΠΟ ΑΝΑΓΝΩΣΗ"
@@ -2587,12 +2607,8 @@ msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down fr
 msgstr "Στο στιλ του CyberUI (ανενεργό: το δικό του του KOReader)· ανοίγει και με σύρσιμο προς τα κάτω από την κορυφή"
 
 #: cyberui/screens/settings.lua
-msgid "KOReader dialogs"
-msgstr "Διάλογοι KOReader"
-
-#: cyberui/screens/settings.lua
-msgid "Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"
-msgstr "Ειδοποιήσεις, διάλογοι, λίστες, πληκτρολόγιο, μενού επισήμανσης και λεξικό με το στυλ του CyberUI (ανενεργό: του KOReader)"
+msgid "Notices, menus, lists, the keyboard, pickers and more in CyberUI's style; each kind has its own switch (off: KOReader's own)"
+msgstr "Ειδοποιήσεις, μενού, λίστες, πληκτρολόγιο, επιλογείς και άλλα με το στυλ του CyberUI· κάθε είδος έχει δικό του διακόπτη (ανενεργό: του KOReader)"
 
 #: cyberui/screens/settings.lua
 msgid "Menu height"
@@ -3059,6 +3075,86 @@ msgstr "Κλείσιμο"
 #: cyberui/skin/fullpage.lua
 msgid "No items"
 msgstr "Κανένα στοιχείο"
+
+#: cyberui/skin/groups.lua
+msgid "Notices and questions"
+msgstr "Ειδοποιήσεις και ερωτήσεις"
+
+#: cyberui/skin/groups.lua
+msgid "Messages, questions and the small notices at the bottom"
+msgstr "Μηνύματα, ερωτήσεις και οι μικρές ειδοποιήσεις στο κάτω μέρος"
+
+#: cyberui/skin/groups.lua
+msgid "Selected text menu"
+msgstr "Μενού επιλεγμένου κειμένου"
+
+#: cyberui/skin/groups.lua
+msgid "The menu after selecting words, and the one for a saved highlight"
+msgstr "Το μενού μετά την επιλογή λέξεων και αυτό για μια αποθηκευμένη επισήμανση"
+
+#: cyberui/skin/groups.lua
+msgid "Button menus"
+msgstr "Μενού κουμπιών"
+
+#: cyberui/skin/groups.lua
+msgid "The menus of buttons (long-press menus, gestures, plugins)"
+msgstr "Τα μενού κουμπιών (μενού παρατεταμένου πατήματος, χειρονομίες, πρόσθετα)"
+
+#: cyberui/skin/groups.lua
+msgid "Keyboard and text entry"
+msgstr "Πληκτρολόγιο και εισαγωγή κειμένου"
+
+#: cyberui/skin/groups.lua
+msgid "The on-screen keyboard and the windows you type into"
+msgstr "Το πληκτρολόγιο οθόνης και τα παράθυρα όπου πληκτρολογείτε"
+
+#: cyberui/skin/groups.lua
+msgid "Lists"
+msgstr "Λίστες"
+
+#: cyberui/skin/groups.lua
+msgid "Contents, bookmarks, history, details lists, sorting and the folder chooser"
+msgstr "Περιεχόμενα, σελιδοδείκτες, ιστορικό, λίστες λεπτομερειών, ταξινόμηση και επιλογέας φακέλου"
+
+#: cyberui/skin/groups.lua
+msgid "Dictionary"
+msgstr "Λεξικό"
+
+#: cyberui/skin/groups.lua
+msgid "The pop-up with a word's meaning"
+msgstr "Το αναδυόμενο με τη σημασία μιας λέξης"
+
+#: cyberui/skin/groups.lua
+msgid "Pickers"
+msgstr "Επιλογείς"
+
+#: cyberui/skin/groups.lua
+msgid "Choosing a number, a date, a time or one of several"
+msgstr "Επιλογή αριθμού, ημερομηνίας, ώρας ή ενός από πολλά"
+
+#: cyberui/skin/groups.lua
+msgid "Viewers"
+msgstr "Προβολείς"
+
+#: cyberui/skin/groups.lua
+msgid "Notes, texts, QR codes, progress and the book status page"
+msgstr "Σημειώσεις, κείμενα, κωδικοί QR, πρόοδος και η σελίδα κατάστασης βιβλίου"
+
+#: cyberui/skin/groups.lua
+msgid "Wi-Fi list"
+msgstr "Λίστα Wi-Fi"
+
+#: cyberui/skin/groups.lua
+msgid "The list of networks"
+msgstr "Η λίστα δικτύων"
+
+#: cyberui/skin/groups.lua
+msgid "Reader panels"
+msgstr "Πάνελ ανάγνωσης"
+
+#: cyberui/skin/groups.lua
+msgid "The settings panel at the bottom of a book and the frontlight window"
+msgstr "Το πάνελ ρυθμίσεων στο κάτω μέρος ενός βιβλίου και το παράθυρο φωτισμού"
 
 #: cyberui/skin/highlightmenu.lua
 msgid "// SELECTION"

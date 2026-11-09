@@ -36,6 +36,22 @@ function Semantics.highlight(slot)
     return name and HIGHLIGHT[name] or nil
 end
 
+-- The same by the button's text, for the highlight menus whose buttons do not say which slot they
+-- are from (another KOReader version builds them differently): KOReader's own words, in the reader's language.
+local HIGHLIGHT_TEXT = {
+    { msgid = "Select", name = "select" }, { msgid = "Highlight", name = "highlight" },
+    { msgid = "Add Note", name = "add_note" }, { msgid = "Add note", name = "add_note" },
+    { msgid = "Copy", name = "copy" }, { msgid = "Dictionary", name = "dictionary" },
+    { msgid = "Wikipedia", name = "wikipedia" }, { msgid = "Translate", name = "translate" },
+    { msgid = "Search", name = "search" },
+}
+function Semantics.highlightByText(text)
+    for _i, h in ipairs(HIGHLIGHT_TEXT) do
+        if text == koreader(h.msgid) then return HIGHLIGHT[h.name] end
+    end
+    return nil
+end
+
 -- Verbs that appear on KOReader's button dialogs (the hold menu of a book, its
 -- gesture and settings menus): what each looks like. They are matched by KOReader's own
 -- English word, in the reader's language through KOReader's catalogue, so an

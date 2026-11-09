@@ -10,14 +10,17 @@ local Theme = require("cyberui/theme")
 
 local ListRow = {}
 
--- Build a row from { path, icon, title, meta, value, dim, on_tap, on_hold, thumb,
--- thumb_w, thumb_h }: a small cover for a book path (thumb_w x thumb_h when
--- given), or an icon.
+-- Build a row from { path, icon, glyph, title, meta, value, trailing, dim, on_tap, on_hold,
+-- thumb, thumb_w, thumb_h }: a small cover for a book path (thumb_w x thumb_h when
+-- given), or an icon, or a glyph (a symbol drawn as text, as some plugins give their
+-- entries); `trailing` is an element at the end of the row (a switch, an arrow).
 function ListRow.build(o)
     local th = Theme.get()
     local h = o.height or Theme.px(54)
     local kids = {}
-    if o.icon then
+    if o.glyph then
+        kids[#kids + 1] = Label:new({ text = o.glyph, kind = "title", color = o.dim and "muted" or nil, align = "center", width = Theme.px(36) })
+    elseif o.icon then
         kids[#kids + 1] = Icon:new({ name = o.icon, size = 26, width = Theme.px(30) })
     elseif o.thumb ~= false and o.path then
         local cw, ch = o.thumb_w or Theme.px(30), o.thumb_h or Theme.px(44)
@@ -30,6 +33,7 @@ function ListRow.build(o)
     if o.meta then lines[#lines + 1] = Label:new({ text = o.meta, kind = "mono_small", color = "muted" }) end
     kids[#kids + 1] = Layout.Column:new({ grow = true, children = lines })
     if o.value then kids[#kids + 1] = Label:new({ text = o.value, kind = "mono_small", color = o.value_color or "ink" }) end
+    if o.trailing then kids[#kids + 1] = o.trailing end
     local row = Layout.Row:new({ gap = th.space.m, height = h - th.size.hair, children = kids })
     local col = Layout.Column:new({ children = { row, Deco.Divider:new({}) }, on_tap = o.on_tap, on_hold = o.on_hold })
     return col

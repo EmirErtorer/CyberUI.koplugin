@@ -159,4 +159,18 @@ do
     end
 end
 
+-- every skin is in a group with a switch of its own, so none can only be switched off with all the others
+local Core = require("cyberui/skin/core")
+local Groups = require("cyberui/skin/groups")
+require("cyberui/skin/all")
+for _i, name in ipairs({ "message", "confirm", "highlightmenu", "edithighlight", "buttondialog", "keyboard", "inputdialog", "list", "dictionary",
+    "textviewer", "numbers", "choice", "keyvalue", "sort", "progress", "qr", "network", "bookstatus" }) do
+    require("cyberui/skin/" .. name)
+end
+local missing = {}
+for _i, skin in ipairs(Core.skins) do
+    if not Groups.of(skin.name) then missing[#missing + 1] = skin.name end
+end
+Kit.ok(#missing == 0, "every skin is in a group: " .. table.concat(missing, ", "))
+
 Kit.finish("widgets")

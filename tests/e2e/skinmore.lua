@@ -153,6 +153,21 @@ scene("wifi", true, function()
         { ssid = "Far away", signal_quality = 9, flags = "[WPA2-PSK-CCMP][ESS]", signal_level = -90 } } })
 end)
 
+local plugin_menu
+scene("plugin-menu", true, function()
+    local checked = true
+    plugin_menu = require("ui/widget/menu"):new({ title = "Settings", item_table = {
+        { text = "Home", icon_glyph = "\u{F0156}", sub_item_table = { { text = "inner" } } },
+        { text = "Library", icon_glyph = "\u{F01BE}", sub_item_table = { { text = "inner" } }, _zen_settings_breadcrumb = "Display, sorting" },
+        { text = "Show icons", icon_glyph = "\u{F0489}", checked_func = function() return checked end, callback = function() checked = not checked; ran.zen = checked end },
+        { text = "Pick one", radio = true, checked_func = function() return true end },
+        { text = "About" } }, covers_fullscreen = true, is_borderless = true, is_popout = false, title_bar_fm_style = true })
+    return plugin_menu
+end)
+scene("icon-only-buttons", true, function()
+    return require("ui/widget/buttondialog"):new({ title = "Actions", buttons = { { { icon = "appbar.search", callback = cb }, { icon = "appbar.settings", callback = cb }, { text = "Plain", callback = cb } } } })
+end)
+
 -- behaviour, in the styled mode only
 local function behaviour()
     -- the text viewer pages a long text, runs KOReader's callbacks and closes with Back or Close
@@ -410,6 +425,44 @@ local function behaviour()
         H.tap("Cancel")
     end)
     H.step(0.8, function() UIManager:close(wifi) end)
+
+    -- a plugin's own list: the glyphs, switches and arrows it gives its entries are kept, and a tap goes to KOReader's callback
+    H.step(0.8, function()
+        local on = true
+        local m = require("ui/widget/menu"):new({ title = "Settings", item_table = {
+            { text = "Show icons", icon_glyph = "\u{F0489}", checked_func = function() return on end, callback = function() on = not on; ran.zen = on end } },
+            covers_fullscreen = true, is_borderless = true, is_popout = false })
+        plugin_menu = m
+        UIManager:show(m)
+    end)
+    H.step(0.8, function()
+        local toggles, glyphs, seen = 0, 0, {}
+        H.findWhere(function(el)
+            if not seen[el] then
+                seen[el] = true
+                if el.on ~= nil and el.naturalWidth and el.draw and el.on_tap == false then toggles = toggles + 1 end
+                if el.text == "\u{F0489}" then glyphs = glyphs + 1 end
+            end
+            return false
+        end)
+        H.check(toggles == 1, "a setting that is on or off shows its switch: " .. toggles)
+        H.check(glyphs == 1, "and the glyph KOReader's plugin put in front of it: " .. glyphs)
+        H.tap("Show icons")
+    end)
+    H.step(0.8, function()
+        H.check(ran.zen == false, "a tap anywhere on the row runs the plugin's callback: " .. tostring(ran.zen))
+        UIManager:close(plugin_menu)
+    end)
+    -- a button with an icon and no words keeps its icon
+    local icons_only
+    H.step(0.8, function()
+        icons_only = require("ui/widget/buttondialog"):new({ title = "Actions", buttons = { { { icon = "appbar.search", callback = cb } } } })
+        UIManager:show(icons_only)
+    end)
+    H.step(0.8, function()
+        H.check(H.findWhere(function(el) return type(el.icon) == "string" and el.icon:find("appbar.search", 1, true) end) ~= nil, "an icon-only button keeps its icon")
+        UIManager:close(icons_only)
+    end)
 
 end
 if mode == "new" then behaviour() end

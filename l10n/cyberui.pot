@@ -1364,6 +1364,26 @@ msgstr ""
 msgid "RESCAN"
 msgstr ""
 
+#: cyberui/screens/dialogs.lua
+msgid "All KOReader dialogs"
+msgstr ""
+
+#: cyberui/screens/dialogs.lua
+msgid "The main switch: off, every window is KOReader's own, whatever the kinds below say"
+msgstr ""
+
+#: cyberui/screens/dialogs.lua
+msgid "THE MAIN SWITCH IS OFF"
+msgstr ""
+
+#: cyberui/screens/dialogs.lua cyberui/screens/settings.lua
+msgid "KOReader dialogs"
+msgstr ""
+
+#: cyberui/screens/dialogs.lua
+msgid "SWITCH EACH KIND"
+msgstr ""
+
 #: cyberui/screens/dossier.lua
 msgid "READING"
 msgstr ""
@@ -2586,11 +2606,7 @@ msgid "In CyberUI's style (off: KOReader's own); also opens with a swipe down fr
 msgstr ""
 
 #: cyberui/screens/settings.lua
-msgid "KOReader dialogs"
-msgstr ""
-
-#: cyberui/screens/settings.lua
-msgid "Notices, dialogs, lists, the keyboard, the highlight menu and the dictionary in CyberUI's style (off: KOReader's own)"
+msgid "Notices, menus, lists, the keyboard, pickers and more in CyberUI's style; each kind has its own switch (off: KOReader's own)"
 msgstr ""
 
 #: cyberui/screens/settings.lua
@@ -3057,6 +3073,86 @@ msgstr ""
 
 #: cyberui/skin/fullpage.lua
 msgid "No items"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Notices and questions"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Messages, questions and the small notices at the bottom"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Selected text menu"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "The menu after selecting words, and the one for a saved highlight"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Button menus"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "The menus of buttons (long-press menus, gestures, plugins)"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Keyboard and text entry"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "The on-screen keyboard and the windows you type into"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Lists"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Contents, bookmarks, history, details lists, sorting and the folder chooser"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Dictionary"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "The pop-up with a word's meaning"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Pickers"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Choosing a number, a date, a time or one of several"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Viewers"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Notes, texts, QR codes, progress and the book status page"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Wi-Fi list"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "The list of networks"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "Reader panels"
+msgstr ""
+
+#: cyberui/skin/groups.lua
+msgid "The settings panel at the bottom of a book and the frontlight window"
 msgstr ""
 
 #: cyberui/skin/highlightmenu.lua
