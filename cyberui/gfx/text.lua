@@ -11,6 +11,7 @@ local Case = require("cyberui/i18n/case")
 local Color = require("cyberui/theme/color")
 local I18n = require("cyberui/gettext")
 local Theme = require("cyberui/theme")
+local Utf8Safe = require("cyberui/utf8safe")
 
 local Text = {}
 
@@ -66,7 +67,7 @@ end
 
 -- The string as it is shown for this kind of text (capitals when the style asks).
 function Text.shown(kind, s)
-    s = tostring(s or "")
+    s = Utf8Safe.clean(tostring(s or ""))   -- (a string cut inside a character would crash the case and composing calls)
     if specOf(kind).caps then
         local lang = I18n.language()
         s = (lang == "tr" or lang == "el") and Case.upper(s, lang) or Utf8Proc.uppercase_dumb(s)
@@ -169,6 +170,7 @@ end
 
 -- Draw an already fitted string with its top-left at (x, y); returns its width.
 function Text.draw(bb, x, y, kind, s, color)
+    s = Utf8Safe.clean(s)
     local spec = specOf(kind)
     local face, track = spec.face, spec.tracking
     local baseline = y + spec.ascent

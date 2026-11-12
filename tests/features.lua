@@ -1097,4 +1097,72 @@ do
     os.execute("rm -rf '" .. root .. "'")
 end
 
+-- text cut inside a character, stacking of unskinned windows, the highlight menu with no book open
+do
+    local Utf8Safe = require("cyberui/utf8safe")
+    local han = string.rep("\u{6B63}", 300)   -- 900 bytes of 3-byte characters
+    for _, n in ipairs({ 399, 400, 401 }) do
+        local c = Utf8Safe.clip(han, n, "...")
+        local body = c:sub(1, -4)
+        Kit.ok(#body <= n and #body % 3 == 0 and Utf8Safe.clean(c) == c, "a cut of " .. n .. " bytes ends on a whole character")
+    end
+    Kit.ok(Utf8Safe.clean("He doesn\xE2") == "He doesn" and Utf8Safe.clean("ok \u{2019} \u{6B63}") == "ok \u{2019} \u{6B63}", "a stray lead byte is dropped, whole characters stay")
+    Kit.ok(Utf8Safe.clip("short", 90, "...") == "short", "short text is not touched")
+
+    local Text = require("cyberui/gfx/text")
+    local bb = Kit.canvas()
+    Text.draw(bb, 0, 0, "body", "He doesn\xE2")
+    Kit.ok(Text.width("body", "He doesn\xE2") == Text.width("body", "He doesn"), "text cut in a character is drawn and measured without it")
+    bb:free()
+
+    local tmp = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-cut"
+    os.execute("rm -rf '" .. tmp .. "'; mkdir -p '" .. tmp .. "'")
+    local Shards = require("cyberui/data/shards")
+    Shards.reset()
+    Shards.file = tmp .. "/shards.lua"
+    local book = tmp .. "/Han.epub"
+    io.open(book, "w"):close()
+    local ds = require("docsettings"):open(book)
+    ds:saveSetting("annotations", { { text = han, datetime = "2026-11-01 10:00:00", page = 1 } })
+    ds:flush()
+    local made = Shards.of(book)[1].text
+    Kit.ok(Utf8Safe.clean(made) == made and #made <= 403, "a long highlight in Chinese is kept as valid text")
+    -- an index an older version saved with a cut character is mended when it is read
+    local LuaSettings = require("luasettings")
+    local old = LuaSettings:open(Shards.file)
+    old:saveSetting("books", { [book] = { stamp = 1, list = { { id = "0000000A", text = "He doesn\xE2...", path = book } } } })
+    old:flush()
+    Shards.reset()
+    Shards.file = tmp .. "/shards.lua"
+    Kit.ok(Shards.ofBook(book)[1].text == "He doesn...", "a saved shard with a cut character is mended")
+    Shards.reset()
+    Shards.file = nil
+    os.execute("rm -rf '" .. tmp .. "'")
+
+    -- the highlight menu asks nothing of a reader that is not there
+    package.loaded["apps/reader/readerui"] = true
+    local HM = require("cyberui/skin/highlightmenu")
+    Kit.ok(HM.isHighlightDialog({}) == false, "no book open: no widget is the highlight menu")
+    package.loaded["apps/reader/readerui"] = { instance = { highlight = false } }
+    Kit.ok(HM.isHighlightDialog({}) == false and HM.selection().text == nil, "a reader with no highlight module is no error")
+    package.loaded["apps/reader/readerui"] = nil
+
+    -- a window no skin took still opens in front of a CyberUI popup
+    local UIManager = require("ui/uimanager")
+    local Core = require("cyberui/skin/core")
+    Core.install()
+    local Popup = require("cyberui/popup")
+    local El = require("cyberui/ui/panel")
+    local Label = require("cyberui/ui/label")
+    local pop = Popup:new({ element = El:new({ shape = "none", width = 100, child = Label:new({ text = "x", kind = "body" }) }) })
+    UIManager:show(pop)
+    local plain = require("ui/widget/container/widgetcontainer"):new({ name = "plain_dialog" })
+    UIManager:show(plain)
+    local order = {}
+    for i, w in ipairs(UIManager._window_stack) do order[w.widget] = i end
+    Kit.ok(order[plain] and order[pop] and order[plain] > order[pop], "a window shown over a popup is above it")
+    UIManager:close(plain)
+    UIManager:close(pop)
+end
+
 Kit.finish("features")

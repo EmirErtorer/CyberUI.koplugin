@@ -12,6 +12,7 @@ local Core = require("cyberui/skin/core")
 local Device = require("device")
 local Semantics = require("cyberui/skin/semantics")
 local Specs = require("cyberui/skin/specs")
+local Utf8Safe = require("cyberui/utf8safe")
 local Tiles = require("cyberui/skin/tiles")
 
 local Screen = Device.screen
@@ -72,7 +73,7 @@ local function card(dialog, highlight)
     for i = 1, #sorted.rest, 2 do plain[#plain + 1] = { sorted.rest[i], sorted.rest[i + 1] } end
     for _i, r in ipairs(Specs.rows(plain)) do rows[#rows + 1] = r end
     local words = highlight and highlight.text and highlight.text:gsub("%s+", " ") or ""
-    if #words > 70 then words = words:sub(1, 70):gsub("[\128-\191]*$", "") .. "..." end
+    words = Utf8Safe.clip(words, 70, "...")
     return Dialog.card({ tag = _("// HIGHLIGHT"), text = words ~= "" and ("\u{201C}" .. words .. "\u{201D}") or nil, lines = 1, rows = rows }, Screen:getWidth())
 end
 

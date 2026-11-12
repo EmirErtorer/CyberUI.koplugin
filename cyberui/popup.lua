@@ -128,9 +128,15 @@ function Popup:onBack()
     return true
 end
 
+-- The refresh a popup's box gets: a colour screen needs the waveform that redraws colour and the
+-- page text under it cleanly (the quick one leaves it washed out), a black and white one the quick one.
+local function mode()
+    return Screen:isColorEnabled() and "partial" or "ui"
+end
+
 -- Show it, refreshing only its box.
 function Popup:open()
-    UIManager:show(self, "ui", self:box())
+    UIManager:show(self, mode(), self:box())
 end
 
 -- Redraw with a new element.
@@ -141,16 +147,16 @@ function Popup:redraw(el)
     if after.w < before.w or after.h < before.h then
         -- the strip no longer covered belongs to what is under the popup, which
         -- only a close repaints
-        UIManager:close(self, "ui", before)
-        UIManager:show(self, "ui", after)
+        UIManager:close(self, mode(), before)
+        UIManager:show(self, mode(), after)
     else
-        UIManager:setDirty(self, "ui", after:combine(before))
+        UIManager:setDirty(self, mode(), after:combine(before))
     end
 end
 
 -- Close it, repainting what it covered.
 function Popup:close()
-    UIManager:close(self, "ui", self:box())
+    UIManager:close(self, mode(), self:box())
 end
 
 return Popup

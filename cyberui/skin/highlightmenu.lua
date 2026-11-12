@@ -11,6 +11,7 @@ local Core = require("cyberui/skin/core")
 local Device = require("device")
 local Semantics = require("cyberui/skin/semantics")
 local Specs = require("cyberui/skin/specs")
+local Utf8Safe = require("cyberui/utf8safe")
 local Tiles = require("cyberui/skin/tiles")
 
 local Screen = Device.screen
@@ -24,7 +25,8 @@ local tagged = setmetatable({}, { __mode = "k" })   -- slot functions already wr
 local function highlighter()
     local ReaderUI = _G.package.loaded["apps/reader/readerui"]
     local ui = type(ReaderUI) == "table" and ReaderUI.instance
-    return ui and ui.highlight
+    local h = ui and ui.highlight
+    return type(h) == "table" and h or nil
 end
 
 -- Is this the menu KOReader made for the selection? Asked by what KOReader keeps, so the menu is
@@ -64,7 +66,7 @@ local function card(dialog, selection)
     for i = 1, #rest, 2 do lines[#lines + 1] = { rest[i], rest[i + 1] } end
     for _i, r in ipairs(Specs.rows(lines)) do rows[#rows + 1] = r end
     local words = selection and selection.text and selection.text:gsub("%s+", " ") or ""
-    if #words > 90 then words = words:sub(1, 90):gsub("[\128-\191]*$", "") .. "..." end
+    words = Utf8Safe.clip(words, 90, "...")
     return Dialog.card({ tag = _("// SELECTION"), text = words ~= "" and ("\u{201C}" .. words .. "\u{201D}") or nil, lines = 2, rows = rows }, Screen:getWidth())
 end
 

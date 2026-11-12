@@ -95,7 +95,7 @@ local function twin(real_show, widget, popup, opts, ...)
         local p = self._cyber_popup
         self._cyber_popup = nil
         self._cyberui_skinned = nil
-        if p then UIManager:close(p, opts.close_refresh or "ui", p:box()) end
+        if p then UIManager:close(p, opts.close_refresh or (require("device").screen:isColorEnabled() and "partial" or "ui"), p:box()) end
         if opts.on_close then opts.on_close(self) end
         if type(stock_close) == "function" then return stock_close(self, ...) end
     end
@@ -103,6 +103,24 @@ local function twin(real_show, widget, popup, opts, ...)
     popup:open()
     if opts.on_shown then opts.on_shown(widget, popup) end
     return result
+end
+
+-- Is a CyberUI popup (one that takes touches) open? KOReader keeps modal windows above every window
+-- that is not modal, so a window shown now that is not modal would land under it.
+local function popupOpen()
+    for _i, w in ipairs(UIManager._window_stack or {}) do
+        local widget = w.widget
+        if widget and widget.name == "cyberui_popup" and not widget.passive then return true end
+    end
+    return false
+end
+
+-- Show a window KOReader's way: a window no skin took (one with extra parts, or a skin that is
+-- switched off) still has to appear in front of the popup of the list it was opened from.
+local APPS = { ReaderUI = true, FileManager = true, filemanager = true, cyberui = true }   -- (the app windows are never raised)
+local function plainly(real_show, um, widget, ...)
+    if not widget.modal and not widget.toast and not APPS[widget.name] and popupOpen() then widget.modal = true end
+    return real_show(um, widget, ...)
 end
 
 local installed
@@ -134,12 +152,12 @@ function Core.install()
             if not ok then
                 logger.warn("CyberUI skin " .. skin.name .. ":", popup)
             elseif popup == false then
-                return real_show(um, widget, ...)
+                return plainly(real_show, um, widget, ...)
             elseif popup then
                 return twin(real_show, widget, popup, opts, ...)
             end
         end
-        return real_show(um, widget, ...)
+        return plainly(real_show, um, widget, ...)
     end
 end
 

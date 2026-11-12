@@ -11,6 +11,7 @@ local LuaSettings = require("luasettings")
 local Profile = require("cyberui/data/profile")
 local UIManager = require("ui/uimanager")
 local lfs = require("libs/libkoreader-lfs")
+local Utf8Safe = require("cyberui/utf8safe")
 local util = require("util")
 
 local Shards = {}
@@ -18,12 +19,13 @@ local Shards = {}
 -- Where the index is kept; a test sets another file before first use.
 Shards.file = nil
 
-local MAX_TEXT = 400        -- characters of a highlight kept
+local MAX_TEXT = 400        -- bytes of a highlight kept (cut on a whole character)
 local PER_BOOK = 80         -- highlights kept from one book
 local BATCH = 3             -- books read per idle tick
 local TICK = 0.25           -- seconds between ticks
 
 local store                 -- the index file, opened on first use
+local healed                -- whether the index was checked for cut text
 local queue, running, done  -- books waiting for a pass, whether one is going, what to call at its end
 local flat                  -- every shard in one list, rebuilt when the index changes
 local shown                 -- the shard on home until it is opened again: shard or false
@@ -33,6 +35,22 @@ local function books()
     if not store then store = LuaSettings:open(Shards.file or (DataStorage:getSettingsDir() .. "/cyberui-shards.lua")) end
     local b = store:readSetting("books")
     if not b then b = {}; store:saveSetting("books", b) end
+    if not healed then
+        healed = true
+        -- an index written by an older version may hold text cut inside a character: mend it once
+        local changed = false
+        for _path, entry in pairs(b) do
+            for _i, s in ipairs(entry.list or {}) do
+                for _j, key in ipairs({ "text", "note", "chapter" }) do
+                    if type(s[key]) == "string" then
+                        local clean = Utf8Safe.clean(s[key])
+                        if clean ~= s[key] then s[key], changed = clean, true end
+                    end
+                end
+            end
+        end
+        if changed then store:flush() end
+    end
     return b
 end
 
@@ -44,8 +62,8 @@ end
 
 -- A shard from one saved highlight.
 local function make(path, a)
-    local text = util.trim((a.text:gsub("%s+", " ")))
-    if #text > MAX_TEXT then text = text:sub(1, MAX_TEXT):gsub("[\128-\191]*$", "") .. "..." end
+    local text = util.trim((Utf8Safe.clean(a.text):gsub("%s+", " ")))
+    text = Utf8Safe.clip(text, MAX_TEXT, "...")
     return {
         id = string.format("%08X", Profile.hash(path .. "|" .. text)), text = text, path = path,
         note = a.note and a.note ~= "" and a.note or nil, chapter = a.chapter, date = a.datetime, page = a.page, pos0 = a.pos0,
@@ -187,7 +205,7 @@ end
 
 -- Forget what was read (tests).
 function Shards.reset()
-    store, queue, running, flat, shown = nil, nil, false, nil, nil
+    store, queue, running, flat, shown, healed = nil, nil, false, nil, nil, false
 end
 
 return Shards
