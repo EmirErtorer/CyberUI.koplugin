@@ -6,6 +6,18 @@ All notable changes to CyberUI are listed here, newest first. Versions follow
 is on its [GitHub release](https://github.com/EmirErtorer/CyberUI.koplugin/releases);
 versions marked *Prerelease* are test builds.
 
+## [1.3.2] - 2026-11-12
+
+A hotfix for crashes with highlights in Chinese, Japanese and other scripts whose letters take several bytes.
+
+### Fixed
+
+- **KOReader crashed on start, or when opening Data shard, with highlights in Chinese, Japanese, Korean and other scripts.** A long highlight was cut in the middle of a letter and saved that way. Text is now cut only between whole letters, anything drawn drops broken bytes, and shards saved by an earlier version are mended when they load, so a device that was stuck restarting recovers by updating.
+- The same cut in the selected-text menu and the edit-highlight dialog, which could break on long selections in those scripts.
+- A window CyberUI does not restyle (the OPDS "Add catalog" form, for one) appeared behind the list it was opened from. It now opens in front.
+- A warning in the log for every window shown from home, from the selected-text menu looking for a book that was not open.
+- On colour screens, pop-ups refresh with the waveform made for colour, which should stop the washed-out, see-through look reported on the Kobo Clara Colour. This one is not yet checked on a device.
+
 ## [1.3.1] - 2026-11-09
 
 ### Fixed
