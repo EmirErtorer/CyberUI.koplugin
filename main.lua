@@ -34,7 +34,10 @@ local function registerStartWith()
             text = _("CyberUI"),
             radio = true,
             checked_func = function() return G_reader_settings:readSetting("start_with") == START_WITH end,
-            callback = function() G_reader_settings:saveSetting("start_with", START_WITH) end,
+            callback = function()
+                G_reader_settings:saveSetting("start_with", START_WITH)
+                require("cyberui/twin").claim()   -- (with its twin installed too, this one is in charge)
+            end,
         })
         local orig_text = t.text_func
         t.text_func = function()
@@ -69,7 +72,7 @@ function CyberUI:styleReaderMenu()
     local km = self.ui.menu
     local show = km.onShowMenu
     km.onShowMenu = function(menu, tab_index, do_not_show)
-        if do_not_show or not require("cyberui/settings").get("styled_menu", true) then
+        if do_not_show or not require("cyberui/settings").get("styled_menu", true) or not require("cyberui/twin").mine() then
             return show(menu, tab_index, do_not_show)
         end
         local Menu = require("cyberui/menu")
@@ -99,6 +102,8 @@ function CyberUI:onShow()
     book_closed = false
     local first = not booted
     booted = true
+    -- (with its twin installed too, only the one in charge comes back or starts)
+    if not require("cyberui/twin").mine() then return end
     if from_book then
         if App.isOpen() or App.isHome() or CyberUI.isHome() then App.raise() end
     elseif first and CyberUI.isHome() then
@@ -155,6 +160,7 @@ end
 -- CyberUI is the reader's home (plugins hear it before the reader does).
 function CyberUI:onHome()
     if not self.ui.document then return false end
+    if not require("cyberui/twin").mine() then return false end
     local App = require("cyberui/app")
     if not (App.isHome() or CyberUI.isHome()) then return false end
     App.homeFromBook(self.ui)

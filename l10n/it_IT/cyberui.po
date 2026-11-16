@@ -297,7 +297,7 @@ msgstr "3/3 // VERIFICA E DECOMPRESSIONE"
 msgid "%s %s is installed. Restart KOReader to use it."
 msgstr "%s %s è installato. Riavvia KOReader per usarlo."
 
-#: cyberui/apps/addons.lua
+#: cyberui/apps/addons.lua cyberui/ui/twinswitch.lua
 msgid "%s is installed. Restart KOReader to use it."
 msgstr "%s è installato. Riavvia KOReader per usarlo."
 
@@ -2503,6 +2503,18 @@ msgid "Open CyberUI when KOReader starts and after closing a book"
 msgstr "Apri CyberUI all'avvio di KOReader e dopo aver chiuso un libro"
 
 #: cyberui/screens/settings.lua
+msgid "Corner to home"
+msgstr "Angolo per la home"
+
+#: cyberui/screens/settings.lua
+msgid "In a book, hold the bottom-right corner to come back to CyberUI's home (in place of what the corner did)"
+msgstr "In un libro, tieni premuto l'angolo in basso a destra per tornare alla home di CyberUI (al posto di ciò che faceva l'angolo)"
+
+#: cyberui/screens/settings.lua
+msgid "KOReader's gestures are not set up yet"
+msgstr "I gesti di KOReader non sono ancora configurati"
+
+#: cyberui/screens/settings.lua
 msgid "Jack-in card"
 msgstr "Scheda jack-in"
 
@@ -3508,6 +3520,14 @@ msgstr "Titoli a pixel Press Start 2P su VT323"
 msgid "KOReader's own fonts, for the plainest reading"
 msgstr "I font di KOReader, per la lettura più semplice"
 
+#: cyberui/twin.lua
+msgid "Your home, as a garden"
+msgstr "La tua home, come un giardino"
+
+#: cyberui/twin.lua
+msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
+msgstr "SolarUI è il gemello di CyberUI: la stessa home, libreria e strumenti di lettura, cresciuti come un giardino Art Nouveau invece che come un cyberdeck. Passa dall'uno all'altro quando vuoi; ognuno mantiene le proprie impostazioni."
+
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "CARTELLA // %d"
@@ -3719,6 +3739,18 @@ msgstr "Archiviazione"
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
 msgstr "Tempo di attività"
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is not installed yet. Tap to get it."
+msgstr "%s non è ancora installato. Tocca per ottenerlo."
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is switched off. Tap to switch it on."
+msgstr "%s è disattivato. Tocca per attivarlo."
+
+#: cyberui/ui/twinswitch.lua
+msgid "CyberUI is in charge. Tap to switch to %s."
+msgstr "CyberUI è al comando. Tocca per passare a %s."
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"

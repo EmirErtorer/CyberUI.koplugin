@@ -33,6 +33,8 @@ local row = require("cyberui/ui/settingrow")
 local Sleep = require("cyberui/sleep")
 local Swatch = require("cyberui/ui/swatch")
 local Theme = require("cyberui/theme")
+local Twin = require("cyberui/twin")
+local TwinSwitch = require("cyberui/ui/twinswitch")
 local Version = require("cyberui/version")
 local util = require("util")
 local _ = require("cyberui/gettext")
@@ -199,6 +201,12 @@ function SettingsScreen:home()
         row(_("Start with CyberUI"), _("Open CyberUI when KOReader starts and after closing a book"),
             Controls.Toggle:new({ on = is_home, on_change = function(on)
                 G_reader_settings:saveSetting("start_with", on and "cyberui" or "filemanager")
+                if on then Twin.claim() end
+                App.update()
+            end })),
+        row(_("Corner to home"), _("In a book, hold the bottom-right corner to come back to CyberUI's home (in place of what the corner did)"),
+            Controls.Toggle:new({ on = Twin.cornerHome(), on_change = function(on)
+                if not Twin.setCornerHome(on) then App.toast(_("KOReader's gestures are not set up yet")) end
                 App.update()
             end })),
         row(_("Jack-in card"), _("A card with the book shown while it opens"),
@@ -353,7 +361,8 @@ function SettingsScreen:build()
     local tabs = Controls.Segmented({ options = SECTIONS, value = self.section, kind = "label", on_change = function(v) self.section, self.page = v, 1; App.update() end })
     return Frame.page({
         screen = self, title = _("System"), path = "~/.cyberui/config", tab = "settings",
-        body = Layout.Column:new({ gap = th.space.m, children = { tabs, Frame.paged(self, self[self.section](self), _("PAGE")) } }),
+        -- (the twin switch first, above the sections, where it is seen)
+        body = Layout.Column:new({ gap = th.space.m, children = { TwinSwitch.build(), tabs, Frame.paged(self, self[self.section](self), _("PAGE")) } }),
     })
 end
 

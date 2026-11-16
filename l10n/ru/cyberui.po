@@ -306,7 +306,7 @@ msgstr "3/3 // ПРОВЕРКА И РАСПАКОВКА"
 msgid "%s %s is installed. Restart KOReader to use it."
 msgstr "%s %s установлен. Перезапустите KOReader, чтобы использовать."
 
-#: cyberui/apps/addons.lua
+#: cyberui/apps/addons.lua cyberui/ui/twinswitch.lua
 msgid "%s is installed. Restart KOReader to use it."
 msgstr "%s установлен. Перезапустите KOReader, чтобы использовать."
 
@@ -2530,6 +2530,18 @@ msgid "Open CyberUI when KOReader starts and after closing a book"
 msgstr "Открывать CyberUI при запуске KOReader и после закрытия книги"
 
 #: cyberui/screens/settings.lua
+msgid "Corner to home"
+msgstr "Угол — домой"
+
+#: cyberui/screens/settings.lua
+msgid "In a book, hold the bottom-right corner to come back to CyberUI's home (in place of what the corner did)"
+msgstr "В книге удерживайте правый нижний угол, чтобы вернуться на главный экран CyberUI (вместо прежнего действия угла)"
+
+#: cyberui/screens/settings.lua
+msgid "KOReader's gestures are not set up yet"
+msgstr "Жесты KOReader ещё не настроены"
+
+#: cyberui/screens/settings.lua
 msgid "Jack-in card"
 msgstr "Карточка jack-in"
 
@@ -3542,6 +3554,14 @@ msgstr "Пиксельные заголовки Press Start 2P поверх VT32
 msgid "KOReader's own fonts, for the plainest reading"
 msgstr "Собственные шрифты KOReader для самого простого чтения"
 
+#: cyberui/twin.lua
+msgid "Your home, as a garden"
+msgstr "Ваш дом в виде сада"
+
+#: cyberui/twin.lua
+msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
+msgstr "SolarUI — близнец CyberUI: тот же главный экран, библиотека и инструменты чтения, но в виде сада в стиле модерн, а не кибердеки. Переключайтесь между ними в любой момент; у каждого свои настройки."
+
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "ПАПКА // %d"
@@ -3757,6 +3777,18 @@ msgstr "Хранилище"
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
 msgstr "Время работы"
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is not installed yet. Tap to get it."
+msgstr "%s ещё не установлен. Нажмите, чтобы получить."
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is switched off. Tap to switch it on."
+msgstr "%s выключен. Нажмите, чтобы включить."
+
+#: cyberui/ui/twinswitch.lua
+msgid "CyberUI is in charge. Tap to switch to %s."
+msgstr "Сейчас главный CyberUI. Нажмите, чтобы перейти на %s."
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"

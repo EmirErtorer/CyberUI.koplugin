@@ -297,7 +297,7 @@ msgstr "3/3 // ΕΛΕΓΧΟΣ ΚΑΙ ΑΠΟΣΥΜΠΙΕΣΗ"
 msgid "%s %s is installed. Restart KOReader to use it."
 msgstr "Το %s %s εγκαταστάθηκε. Επανεκκινήστε το KOReader για να το χρησιμοποιήσετε."
 
-#: cyberui/apps/addons.lua
+#: cyberui/apps/addons.lua cyberui/ui/twinswitch.lua
 msgid "%s is installed. Restart KOReader to use it."
 msgstr "Το %s εγκαταστάθηκε. Επανεκκινήστε το KOReader για να το χρησιμοποιήσετε."
 
@@ -2503,6 +2503,18 @@ msgid "Open CyberUI when KOReader starts and after closing a book"
 msgstr "Άνοιγμα του CyberUI όταν ξεκινά το KOReader και μετά το κλείσιμο ενός βιβλίου"
 
 #: cyberui/screens/settings.lua
+msgid "Corner to home"
+msgstr "Γωνία για αρχική"
+
+#: cyberui/screens/settings.lua
+msgid "In a book, hold the bottom-right corner to come back to CyberUI's home (in place of what the corner did)"
+msgstr "Σε ένα βιβλίο, κρατήστε πατημένη την κάτω δεξιά γωνία για να επιστρέψετε στην αρχική του CyberUI (αντί για ό,τι έκανε η γωνία)"
+
+#: cyberui/screens/settings.lua
+msgid "KOReader's gestures are not set up yet"
+msgstr "Οι χειρονομίες του KOReader δεν έχουν ρυθμιστεί ακόμη"
+
+#: cyberui/screens/settings.lua
 msgid "Jack-in card"
 msgstr "Κάρτα jack-in"
 
@@ -3508,6 +3520,14 @@ msgstr "Τίτλοι pixel Press Start 2P πάνω από VT323"
 msgid "KOReader's own fonts, for the plainest reading"
 msgstr "Οι δικές του γραμματοσειρές του KOReader, για την πιο απλή ανάγνωση"
 
+#: cyberui/twin.lua
+msgid "Your home, as a garden"
+msgstr "Η αρχική σας, ως κήπος"
+
+#: cyberui/twin.lua
+msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
+msgstr "Το SolarUI είναι το δίδυμο του CyberUI: η ίδια αρχική, βιβλιοθήκη και εργαλεία ανάγνωσης, ως κήπος Αρ Νουβό αντί για cyberdeck. Αλλάξτε ανάμεσά τους όποτε θέλετε· το καθένα κρατά τις δικές του ρυθμίσεις."
+
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "ΦΑΚΕΛΟΣ // %d"
@@ -3719,6 +3739,18 @@ msgstr "Αποθηκευτικός χώρος"
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
 msgstr "Χρόνος λειτουργίας"
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is not installed yet. Tap to get it."
+msgstr "Το %s δεν έχει εγκατασταθεί ακόμη. Πατήστε για να το αποκτήσετε."
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is switched off. Tap to switch it on."
+msgstr "Το %s είναι απενεργοποιημένο. Πατήστε για να το ενεργοποιήσετε."
+
+#: cyberui/ui/twinswitch.lua
+msgid "CyberUI is in charge. Tap to switch to %s."
+msgstr "Τώρα έχει τον έλεγχο το CyberUI. Πατήστε για να αλλάξετε σε %s."
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"

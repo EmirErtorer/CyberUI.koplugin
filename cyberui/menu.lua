@@ -609,6 +609,11 @@ function Menu:deckButtons()
             InkAway.annotate()
         end }
     end
+    -- hand over to the twin UI (or get it)
+    out[#out + 1] = { label = require("cyberui/twin").OTHER.name, icon = "home", callback = function()
+        self:close()
+        require("cyberui/twin").switch()
+    end }
     if Device:canRestart() then
         out[#out + 1] = { label = _("Restart"), icon = "restart", callback = function()
             self:close()

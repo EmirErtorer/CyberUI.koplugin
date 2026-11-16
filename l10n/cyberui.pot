@@ -296,7 +296,7 @@ msgstr ""
 msgid "%s %s is installed. Restart KOReader to use it."
 msgstr ""
 
-#: cyberui/apps/addons.lua
+#: cyberui/apps/addons.lua cyberui/ui/twinswitch.lua
 msgid "%s is installed. Restart KOReader to use it."
 msgstr ""
 
@@ -2502,6 +2502,18 @@ msgid "Open CyberUI when KOReader starts and after closing a book"
 msgstr ""
 
 #: cyberui/screens/settings.lua
+msgid "Corner to home"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "In a book, hold the bottom-right corner to come back to CyberUI's home (in place of what the corner did)"
+msgstr ""
+
+#: cyberui/screens/settings.lua
+msgid "KOReader's gestures are not set up yet"
+msgstr ""
+
+#: cyberui/screens/settings.lua
 msgid "Jack-in card"
 msgstr ""
 
@@ -3507,6 +3519,14 @@ msgstr ""
 msgid "KOReader's own fonts, for the plainest reading"
 msgstr ""
 
+#: cyberui/twin.lua
+msgid "Your home, as a garden"
+msgstr ""
+
+#: cyberui/twin.lua
+msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
+msgstr ""
+
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr ""
@@ -3717,6 +3737,18 @@ msgstr ""
 
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
+msgstr ""
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is not installed yet. Tap to get it."
+msgstr ""
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is switched off. Tap to switch it on."
+msgstr ""
+
+#: cyberui/ui/twinswitch.lua
+msgid "CyberUI is in charge. Tap to switch to %s."
 msgstr ""
 
 #: cyberui/update/updater.lua

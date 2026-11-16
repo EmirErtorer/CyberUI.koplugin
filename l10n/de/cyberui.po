@@ -297,7 +297,7 @@ msgstr "3/3 // PRÜFEN UND ENTPACKEN"
 msgid "%s %s is installed. Restart KOReader to use it."
 msgstr "%s %s ist installiert. Starte KOReader neu, um es zu nutzen."
 
-#: cyberui/apps/addons.lua
+#: cyberui/apps/addons.lua cyberui/ui/twinswitch.lua
 msgid "%s is installed. Restart KOReader to use it."
 msgstr "%s ist installiert. Starte KOReader neu, um es zu nutzen."
 
@@ -2503,6 +2503,18 @@ msgid "Open CyberUI when KOReader starts and after closing a book"
 msgstr "CyberUI öffnen, wenn KOReader startet und nach dem Schließen eines Buchs"
 
 #: cyberui/screens/settings.lua
+msgid "Corner to home"
+msgstr "Ecke nach Hause"
+
+#: cyberui/screens/settings.lua
+msgid "In a book, hold the bottom-right corner to come back to CyberUI's home (in place of what the corner did)"
+msgstr "Halte in einem Buch die untere rechte Ecke gedrückt, um zu CyberUIs Startseite zurückzukehren (statt der bisherigen Eckenaktion)"
+
+#: cyberui/screens/settings.lua
+msgid "KOReader's gestures are not set up yet"
+msgstr "Die Gesten von KOReader sind noch nicht eingerichtet"
+
+#: cyberui/screens/settings.lua
 msgid "Jack-in card"
 msgstr "Jack-in-Karte"
 
@@ -3508,6 +3520,14 @@ msgstr "Pixel-Überschriften in Press Start 2P über VT323"
 msgid "KOReader's own fonts, for the plainest reading"
 msgstr "Die eigenen Schriften von KOReader für schlichtestes Lesen"
 
+#: cyberui/twin.lua
+msgid "Your home, as a garden"
+msgstr "Dein Zuhause als Garten"
+
+#: cyberui/twin.lua
+msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
+msgstr "SolarUI ist der Zwilling von CyberUI: dieselbe Startseite, Bibliothek und Lesewerkzeuge, gewachsen als Jugendstil-Garten statt als Cyberdeck. Wechsle jederzeit zwischen beiden; jedes behält seine eigenen Einstellungen."
+
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "ORDNER // %d"
@@ -3719,6 +3739,18 @@ msgstr "Speicherplatz"
 #: cyberui/ui/statusbar.lua
 msgid "Uptime"
 msgstr "Laufzeit"
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is not installed yet. Tap to get it."
+msgstr "%s ist noch nicht installiert. Tippen, um es zu holen."
+
+#: cyberui/ui/twinswitch.lua
+msgid "%s is switched off. Tap to switch it on."
+msgstr "%s ist ausgeschaltet. Tippen, um es einzuschalten."
+
+#: cyberui/ui/twinswitch.lua
+msgid "CyberUI is in charge. Tap to switch to %s."
+msgstr "CyberUI ist aktiv. Tippen, um zu %s zu wechseln."
 
 #: cyberui/update/updater.lua
 msgid "DOWNLOADING %s (%.1f MB)"

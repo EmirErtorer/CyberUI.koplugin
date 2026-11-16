@@ -18,10 +18,10 @@ local logger = require("logger")
 
 local Core = { skins = {} }
 
--- Is the styled look wanted? The main switch (System > Dialogs) and, for a skin in a group, the
+-- Is the styled look wanted? Only while this UI is in charge (see twin.lua), and then the main switch (System > Dialogs) and, for a skin in a group, the
 -- group's own. Asked each time a widget is shown, so a switch works at once.
 function Core.wanted(skin_name)
-    if not Settings.get("styled_widgets", true) then return false end
+    if not Settings.get("styled_widgets", true) or not require("cyberui/twin").mine() then return false end
     local Groups = require("cyberui/skin/groups")
     local group = skin_name and Groups.of(skin_name)
     return not group or Settings.get(Groups.key(group), true)
