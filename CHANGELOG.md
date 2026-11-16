@@ -6,6 +6,15 @@ All notable changes to CyberUI are listed here, newest first. Versions follow
 is on its [GitHub release](https://github.com/EmirErtorer/CyberUI.koplugin/releases);
 versions marked *Prerelease* are test builds.
 
+## [1.4.0] - 2026-11-17
+
+A twin: CyberUI and SolarUI, the new Art Nouveau garden home, switch with one tap.
+
+### Added
+
+- **The twin switch.** A plaque at the top of System, half cyberdeck and half garden, and a tile in the menu's Controls tab, hand home over to SolarUI at once and back. Only the UI in charge opens at start, comes back after a book and styles KOReader's windows, menus and sleep screen; each keeps its own settings. Without SolarUI the switch offers to install it.
+- **Corner to home.** A Home setting makes holding the bottom-right corner in a book open CyberUI's home, and the corner follows whichever twin is in charge.
+
 ## [1.3.2] - 2026-11-12
 
 A hotfix for crashes with highlights in Chinese, Japanese and other scripts whose letters take several bytes.
