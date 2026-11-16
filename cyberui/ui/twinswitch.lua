@@ -50,19 +50,23 @@ local function picture(screen_type, w, h, active)
     return out
 end
 
+-- How much of the page's width the plaque takes, centred on it.
+local SHARE = 0.8
+
 -- The plaque, always five times as wide as it is high.
 local Plaque = Element:extend({})
 
--- A fifth of the width it is given.
+-- A fifth of the width it takes.
 function Plaque:naturalHeight(w)
-    return math.floor((w or self.w or Theme.px(500)) / 5)
+    return math.floor((w or self.w or Theme.px(500)) * SHARE / 5)
 end
 
--- Draw the plaque across the box.
+-- Draw the plaque in the middle of the box.
 function Plaque:draw(bb, x, y)
     if self.w < 2 or self.h < 2 then return end
-    local img = picture(bb:getType(), self.w, self.h, self.active)
-    if img then bb:blitFrom(img, x, y, 0, 0, self.w, self.h) end
+    local w = math.floor(self.w * SHARE)
+    local img = picture(bb:getType(), w, self.h, self.active)
+    if img then bb:blitFrom(img, x + math.floor((self.w - w) / 2), y, 0, 0, w, self.h) end
 end
 
 -- What a tap does, in a line.
