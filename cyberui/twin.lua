@@ -137,12 +137,10 @@ function Twin.switch()
     local App = require("cyberui/app")
     App.setHome(false)
     require("cyberui/park").finish()   -- a book kept open under home closes; the twin opens from the file browser
-    App.close()
-    local UIManager = require("ui/uimanager")
-    UIManager:nextTick(function()
-        local fm = require("apps/filemanager/filemanager").instance
-        if fm then fm:handleEvent(require("ui/event"):new(Twin.OTHER.open_event)) end
-    end)
+    -- the twin opens over this one, then this one closes under it, so KOReader's file browser never shows between them
+    local fm = require("apps/filemanager/filemanager").instance
+    if fm then fm:handleEvent(require("ui/event"):new(Twin.OTHER.open_event)) end
+    require("ui/uimanager"):nextTick(function() App.close() end)
 end
 
 return Twin
