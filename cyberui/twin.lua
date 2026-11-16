@@ -60,11 +60,6 @@ function Twin.mine()
     return Twin.active() == Twin.ME
 end
 
--- Make this twin the one in charge (it was chosen as KOReader's start screen).
-function Twin.claim()
-    G_reader_settings:saveSetting(KEY, Twin.ME)
-end
-
 -- KOReader's gesture bindings (shared by the gestures module of the file
 -- browser and of the reader) and a function writing them; nil when there are
 -- none yet (KOReader writes them at its first start).
@@ -103,14 +98,25 @@ function Twin.setCornerHome(on)
     return true
 end
 
--- A corner set to open this twin's home opens the other's from now on.
-local function cornerFollows()
+-- A corner set to open either twin's home opens the home of twin `to` from now on.
+local function cornerTo(to)
     local data, write = gestures()
     local held = data and data.gesture_reader[CORNER]
-    if type(held) == "table" and held[ACTIONS[Twin.ME]] then
-        data.gesture_reader[CORNER] = { [ACTIONS[Twin.OTHER.id]] = true }
-        write()
+    if type(held) ~= "table" then return end
+    for id, action in pairs(ACTIONS) do
+        if id ~= to and held[action] then
+            data.gesture_reader[CORNER] = { [ACTIONS[to]] = true }
+            write()
+            return
+        end
     end
+end
+
+-- Make this twin the one in charge (it was chosen as KOReader's start screen);
+-- a corner set to the other twin's home comes along.
+function Twin.claim()
+    G_reader_settings:saveSetting(KEY, Twin.ME)
+    cornerTo(Twin.ME)
 end
 
 -- The other twin's state: "ready", "disabled", "restart" or "missing" (see apps/addons.lua).
@@ -127,7 +133,7 @@ function Twin.switch()
     local G = G_reader_settings
     G:saveSetting(KEY, Twin.OTHER.id)
     if G:readSetting("start_with") == Twin.ME then G:saveSetting("start_with", Twin.OTHER.id) end
-    cornerFollows()
+    cornerTo(Twin.OTHER.id)
     local App = require("cyberui/app")
     App.setHome(false)
     require("cyberui/park").finish()   -- a book kept open under home closes; the twin opens from the file browser
