@@ -57,26 +57,7 @@ end
 -- Is this twin the one in charge? Asked whenever a window or menu is about to
 -- be styled, so a switch takes effect at once.
 function Twin.mine()
-    -- Once, a little after this UI first opens with its twin not installed: a
--- word about the twin with an Install button. Never shown again after it
--- was seen (whatever the answer), nor while a dialog is open.
-local announced = false
-function Twin.announceSoon()
-    local Settings = require("cyberui/settings")
-    if announced or Settings.get("twin_told", false) then return end
-    announced = true
-    require("ui/uimanager"):scheduleIn(4, function()
-        local App = require("cyberui/app")
-        local Addons = require("cyberui/apps/addons")
-        if not App.isOpen() or (App.overlay and App.overlay()) or Addons.status(Twin.OTHER) ~= "missing" then return end
-        Settings.save("twin_told", true)
-        App.confirm({ icon = Twin.OTHER.icon, title = string.format(_("Meet %s"), Twin.OTHER.name), detail = Twin.OTHER.tagline,
-            text = Twin.OTHER.description .. "\n\n" .. string.format(_("Free, from github.com/%s. Needs Wi-Fi."), Twin.OTHER.repo),
-            ok = _("Install"), cancel = _("Not now"), on_ok = function() Addons.install(Twin.OTHER) end })
-    end)
-end
-
-return Twin.active() == Twin.ME
+    return Twin.active() == Twin.ME
 end
 
 -- KOReader's gesture bindings (shared by the gestures module of the file

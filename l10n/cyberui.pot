@@ -312,15 +312,15 @@ msgstr ""
 msgid "%s is switched on. Restart KOReader to use it."
 msgstr ""
 
-#: cyberui/apps/addons.lua cyberui/screens/updates.lua cyberui/twin.lua
+#: cyberui/apps/addons.lua cyberui/screens/updates.lua
 msgid "Install"
 msgstr ""
 
-#: cyberui/apps/addons.lua cyberui/twin.lua
+#: cyberui/apps/addons.lua
 msgid "Not now"
 msgstr ""
 
-#: cyberui/apps/addons.lua cyberui/twin.lua
+#: cyberui/apps/addons.lua
 msgid "Free, from github.com/%s. Needs Wi-Fi."
 msgstr ""
 
@@ -3525,10 +3525,6 @@ msgstr ""
 
 #: cyberui/twin.lua
 msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
-msgstr ""
-
-#: cyberui/twin.lua
-msgid "Meet %s"
 msgstr ""
 
 #: cyberui/ui/cover.lua

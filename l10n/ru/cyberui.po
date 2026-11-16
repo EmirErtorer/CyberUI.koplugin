@@ -322,15 +322,15 @@ msgstr "%s установлен, но выключен в плагинах KORea
 msgid "%s is switched on. Restart KOReader to use it."
 msgstr "%s включён. Перезапустите KOReader, чтобы использовать."
 
-#: cyberui/apps/addons.lua cyberui/screens/updates.lua cyberui/twin.lua
+#: cyberui/apps/addons.lua cyberui/screens/updates.lua
 msgid "Install"
 msgstr "Установить"
 
-#: cyberui/apps/addons.lua cyberui/twin.lua
+#: cyberui/apps/addons.lua
 msgid "Not now"
 msgstr "Не сейчас"
 
-#: cyberui/apps/addons.lua cyberui/twin.lua
+#: cyberui/apps/addons.lua
 msgid "Free, from github.com/%s. Needs Wi-Fi."
 msgstr "Бесплатно, с github.com/%s. Нужен Wi-Fi."
 
@@ -3561,10 +3561,6 @@ msgstr "Ваш дом в виде сада"
 #: cyberui/twin.lua
 msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
 msgstr "SolarUI — близнец CyberUI: тот же главный экран, библиотека и инструменты чтения, но в виде сада в стиле модерн, а не кибердеки. Переключайтесь между ними в любой момент; у каждого свои настройки."
-
-#: cyberui/twin.lua
-msgid "Meet %s"
-msgstr "Знакомьтесь: %s"
 
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"

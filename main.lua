@@ -108,7 +108,6 @@ function CyberUI:onShow()
         if App.isOpen() or App.isHome() or CyberUI.isHome() then App.raise() end
     elseif first and CyberUI.isHome() then
         App.open()
-        require("cyberui/twin").announceSoon()
     end
 end
 
@@ -153,7 +152,6 @@ function CyberUI:onCyberUIHome()
         App.homeFromBook(self.ui)
     else
         App.open()
-        require("cyberui/twin").announceSoon()
     end
     return true
 end
