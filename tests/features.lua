@@ -611,7 +611,7 @@ do
     local QRCode = require("cyberui/ui/qrcode")
     local qr = QRCode:new({ text = "https://buymeacoffee.com/emirertorer", size = 150 })
     qr:layout(nil, nil)
-    Kit.ok(qr.grid ~= nil and #qr.grid >= 21 and qr.w == qr.h and qr.w % qr:module() == 0, "the QR code is a square of whole modules")
+    Kit.ok(qr.code ~= nil and qr.code.n >= 21 and qr.w == qr.h and qr.w % qr:module() == 0, "the QR code is a square of whole modules")
     local bb = Kit.canvas(400, 400)
     require("cyberui/gfx/paint").fill(bb, 0, 0, 400, 400, require("ffi/blitbuffer").COLOR_BLACK)
     qr:paint(bb, 10, 10)

@@ -130,6 +130,16 @@ end
 function Twin.switch()
     local Addons = require("cyberui/apps/addons")
     if Addons.status(Twin.OTHER) ~= "ready" then return Addons.launch(Twin.OTHER) end
+    -- asked first, so a stray tap never swaps the whole look
+    require("cyberui/app").confirm({ icon = "home", title = string.format(_("Switch to %s?"), Twin.OTHER.name),
+        text = string.format(_("Home, the menus and KOReader's windows will look like %s. You can switch back at any time."), Twin.OTHER.name),
+        ok = _("Switch"), on_ok = Twin.handOver })
+end
+
+-- Hand over to the other twin at once (Twin.switch asks first).
+function Twin.handOver()
+    local Addons = require("cyberui/apps/addons")
+    if Addons.status(Twin.OTHER) ~= "ready" then return Addons.launch(Twin.OTHER) end
     local G = G_reader_settings
     G:saveSetting(KEY, Twin.OTHER.id)
     if G:readSetting("start_with") == Twin.ME then G:saveSetting("start_with", Twin.OTHER.id) end

@@ -3528,6 +3528,18 @@ msgstr "Η αρχική σας, ως κήπος"
 msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
 msgstr "Το SolarUI είναι το δίδυμο του CyberUI: η ίδια αρχική, βιβλιοθήκη και εργαλεία ανάγνωσης, ως κήπος Αρ Νουβό αντί για cyberdeck. Αλλάξτε ανάμεσά τους όποτε θέλετε· το καθένα κρατά τις δικές του ρυθμίσεις."
 
+#: cyberui/twin.lua
+msgid "Switch to %s?"
+msgstr "Αλλαγή σε %s;"
+
+#: cyberui/twin.lua
+msgid "Home, the menus and KOReader's windows will look like %s. You can switch back at any time."
+msgstr "Η αρχική, τα μενού και τα παράθυρα του KOReader θα μοιάζουν με το %s. Μπορείτε να επιστρέψετε όποτε θέλετε."
+
+#: cyberui/twin.lua
+msgid "Switch"
+msgstr "Αλλαγή"
+
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "ΦΑΚΕΛΟΣ // %d"

@@ -3528,6 +3528,18 @@ msgstr "Dein Zuhause als Garten"
 msgid "SolarUI is the twin of CyberUI: the same home, library and reading tools, grown as an Art Nouveau garden instead of a cyberdeck. Switch between the two at any time; each keeps its own settings."
 msgstr "SolarUI ist der Zwilling von CyberUI: dieselbe Startseite, Bibliothek und Lesewerkzeuge, gewachsen als Jugendstil-Garten statt als Cyberdeck. Wechsle jederzeit zwischen beiden; jedes behält seine eigenen Einstellungen."
 
+#: cyberui/twin.lua
+msgid "Switch to %s?"
+msgstr "Zu %s wechseln?"
+
+#: cyberui/twin.lua
+msgid "Home, the menus and KOReader's windows will look like %s. You can switch back at any time."
+msgstr "Startseite, Menüs und die Fenster von KOReader sehen dann wie %s aus. Du kannst jederzeit zurückwechseln."
+
+#: cyberui/twin.lua
+msgid "Switch"
+msgstr "Wechseln"
+
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "ORDNER // %d"
