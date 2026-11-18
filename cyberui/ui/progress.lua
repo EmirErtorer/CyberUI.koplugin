@@ -46,8 +46,15 @@ local function segments(self, bb, x, y, c)
     local gap = th.size.segment_gap
     local cell = math.floor((self.w - gap * (n - 1)) / n)
     if cell < 2 then n, cell = math.max(1, math.floor(self.w / 4)), 2 end
-    local filled = math.floor(self.v * n + 0.5)
     local hair = th.size.hair
+    -- a single cell fills as far as the value (whole cells would show only empty or full)
+    if n == 1 then
+        Paint.frame(bb, x, y, self.w, self.h, hair, c)
+        local fw = math.floor(self.w * self.v + 0.5)
+        if fw > 0 then Paint.fill(bb, x, y, fw, self.h, c) end
+        return
+    end
+    local filled = math.floor(self.v * n + 0.5)
     -- the last cell takes the rounding left over so the bar ends flush
     local cx = x
     for i = 1, n do
