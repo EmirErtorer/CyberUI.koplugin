@@ -6,6 +6,19 @@ All notable changes to CyberUI are listed here, newest first. Versions follow
 is on its [GitHub release](https://github.com/EmirErtorer/CyberUI.koplugin/releases);
 versions marked *Prerelease* are test builds.
 
+## [1.4.1] - 2026-11-18
+
+Fixes from your reports.
+
+### Added
+
+- **Switching to SolarUI asks first**, so a stray tap never swaps the whole look.
+
+### Fixed
+
+- **KOReader crashed when opening System, About** on newer KOReader versions, whose QR codes are made differently now.
+- **Progress under covers in the library** now fills to the exact share; it showed only empty or full.
+
 ## [1.4.0] - 2026-11-17
 
 A twin: CyberUI and SolarUI, the new Art Nouveau garden home, switch with one tap.
