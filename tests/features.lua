@@ -565,6 +565,23 @@ do
         Kit.ok(readThrough(b, nil, 300, 2.5) == full(b), "not measured yet: 2.5 s a page passes the 2 s floor")
         Kit.ok(Pace.need(Pace.new(nil), 300) == Pace.PACE_FLOOR, "the floor is the need with no pace known")
     end
+    -- the Active tab: gigs first, however little read, then the many plain books
+    do
+        local gig = book("epub", 600)
+        local d = Ledger.data()
+        local q = { price = 99, days = 21, t = os.time() }
+        q.sig = Ledger.sign(table.concat({ "q", gig, q.price, q.days, q.t }, "|"))
+        d.quotes[gig] = q
+        local list = Gigs.active()
+        local first_plain
+        for i, a in ipairs(list) do if not a.gig then first_plain = first_plain or i end end
+        local plain_ahead = false
+        for i, a in ipairs(list) do if a.gig and first_plain and i > first_plain then plain_ahead = true end end
+        local at
+        for i, x in ipairs(list) do if x.path == gig then at = i end end
+        Kit.ok(at and first_plain and at < first_plain and list[at].milestones == 0, "a gig not yet read comes before every plain book in the Active list (" .. tostring(at) .. " < " .. tostring(first_plain) .. ")")
+        Kit.ok(first_plain and list[first_plain].milestones >= 3 and not plain_ahead, "plain books, even ones further along, all come after the gigs")
+    end
     -- words are counted in every script
     Kit.ok(Pace.countWords("one two  three\nfour") == 4, "words are runs of non-spaces")
     Kit.ok(Pace.countWords("日本語の本 and two") == 7, "each Chinese or Japanese character is a word")

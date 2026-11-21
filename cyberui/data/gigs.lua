@@ -496,8 +496,9 @@ function Gigs.earnings(path)
     return e
 end
 
--- The books paying now and not finished, gigs and plain rate alike, the most
--- advanced first: { path, gig, price, milestones (paid), earned }.
+-- The books paying now and not finished: the gigs first, then the books at
+-- the plain rate (there may be many: every book opened joins), each group the
+-- most advanced first: { path, gig, price, milestones (paid), earned, seen }.
 function Gigs.active()
     local d = data()
     local list = {}
@@ -511,6 +512,7 @@ function Gigs.active()
         end
     end
     table.sort(list, function(a, b)
+        if a.gig ~= b.gig then return a.gig end
         if a.milestones ~= b.milestones then return a.milestones > b.milestones end
         if a.seen ~= b.seen then return a.seen > b.seen end
         return a.path < b.path
