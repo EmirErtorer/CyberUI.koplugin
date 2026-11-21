@@ -41,8 +41,14 @@ function Fullpage.build(o)
     end
     if (o.pages or 1) > 1 then kids[#kids + 1] = Dialog.pager(o.page, o.pages, o.show) end
     for _i, el in ipairs(o.footer or {}) do kids[#kids + 1] = el end
-    return Panel:new({ shape = "none", fill = "bg", pad = { th.space.s, side, th.space.m, side }, width = Screen:getWidth(), height = Screen:getHeight(),
+    local panel = Panel:new({ shape = "none", fill = "bg", pad = { th.space.s, side, th.space.m, side }, width = Screen:getWidth(), height = Screen:getHeight(),
         child = Layout.Column:new({ gap = th.space.m, children = kids }) })
+    -- the page turn keys turn the list's pages (the popup it is shown in hands them here)
+    panel.on_page = function(delta)
+        local p = math.max(1, math.min((o.page or 1) + delta, o.pages or 1))
+        if p ~= (o.page or 1) and o.show then o.show(p) end
+    end
+    return panel
 end
 
 return Fullpage

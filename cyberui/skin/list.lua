@@ -220,6 +220,11 @@ Core.register({
             on_outside = function() end,
             on_back = function() menu:onClose(); return true end,
             on_swipe = function(dir)
+                -- a swipe down closes a list that has a title, as KOReader's own lists do
+                if dir == "south" then
+                    if not menu.no_title then menu:onClose() end
+                    return
+                end
                 if dir == "west" then state.page = (state.page or 1) + 1 elseif dir == "east" then state.page = (state.page or 1) - 1 else return end
                 state.redraw()
             end,

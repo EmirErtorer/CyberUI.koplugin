@@ -125,9 +125,10 @@ function Dialog.pager(page, pages, show)
     local th = Theme.get()
     local function go(p) return function() show(p) end end
     return Layout.Row:new({ gap = th.space.s, children = {
-        Button:new({ label = "<", grow = true, variant = page > 1 and "soft" or "ghost", on_tap = page > 1 and go(page - 1) or nil }),
+        -- (a long press goes to the first or the last page)
+        Button:new({ label = "<", grow = true, variant = page > 1 and "soft" or "ghost", on_tap = page > 1 and go(page - 1) or nil, on_hold = page > 1 and go(1) or nil }),
         Label:new({ text = page .. " / " .. pages, kind = "mono", align = "center" }),
-        Button:new({ label = ">", grow = true, variant = page < pages and "soft" or "ghost", on_tap = page < pages and go(page + 1) or nil }),
+        Button:new({ label = ">", grow = true, variant = page < pages and "soft" or "ghost", on_tap = page < pages and go(page + 1) or nil, on_hold = page < pages and go(pages) or nil }),
     } })
 end
 
