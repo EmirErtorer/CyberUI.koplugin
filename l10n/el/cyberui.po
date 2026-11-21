@@ -3562,20 +3562,48 @@ msgid "FINISH PAYS %s"
 msgstr "ΤΟ ΤΕΛΟΣ ΠΛΗΡΩΝΕΙ %s"
 
 #: cyberui/ui/earnings.lua
+msgid "BY WORDS"
+msgstr "ΜΕ ΒΑΣΗ ΤΙΣ ΛΕΞΕΙΣ"
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once its words could have been read."
 msgstr "Μια σελίδα μετράει μόλις οι λέξεις της θα μπορούσαν να έχουν διαβαστεί."
+
+#: cyberui/ui/earnings.lua
+msgid "BY YOUR PACE"
+msgstr "ΜΕ ΒΑΣΗ ΤΟΝ ΡΥΘΜΟ ΣΟΥ"
 
 #: cyberui/ui/earnings.lua
 msgid "A page counts after a third of your usual time on a page of this book."
 msgstr "Μια σελίδα μετράει μετά από το ένα τρίτο του συνηθισμένου σου χρόνου σε μια σελίδα αυτού του βιβλίου."
 
 #: cyberui/ui/earnings.lua
+msgid "MEASURING"
+msgstr "ΜΕΤΡΙΕΤΑΙ"
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once it could have been read."
 msgstr "Μια σελίδα μετράει μόλις θα μπορούσε να έχει διαβαστεί."
 
 #: cyberui/ui/earnings.lua
+msgid "How pages count"
+msgstr "Πώς μετράνε οι σελίδες"
+
+#: cyberui/ui/earnings.lua
 msgid "PAGES COUNTED %d // TOO QUICK %d"
 msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΜΕΤΡΗΣΑΝ %d // ΠΟΛΥ ΓΡΗΓΟΡΑ %d"
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr "ΤΙΜΗ GIG"
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr "ΑΠΛΗ ΤΙΜΗ"
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
+msgstr "ΧΩΡΙΣ ΠΛΗΡΩΜΗ"
 
 #: cyberui/ui/earnings.lua
 msgid "This file is too short to pay eddies."
@@ -3592,18 +3620,6 @@ msgstr "ΤΕΛΕΙΩΣΕ: ΟΛΑ ΠΛΗΡΩΘΗΚΑΝ"
 #: cyberui/ui/earnings.lua
 msgid "%s STILL TO EARN // FINISH PAYS %s"
 msgstr "%s ΑΚΟΜΑ ΝΑ ΚΕΡΔΙΣΕΙΣ // ΤΟ ΤΕΛΟΣ ΠΛΗΡΩΝΕΙ %s"
-
-#: cyberui/ui/earnings.lua
-msgid "GIG RATE"
-msgstr "ΤΙΜΗ GIG"
-
-#: cyberui/ui/earnings.lua
-msgid "PLAIN RATE"
-msgstr "ΑΠΛΗ ΤΙΜΗ"
-
-#: cyberui/ui/earnings.lua
-msgid "NO PAY"
-msgstr "ΧΩΡΙΣ ΠΛΗΡΩΜΗ"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

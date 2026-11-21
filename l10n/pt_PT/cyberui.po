@@ -3562,20 +3562,48 @@ msgid "FINISH PAYS %s"
 msgstr "TERMINAR PAGA %s"
 
 #: cyberui/ui/earnings.lua
+msgid "BY WORDS"
+msgstr "POR PALAVRAS"
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once its words could have been read."
 msgstr "Uma página conta assim que as suas palavras poderiam ter sido lidas."
+
+#: cyberui/ui/earnings.lua
+msgid "BY YOUR PACE"
+msgstr "AO TEU RITMO"
 
 #: cyberui/ui/earnings.lua
 msgid "A page counts after a third of your usual time on a page of this book."
 msgstr "Uma página conta depois de um terço do teu tempo habitual numa página deste livro."
 
 #: cyberui/ui/earnings.lua
+msgid "MEASURING"
+msgstr "A MEDIR"
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once it could have been read."
 msgstr "Uma página conta assim que poderia ter sido lida."
 
 #: cyberui/ui/earnings.lua
+msgid "How pages count"
+msgstr "Como as páginas contam"
+
+#: cyberui/ui/earnings.lua
 msgid "PAGES COUNTED %d // TOO QUICK %d"
 msgstr "PÁGINAS CONTADAS %d // DEMASIADO RÁPIDAS %d"
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr "TAXA DE GIG"
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr "TAXA NORMAL"
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
+msgstr "SEM PAGAMENTO"
 
 #: cyberui/ui/earnings.lua
 msgid "This file is too short to pay eddies."
@@ -3592,18 +3620,6 @@ msgstr "TERMINADO: TUDO PAGO"
 #: cyberui/ui/earnings.lua
 msgid "%s STILL TO EARN // FINISH PAYS %s"
 msgstr "FALTAM %s PARA GANHAR // TERMINAR PAGA %s"
-
-#: cyberui/ui/earnings.lua
-msgid "GIG RATE"
-msgstr "TAXA DE GIG"
-
-#: cyberui/ui/earnings.lua
-msgid "PLAIN RATE"
-msgstr "TAXA NORMAL"
-
-#: cyberui/ui/earnings.lua
-msgid "NO PAY"
-msgstr "SEM PAGAMENTO"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

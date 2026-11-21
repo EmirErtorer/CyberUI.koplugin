@@ -3562,20 +3562,48 @@ msgid "FINISH PAYS %s"
 msgstr "BİTİRİNCE %s"
 
 #: cyberui/ui/earnings.lua
+msgid "BY WORDS"
+msgstr "KELİMEYE GÖRE"
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once its words could have been read."
 msgstr "Bir sayfa, kelimeleri okunabilecek kadar kaldığında sayılır."
+
+#: cyberui/ui/earnings.lua
+msgid "BY YOUR PACE"
+msgstr "SENİN HIZINA GÖRE"
 
 #: cyberui/ui/earnings.lua
 msgid "A page counts after a third of your usual time on a page of this book."
 msgstr "Bir sayfa, bu kitapta bir sayfaya ayırdığın olağan sürenin üçte biri kadar kaldığında sayılır."
 
 #: cyberui/ui/earnings.lua
+msgid "MEASURING"
+msgstr "ÖLÇÜLÜYOR"
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once it could have been read."
 msgstr "Bir sayfa, okunabilecek kadar kaldığında sayılır."
 
 #: cyberui/ui/earnings.lua
+msgid "How pages count"
+msgstr "Sayfalar nasıl sayılır"
+
+#: cyberui/ui/earnings.lua
 msgid "PAGES COUNTED %d // TOO QUICK %d"
 msgstr "SAYILAN SAYFA %d // ÇOK HIZLI %d"
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr "GIG ÜCRETİ"
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr "DÜZ ÜCRET"
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
+msgstr "ÖDEME YOK"
 
 #: cyberui/ui/earnings.lua
 msgid "This file is too short to pay eddies."
@@ -3592,18 +3620,6 @@ msgstr "BİTTİ: HEPSİ ÖDENDİ"
 #: cyberui/ui/earnings.lua
 msgid "%s STILL TO EARN // FINISH PAYS %s"
 msgstr "KAZANILACAK %s // BİTİRİNCE %s"
-
-#: cyberui/ui/earnings.lua
-msgid "GIG RATE"
-msgstr "GIG ÜCRETİ"
-
-#: cyberui/ui/earnings.lua
-msgid "PLAIN RATE"
-msgstr "DÜZ ÜCRET"
-
-#: cyberui/ui/earnings.lua
-msgid "NO PAY"
-msgstr "ÖDEME YOK"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

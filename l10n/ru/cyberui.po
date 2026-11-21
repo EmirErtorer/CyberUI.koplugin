@@ -3596,20 +3596,48 @@ msgid "FINISH PAYS %s"
 msgstr "ЗАВЕРШЕНИЕ ПЛАТИТ %s"
 
 #: cyberui/ui/earnings.lua
+msgid "BY WORDS"
+msgstr "ПО СЛОВАМ"
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once its words could have been read."
 msgstr "Страница засчитывается, когда её слова уже можно было прочитать."
+
+#: cyberui/ui/earnings.lua
+msgid "BY YOUR PACE"
+msgstr "ПО ТВОЕМУ ТЕМПУ"
 
 #: cyberui/ui/earnings.lua
 msgid "A page counts after a third of your usual time on a page of this book."
 msgstr "Страница засчитывается после трети твоего обычного времени на страницу этой книги."
 
 #: cyberui/ui/earnings.lua
+msgid "MEASURING"
+msgstr "ИДЁТ ЗАМЕР"
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once it could have been read."
 msgstr "Страница засчитывается, когда её уже можно было прочитать."
 
 #: cyberui/ui/earnings.lua
+msgid "How pages count"
+msgstr "Как засчитываются страницы"
+
+#: cyberui/ui/earnings.lua
 msgid "PAGES COUNTED %d // TOO QUICK %d"
 msgstr "ЗАСЧИТАНО СТРАНИЦ %d // СЛИШКОМ БЫСТРО %d"
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr "СТАВКА GIG"
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr "ОБЫЧНАЯ СТАВКА"
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
+msgstr "БЕЗ ОПЛАТЫ"
 
 #: cyberui/ui/earnings.lua
 msgid "This file is too short to pay eddies."
@@ -3626,18 +3654,6 @@ msgstr "ЗАВЕРШЕНО: ВСЁ ВЫПЛАЧЕНО"
 #: cyberui/ui/earnings.lua
 msgid "%s STILL TO EARN // FINISH PAYS %s"
 msgstr "ЕЩЁ %s К ЗАРАБОТКУ // ЗАВЕРШЕНИЕ ПЛАТИТ %s"
-
-#: cyberui/ui/earnings.lua
-msgid "GIG RATE"
-msgstr "СТАВКА GIG"
-
-#: cyberui/ui/earnings.lua
-msgid "PLAIN RATE"
-msgstr "ОБЫЧНАЯ СТАВКА"
-
-#: cyberui/ui/earnings.lua
-msgid "NO PAY"
-msgstr "БЕЗ ОПЛАТЫ"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

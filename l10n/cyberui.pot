@@ -3561,7 +3561,15 @@ msgid "FINISH PAYS %s"
 msgstr ""
 
 #: cyberui/ui/earnings.lua
+msgid "BY WORDS"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once its words could have been read."
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "BY YOUR PACE"
 msgstr ""
 
 #: cyberui/ui/earnings.lua
@@ -3569,11 +3577,31 @@ msgid "A page counts after a third of your usual time on a page of this book."
 msgstr ""
 
 #: cyberui/ui/earnings.lua
+msgid "MEASURING"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
 msgid "A page counts once it could have been read."
 msgstr ""
 
 #: cyberui/ui/earnings.lua
+msgid "How pages count"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
 msgid "PAGES COUNTED %d // TOO QUICK %d"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
 msgstr ""
 
 #: cyberui/ui/earnings.lua
@@ -3590,18 +3618,6 @@ msgstr ""
 
 #: cyberui/ui/earnings.lua
 msgid "%s STILL TO EARN // FINISH PAYS %s"
-msgstr ""
-
-#: cyberui/ui/earnings.lua
-msgid "GIG RATE"
-msgstr ""
-
-#: cyberui/ui/earnings.lua
-msgid "PLAIN RATE"
-msgstr ""
-
-#: cyberui/ui/earnings.lua
-msgid "NO PAY"
 msgstr ""
 
 #: cyberui/ui/idcard.lua

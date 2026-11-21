@@ -73,17 +73,19 @@ function Dialog.card(o, screen_w)
 end
 
 -- A question with cancel and confirm; `danger` adds the warning look, `icon`
--- a large icon over the title. o: { title, text, detail, ok, cancel, danger,
--- icon, on_ok }
+-- a large icon over the title, `cancel = false` leaves only the confirm (a
+-- notice). o: { title, text, detail, ok, cancel, danger, icon, on_ok }
 function Dialog.confirm(o, close, screen_w)
     local th = Theme.get()
+    local buttons = {}
+    if o.cancel ~= false then
+        buttons[1] = Button:new({ label = o.cancel or _("Cancel"), grow = true, on_tap = closing(close, o.on_cancel) })
+    end
+    buttons[#buttons + 1] = Button:new({ label = o.ok or _("OK"), variant = "primary", grow = true, on_tap = closing(close, o.on_ok) })
     return Dialog.card({
         title = o.title or (o.danger and _("Attention") or nil), icon = o.icon or (o.danger and "warning" or nil),
         danger = o.danger, detail = o.detail, text = o.text,
-        rows = { Layout.Row:new({ gap = th.space.m, children = {
-            Button:new({ label = o.cancel or _("Cancel"), grow = true, on_tap = closing(close, o.on_cancel) }),
-            Button:new({ label = o.ok or _("OK"), variant = "primary", grow = true, on_tap = closing(close, o.on_ok) }),
-        } }) },
+        rows = { Layout.Row:new({ gap = th.space.m, children = buttons }) },
     }, screen_w)
 end
 

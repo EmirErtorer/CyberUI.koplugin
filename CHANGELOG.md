@@ -10,7 +10,7 @@ versions marked *Prerelease* are test builds.
 
 ### Added
 
-- **Every book's dossier shows its eddies**: a bar of its ten payouts and the finish, what it has paid out of its price, the next payout, what is still to earn, and how its pages are counting. The Gigs page's Active tab now lists every book that is paying, not only gigs, each with the same bar.
+- **Every book's dossier shows its eddies**: a bar of its ten payouts and the finish, what it has paid out of its price, the next payout, what is still to earn, and how its pages are counting (tap it to see the rule), compact enough to leave the synopsis its room. The Gigs page's Active tab now lists every book that is paying, not only gigs, each with the same bar.
 - **Long press on the < and > of a list** goes to its first or last page.
 
 ### Changed
