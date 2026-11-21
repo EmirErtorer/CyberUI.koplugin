@@ -128,10 +128,31 @@ function Menu.available()
     return m ~= nil and m.tab_item_table ~= nil and #m.tab_item_table > 0
 end
 
--- The open menu, or nil (it may have been closed by a tap outside it).
+-- The open menu, or nil (it may have been closed by a tap outside it). A
+-- reader's menu whose book is gone, or one waiting for a window that closed
+-- without telling it, ends here, so the next swipe down opens a fresh one.
 function Menu.current()
-    if showing and showing:isOpen() then return showing end
+    local m = showing
+    if not m then return nil end
+    if not m:bookShown() then
+        m:close()
+        return nil
+    end
+    if m.aside and not (m.watched and UIManager:isWidgetShown(m.watched)) then
+        local above = m:windowsAbove()
+        if #above > 0 then m:watch(above[#above]) else m:close() end
+    end
+    if showing == m and m:isOpen() then return m end
     return nil
+end
+
+-- Is the book this menu was opened over still open and on screen (not closed,
+-- not put away under home)? Always true for the file browser's menu.
+function Menu:bookShown()
+    if not self.reader then return true end
+    local ui = self.km and self.km.ui
+    return ui ~= nil and ui == require("apps/reader/readerui").instance and ui.document ~= nil
+        and not require("cyberui/park").isParked()
 end
 
 -- The stable name of a tab: its id, else its icon, else its place.
@@ -207,6 +228,8 @@ end
 -- a popup of its own.
 function Menu:show()
     if self.quiet then return end
+    -- (a late redraw after the book closed would run its items' text over a closed document)
+    if not self:bookShown() then return self:close() end
     if not self.reader then
         App.dialog(function(close, w) return self:build(close, w) end)
         return
@@ -401,6 +424,7 @@ end
 
 -- Come back when `widget` closes, unless another window is still up (then wait for that one).
 function Menu:watch(widget)
+    self.watched = widget
     local closed = widget.onCloseWidget
     widget.onCloseWidget = function(w, ...)
         widget.onCloseWidget = closed
