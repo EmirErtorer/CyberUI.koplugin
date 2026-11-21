@@ -116,13 +116,24 @@ end
 function CyberUI:onReaderReady()
     local App = _G.package.loaded["cyberui/app"]
     if App then App.bookOpened() end
-    require("cyberui/data/gigs").follow(self.ui.document and self.ui.document.file)
+    local Gigs = require("cyberui/data/gigs")
+    local doc = self.ui.document
+    Gigs.follow(doc and doc.file)
+    -- a book that pays is measured once, a moment after it shows (never on a page turn)
+    if doc and Gigs.needsMeasure() then
+        require("ui/uimanager"):scheduleIn(Gigs.MEASURE_AFTER, function()
+            local ReaderUI = require("apps/reader/readerui")
+            if ReaderUI.instance and ReaderUI.instance.document == doc then Gigs.measure(doc) end
+        end)
+    end
 end
 
 -- A page was shown: it counts toward the gig's payouts.
 function CyberUI:onPageUpdate(page)
     local doc = self.ui.document
-    if type(page) == "number" and doc then require("cyberui/data/gigs").page(page, doc:getPageCount()) end
+    -- (after a change of font KOReader keeps the old page count until the book is laid out again)
+    local unsettled = self.ui.rolling ~= nil and self.ui.rolling.rendering_state ~= nil
+    if type(page) == "number" and doc then require("cyberui/data/gigs").page(page, doc:getPageCount(), unsettled) end
 end
 
 -- The device sleeps: pay what has been read so the sleep cannot lose it.

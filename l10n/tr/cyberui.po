@@ -1503,7 +1503,7 @@ msgid_plural "%d AVAILABLE"
 msgstr[0] "%d MEVCUT"
 msgstr[1] "%d MEVCUT"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/ui/earnings.lua
 msgid "PAYS %s"
 msgstr "ÖDÜL %s"
 
@@ -1573,7 +1573,7 @@ msgid_plural "~%d PAGES"
 msgstr[0] "~%d SAYFA"
 msgstr[1] "~%d SAYFA"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/ui/earnings.lua
 msgid "%s PER 10%% // %s ON FINISH"
 msgstr "HER %%10 İÇİN %s // BİTİNCE %s"
 
@@ -1590,16 +1590,21 @@ msgid "GIGS"
 msgstr "GIGS"
 
 #: cyberui/screens/gigs.lua
-msgid "NO GIGS TAKEN"
-msgstr "ALINMIŞ GIG YOK"
+msgid "NOTHING PAYING YET"
+msgstr "ÖDEYEN KİTAP YOK"
 
 #: cyberui/screens/gigs.lua
-msgid "Take an open gig and start reading. It shows up here and pays as you read."
-msgstr "Açık bir gig al ve okumaya başla. Burada görünür ve okudukça öder."
+msgid "Open a book or take a gig and start reading. It shows up here and pays as you read."
+msgstr "Bir kitap aç ya da bir gig al ve okumaya başla. Burada görünür ve okudukça öder."
 
 #: cyberui/screens/gigs.lua
-msgid "%s OF %s PAID"
-msgstr "%s / %s ÖDENDİ"
+msgid "GIG"
+msgstr "GIG"
+
+#: cyberui/screens/gigs.lua
+msgctxt "pay rate"
+msgid "PLAIN"
+msgstr "DÜZ"
 
 #: cyberui/screens/gigs.lua
 msgid "BALANCE"
@@ -3543,6 +3548,62 @@ msgstr "Geç"
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "KLASÖR // %d"
+
+#: cyberui/ui/earnings.lua
+msgid "%s OF %s PAID"
+msgstr "%s / %s ÖDENDİ"
+
+#: cyberui/ui/earnings.lua
+msgid "NEXT %s AT %d%%"
+msgstr "SIRADAKİ %s, %%%d'DE"
+
+#: cyberui/ui/earnings.lua
+msgid "FINISH PAYS %s"
+msgstr "BİTİRİNCE %s"
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts once its words could have been read."
+msgstr "Bir sayfa, kelimeleri okunabilecek kadar kaldığında sayılır."
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts after a third of your usual time on a page of this book."
+msgstr "Bir sayfa, bu kitapta bir sayfaya ayırdığın olağan sürenin üçte biri kadar kaldığında sayılır."
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts once it could have been read."
+msgstr "Bir sayfa, okunabilecek kadar kaldığında sayılır."
+
+#: cyberui/ui/earnings.lua
+msgid "PAGES COUNTED %d // TOO QUICK %d"
+msgstr "SAYILAN SAYFA %d // ÇOK HIZLI %d"
+
+#: cyberui/ui/earnings.lua
+msgid "This file is too short to pay eddies."
+msgstr "Bu dosya eddies kazandırmak için fazla kısa."
+
+#: cyberui/ui/earnings.lua
+msgid "This book was started before it could pay, so it pays no eddies."
+msgstr "Bu kitaba ödeme başlamadan önce başlandı, bu yüzden eddies kazandırmaz."
+
+#: cyberui/ui/earnings.lua
+msgid "FINISHED: ALL PAID"
+msgstr "BİTTİ: HEPSİ ÖDENDİ"
+
+#: cyberui/ui/earnings.lua
+msgid "%s STILL TO EARN // FINISH PAYS %s"
+msgstr "KAZANILACAK %s // BİTİRİNCE %s"
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr "GIG ÜCRETİ"
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr "DÜZ ÜCRET"
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
+msgstr "ÖDEME YOK"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

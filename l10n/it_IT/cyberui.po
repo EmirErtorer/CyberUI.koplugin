@@ -1503,7 +1503,7 @@ msgid_plural "%d AVAILABLE"
 msgstr[0] "%d DISPONIBILE"
 msgstr[1] "%d DISPONIBILI"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/ui/earnings.lua
 msgid "PAYS %s"
 msgstr "PAGA %s"
 
@@ -1573,7 +1573,7 @@ msgid_plural "~%d PAGES"
 msgstr[0] "~%d PAGINA"
 msgstr[1] "~%d PAGINE"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/ui/earnings.lua
 msgid "%s PER 10%% // %s ON FINISH"
 msgstr "%s OGNI 10%% // %s AL TERMINE"
 
@@ -1590,16 +1590,21 @@ msgid "GIGS"
 msgstr "GIGS"
 
 #: cyberui/screens/gigs.lua
-msgid "NO GIGS TAKEN"
-msgstr "NESSUN GIG ACCETTATO"
+msgid "NOTHING PAYING YET"
+msgstr "ANCORA NIENTE PAGA"
 
 #: cyberui/screens/gigs.lua
-msgid "Take an open gig and start reading. It shows up here and pays as you read."
-msgstr "Accetta un gig aperto e inizia a leggere. Compare qui e paga man mano che leggi."
+msgid "Open a book or take a gig and start reading. It shows up here and pays as you read."
+msgstr "Apri un libro o accetta un gig e inizia a leggere. Compare qui e paga mentre leggi."
 
 #: cyberui/screens/gigs.lua
-msgid "%s OF %s PAID"
-msgstr "%s DI %s PAGATI"
+msgid "GIG"
+msgstr "GIG"
+
+#: cyberui/screens/gigs.lua
+msgctxt "pay rate"
+msgid "PLAIN"
+msgstr "NORMALE"
 
 #: cyberui/screens/gigs.lua
 msgid "BALANCE"
@@ -3543,6 +3548,62 @@ msgstr "Passa"
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "CARTELLA // %d"
+
+#: cyberui/ui/earnings.lua
+msgid "%s OF %s PAID"
+msgstr "%s DI %s PAGATI"
+
+#: cyberui/ui/earnings.lua
+msgid "NEXT %s AT %d%%"
+msgstr "PROSSIMO %s AL %d%%"
+
+#: cyberui/ui/earnings.lua
+msgid "FINISH PAYS %s"
+msgstr "LA FINE PAGA %s"
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts once its words could have been read."
+msgstr "Una pagina conta non appena le sue parole potrebbero essere state lette."
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts after a third of your usual time on a page of this book."
+msgstr "Una pagina conta dopo un terzo del tuo tempo abituale su una pagina di questo libro."
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts once it could have been read."
+msgstr "Una pagina conta non appena potrebbe essere stata letta."
+
+#: cyberui/ui/earnings.lua
+msgid "PAGES COUNTED %d // TOO QUICK %d"
+msgstr "PAGINE CONTATE %d // TROPPO VELOCI %d"
+
+#: cyberui/ui/earnings.lua
+msgid "This file is too short to pay eddies."
+msgstr "Questo file è troppo corto per pagare eddies."
+
+#: cyberui/ui/earnings.lua
+msgid "This book was started before it could pay, so it pays no eddies."
+msgstr "Questo libro è stato iniziato prima che potesse pagare, quindi non paga eddies."
+
+#: cyberui/ui/earnings.lua
+msgid "FINISHED: ALL PAID"
+msgstr "FINITO: TUTTO PAGATO"
+
+#: cyberui/ui/earnings.lua
+msgid "%s STILL TO EARN // FINISH PAYS %s"
+msgstr "ANCORA %s DA GUADAGNARE // LA FINE PAGA %s"
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr "TARIFFA GIG"
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr "TARIFFA NORMALE"
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
+msgstr "NESSUN PAGAMENTO"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

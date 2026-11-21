@@ -1503,7 +1503,7 @@ msgid_plural "%d AVAILABLE"
 msgstr[0] "%d ΔΙΑΘΕΣΙΜΟ"
 msgstr[1] "%d ΔΙΑΘΕΣΙΜΑ"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/ui/earnings.lua
 msgid "PAYS %s"
 msgstr "ΠΛΗΡΩΝΕΙ %s"
 
@@ -1573,7 +1573,7 @@ msgid_plural "~%d PAGES"
 msgstr[0] "~%d ΣΕΛΙΔΑ"
 msgstr[1] "~%d ΣΕΛΙΔΕΣ"
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/ui/earnings.lua
 msgid "%s PER 10%% // %s ON FINISH"
 msgstr "%s ΑΝΑ 10%% // %s ΣΤΗΝ ΟΛΟΚΛΗΡΩΣΗ"
 
@@ -1590,16 +1590,21 @@ msgid "GIGS"
 msgstr "GIGS"
 
 #: cyberui/screens/gigs.lua
-msgid "NO GIGS TAKEN"
-msgstr "ΚΑΝΕΝΑ GIG ΔΕΝ ΑΝΑΛΗΦΘΗΚΕ"
+msgid "NOTHING PAYING YET"
+msgstr "ΤΙΠΟΤΑ ΔΕΝ ΠΛΗΡΩΝΕΙ ΑΚΟΜΑ"
 
 #: cyberui/screens/gigs.lua
-msgid "Take an open gig and start reading. It shows up here and pays as you read."
-msgstr "Ανάλαβε ένα ανοιχτό gig και ξεκίνα να διαβάζεις. Εμφανίζεται εδώ και πληρώνει όσο διαβάζεις."
+msgid "Open a book or take a gig and start reading. It shows up here and pays as you read."
+msgstr "Άνοιξε ένα βιβλίο ή πάρε ένα gig και ξεκίνα να διαβάζεις. Εμφανίζεται εδώ και πληρώνει καθώς διαβάζεις."
 
 #: cyberui/screens/gigs.lua
-msgid "%s OF %s PAID"
-msgstr "%s ΑΠΟ %s ΠΛΗΡΩΘΗΚΑΝ"
+msgid "GIG"
+msgstr "GIG"
+
+#: cyberui/screens/gigs.lua
+msgctxt "pay rate"
+msgid "PLAIN"
+msgstr "ΑΠΛΟ"
 
 #: cyberui/screens/gigs.lua
 msgid "BALANCE"
@@ -3543,6 +3548,62 @@ msgstr "Αλλαγή"
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
 msgstr "ΦΑΚΕΛΟΣ // %d"
+
+#: cyberui/ui/earnings.lua
+msgid "%s OF %s PAID"
+msgstr "%s ΑΠΟ %s ΠΛΗΡΩΘΗΚΑΝ"
+
+#: cyberui/ui/earnings.lua
+msgid "NEXT %s AT %d%%"
+msgstr "ΕΠΟΜΕΝΗ %s ΣΤΟ %d%%"
+
+#: cyberui/ui/earnings.lua
+msgid "FINISH PAYS %s"
+msgstr "ΤΟ ΤΕΛΟΣ ΠΛΗΡΩΝΕΙ %s"
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts once its words could have been read."
+msgstr "Μια σελίδα μετράει μόλις οι λέξεις της θα μπορούσαν να έχουν διαβαστεί."
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts after a third of your usual time on a page of this book."
+msgstr "Μια σελίδα μετράει μετά από το ένα τρίτο του συνηθισμένου σου χρόνου σε μια σελίδα αυτού του βιβλίου."
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts once it could have been read."
+msgstr "Μια σελίδα μετράει μόλις θα μπορούσε να έχει διαβαστεί."
+
+#: cyberui/ui/earnings.lua
+msgid "PAGES COUNTED %d // TOO QUICK %d"
+msgstr "ΣΕΛΙΔΕΣ ΠΟΥ ΜΕΤΡΗΣΑΝ %d // ΠΟΛΥ ΓΡΗΓΟΡΑ %d"
+
+#: cyberui/ui/earnings.lua
+msgid "This file is too short to pay eddies."
+msgstr "Αυτό το αρχείο είναι πολύ μικρό για να πληρώνει eddies."
+
+#: cyberui/ui/earnings.lua
+msgid "This book was started before it could pay, so it pays no eddies."
+msgstr "Αυτό το βιβλίο ξεκίνησε πριν μπορέσει να πληρώνει, οπότε δεν πληρώνει eddies."
+
+#: cyberui/ui/earnings.lua
+msgid "FINISHED: ALL PAID"
+msgstr "ΤΕΛΕΙΩΣΕ: ΟΛΑ ΠΛΗΡΩΘΗΚΑΝ"
+
+#: cyberui/ui/earnings.lua
+msgid "%s STILL TO EARN // FINISH PAYS %s"
+msgstr "%s ΑΚΟΜΑ ΝΑ ΚΕΡΔΙΣΕΙΣ // ΤΟ ΤΕΛΟΣ ΠΛΗΡΩΝΕΙ %s"
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr "ΤΙΜΗ GIG"
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr "ΑΠΛΗ ΤΙΜΗ"
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
+msgstr "ΧΩΡΙΣ ΠΛΗΡΩΜΗ"
 
 #: cyberui/ui/idcard.lua
 msgid "EDDIES"

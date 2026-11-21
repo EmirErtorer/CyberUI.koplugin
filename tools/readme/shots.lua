@@ -145,6 +145,9 @@ H.step(25, function()
     Gigs.reload()
     for _i, b in ipairs(Library.all()) do require("cyberui/data/books").forget(b) end
     local altered, gravity = find("Altered Carbon"), find("Gravity")
+    -- (each page stays half a minute, as a reader's would, so it counts)
+    local real_clock, tick = Gigs.clock, 0
+    Gigs.clock = function() tick = tick + 30; return tick end
     for _i, job in ipairs({ { altered, 45 }, { gravity, 100 } }) do
         if job[1] then
             Gigs.accept(job[1])
@@ -153,6 +156,7 @@ H.step(25, function()
             Gigs.settle()
         end
     end
+    Gigs.clock = real_clock
     Gigs.takeReceipt()
     Ledger.add("g", "earlier", 0, 3000)   -- eddies from earlier gigs, so the shop has something to show
     Ledger.save()

@@ -7,7 +7,9 @@
 -- the signed ledger (see Ledger), and so do the quotes and what has been seen
 -- of each book, kept here:
 -- quotes = { path -> { price, days, t, sig } } (days 0 is a book read at the
--- plain rate), seen = { path -> { bits, sig } }, board = { t, slots = { path } }.
+-- plain rate), seen = { path -> { bits, sig } }, board = { t, slots = { path } },
+-- pace = { path -> { words, counted, quick } } (the words measured in the book,
+-- see Pace, and how many pages counted or were turned too quickly to count).
 
 local Books = require("cyberui/data/books")
 local Economy = require("cyberui/data/economy")
@@ -15,6 +17,7 @@ local BookList = require("ui/widget/booklist")
 local Library = require("cyberui/data/library")
 local Settings = require("cyberui/settings")
 local Ledger = require("cyberui/data/ledger")
+local Pace = require("cyberui/data/pace")
 local lfs = require("libs/libkoreader-lfs")
 
 local Gigs = {}
@@ -28,8 +31,8 @@ Gigs.ROLL_COST = 20     -- eddies to swap a gig on the board for another
 Gigs.SLOTS = { 3, 5, 10 }
 Gigs.ROTATIONS = { 3, 7, 14 }
 Gigs.NEEDED = 0.7       -- the share of a stretch of book that must have been seen to count as read
-Gigs.MIN_SECONDS = 15   -- a page counts as read only after it has been on screen this long
 Gigs.MIN_PAGES = 50     -- shorter files (pictures, one-page documents) are not books that pay
+Gigs.MEASURE_AFTER = 3  -- seconds after a book opens that its words are measured (see Pace)
 Gigs.MAX_ESTIMATE = 800 -- the most pages guessed for a book from the size of its file
 
 -- Rough kilobytes of file per page, by kind of file, for books never opened.
@@ -38,11 +41,15 @@ local TEXT_KB_PER_PAGE = 2
 -- Files that are pictures, not books: they never pay, whatever their size.
 local PICTURES = { png = true, jpg = true, jpeg = true, gif = true, webp = true, bmp = true, tif = true, tiff = true, svg = true }
 
--- The time now in seconds (the tests replace it to set the pace of reading).
-Gigs.clock = os.time
+-- The time now in seconds, to the millisecond, on a clock that stops while
+-- the device sleeps (the tests replace it to set the pace of reading).
+Gigs.clock = function()
+    local time = require("ui/time")
+    return time.to_s(time.now())
+end
 
 local cache         -- { all, revision, list }: the board
-local cur           -- the book being read: { path, bits (table of 100), total, quote }
+local cur           -- the book being read: { path, bits (table of 100), total, quote, pace, shown }
 local receipt       -- what was paid since the reader last looked: { total, finished }
 
 ---------------------------------------------------------------- storage
@@ -303,12 +310,40 @@ local function plainQuote(path)
     return q
 end
 
+-- What is kept on how a book is read: { words, counted, quick } (see Pace).
+local function paceRecord(path)
+    local d = data()
+    d.pace = d.pace or {}
+    d.pace[path] = d.pace[path] or { counted = 0, quick = 0 }
+    return d.pace[path]
+end
+
 -- Start following the open book: the gig taken on it, or else the plain rate.
 function Gigs.follow(path)
     if not Economy.on() or not path then cur = nil; return end
     if cur and cur.path == path then return end
     local q = Gigs.quote(path) or plainQuote(path)
-    cur = q and { path = path, quote = q, bits = loadBits(path), total = 0 } or nil
+    if not q then cur = nil; return end
+    local kept = (data().pace or {})[path]
+    cur = { path = path, quote = q, bits = loadBits(path), total = 0, pace = Pace.new(kept and kept.words) }
+end
+
+-- Does the followed book still need measuring (see Gigs.measure)?
+function Gigs.needsMeasure()
+    return cur ~= nil and cur.pace.words == nil
+end
+
+-- Measure the open document of the followed book, once for good: the words
+-- in it set how long its pages must stay to count. Done a moment after the
+-- book opens, never on a page turn. Returns the words (0 for a picture book).
+function Gigs.measure(doc)
+    if not (cur and doc and doc.file == cur.path and cur.pace.words == nil) then return nil end
+    local words = Pace.measure(doc)
+    if words == nil then return nil end
+    cur.pace.words = words
+    paceRecord(cur.path).words = words
+    Settings.save("gigs", data())
+    return words
 end
 
 -- Mark the percents a page covers as seen.
@@ -318,23 +353,34 @@ local function see(page, total)
     for i = math.max(1, lo), math.min(100, hi) do cur.bits[i] = true end
 end
 
--- Count the page on screen if it stayed long enough to have been read.
-local function readIfStayed(shown, now)
-    if shown and not shown.counted and now - shown.t >= Gigs.MIN_SECONDS then
+-- Count the page on screen if it has stayed long enough to have been read
+-- (its words at a speed no one reads faster, see Pace). `left` says the page
+-- was turned: its time is final, so it adds to the reader's usual pace, and a
+-- page turned before it could be read is told apart from one still being read.
+local function readIfStayed(shown, now, left)
+    if not shown then return end
+    local stayed = now - shown.t
+    local need = Pace.need(cur.pace, shown.total, shown.unsettled)
+    if left and Pace.note(cur.pace, stayed) and not shown.counted and stayed < need then
+        cur.quick = (cur.quick or 0) + 1
+    end
+    if not shown.counted and stayed >= need then
         shown.counted = true
+        cur.counted = (cur.counted or 0) + 1
         see(shown.page, shown.total)
     end
 end
 
--- A page of the followed book was shown. It counts as read once it has stayed
--- on screen for MIN_SECONDS, so turning through a book pays nothing.
-function Gigs.page(page, total)
+-- A page of the followed book was shown (`unsettled`: while the book is being
+-- laid out anew, see Pace.need). The one before counts as read if it stayed
+-- long enough, so turning through a book pays nothing.
+function Gigs.page(page, total, unsettled)
     if not cur or not total or total < 1 then return end
     cur.total = total
     local now = Gigs.clock()
     if cur.shown and cur.shown.page == page and cur.shown.total == total then return end
-    readIfStayed(cur.shown, now)
-    cur.shown = { page = page, total = total, t = now }
+    readIfStayed(cur.shown, now, true)
+    cur.shown = { page = page, total = total, t = now, unsettled = unsettled or nil }
 end
 
 -- Has the first `upto` percent been reached, and enough of it seen to count
@@ -351,7 +397,7 @@ function Gigs.settle()
     if not cur or not Economy.on() then return 0 end
     local d = data()
     local paid = Ledger.verified().paid
-    readIfStayed(cur.shown, Gigs.clock())
+    readIfStayed(cur.shown, Gigs.clock(), false)
     local price = cur.quote.price
     local gig = cur.quote.days > 0
     local mk, fk = gig and "m" or "n", gig and "f" or "e"   -- the entry kinds: gig, or plain rate
@@ -376,6 +422,10 @@ function Gigs.settle()
     local s = { bits = table.concat(chars) }
     s.sig = sign(seenText(cur.path, s))
     d.seen[cur.path] = s
+    -- the pages counted and turned too quickly since the last settle are kept with the book
+    local rec = paceRecord(cur.path)
+    rec.counted, rec.quick = rec.counted + (cur.counted or 0), rec.quick + (cur.quick or 0)
+    cur.counted, cur.quick = 0, 0
     Settings.save("gigs", d)
     if total > 0 then
         receipt = receipt or { total = 0, finished = false, gig = false }
@@ -391,22 +441,78 @@ function Gigs.takeReceipt()
     return r
 end
 
--- The accepted gigs not yet finished, the most advanced first:
--- { path, price, milestones (paid), percent }.
+-- How a book pays and how far it has, for the dossier and the Gigs page:
+-- { state, gig, price, earned, left, finish, finish_paid, seen (0 to 1),
+-- tenths = { the share of each tenth counted }, paid = { true or false for
+-- each tenth }, next = { k, pay } or nil,
+-- counted, quick, mode ("words", "pace" or nil) }. `state` is "paying" (its
+-- price is fixed), "offer" (not started: what it would pay; `price` is the
+-- board's for a gig), "started" (begun before eddies, so it cannot pay),
+-- "short" (not a book that pays) or "off" (eddies switched off).
+function Gigs.earnings(path)
+    if not Economy.on() then return { state = "off" } end
+    local q = Gigs.quote(path)
+    if not q then
+        if not Gigs.eligible(path) then return { state = "short" } end
+        local st = Books.state(path)
+        if st.status == "complete" or st.percent > 0.1 then return { state = "started" } end
+        local offer = Gigs.offer(path)
+        local price = offer and offer.price or Gigs.basePrice(Gigs.pages(path))
+        return { state = "offer", gig = offer ~= nil, price = price, earned = 0, left = price, finish = Gigs.finish(price), seen = 0, tenths = {}, paid = {} }
+    end
+    local gig = q.days > 0
+    local mk, fk = gig and "m" or "n", gig and "f" or "e"
+    local paid_keys = Ledger.verified().paid
+    local bits = (cur and cur.path == path) and cur.bits or loadBits(path)
+    local seen, tenths = 0, {}
+    for i = 1, 100 do
+        if bits[i] then
+            seen = seen + 1
+            local k = math.ceil(i / 10)
+            tenths[k] = (tenths[k] or 0) + 0.1
+        end
+    end
+    local e = { state = "paying", gig = gig, price = q.price, seen = seen / 100, tenths = tenths, paid = {}, finish = Gigs.finish(q.price) }
+    local n = 0
+    for k = 1, 10 do
+        e.paid[k] = paid_keys[mk .. "|" .. path .. "|" .. k] == true
+        if e.paid[k] then n = k end
+        -- (a tenth too small to pay anything never gets an entry: it counts as paid once read)
+        if not e.paid[k] and Gigs.milestone(q.price, k) == 0 and read(bits, k * 10) then e.paid[k] = true; n = k end
+        if not e.paid[k] and not e.next and Gigs.milestone(q.price, k) > 0 then e.next = { k = k, pay = Gigs.milestone(q.price, k) } end
+    end
+    e.finish_paid = paid_keys[fk .. "|" .. path .. "|0"] == true
+    e.earned = 0
+    for k = 1, 10 do if paid_keys[mk .. "|" .. path .. "|" .. k] then e.earned = e.earned + Gigs.milestone(q.price, k) end end
+    if e.finish_paid then e.earned = e.earned + e.finish end
+    e.left = q.price - e.earned
+    e.milestones = n
+    local rec = (data().pace or {})[path] or {}
+    local live = (cur and cur.path == path) and cur or {}
+    e.counted = (rec.counted or 0) + (live.counted or 0)
+    e.quick = (rec.quick or 0) + (live.quick or 0)
+    local words = (live.pace and live.pace.words) or rec.words
+    if words ~= nil then e.mode = words > 0 and "words" or "pace" end
+    return e
+end
+
+-- The books paying now and not finished, gigs and plain rate alike, the most
+-- advanced first: { path, gig, price, milestones (paid), earned }.
 function Gigs.active()
     local d = data()
-    local paid = Ledger.verified().paid
     local list = {}
     for path in pairs(d.quotes) do
         local q = Gigs.quote(path)
-        if q and q.days > 0 and not paid["f|" .. path .. "|0"] then
-            local n = 0
-            for k = 1, 10 do if paid["m|" .. path .. "|" .. k] then n = k end end
-            list[#list + 1] = { path = path, price = q.price, milestones = n, percent = Books.state(path).percent }
+        if q then
+            local e = Gigs.earnings(path)
+            if e.state == "paying" and not e.finish_paid then
+                list[#list + 1] = { path = path, gig = e.gig, price = e.price, milestones = e.milestones, earned = e.earned, seen = e.seen }
+            end
         end
     end
     table.sort(list, function(a, b)
         if a.milestones ~= b.milestones then return a.milestones > b.milestones end
+        if a.seen ~= b.seen then return a.seen > b.seen end
         return a.path < b.path
     end)
     return list

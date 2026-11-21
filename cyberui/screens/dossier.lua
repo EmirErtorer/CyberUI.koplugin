@@ -9,6 +9,7 @@ local Button = require("cyberui/ui/button")
 local Collections = require("cyberui/data/collections")
 local Deco = require("cyberui/ui/deco")
 local Cover = require("cyberui/ui/cover")
+local Earnings = require("cyberui/ui/earnings")
 local Format = require("cyberui/format")
 local Frame = require("cyberui/screens/frame")
 local Gigs = require("cyberui/data/gigs")
@@ -139,6 +140,9 @@ function Dossier:build()
 
     local kids = { head }
     if st.opened then kids[#kids + 1] = progress(path, st) end
+    -- every book pays: how far this one has, and what is still to come
+    local earnings = Earnings.panel(path)
+    if earnings then kids[#kids + 1] = earnings end
     kids[#kids + 1] = synopsis
     kids[#kids + 1] = counts
     kids[#kids + 1] = actions

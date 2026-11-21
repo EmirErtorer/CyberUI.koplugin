@@ -6,6 +6,23 @@ All notable changes to CyberUI are listed here, newest first. Versions follow
 is on its [GitHub release](https://github.com/EmirErtorer/CyberUI.koplugin/releases);
 versions marked *Prerelease* are test builds.
 
+## [Unreleased]
+
+### Added
+
+- **Every book's dossier shows its eddies**: a bar of its ten payouts and the finish, what it has paid out of its price, the next payout, what is still to earn, and how its pages are counting. The Gigs page's Active tab now lists every book that is paying, not only gigs, each with the same bar.
+- **Long press on the < and > of a list** goes to its first or last page.
+
+### Changed
+
+- **Pages count by how much is on them, not by a fixed 15 seconds.** A book is measured once when it opens, and a page counts once its words could have been read, even very fast: in a large font or at a quick pace, pages count in a couple of seconds, while flipping through still pays nothing. Comics and scans count by your own pace in that book. Page turns do no extra work.
+
+### Fixed
+
+- **KOReader crashed** when going home from a book while the top menu waited for a plugin's window (Reading style, for one), and the top menu could stop opening in books after changing such a plugin's settings.
+- **The page turn keys did nothing in styled lists**, such as Rakuyomi's chapters, history or the table of contents.
+- **A swipe down closes a styled list** again, as it does in KOReader.
+
 ## [1.4.1] - 2026-11-18
 
 Fixes from your reports.

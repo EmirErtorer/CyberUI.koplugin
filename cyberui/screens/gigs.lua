@@ -10,6 +10,7 @@ local Books = require("cyberui/data/books")
 local Button = require("cyberui/ui/button")
 local Controls = require("cyberui/ui/controls")
 local Cover = require("cyberui/ui/cover")
+local Earnings = require("cyberui/ui/earnings")
 local Format = require("cyberui/format")
 local Frame = require("cyberui/screens/frame")
 local Gigs = require("cyberui/data/gigs")
@@ -19,7 +20,6 @@ local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local ListRow = require("cyberui/ui/listrow")
 local Panel = require("cyberui/ui/panel")
-local Progress = require("cyberui/ui/progress")
 local Screen = require("cyberui/screens/screen")
 local StatTile = require("cyberui/ui/stattile")
 local Theme = require("cyberui/theme")
@@ -128,24 +128,29 @@ function GigsScreen:openTab()
     } })
 end
 
--- The gigs taken, each with a bar of its ten payouts.
+-- The books paying now, gigs and plain rate alike, each with the bar of its
+-- ten payouts and the finish, what it has paid and what comes next. A tap
+-- opens the book's dossier, where all of it is told.
 function GigsScreen:activeTab()
     local th = Theme.get()
     local list = Gigs.active()
     if #list == 0 then
-        return empty(_("NO GIGS TAKEN"), _("Take an open gig and start reading. It shows up here and pays as you read."))
+        return empty(_("NOTHING PAYING YET"), _("Open a book or take a gig and start reading. It shows up here and pays as you read."))
     end
     local grid = Grid:new({
         grow = true, items = list, page = self.page, cols = 1, cell_h = Theme.px(84), gap = 0, row_gap = 0,
         make = function(g)
-            return Panel:new({ shape = "none", pad = th.space.s, on_tap = function() Actions.open(g.path) end,
+            local e = Gigs.earnings(g.path)
+            return Panel:new({ shape = "none", pad = th.space.s, on_tap = function() Actions.details(g.path) end,
                 child = Layout.Row:new({ gap = th.space.m, valign = "center", children = {
                     Cover:new({ path = g.path, width = Theme.px(40), height = Theme.px(60) }),
                     Layout.Column:new({ grow = true, gap = th.space.xs, children = {
-                        Label:new({ text = Books.info(g.path).title, kind = "body" }),
-                        Progress:new({ value = g.milestones / 10, segments = 10 }),
-                        Label:new({ text = string.format(_("%s OF %s PAID"), Format.credits(Gigs.paidAt(g.price, g.milestones)), Format.credits(g.price)),
-                            kind = "mono_small", color = "muted" }),
+                        Layout.Row:new({ gap = th.space.s, children = {
+                            Label:new({ text = Books.info(g.path).title, kind = "body", grow = true }),
+                            Label:new({ text = g.gig and _("GIG") or _.c("pay rate", "PLAIN"), kind = "micro", color = g.gig and "accent" or "muted" }),
+                        } }),
+                        Earnings.bar(e),
+                        Label:new({ text = Earnings.summary(e), kind = "mono_small", color = "muted" }),
                     } }),
                 } }) })
         end,

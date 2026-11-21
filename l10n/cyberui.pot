@@ -1502,7 +1502,7 @@ msgid_plural "%d AVAILABLE"
 msgstr[0] ""
 msgstr[1] ""
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/ui/earnings.lua
 msgid "PAYS %s"
 msgstr ""
 
@@ -1572,7 +1572,7 @@ msgid_plural "~%d PAGES"
 msgstr[0] ""
 msgstr[1] ""
 
-#: cyberui/screens/gigs.lua
+#: cyberui/screens/gigs.lua cyberui/ui/earnings.lua
 msgid "%s PER 10%% // %s ON FINISH"
 msgstr ""
 
@@ -1589,15 +1589,20 @@ msgid "GIGS"
 msgstr ""
 
 #: cyberui/screens/gigs.lua
-msgid "NO GIGS TAKEN"
+msgid "NOTHING PAYING YET"
 msgstr ""
 
 #: cyberui/screens/gigs.lua
-msgid "Take an open gig and start reading. It shows up here and pays as you read."
+msgid "Open a book or take a gig and start reading. It shows up here and pays as you read."
 msgstr ""
 
 #: cyberui/screens/gigs.lua
-msgid "%s OF %s PAID"
+msgid "GIG"
+msgstr ""
+
+#: cyberui/screens/gigs.lua
+msgctxt "pay rate"
+msgid "PLAIN"
 msgstr ""
 
 #: cyberui/screens/gigs.lua
@@ -3541,6 +3546,62 @@ msgstr ""
 
 #: cyberui/ui/cover.lua
 msgid "FOLDER // %d"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "%s OF %s PAID"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "NEXT %s AT %d%%"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "FINISH PAYS %s"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts once its words could have been read."
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts after a third of your usual time on a page of this book."
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "A page counts once it could have been read."
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "PAGES COUNTED %d // TOO QUICK %d"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "This file is too short to pay eddies."
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "This book was started before it could pay, so it pays no eddies."
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "FINISHED: ALL PAID"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "%s STILL TO EARN // FINISH PAYS %s"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "GIG RATE"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "PLAIN RATE"
+msgstr ""
+
+#: cyberui/ui/earnings.lua
+msgid "NO PAY"
 msgstr ""
 
 #: cyberui/ui/idcard.lua

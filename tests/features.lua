@@ -415,7 +415,7 @@ do
     for p = 1, pages do Gigs.page(p, pages) end
     local paid = Gigs.settle()
     Kit.ok(paid == Gigs.basePrice(pages) and Ledger.balance() == before + paid and Gigs.takeReceipt().gig == false, "reading it to the end pays the plain price, with a notice that is not a gig's")
-    Kit.ok(#Gigs.active() == 1 and Gigs.active()[1].path == on, "the active list holds gigs only")
+    Kit.ok(#Gigs.active() == 1 and Gigs.active()[1].path == on, "a finished plain book leaves the active list")
     local earned, done = Ledger.totals()
     Kit.ok(done == 0, "a plain book does not count as a gig done")
     -- pictures and tiny files do not pay, at the plain rate or as gigs
@@ -430,20 +430,147 @@ do
     end
     Kit.ok(Ledger.balance() == before2, "and no eddies appear")
     -- turning pages without reading pays nothing: a page must stay on screen
+    -- long enough for its words to be read (see Pace), whatever the font size,
+    -- the reading speed or the kind of book
+    local Pace = require("cyberui/data/pace")
     local real = Gigs.clock
     local t0 = 1800000000
-    Gigs.clock = function() return t0 end   -- time stands still: pages turned as fast as they come
-    Gigs.follow(steady)
+    Gigs.clock = function() return t0 end
+    -- a book like an EPUB (text from one page's top to the next), like a PDF
+    -- with a text layer, and like a comic or a scan (no text at all)
+    local function creDoc(path, total, per_page)
+        local text = string.rep("word ", per_page)
+        return { file = path, getPageCount = function() return total end,
+            getPageXPointer = function(_, p) return "/body/p[" .. p .. "]" end,
+            getTextFromXPointers = function() return text end }
+    end
+    local function pdfDoc(path, total, per_page)
+        local line = {}
+        for i = 1, per_page do line[i] = { word = "w" } end
+        return { file = path, getPageCount = function() return total end, getPageTextBoxes = function() return { line } end }
+    end
+    local function picDoc(path, total)
+        return { file = path, getPageCount = function() return total end, getPageTextBoxes = function() return {} end }
+    end
+    local n_books = 0
+    -- a fresh book of `kb` kilobytes (its size sets its price, 2 KB a page for text)
+    local function book(ext, kb)
+        n_books = n_books + 1
+        local path = tmp .. "/Speed" .. n_books .. "." .. ext
+        local h2 = io.open(path, "w"); h2:write(string.rep("x", kb * 1024)); h2:close()
+        return path
+    end
+    -- Read `path` from page 1 to `total`, each page staying `secs` seconds (a
+    -- number, or a function of the page), measured first from `doc`. Returns what was paid.
+    local function readThrough(path, doc, total, secs)
+        Gigs.follow(path)
+        if doc then Gigs.measure(doc) end
+        for p = 1, total do
+            Gigs.page(p, total)
+            t0 = t0 + (type(secs) == "function" and secs(p) or secs)
+        end
+        return Gigs.settle()
+    end
+    local function full(path) return Gigs.quote(path).price end
+
+    -- nothing measured yet (a book opened a moment ago): every page at once pays nothing
+    local steady0 = book("epub", 600)
+    Gigs.follow(steady0)
     for p = 1, 300 do Gigs.page(p, 300) end
-    Kit.ok(Gigs.quote(steady) ~= nil and Gigs.settle() == 0, "turning every page at once pays nothing")
-    t0 = 1800000000
-    Gigs.clock = function() t0 = t0 + 10; return t0 end   -- ten seconds a page: still too fast
-    Gigs.follow(steady)
-    for p = 1, 300 do Gigs.page(p, 300) end
-    Kit.ok(Gigs.settle() == 0, "ten seconds a page is still skimming")
-    Gigs.clock = function() t0 = t0 + 16; return t0 end   -- sixteen seconds a page counts
-    for p = 1, 300 do Gigs.page(p, 300) end
-    Kit.ok(Gigs.settle() == Gigs.basePrice(300), "sixteen seconds a page is reading: the whole plain price")
+    Kit.ok(Gigs.quote(steady0) ~= nil and Gigs.settle() == 0, "turning every page at once pays nothing")
+
+    -- an EPUB at a normal font: 300 words a page, so a page needs 12 seconds
+    local doc_words = 300
+    local cases = {
+        { 72, true, "250 words a minute (72 s a page) is reading" },
+        { 30, true, "600 words a minute (30 s a page) is reading" },
+        { 13, true, "1400 words a minute (13 s a page), a very fast reader, still counts" },
+        { 10, false, "1800 words a minute (10 s a page) is skimming" },
+        { 3, false, "3 s a page on a full page is flipping" },
+    }
+    for _, c in ipairs(cases) do
+        local b = book("epub", 600)
+        local got = readThrough(b, creDoc(b, 300, doc_words), 300, c[1])
+        Kit.ok((got == full(b)) == c[2] and (c[2] or got == 0), "EPUB, normal font: " .. c[3] .. " (paid " .. got .. " of " .. full(b) .. ")")
+    end
+    -- the same book in an enormous font: 2250 pages of 40 words, a page needs 1.6 seconds
+    do
+        local b = book("epub", 600)
+        Gigs.follow(b)
+        Kit.ok(Gigs.measure(creDoc(b, 300, doc_words)) == 90000, "the book is measured once: 90000 words")
+        local e0 = Gigs.earnings(b)
+        Kit.ok(e0.mode == "words" and e0.state == "paying" and e0.earned == 0 and e0.left == e0.price, "its earnings start at nothing, the whole price to come")
+        local got = readThrough(b, nil, 2250, 4)
+        local e = Gigs.earnings(b)
+        Kit.ok(got == full(b) and e.finish_paid and e.earned == e.price and e.left == 0, "enormous font, 4 s a page (a fast reader): the whole price, finish included (paid " .. got .. ")")
+        Kit.ok(e.counted == 2250 and e.quick == 0, "every page counted, none too quick: " .. tostring(e.counted) .. " / " .. tostring(e.quick))
+    end
+    do
+        local b = book("epub", 600)
+        Gigs.follow(b)
+        Gigs.measure(creDoc(b, 300, doc_words))
+        -- (the last page is still on screen: not judged yet)
+        Kit.ok(readThrough(b, nil, 2250, 1) == 0 and Gigs.earnings(b).quick == 2249, "enormous font, 1 s a page: flipping, nothing paid, every turned page told as too quick")
+    end
+    -- the font changes halfway: the words in the book stay, so the pages' need follows the new count
+    do
+        local b = book("epub", 600)
+        Gigs.follow(b)
+        Gigs.measure(creDoc(b, 300, doc_words))
+        for p = 1, 150 do Gigs.page(p, 300); t0 = t0 + 14 end      -- normal font, 14 s (needs 12)
+        for p = 451, 900 do Gigs.page(p, 900); t0 = t0 + 5 end     -- three times the font: needs 4 s
+        Kit.ok(Gigs.settle() == full(b), "a font change halfway keeps paying at the new size")
+    end
+    -- right after a change of font KOReader keeps the old page count until the book is laid out
+    -- again: those pages are judged by the floor, so a big font read fast still counts meanwhile
+    do
+        local b = book("epub", 600)
+        Gigs.follow(b)
+        Gigs.measure(creDoc(b, 300, doc_words))
+        for p = 1, 120 do Gigs.page(p, 300, true); t0 = t0 + 4 end     -- stale count of 300 (needs 12 s when settled)
+        Gigs.page(121, 300, true)
+        Gigs.settle()
+        local e = Gigs.earnings(b)
+        Kit.ok(e.counted == 120 and e.milestones >= 3, "while the book is laid out anew, 4 s a page counts: " .. e.counted)
+        for p = 122, 200 do Gigs.page(p, 300, true); t0 = t0 + 1 end
+        Gigs.settle()
+        Kit.ok(Gigs.earnings(b).quick >= 78, "and 1 s a page is still too quick then")
+    end
+    -- a PDF with a text layer: 350 words a page, a page needs 14 seconds
+    do
+        local b = book("pdf", 18000)
+        Kit.ok(readThrough(b, pdfDoc(b, 300, 350), 300, 25) == full(b), "PDF with text, 25 s a page: the whole price")
+        local b2 = book("pdf", 18000)
+        Kit.ok(readThrough(b2, pdfDoc(b2, 300, 350), 300, 6) == 0, "PDF with text, 6 s a page: skimming, nothing")
+        Kit.ok(Gigs.earnings(b2).mode == "words", "a PDF with text is judged by its words")
+    end
+    -- a comic or a scan has no text: judged by the reader's own pace in it
+    do
+        local b = book("pdf", 18000)
+        Gigs.follow(b)
+        Kit.ok(Gigs.measure(picDoc(b, 300)) == 0 and Gigs.earnings(b).mode == "pace", "a PDF without text is measured as a picture book")
+        -- eight seconds a page, now and then a page flicked back past in a second
+        local got = readThrough(b, nil, 300, function(p) return p % 10 == 0 and 1 or 8 end)
+        Kit.ok(got == full(b), "pictures at 8 s a page pay the whole price (paid " .. got .. ")")
+        local e = Gigs.earnings(b)
+        Kit.ok(e.quick == 29 and e.counted == 270, "the flicked pages (the last one still on screen) are too quick, the rest counted: " .. e.counted .. " / " .. e.quick)
+        local b2 = book("pdf", 18000)
+        Kit.ok(readThrough(b2, picDoc(b2, 300), 300, 1) == 0, "pictures flicked at 1 s a page pay nothing")
+        local b3 = book("cbz", 90000)
+        Kit.ok(readThrough(b3, { file = b3, getPageCount = function() return 300 end }, 300, 5) == full(b3), "a comic KOReader gives no text for, 5 s a page, pays by pace")
+    end
+    -- a book that cannot be read for its words (or not yet) uses the pace rule with its floor
+    do
+        local b = book("epub", 600)
+        Kit.ok(readThrough(b, nil, 300, 2.5) == full(b), "not measured yet: 2.5 s a page passes the 2 s floor")
+        Kit.ok(Pace.need(Pace.new(nil), 300) == Pace.PACE_FLOOR, "the floor is the need with no pace known")
+    end
+    -- words are counted in every script
+    Kit.ok(Pace.countWords("one two  three\nfour") == 4, "words are runs of non-spaces")
+    Kit.ok(Pace.countWords("日本語の本 and two") == 7, "each Chinese or Japanese character is a word")
+    -- a page passed on the way (a jump, a re-render) and a page left for an hour are not reading times
+    local p0 = Pace.new(0)
+    Kit.ok(not Pace.note(p0, 0.2) and not Pace.note(p0, 3600) and Pace.note(p0, 9) and #p0.times == 1, "only reading times make the usual pace")
     Gigs.clock = real
     Settings.set("gigs", saved[1]); Settings.set("gig_slots", saved[2]); Settings.set("gig_rotation", saved[3]); Settings.set("bounty_skipped", saved[4])
     G_reader_settings:saveSetting("home_dir", home)
