@@ -70,6 +70,7 @@ do
     local Library = require("cyberui/data/library")
     local Groups = require("cyberui/data/libgroups")
     local all = Library.all()
+    Kit.ok(Settings.get("library_count") == #all and Library.shownCount() == #all, "the library's size is kept for the next start")
     local up = Library.sort(all, "title")
     local down = Library.sort(all, "title", true)
     Kit.ok(#up == #all and up[1] == down[#down], "reversing a sort turns the order round")
@@ -88,6 +89,20 @@ do
     local only = Groups.filter(all, { format = fmt })
     Kit.ok(#only > 0 and #only <= #all, "the format filter keeps that format")
     Kit.ok(Groups.filter(all, {}) == all, "no filter returns the same list")
+
+    -- turning a page does not sort again; a book opened since does
+    local History = require("cyberui/data/history")
+    local ReadHistory = require("readhistory")
+    local kept = Library.sort(all, "recent")
+    Kit.ok(Library.sort(all, "recent") == kept, "the same sort with nothing changed gives the kept answer")
+    local saved_hist = ReadHistory.hist
+    local last = kept[#kept]
+    ReadHistory.hist = { { file = last, time = os.time() + 100 } }
+    local resorted = Library.sort(all, "recent")
+    Kit.ok(resorted ~= kept and resorted[1] == last, "a book opened since moves to the front")
+    Kit.ok(History.lastOpened(last) == ReadHistory.hist[1].time and History.lastOpened(kept[1] .. "-gone") == nil,
+        "the history says when a book was opened, and nothing for one never opened")
+    ReadHistory.hist = saved_hist
 
     -- the screen in every grouping, picking books
     local Lib = require("cyberui/screens/library")
@@ -306,9 +321,12 @@ do
     Library.reset()
     Settings.set("gig_slots", nil)
     Kit.ok(Gigs.pages(book) == 300, "a book never opened is sized from its file")
+    Gigs.board()   -- (the reader sees the board before taking a gig from it)
     Gigs.accept(book)
     local q = Gigs.quote(book)
     Kit.ok(q and q.price == 120, "taking a gig fixes the price")
+    Gigs.accept(tmp .. "/Not on the board.epub")
+    Kit.ok(Gigs.quote(tmp .. "/Not on the board.epub") == nil, "a book that was not on the board is not taken")
     Gigs.follow(book)
     for p = 1, 100 do Gigs.page(p, 300) end
     local paid_now = Gigs.settle()
@@ -1307,6 +1325,47 @@ do
     Kit.ok(order[plain] and order[pop] and order[plain] > order[pop], "a window shown over a popup is above it")
     UIManager:close(plain)
     UIManager:close(pop)
+end
+
+-- compiled copies of modules: made at the first load, used while the source
+-- stays as it was, made again when it changes (last here: the loader stays in)
+do
+    local BcCache = require("cyberui/bccache")
+    local lfs = require("libs/libkoreader-lfs")
+    local tmp = (os.getenv("TMPDIR") or "/tmp") .. "/cyberui-test-bc"
+    os.execute("rm -rf '" .. tmp .. "'; mkdir -p '" .. tmp .. "/root/cyberui'")
+    local src = tmp .. "/root/cyberui/bctest.lua"
+    local function write(v, t)
+        local f = io.open(src, "w")
+        f:write("return { v = " .. v .. " }\n")
+        f:close()
+        lfs.touch(src, t, t)
+    end
+    write(1, 1000000)
+    BcCache.install(tmp .. "/root", tmp .. "/cache")
+    local m = require("cyberui/bctest")
+    Kit.ok(m.v == 1, "a module loads through the cache")
+    local copy = tmp .. "/cache/cyberui~bctest.bc"
+    Kit.ok(lfs.attributes(copy, "mode") == "file", "its compiled copy is kept")
+    local f = io.open(copy, "rb")
+    local stamp = f:read("*l")
+    f:close()
+    f = io.open(copy, "wb")
+    f:write(stamp, "\n", string.dump(loadstring("return { v = 2, where = debug.getinfo(1, 'S').source }", "@" .. src)))
+    f:close()
+    package.loaded["cyberui/bctest"] = nil
+    m = require("cyberui/bctest")
+    Kit.ok(m.v == 2, "the copy is what loads while the source is unchanged")
+    Kit.ok(m.where == "@" .. src, "a module from its copy still knows its source file (paths.lua relies on it)")
+    write(33, 2000000)
+    package.loaded["cyberui/bctest"] = nil
+    Kit.ok(require("cyberui/bctest").v == 33, "a changed source is read again")
+    f = io.open(copy, "wb")
+    f:write("not bytecode")
+    f:close()
+    package.loaded["cyberui/bctest"] = nil
+    Kit.ok(require("cyberui/bctest").v == 33, "a broken copy falls back to the source")
+    package.loaded["cyberui/bctest"] = nil
 end
 
 Kit.finish("features")
