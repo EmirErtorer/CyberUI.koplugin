@@ -1327,6 +1327,90 @@ do
     UIManager:close(pop)
 end
 
+-- shortening text to fit: the one pass gives what measuring each prefix gave
+do
+    local Text = require("cyberui/gfx/text")
+    local ELL = "…"
+    local function slow(kind, s, max_w)
+        s = Text.shown(kind, s)
+        if Text.width(kind, s) <= max_w then return s end
+        local cps = Text.codepoints(s)
+        local function prefix(n) local c = {} for i = 1, n do c[i] = cps[i] end return Text.fromCodepoints(c) end
+        local lo, hi = 0, #cps
+        while lo < hi do
+            local mid = math.ceil((lo + hi) / 2)
+            if Text.width(kind, prefix(mid) .. ELL) <= max_w then lo = mid else hi = mid - 1 end
+        end
+        return (prefix(lo):gsub("%s+$", "")) .. ELL
+    end
+    math.randomseed(3)
+    local words = { "The", "Brothers", "Karamazov", "Ağaç", "İstanbul", "日本語", "WAVE", "AV", "To", "ë", " " }
+    local differ = 0
+    for _, kind in ipairs({ "label", "micro", "mono" }) do
+        for _t = 1, 80 do
+            local parts = {}
+            for k = 1, math.random(1, 8) do parts[k] = words[math.random(#words)] end
+            local s, w = table.concat(parts, " "), math.random(10, 300)
+            if slow(kind, s, w) ~= Text.fit(kind, s, w) then differ = differ + 1 end
+        end
+    end
+    Kit.ok(differ == 0, "text shortened in one pass matches measuring each prefix (" .. differ .. " differ)")
+end
+
+-- a page turn paints only the grid, the page number and a pressed button, and
+-- the screen comes out exactly as a full paint of the new page
+do
+    local ffi = require("ffi")
+    local Host = require("cyberui/host")
+    local Grid = require("cyberui/ui/grid")
+    local Cover = require("cyberui/ui/cover")
+    local Frame = require("cyberui/screens/frame")
+    local Layout = require("cyberui/ui/layout")
+    local DeviceInfo = require("cyberui/data/device")
+    local clock = DeviceInfo.clock
+    DeviceInfo.clock = function() return "12:00" end   -- (the same minute for both paints)
+    local state = { page = 1 }
+    local items = {}
+    for i = 1, 40 do items[i] = { title = "Book number " .. i, author = "Author " .. i } end
+    local function tree()
+        return Frame.page({ screen = state, title = "PAGES", body = Layout.Column:new({ children = {
+            Grid:new({ grow = true, items = items, page = state.page, paged = true, min_cell_w = Theme.px(120), ratio = 1.72,
+                make = function(item, w, h) return Cover:new({ title = item.title, author = item.author, width = w, height = h }) end,
+                on_layout = function(_cap, pages, page) state.pages, state.page = pages, page end }),
+            Frame.pager(state, "SECTOR", function() end),
+        } }) })
+    end
+    local function bytes(bb) return ffi.string(bb.data, bb.stride * bb:getHeight()) end
+    local host = Host:new({})
+    host:setRoot(tree())
+    local turned, full = Kit.canvas(), Kit.canvas()
+    host:paintAll(turned, 0, 0)
+    local pressed
+    for _, el in ipairs(host.root.children[2].children[1].children[2].children) do pressed = pressed or (el.on_tap and el) end
+    state.page = 2
+    local old = host.root
+    host:setRoot(tree())
+    local box = { x = pressed.x, y = pressed.y, w = pressed.w, h = pressed.h }
+    local parts = Host.carry(old, host.root, box, {})
+    Kit.ok(parts and #parts == 3, "a page turn repaints the grid, the page number and the pressed button: " .. tostring(parts and #parts))
+    turned:invertRect(box.x, box.y, box.w, box.h)   -- (the press shows the button inverted)
+    host.parts = parts
+    host:paintAll(turned, 0, 0)
+    Kit.ok(host.parts == nil, "the parts are painted once")
+    host:paintAll(full, 0, 0)
+    Kit.ok(bytes(turned) == bytes(full), "the turned page is pixel for pixel the full paint of it")
+    local hit = host.root:hit(box.x + 1, box.y + 1, "on_tap")
+    Kit.ok(hit ~= nil, "elements not painted again still answer taps where they are")
+    state.page = 3
+    local before = host.root
+    host:setRoot(tree())
+    local wide = Layout.Column:new({ children = {} })
+    wide.x, wide.w, wide.h = 0, 1, 1
+    Kit.ok(Host.carry(before, wide, nil, {}) == nil, "a tree of another shape is painted whole")
+    turned:free(); full:free()
+    DeviceInfo.clock = clock
+end
+
 -- compiled copies of modules: made at the first load, used while the source
 -- stays as it was, made again when it changes (last here: the loader stays in)
 do
