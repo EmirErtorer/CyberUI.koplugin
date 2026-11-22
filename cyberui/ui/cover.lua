@@ -44,7 +44,7 @@ local function hash(s)
 end
 
 -- Draw the card's background pattern inside the frame.
-local function pattern(bb, x, y, w, h, name, th)
+local function drawPattern(bb, x, y, w, h, name, th)
     local period, thick = Theme.px(7), Theme.px(2)
     if name == "h" then Paint.stripes(bb, x, y, w, h, "h", period, thick, th.c.line)
     elseif name == "v" then Paint.stripes(bb, x, y, w, h, "v", period, thick, th.c.line)
@@ -52,6 +52,31 @@ local function pattern(bb, x, y, w, h, name, th)
         Paint.stripes(bb, x, y, w, h, "h", period * 2, thick, th.c.line)
         Paint.stripes(bb, x, y, w, h, "v", period * 2, thick, th.c.line)
     elseif name == "solid" then Paint.fill(bb, x, y, w, h, th.c.soft) end
+end
+
+local patterns, npatterns = {}, 0   -- the patterns drawn once, by name, size, colours and screen type
+local MAX_PATTERNS = 24
+
+-- Paint the pattern `name` over a box already filled with the background:
+-- the cards of a grid share their size, so each pattern is drawn once and
+-- copied in after that.
+local function pattern(bb, x, y, w, h, name, th)
+    if name == "plain" or w <= 0 or h <= 0 then return end
+    local inverse = bb.getInverse and bb:getInverse() or 0
+    local key = table.concat({ name, w, h, tostring(th.c.bg), tostring(th.c.line), tostring(th.c.soft), bb:getType(), inverse }, "|")
+    local p = patterns[key]
+    if not p then
+        if npatterns >= MAX_PATTERNS then
+            for _k, old in pairs(patterns) do old:free() end
+            patterns, npatterns = {}, 0
+        end
+        p = Blitbuffer.new(w, h, bb:getType())
+        if inverse == 1 then p:setInverse(1) end
+        Paint.fill(p, 0, 0, w, h, th.c.bg)
+        drawPattern(p, 0, 0, w, h, name, th)
+        patterns[key], npatterns = p, npatterns + 1
+    end
+    bb:blitFrom(p, x, y, 0, 0, w, h)
 end
 
 -- The narrowest a cover may be in the library grid, per size setting (base

@@ -29,7 +29,7 @@ local Settings = require("cyberui/settings")
 local Theme = require("cyberui/theme")
 local _ = require("cyberui/gettext")
 
-local Library = Screen:extend()
+local Library = Screen:extend({ turns_parts = true })   -- a page turn paints only the grid and the page number
 
 -- Names shown for the filters.
 local FILTER_NAMES = { all = _("All"), reading = _("Reading"), unread = _("Unread"), done = _("Done") }
@@ -380,7 +380,7 @@ function Library:build()
         body_kids[#body_kids + 1] = Label:new({ grow = true, text = empty, kind = "body", color = "muted", align = "center", lines = 3 })
     else
         body_kids[#body_kids + 1] = Grid:new({
-            grow = true, items = items, page = self.page,
+            grow = true, items = items, page = self.page, paged = true,
             cols = as_list and 1 or nil, min_cell_w = Theme.px(Cover.SIZES[Settings.get("cover_size", "m")] or 120), cell_h = as_list and Theme.px(56) or nil, ratio = 1.72,
             row_gap = as_list and 0 or th.space.l,
             make = function(item, w, h) return self:cell(item, w, h, as_list) end,

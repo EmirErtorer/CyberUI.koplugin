@@ -40,7 +40,8 @@ function Screen:setPage(p)
     p = math.max(1, math.min(p, self.pages or 1))
     if p == self.page then return end
     self.page = p
-    App.render("ui")
+    -- (a screen that marks what changes with the page paints only that)
+    if self.turns_parts then App.turnPage() else App.render("ui") end
 end
 
 return Screen

@@ -63,6 +63,12 @@ function App.current()
     return stack[#stack]
 end
 
+-- Ask for the window to be painted again, all of it (see App.turnPage for less).
+local function dirty(mode, region)
+    host.parts = nil
+    UIManager:setDirty(host, mode, region)
+end
+
 -- Build the current screen's elements into the window.
 local function build()
     local s = App.current()
@@ -89,7 +95,26 @@ function App.render(refresh)
     if not host then return end
     build()
     host:markRepainted()
-    UIManager:setDirty(host, refresh or viewRefresh())
+    dirty(refresh or viewRefresh())
+end
+
+-- Show another page of the current screen: rebuilt, but only what changes with
+-- the page (elements marked `paged`, on the screen's background) and a button
+-- just pressed are painted again; the rest of the screen stays as drawn.
+function App.turnPage()
+    if not host then return end
+    local old = host.root
+    build()
+    host:markRepainted()
+    local parts = not host.overlay and not host.toast and Host.carry(old, host.root, host.pressed, {})
+    if not parts or #parts == 0 then return dirty("ui") end
+    local region
+    for _i, p in ipairs(parts) do
+        local b = Geom:new({ x = p.x, y = p.y, w = p.el.w, h = p.el.h })
+        region = region and region:combine(b) or b
+    end
+    UIManager:setDirty(host, "ui", region)
+    host.parts = parts
 end
 
 -- Rebuild the current screen but refresh only `region` (a Geom). Without
@@ -102,14 +127,14 @@ function App.update(region)
     if not region and o and o.dock == "bottom" and o.h then
         region = Geom:new({ x = 0, y = 0, w = host.dimen.w, h = host.dimen.h - o.h })
     end
-    UIManager:setDirty(host, "ui", region or host.dimen)
+    dirty("ui", region or host.dimen)
 end
 
 -- Repaint one element in place after changing it (no rebuild).
 function App.repaint(el, mode)
     if not (host and el.x) then return end
     -- the quickest refresh leaves traces on a dark screen
-    UIManager:setDirty(host, mode or (Theme.isDark() and "ui" or "fast"), Host.box(el))
+    dirty(mode or (Theme.isDark() and "ui" or "fast"), Host.box(el))
 end
 
 -- Show the clock change once a minute while CyberUI is on top.
@@ -380,7 +405,7 @@ function App.dialog(builder)
     host:markRepainted()
     -- refresh only what the old and new dialog cover
     local box = host:overlayBox()
-    UIManager:setDirty(host, "ui", before and box:combine(before) or box)
+    dirty("ui", before and box:combine(before) or box)
 end
 
 -- The dialog showing, or nil.
@@ -394,7 +419,7 @@ function App.closeDialog()
     local box = host:overlayBox()
     host.overlay = nil
     host:markRepainted()
-    UIManager:setDirty(host, "ui", box)
+    dirty("ui", box)
 end
 
 -- Ask before doing something (see Dialog.confirm for the fields).
@@ -418,13 +443,13 @@ function App.toast(text)
     if not host then return end
     host.toast = require("cyberui/ui/dialog").toast(text)
     host:relayout()
-    UIManager:setDirty(host, "ui")
+    dirty("ui")
     if toast_timer then UIManager:unschedule(toast_timer) end
     toast_timer = function()
         toast_timer = nil
         if host and host.toast then
             host.toast = nil
-            UIManager:setDirty(host, "ui")
+            dirty("ui")
         end
     end
     UIManager:scheduleIn(2, toast_timer)
@@ -498,7 +523,7 @@ function App.openBook(path, after_open)
         -- until it does; if it did not (an error, or a question asked first),
         -- the screen under the card is drawn again
         UIManager:tickAfterNext(function()
-            if host and not host.invisible and not ReaderUI.instance then UIManager:setDirty(host, "ui") end
+            if host and not host.invisible and not ReaderUI.instance then dirty("ui") end
         end)
     else
         ReaderUI:showReader(path, nil, nil, nil, after_open)
@@ -514,7 +539,7 @@ function App.flash(card)
     if quick then host:layoutOverlays() else host:relayout() end
     host.only_overlay = quick
     host:markRepainted()
-    UIManager:setDirty(host, "ui", host:overlayBox())
+    dirty("ui", host:overlayBox())
     UIManager:forceRePaint()
     host.only_overlay = nil
     host.overlay = nil

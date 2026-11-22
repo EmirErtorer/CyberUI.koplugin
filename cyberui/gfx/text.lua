@@ -70,6 +70,23 @@ end
 
 local shaped = setmetatable({}, { __mode = "k" })   -- face -> { str -> shaped line }
 
+local glyphs = setmetatable({}, { __mode = "k" })   -- face -> { code point -> glyph }
+local GLYPHS_PER_FACE = 1024
+
+-- A glyph of `face`: KOReader's (its cache keys each glyph by a string built
+-- for every lookup), kept here by code point once asked for. The glyphs stay
+-- valid while held: KOReader frees them only when nothing refers to them.
+local function glyphOf(face, cp)
+    local g = glyphs[face]
+    if not g then g = { n = 0 }; glyphs[face] = g end
+    local glyph = g[cp]
+    if glyph then return glyph end
+    glyph = RenderText:getGlyph(face, cp, false)
+    if g.n >= GLYPHS_PER_FACE then g = { n = 0 }; glyphs[face] = g end
+    g[cp], g.n = glyph, g.n + 1
+    return glyph
+end
+
 -- The shaped line for a right to left string, kept for reuse.
 local function shapedLine(face, s)
     local cache = shaped[face]
@@ -115,7 +132,7 @@ local function measure(spec, s)
     local prev = 0
     local cps = codepoints(s)
     for i, cp in ipairs(cps) do
-        local glyph = RenderText:getGlyph(face, cp, false)
+        local glyph = glyphOf(face, cp)
         if prev ~= 0 then w = w + face.ftsize:getKerning(prev, cp) end
         w = w + glyph.ax + (i < #cps and track or 0)
         prev = cp
@@ -130,21 +147,63 @@ function Text.width(kind, s)
 end
 
 -- `s` shortened with an ellipsis to fit `max_w` (already shown form).
-local function fit(spec, s, max_w)
-    if measure(spec, s) <= max_w then return s end
+local fits = setmetatable({}, { __mode = "k" })   -- face spec -> { "max_w|str" -> fitted string }
+local FITS_PER_SPEC = 2048
+
+local function fitNow(spec, s, max_w)
     local cps = codepoints(s)
     local function prefix(n)
         local chars = {}
         for i = 1, n do chars[i] = cps[i] end
         return Text.fromCodepoints(chars)
     end
+    -- the width of each prefix with the ellipsis after it, added up in one
+    -- pass exactly as measure() adds up a string (a right to left string
+    -- is shaped, so it is measured whole)
+    local width_of
+    if isRTL(s) then
+        width_of = function(n) return measure(spec, prefix(n) .. ELLIPSIS) end
+    else
+        local face, track = spec.face, spec.tracking
+        local e = codepoints(ELLIPSIS)[1]
+        local e_ax = glyphOf(face, e).ax
+        local sums, w, prev = {}, 0, 0
+        local function withEllipsis()
+            local x = w
+            if prev ~= 0 then x = x + face.ftsize:getKerning(prev, e) end
+            return x + (e_ax + 0)
+        end
+        sums[0] = withEllipsis()
+        for i, cp in ipairs(cps) do
+            if prev ~= 0 then w = w + face.ftsize:getKerning(prev, cp) end
+            w = w + (glyphOf(face, cp).ax + track)
+            prev = cp
+            sums[i] = withEllipsis()
+        end
+        width_of = function(n) return sums[n] end
+    end
     -- binary search the longest prefix that fits with the ellipsis
     local lo, hi = 0, #cps
     while lo < hi do
         local mid = math.ceil((lo + hi) / 2)
-        if measure(spec, prefix(mid) .. ELLIPSIS) <= max_w then lo = mid else hi = mid - 1 end
+        if width_of(mid) <= max_w then lo = mid else hi = mid - 1 end
     end
     return (prefix(lo):gsub("%s+$", "")) .. ELLIPSIS
+end
+
+-- `s` as it fits in `max_w`: whole, or shortened with an ellipsis (the same
+-- strings are fitted again each time a screen is rebuilt, so answers are kept).
+local function fit(spec, s, max_w)
+    if measure(spec, s) <= max_w then return s end
+    local kept = fits[spec]
+    if not kept or kept.n >= FITS_PER_SPEC then kept = { n = 0 }; fits[spec] = kept end
+    local key = max_w .. "|" .. s
+    local out = kept[key]
+    if not out then
+        out = fitNow(spec, s, max_w)
+        kept[key], kept.n = out, kept.n + 1
+    end
+    return out
 end
 
 -- Encode code points back into UTF-8.
@@ -208,7 +267,7 @@ function Text.draw(bb, x, y, kind, s, color)
     local pen = 0
     local prev = 0
     for _i, cp in ipairs(codepoints(s)) do
-        local glyph = RenderText:getGlyph(face, cp, false)
+        local glyph = glyphOf(face, cp)
         if prev ~= 0 then pen = pen + face.ftsize:getKerning(prev, cp) end
         local gbb = glyph.bb
         if rgb then

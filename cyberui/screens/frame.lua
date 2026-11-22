@@ -39,7 +39,7 @@ function Frame.pager(state, label, on_page)
     return Layout.Row:new({ gap = th.space.s, children = {
         Button:new({ icon = "first", variant = "icon", width = w, on_tap = function() on_page(1) end }),
         Button:new({ icon = "back", variant = "icon", width = w, on_tap = function() on_page(state.page - 1) end }),
-        Label:new({ grow = true, kind = "mono", align = "center",
+        Label:new({ grow = true, kind = "mono", align = "center", paged = true,
             text_fn = function() return string.format("%s %02d / %02d", label, state.page, state.pages or 1) end }),
         Button:new({ icon = "forward", variant = "icon_on", width = w, on_tap = function() on_page(state.page + 1) end }),
         Button:new({ icon = "last", variant = "icon", width = w, on_tap = function() on_page(state.pages or 1) end }),

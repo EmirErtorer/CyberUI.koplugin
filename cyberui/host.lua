@@ -90,6 +90,28 @@ function Host:toastPos()
     return math.floor((self.dimen.w - t.w) / 2), self.dimen.h - th.size.tabbar - th.space.xl - t.h
 end
 
+-- Copy where the elements of the previous tree `old` were painted onto the
+-- same elements of the new tree `new` (same shape and sizes), and add to
+-- `parts` the new elements to paint again: those marked `paged` (they change
+-- with the page) and the one in the box `pressed` (a button shown inverted).
+-- Returns `parts`, or nil when the two trees differ (paint everything).
+function Host.carry(old, new, pressed, parts)
+    if not old or not new or old.x == nil or old.w ~= new.w or old.h ~= new.h then return nil end
+    if new.paged or (pressed and old.x == pressed.x and old.y == pressed.y and old.w == pressed.w and old.h == pressed.h) then
+        parts[#parts + 1] = { el = new, x = old.x, y = old.y }
+        return parts
+    end
+    new.x, new.y = old.x, old.y
+    if (old.child == nil) ~= (new.child == nil) then return nil end
+    if old.child and not Host.carry(old.child, new.child, pressed, parts) then return nil end
+    local oc, nc = old.children, new.children
+    if (oc == nil) ~= (nc == nil) or (oc and #oc ~= #nc) then return nil end
+    for i = 1, oc and #oc or 0 do
+        if not Host.carry(oc[i], nc[i], pressed, parts) then return nil end
+    end
+    return parts
+end
+
 -- Paint background, screen, overlay and toast (timed), unless invisible.
 function Host:paintTo(bb, x, y)
     if self.invisible then return end
@@ -100,7 +122,19 @@ end
 function Host:paintAll(bb, x, y)
     Theme.sync()
     if self.laid_w ~= Screen:getWidth() or self.laid_h ~= Screen:getHeight() then
+        self.parts = nil
         if self.on_resize then self.on_resize() else self:relayout() end
+    end
+    -- only some parts changed (a page turn): each is painted again where it
+    -- was, on the screen's background, and the rest stays as it was drawn
+    if self.parts then
+        local bg = Theme.get().c.bg
+        for _i, p in ipairs(self.parts) do
+            Paint.fill(bb, x + p.x, y + p.y, p.el.w, p.el.h, bg)
+            p.el:paint(bb, x + p.x, y + p.y)
+        end
+        self.parts = nil
+        return
     end
     -- (with `only_overlay` the screen already shows the rest as it stands)
     if not self.only_overlay then
@@ -143,8 +177,10 @@ function Host:press(el, handler)
     UIManager:setDirty(nil, "fast", d)
     UIManager:forceRePaint()
     self.repainted = false
+    self.pressed = d   -- (a page turn paints the pressed button again, see Host.carry)
     -- a failing action must never take KOReader down: log it and say so
     local ok, err = xpcall(el[handler], debug.traceback, el)
+    self.pressed = nil
     if not ok then
         logger.err("CyberUI: action failed:", err)
         if self.on_error then self.on_error(err) end
