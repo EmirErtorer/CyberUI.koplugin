@@ -19,6 +19,7 @@ versions marked *Prerelease* are test builds.
 
 ### Fixed
 
+- **KOReader opened to the plain file browser instead of CyberUI** after a KOReader update or on a fresh install (CoverBrowser's "database updated" notice at start left the file browser on top of home), and the top menu did not open until a book was closed.
 - **KOReader crashed** when going home from a book while the top menu waited for a plugin's window (Reading style, for one), and the top menu could stop opening in books after changing such a plugin's settings.
 - **The page turn keys did nothing in styled lists**, such as Rakuyomi's chapters, history or the table of contents.
 - **A swipe down closes a styled list** again, as it does in KOReader.

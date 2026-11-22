@@ -118,8 +118,19 @@ end
 -- Show a window KOReader's way: a window no skin took (one with extra parts, or a skin that is
 -- switched off) still has to appear in front of the popup of the list it was opened from.
 local APPS = { ReaderUI = true, FileManager = true, filemanager = true, cyberui = true }   -- (the app windows are never raised)
+
+-- Is this one of KOReader's app windows (the file browser, the reader) or CyberUI's own? Those
+-- are never raised over a popup. The file browser has no name, so its class is asked too: made
+-- modal (while, say, CoverBrowser's notice of a new database was up at start), it would keep
+-- every later window, CyberUI's home included, underneath it.
+local function isApp(widget)
+    if APPS[widget.name] then return true end
+    local Anatomy = require("cyberui/skin/anatomy")
+    return Anatomy.is(widget, "apps/filemanager/filemanager") or Anatomy.is(widget, "apps/reader/readerui")
+end
+
 local function plainly(real_show, um, widget, ...)
-    if not widget.modal and not widget.toast and not APPS[widget.name] and popupOpen() then widget.modal = true end
+    if not widget.modal and not widget.toast and popupOpen() and not isApp(widget) then widget.modal = true end
     return real_show(um, widget, ...)
 end
 
