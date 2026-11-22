@@ -6,14 +6,13 @@
 
 local Dispatcher = require("dispatcher")
 local App = require("cyberui/app")
-local Menu = require("cyberui/menu")
 local _ = require("cyberui/gettext")
 
 local Targets = {}
 
 -- Choose an entry of KOReader's top menu; done(target) gets it.
 function Targets.pickMenu(done)
-    Menu.open({ title = _("KOREADER MENU"), pick = function(target)
+    require("cyberui/menu").open({ title = _("KOREADER MENU"), pick = function(target)
         target.kind = "menu"
         target.title = target.text
         done(target)
@@ -23,6 +22,7 @@ end
 -- Open the entry of KOReader's top menu a target points to: a submenu stays
 -- open, anything else runs.
 local function runMenu(target)
+    local Menu = require("cyberui/menu")
     local m = Menu.open({ quiet = true })
     local i = m:tabIndex(target.tab)
     if not i then m.quiet = false; m:close(); return App.toast(_("That menu is gone")) end

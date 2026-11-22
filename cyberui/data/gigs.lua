@@ -209,6 +209,18 @@ function Gigs.board()
     return list
 end
 
+-- How many gigs are open, for the home screen: before the library has been
+-- looked through this session (a moment after the first screen), the board
+-- as it was last drawn.
+function Gigs.openCount()
+    if not Economy.on() then return 0 end
+    if Library.stale() then
+        local board = data().board
+        return board and #(board.slots or {}) or 0
+    end
+    return #Gigs.board()
+end
+
 -- The open gig on this book, or nil.
 function Gigs.offer(path)
     for _i, g in ipairs(Gigs.board()) do
@@ -266,6 +278,14 @@ end
 -- price is fixed as the board showed it. Does nothing for any other book.
 function Gigs.accept(path)
     if not Economy.on() then return end
+    -- only a book on the board as it was last drawn can be taken: most books
+    -- opened never are, and need no look at the whole library
+    local board = data().board
+    local listed = false
+    for _i, p in ipairs(board and board.slots or {}) do
+        if p == path then listed = true; break end
+    end
+    if not listed then return end
     local g = Gigs.offer(path)
     if not g then return end
     local d = data()

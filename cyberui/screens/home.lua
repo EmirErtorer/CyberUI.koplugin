@@ -1,7 +1,6 @@
 -- The home screen: the masthead, today's date and reading streak, the book
 -- being read with Resume, recent books and the launcher to every section.
 
-local Actions = require("cyberui/actions")
 local App = require("cyberui/app")
 local Banner = require("cyberui/data/banner")
 local Books = require("cyberui/data/books")
@@ -19,7 +18,6 @@ local Library = require("cyberui/data/library")
 local ListRow = require("cyberui/ui/listrow")
 local Masthead = require("cyberui/ui/masthead")
 local Panel = require("cyberui/ui/panel")
-local ProfileFlow = require("cyberui/profileflow")
 local Progress = require("cyberui/ui/progress")
 local Screen = require("cyberui/screens/screen")
 local Settings = require("cyberui/settings")
@@ -58,7 +56,7 @@ end
 -- The index strip: a rule ending in a tag with the library size.
 local function indexStrip()
     local th = Theme.get()
-    local count = Library.count()
+    local count = Library.shownCount()
     return Layout.Row:new({ children = {
         Layout.Column:new({ grow = true, children = {
             Layout.Spacer:new({ grow = true }),
@@ -133,7 +131,7 @@ local function activeFile(cur)
     local pages = st.pages and string.format(_("PG %d/%d"), math.floor(st.percent * st.pages + 0.5), st.pages) or ""
     return Panel:new({ shape = "brackets", label = _("ACTIVE_FILE"), pad = { th.space.l, th.space.l, th.space.l, th.space.l },
         child = Layout.Row:new({ gap = th.space.l, valign = "stretch", children = {
-            Cover:new({ path = path, width = Theme.px(104), height = Theme.px(152), on_tap = function() Actions.details(path) end }),
+            Cover:new({ path = path, width = Theme.px(104), height = Theme.px(152), on_tap = function() require("cyberui/actions").details(path) end }),
             Layout.Column:new({ grow = true, gap = th.space.s, children = {
                 Label:new({ text = info.title, kind = "display", lines = 2 }),
                 Label:new({ text = who, kind = "body", color = "muted" }),
@@ -147,7 +145,7 @@ local function activeFile(cur)
                 Label:new({ text = cur.time and string.format(_("LAST OPEN %s"), Format.ago(cur.time)) or _("NEVER OPENED"), kind = "mono_small", color = "muted" }),
                 Layout.Spacer:new({ grow = true }),
                 Button:new({ label = st.percent > 0 and _("RESUME") or _("OPEN"), icon = "forward", variant = "primary", width = Theme.px(160),
-                    on_tap = function() Actions.open(path) end }),
+                    on_tap = function() require("cyberui/actions").open(path) end }),
             } }),
         } }) })
 end
@@ -174,7 +172,7 @@ local function recentList(home, shown, shard)
             return ListRow.build({ path = p, title = Books.info(p).title, meta = Books.badge(p) .. " // " .. Format.ago(item.time),
                 height = height, thumb_w = math.floor(thumb_w * f), thumb_h = math.floor(thumb_h * f),
                 on_tap = function() home.picked = p; App.update() end,
-                on_hold = function() Actions.details(p) end })
+                on_hold = function() require("cyberui/actions").details(p) end })
         end })
     return Panel:new({ shape = "rail", line = "accent", grow = true, pad = { 0, 0, 0, th.space.l }, child = list })
 end
@@ -206,16 +204,24 @@ local function footer()
     } })
 end
 
+-- The numbers home shows that come from looking through the library (books
+-- in it, gigs open), as one string to compare.
+function Home.counts()
+    return tostring(Library.shownCount()) .. "/" .. require("cyberui/data/gigs").openCount()
+end
+
 -- Build the home screen.
 function Home:build()
     local th = Theme.get()
     local status, clock = StatusBar.build()
     self.clock = clock
+    self.counts = Home.counts()
     local shown = self:shown()
     local card = Settings.get("home_card", true)
     local kids = {
         status,
-        Masthead.build({ operator = card, on_open = ProfileFlow.card, on_photo = ProfileFlow.photo }),
+        Masthead.build({ operator = card, on_open = function(...) return require("cyberui/profileflow").card(...) end,
+            on_photo = function(...) return require("cyberui/profileflow").photo(...) end }),
     }
     if not card then table.insert(kids, indexStrip()) end
     table.insert(kids, dateRow(self))
@@ -227,7 +233,7 @@ end
 
 -- The library index is ready: show the real counts.
 function Home:onIndexed()
-    App.update()
+    if self.counts ~= Home.counts() then App.update() end
 end
 
 return Home

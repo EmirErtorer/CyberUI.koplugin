@@ -7,13 +7,21 @@ local Skin = {}
 -- The skins, in the order they are asked about a widget.
 local SKINS = { "message", "confirm", "highlightmenu", "edithighlight", "buttondialog", "keyboard", "inputdialog", "list", "dictionary", "textviewer", "numbers", "choice", "keyvalue", "sort", "progress", "qr", "network", "bookstatus" }
 
--- Style everything. Safe to call every time KOReader starts a reader.
-function Skin.install()
-    local Core = require("cyberui/skin/core")
+-- Load every skin (each registers itself with the core).
+local function load()
     for _i, name in ipairs(SKINS) do require("cyberui/skin/" .. name) end
-    Core.install()
+end
+
+-- Style everything. Safe to call every time KOReader starts a reader. The
+-- skins load right away in a book (one patches the reader's highlight menu),
+-- and in the file browser just before the first widget is shown, so a start
+-- to the home screen does not load them.
+function Skin.install(now)
+    local Core = require("cyberui/skin/core")
+    if now then load() end
+    Core.install(load)
     require("cyberui/skin/frontlight").install()
-    require("cyberui/skin/configdialog").install()
+    if now then require("cyberui/skin/configdialog").install() end
 end
 
 return Skin

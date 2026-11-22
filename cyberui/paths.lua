@@ -17,10 +17,18 @@ function Paths.file(rel)
     return Paths.root .. "/" .. rel
 end
 
+local relative = {}   -- path -> the answer of fontRelative (the folders do not move)
+
 -- A font file's path as seen from KOReader's fonts folder. Font:getFace
 -- puts that folder in front of every name in releases up to 2026.07 (later
 -- ones also take absolute paths), so a relative path works in all of them.
 function Paths.fontRelative(path)
+    if not relative[path] then relative[path] = Paths.resolveFont(path) end
+    return relative[path]
+end
+
+-- Work out fontRelative's answer (asks the file system).
+function Paths.resolveFont(path)
     local ffiUtil = require("ffi/util")
     local fontdir = ffiUtil.realpath(require("fontlist").fontdir)
     local file = ffiUtil.realpath(path) or path

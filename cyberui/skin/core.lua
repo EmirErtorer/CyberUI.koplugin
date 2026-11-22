@@ -22,18 +22,31 @@ local Core = { skins = {} }
 -- group's own. Asked each time a widget is shown, so a switch works at once.
 function Core.wanted(skin_name)
     if not Settings.get("styled_widgets", true) or not require("cyberui/twin").mine() then return false end
+    if not skin_name then return true end
     local Groups = require("cyberui/skin/groups")
-    local group = skin_name and Groups.of(skin_name)
+    local group = Groups.of(skin_name)
     return not group or Settings.get(Groups.key(group), true)
 end
 
+local installed
+local loader   -- loads the skins, until they are loaded
+
+-- Run a skin's own install (patches KOReader's classes once).
+local function installSkin(skin)
+    if not skin.install then return end
+    local ok, err = pcall(skin.install)
+    if not ok then logger.warn("CyberUI skin " .. skin.name .. " (install):", err) end
+end
+
 -- Add a skin: { name, matches(widget) -> bool, present(widget) -> Popup options or nil,
--- install() (optional: patches KOReader's classes once) }.
+-- install() (optional: patches KOReader's classes once) }. A skin added once
+-- the skins are switched on is installed at once.
 function Core.register(skin)
     for i, s in ipairs(Core.skins) do
         if s.name == skin.name then Core.skins[i] = skin; return end
     end
     Core.skins[#Core.skins + 1] = skin
+    if installed then installSkin(skin) end
 end
 
 -- Run fn(...) with KOReader's refresh requests doing nothing (the widget's own
@@ -134,22 +147,25 @@ local function plainly(real_show, um, widget, ...)
     return real_show(um, widget, ...)
 end
 
-local installed
-
 -- Turn the skins on: from now on a widget a skin takes is shown through it.
-function Core.install()
+-- `load` (optional) loads the skins, and is called before the first widget
+-- they are asked about.
+function Core.install(load)
+    if load and #Core.skins == 0 then loader = load end
     if installed then return end
     installed = true
-    for _i, skin in ipairs(Core.skins) do
-        if skin.install then
-            local ok, err = pcall(skin.install)
-            if not ok then logger.warn("CyberUI skin " .. skin.name .. " (install):", err) end
-        end
-    end
+    for _i, skin in ipairs(Core.skins) do installSkin(skin) end
     local real_show = UIManager.show
     UIManager.show = function(um, widget, ...)
         if type(widget) ~= "table" or widget._cyberui_skinned or widget.name == "cyberui_popup" or not Core.wanted() then
             return real_show(um, widget, ...)
+        end
+        -- (KOReader's app windows and CyberUI's own are never skinned)
+        if isApp(widget) then return real_show(um, widget, ...) end
+        if loader then
+            local l = loader
+            loader = nil
+            l()
         end
         for _i, skin in ipairs(Core.skins) do
             -- ask the skin and build its popup before touching the widget: any failure shows KOReader's own

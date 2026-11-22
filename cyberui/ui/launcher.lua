@@ -24,7 +24,7 @@ local Launcher = {}
 -- The built-in buttons: id -> function giving icon, label, sub line, action.
 local BUILTIN = {
     library = function()
-        local count = Library.count()
+        local count = Library.shownCount()
         return "library", _("LIBRARY"), count and string.format(_.n("%d FILE // GRID", "%d FILES // GRID", count), count) or _("FILES // GRID"),
             function() App.go("library") end
     end,
@@ -34,7 +34,7 @@ local BUILTIN = {
     history = function() return "history", _("HISTORY"), _("TELEMETRY.LOG"), function() App.go("history") end end,
     gigs = function()
         if not Economy.on() then return "shop", _("SHOP"), _("ALL LOOKS UNLOCKED"), function() App.push("shop") end end
-        local n = #Gigs.board()
+        local n = Gigs.openCount()
         return "gigs", _("GIGS"), n > 0 and string.format(_.n("%d OPEN", "%d OPEN", n), n) or _("BACKLOG CLEAR"),
             function() App.push("gigs") end
     end,

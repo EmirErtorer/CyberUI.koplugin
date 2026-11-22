@@ -7,11 +7,7 @@ local Event = require("ui/event")
 local UIManager = require("ui/uimanager")
 local lfs = require("libs/libkoreader-lfs")
 local App = require("cyberui/app")
-local Dialog = require("cyberui/ui/dialog")
-local GitHub = require("cyberui/install/github")
-local Net = require("cyberui/install/net")
 local Paths = require("cyberui/paths")
-local Unpack = require("cyberui/install/unpack")
 local _ = require("cyberui/gettext")
 
 local Addons = {}
@@ -69,7 +65,7 @@ end
 function Addons.install(addon)
     local function step(text)
         App.dialog(function(_close, w)
-            return Dialog.progress({ title = string.format(_("Installing %s"), addon.name), text = text }, w)
+            return require("cyberui/ui/dialog").progress({ title = string.format(_("Installing %s"), addon.name), text = text }, w)
         end)
     end
     local function fail(why)
@@ -79,14 +75,14 @@ function Addons.install(addon)
     end
     local function run()
         step(_("1/3 // ASKING GITHUB"))
-        GitHub.latest(addon, function(release, why)
+        require("cyberui/install/github").latest(addon, function(release, why)
             if not release then return fail(why) end
             step(string.format(_("2/3 // DOWNLOADING %s %s (%.1f MB)"), addon.name:upper(), release.version, release.size / 1048576))
-            Net.get(release.url, release.size, 300, function(zip, err)
+            require("cyberui/install/net").get(release.url, release.size, 300, function(zip, err)
                 if not zip then return fail(err) end
                 step(_("3/3 // CHECKING AND UNPACKING"))
                 UIManager:nextTick(function()
-                    local ok, res, uerr = pcall(Unpack.install, zip, release, addon.folder, Addons.pluginsDir())
+                    local ok, res, uerr = pcall(require("cyberui/install/unpack").install, zip, release, addon.folder, Addons.pluginsDir())
                     os.remove(zip)
                     if not (ok and res) then return fail(tostring(ok and uerr or res)) end
                     App.closeDialog()

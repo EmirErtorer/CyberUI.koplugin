@@ -97,6 +97,12 @@ function Profile.rank(hours)
     }
 end
 
+-- Hours read in all, which the rank goes by (without counting the finished
+-- books, which looks through the whole library).
+function Profile.hours()
+    return Insights.allTime().seconds / 3600
+end
+
 -- The totals on the card: { hours, pages, days, books, best_run, since }.
 function Profile.stats()
     local t = Insights.allTime()

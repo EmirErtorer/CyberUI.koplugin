@@ -29,10 +29,27 @@ function History.current()
     return r[1]
 end
 
--- When `path` was last opened (seconds), or nil.
+-- A string that changes whenever the history does (a book opened, one
+-- removed, the history read again).
+function History.stamp()
+    local hist = ReadHistory.hist or {}
+    local top = hist[1]
+    return tostring(hist) .. "#" .. #hist .. "#" .. tostring(top and top.file) .. "#" .. tostring(top and top.time)
+end
+
+local opened, opened_stamp   -- file -> time it was last opened, for the history as of opened_stamp
+
+-- When `path` was last opened (seconds), or nil. (A lookup in a map made
+-- once per change of the history: sorting a big folder by it asks for every book.)
 function History.lastOpened(path)
-    local i = ReadHistory:getIndexByFile(path)
-    return i and ReadHistory.hist[i].time or nil
+    local stamp = History.stamp()
+    if opened_stamp ~= stamp then
+        opened, opened_stamp = {}, stamp
+        for _i, item in ipairs(ReadHistory.hist or {}) do
+            if item.file and not opened[item.file] then opened[item.file] = item.time end
+        end
+    end
+    return opened[path]
 end
 
 return History

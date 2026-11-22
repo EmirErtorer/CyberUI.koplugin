@@ -13,8 +13,6 @@ local Perf = require("cyberui/perf")
 local Settings = require("cyberui/settings")
 local Stats = require("cyberui/data/stats")
 local Theme = require("cyberui/theme")
-local Dialog = require("cyberui/ui/dialog")
-local TextInput = require("cyberui/ui/textinput")
 local StatusBar = require("cyberui/ui/statusbar")
 local _ = require("cyberui/gettext")
 
@@ -281,6 +279,7 @@ local function prewarm()
 end
 
 -- Work done once the screen is up, so it never delays the first paint.
+local IDLE_S = 0.5
 function App.afterShow()
     prewarm()
     if not update_started then
@@ -292,7 +291,8 @@ function App.afterShow()
             Updater.autoCheck(function() if App.isOpen() then App.update() end end)
         end)
     end
-    UIManager:nextTick(function()
+    -- (a moment later, so the screen is up and answering before the library is looked through)
+    UIManager:scheduleIn(IDLE_S, function()
         if Library.stale() then
             Library.all()
             local s = App.current()
@@ -305,10 +305,12 @@ function App.afterShow()
     end)
 end
 
--- Close CyberUI and show what is under it (the file browser).
-function App.close()
+-- Close CyberUI and show what is under it (the file browser, which makes its
+-- list now if home kept it waiting); `quitting` when KOReader is exiting.
+function App.close(quitting)
     if not host then return end
     if clock_timer then UIManager:unschedule(clock_timer); clock_timer = nil end
+    if not quitting then require("cyberui/lazyfm").fill() end
     UIManager:close(host, "ui")
     host, stack = nil, {}
     Covers.forget()
@@ -397,24 +399,24 @@ end
 
 -- Ask before doing something (see Dialog.confirm for the fields).
 function App.confirm(o)
-    App.dialog(function(close, w) return Dialog.confirm(o, close, w) end)
+    App.dialog(function(close, w) return require("cyberui/ui/dialog").confirm(o, close, w) end)
 end
 
 -- Offer a set of actions as tiles (see Dialog.sheet).
 function App.sheet(o)
-    App.dialog(function(close, w) return Dialog.sheet(o, close, w) end)
+    App.dialog(function(close, w) return require("cyberui/ui/dialog").sheet(o, close, w) end)
 end
 
 -- Let the reader pick from options (see Dialog.choose).
 function App.choose(o)
     o.show = function(page) o.page = page; App.choose(o) end
-    App.dialog(function(close, w) return Dialog.choose(o, close, w, Screen:getHeight()) end)
+    App.dialog(function(close, w) return require("cyberui/ui/dialog").choose(o, close, w, Screen:getHeight()) end)
 end
 
 -- A short notice near the bottom for two seconds.
 function App.toast(text)
     if not host then return end
-    host.toast = Dialog.toast(text)
+    host.toast = require("cyberui/ui/dialog").toast(text)
     host:relayout()
     UIManager:setDirty(host, "ui")
     if toast_timer then UIManager:unschedule(toast_timer) end
@@ -448,7 +450,7 @@ function App.input(title, value, on_done, ok_label, opts)
     show = function()
         App.dialog(function(close, screen_w)
             local panel
-            panel, field = TextInput.build({
+            panel, field = require("cyberui/ui/textinput").build({
                 title = title, placeholder = opts.placeholder, ok_label = ok_label, state = state, screen_w = screen_w,
                 on_char = function(c)
                     state.text = state.text .. c
@@ -464,7 +466,7 @@ function App.input(title, value, on_done, ok_label, opts)
                 on_collapse = function() state.collapsed = true; show() end,
                 on_expand = function() state.collapsed = nil; show() end,
                 on_layer = function(layer) state.layer, state.shift = layer, (state.shift == "lock" and "lock" or false); show() end,
-                on_shift = function() state.shift = TextInput.nextShift(state.shift); show() end,
+                on_shift = function() state.shift = require("cyberui/ui/textinput").nextShift(state.shift); show() end,
             })
             -- a tap beside the keyboard puts it away (the text stays); a tap beside the bare field leaves
             panel.on_outside = function()
@@ -492,8 +494,12 @@ function App.openBook(path, after_open)
     if host and JackIn.wanted(path) then
         App.flash(JackIn.card(path))
         JackIn.silenced(path, function() ReaderUI:showReader(path, nil, nil, nil, after_open) end)
-        -- the book did not open: the screen under the card is drawn again
-        if not ReaderUI.instance then UIManager:setDirty(host, "ui") end
+        -- the reader opens on the next turn of the loop, and the card stays up
+        -- until it does; if it did not (an error, or a question asked first),
+        -- the screen under the card is drawn again
+        UIManager:tickAfterNext(function()
+            if host and not host.invisible and not ReaderUI.instance then UIManager:setDirty(host, "ui") end
+        end)
     else
         ReaderUI:showReader(path, nil, nil, nil, after_open)
     end
@@ -502,11 +508,15 @@ end
 -- Paint a card over the current screen at once, then forget it without
 -- painting: the card stays up until whatever opens next paints over it.
 function App.flash(card)
+    -- home on top and drawn as it stands: only the card is painted over it
+    local quick = onTop() and not UIManager._dirty[host] and host.laid_w == Screen:getWidth() and host.laid_h == Screen:getHeight()
     host.overlay = card
-    host:relayout()
+    if quick then host:layoutOverlays() else host:relayout() end
+    host.only_overlay = quick
     host:markRepainted()
     UIManager:setDirty(host, "ui", host:overlayBox())
     UIManager:forceRePaint()
+    host.only_overlay = nil
     host.overlay = nil
 end
 

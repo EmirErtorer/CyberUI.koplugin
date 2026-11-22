@@ -31,9 +31,12 @@ local KEY = "twin_ui"                       -- (in KOReader's own settings, whic
 local ELDER = "cyberui"                     -- in charge when both run and neither was chosen
 local CORNER = "hold_bottom_right_corner"   -- (KOReader's name for the gesture)
 
--- KOReader's file browser or reader, whichever is open.
+-- KOReader's file browser or reader, whichever is open. (The reader's code is
+-- only looked at when it was loaded: no reader can be open before that, and
+-- loading it at start would cost more than everything else asked here.)
 local function ui()
-    return require("apps/filemanager/filemanager").instance or require("apps/reader/readerui").instance
+    local fm, reader = _G.package.loaded["apps/filemanager/filemanager"], _G.package.loaded["apps/reader/readerui"]
+    return (fm and fm.instance) or (reader and reader.instance)
 end
 
 -- Is the other twin running in this KOReader?

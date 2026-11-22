@@ -12,11 +12,8 @@
 -- pre } as versions, from the last check).
 
 local UIManager = require("ui/uimanager")
-local Net = require("cyberui/install/net")
-local GitHub = require("cyberui/install/github")
 local Policy = require("cyberui/update/policy")
 local Settings = require("cyberui/settings")
-local Unpack = require("cyberui/install/unpack")
 local Version = require("cyberui/version")
 local _ = require("cyberui/gettext")
 
@@ -49,7 +46,7 @@ function Updater.check(done)
     if Updater.busy then return end
     Updater.busy, Updater.error = "checking", nil
     Settings.set("update_tried", os.time())
-    GitHub.releases(Policy.SELF, function(list, why)
+    require("cyberui/install/github").releases(Policy.SELF, function(list, why)
         Updater.busy = nil
         if not list then
             Updater.error = why
@@ -88,12 +85,12 @@ function Updater.install(release, step, done)
         done(ok, why)
     end
     step(string.format(_("DOWNLOADING %s (%.1f MB)"), release.tag, release.size / 1048576))
-    Net.get(release.url, release.size, 300, function(zip, err)
+    require("cyberui/install/net").get(release.url, release.size, 300, function(zip, err)
         if not zip then return finish(nil, err) end
         step(_("CHECKING AND UNPACKING"))
         UIManager:nextTick(function()
             local Addons = require("cyberui/apps/addons")
-            local ok, res, uerr = pcall(Unpack.replace, zip, release, Policy.SELF.folder, Addons.pluginsDir(), Updater.folder())
+            local ok, res, uerr = pcall(require("cyberui/install/unpack").replace, zip, release, Policy.SELF.folder, Addons.pluginsDir(), Updater.folder())
             os.remove(zip)
             if not (ok and res) then return finish(nil, tostring(ok and uerr or res)) end
             Updater.installed = release.version
@@ -111,6 +108,7 @@ end
 -- At start: the copy an update replaced is no longer needed.
 function Updater.cleanup()
     local Addons = require("cyberui/apps/addons")
+    local Unpack = require("cyberui/install/unpack")
     pcall(Unpack.removeTree, Unpack.previous(Addons.pluginsDir(), Updater.folder()))
 end
 

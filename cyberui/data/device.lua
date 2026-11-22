@@ -20,10 +20,22 @@ function DeviceInfo.battery()
     return ok and pct or nil
 end
 
+local charging, charging_at   -- the last answer of charging() and when (os.time)
+local CHARGING_KEEP = 10        -- seconds an answer is kept (KOReader reads the hardware each time)
+
 -- Is the battery charging?
 function DeviceInfo.charging()
-    local ok, yes = pcall(function() return Device:getPowerDevice():isCharging() end)
-    return ok and yes or false
+    local now = os.time()
+    if charging == nil or now - charging_at >= CHARGING_KEEP or now < charging_at then
+        local ok, yes = pcall(function() return Device:getPowerDevice():isCharging() end)
+        charging, charging_at = ok and yes or false, now
+    end
+    return charging
+end
+
+-- Forget the kept charging state (a charger was plugged in or out).
+function DeviceInfo.forgetCharging()
+    charging = nil
 end
 
 -- Is Wi-Fi switched on?

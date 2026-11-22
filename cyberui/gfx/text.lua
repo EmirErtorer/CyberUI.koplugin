@@ -18,21 +18,44 @@ local Text = {}
 local ELLIPSIS = "…"
 local widths = setmetatable({}, { __mode = "k" })   -- face -> { str -> width }
 
--- Decode a UTF-8 string into a list of code points.
+local byte = string.byte
+
+-- The byte at `i` of `s` when it lies before `stop`, else 0x80 (a missing
+-- continuation byte counts as an empty one).
+local function cont(s, i, stop)
+    return i < stop and byte(s, i) or 0x80
+end
+
+-- Decode a UTF-8 string into a list of code points: each lead byte (ASCII,
+-- or 0xC2 to 0xF4) with the continuation bytes after it is one code point,
+-- and a stray byte is skipped. (A loop over bytes, not gmatch, which LuaJIT
+-- cannot compile: every line of text drawn went through it.)
 local function codepoints(s)
-    local out = {}
-    for ch in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
-        local b1 = ch:byte(1)
-        local cp
-        if b1 < 0x80 then cp = b1
-        elseif b1 < 0xE0 then cp = (b1 - 0xC0) * 0x40 + (ch:byte(2) or 0x80) - 0x80
-        elseif b1 < 0xF0 then
-            cp = (b1 - 0xE0) * 0x1000 + ((ch:byte(2) or 0x80) - 0x80) * 0x40 + (ch:byte(3) or 0x80) - 0x80
+    local out, n, i, len = {}, 0, 1, #s
+    while i <= len do
+        local b1 = byte(s, i)
+        if b1 < 0x80 or (b1 >= 0xC2 and b1 <= 0xF4) then
+            local j = i + 1
+            while j <= len do
+                local c = byte(s, j)
+                if c < 0x80 or c > 0xBF then break end
+                j = j + 1
+            end
+            local cp
+            if b1 < 0x80 then cp = b1
+            elseif b1 < 0xE0 then cp = (b1 - 0xC0) * 0x40 + cont(s, i + 1, j) - 0x80
+            elseif b1 < 0xF0 then
+                cp = (b1 - 0xE0) * 0x1000 + (cont(s, i + 1, j) - 0x80) * 0x40 + cont(s, i + 2, j) - 0x80
+            else
+                cp = (b1 - 0xF0) * 0x40000 + (cont(s, i + 1, j) - 0x80) * 0x1000
+                    + (cont(s, i + 2, j) - 0x80) * 0x40 + cont(s, i + 3, j) - 0x80
+            end
+            n = n + 1
+            out[n] = cp
+            i = j
         else
-            cp = (b1 - 0xF0) * 0x40000 + ((ch:byte(2) or 0x80) - 0x80) * 0x1000
-                + ((ch:byte(3) or 0x80) - 0x80) * 0x40 + (ch:byte(4) or 0x80) - 0x80
+            i = i + 1
         end
-        out[#out + 1] = cp
     end
     return out
 end

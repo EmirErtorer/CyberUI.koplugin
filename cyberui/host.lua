@@ -50,9 +50,14 @@ function Host:relayout()
     local w, h = Screen:getWidth(), Screen:getHeight()
     self.dimen.w, self.dimen.h = w, h
     if self.root then self.root:layout(w, h) end
-    if self.overlay then self.overlay:layout(self.overlay:naturalWidth() or w, nil) end
-    if self.toast then self.toast:layout(nil, nil) end
+    self:layoutOverlays()
     self.laid_w, self.laid_h = w, h
+end
+
+-- Lay out only the overlay and the toast (the screen under them stays as laid out).
+function Host:layoutOverlays()
+    if self.overlay then self.overlay:layout(self.overlay:naturalWidth() or self.dimen.w, nil) end
+    if self.toast then self.toast:layout(nil, nil) end
 end
 
 -- Show a new element tree.
@@ -97,8 +102,11 @@ function Host:paintAll(bb, x, y)
     if self.laid_w ~= Screen:getWidth() or self.laid_h ~= Screen:getHeight() then
         if self.on_resize then self.on_resize() else self:relayout() end
     end
-    Paint.fill(bb, x, y, self.dimen.w, self.dimen.h, Theme.get().c.bg)
-    if self.root then self.root:paint(bb, x, y) end
+    -- (with `only_overlay` the screen already shows the rest as it stands)
+    if not self.only_overlay then
+        Paint.fill(bb, x, y, self.dimen.w, self.dimen.h, Theme.get().c.bg)
+        if self.root then self.root:paint(bb, x, y) end
+    end
     if self.overlay then
         -- a hard offset shadow lifts a centred dialog off the screen behind it
         local ox, oy = self:overlayPos()

@@ -12,6 +12,7 @@ local Library = {}
 
 local listings = {}   -- dir -> { mtime, folders, books }
 local index           -- { books = {paths}, built = time } for the whole library
+local last_sort       -- the last sort asked for and its answer (turning a page asks again)
 
 local MAX_DEPTH = 8
 -- A phone's whole storage can hold tens of thousands of folders: the walk stops
@@ -106,6 +107,7 @@ function Library.all()
     end
     walk(home, 0)
     index = { books = books, built = os.time() }
+    if Settings.get("library_count") ~= #books then Settings.save("library_count", #books) end
     return books
 end
 
@@ -113,6 +115,12 @@ end
 -- index is first built.
 function Library.count()
     return index and #index.books or nil
+end
+
+-- The number to show for the library: the index's, or before it is walked
+-- this session (a moment after the first screen), the one counted last time.
+function Library.shownCount()
+    return Library.count() or Settings.get("library_count")
 end
 
 -- Is the index missing or out of date?
@@ -124,6 +132,7 @@ end
 -- kept for its count until it is walked again.
 function Library.reset()
     listings = {}
+    last_sort = nil
     if index then index.stale = true end
 end
 
@@ -141,8 +150,21 @@ local SORTS = {
 Library.SORTS = { "recent", "title", "author", "series", "added", "progress", "pages", "size" }
 
 -- A sorted copy of `books` by an order of Library.SORTS; `reverse` turns the
--- order round.
+-- order round. The same list sorted the same way, with nothing read or
+-- changed since, gives the last answer again.
 function Library.sort(books, order, reverse)
+    local stamp = Books.revision .. "/" .. History.stamp()
+    local l = last_sort
+    if l and l.books == books and l.n == #books and l.order == order and l.reverse == reverse and l.stamp == stamp then
+        return l.out
+    end
+    local out = Library.sortNow(books, order, reverse)
+    last_sort = { books = books, n = #books, order = order, reverse = reverse, stamp = stamp, out = out }
+    return out
+end
+
+-- Sort without looking at the last answer.
+function Library.sortNow(books, order, reverse)
     local key = SORTS[order] or SORTS.recent
     local keyed = {}
     for i, p in ipairs(books) do

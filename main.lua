@@ -2,12 +2,34 @@
 -- opens CyberUI at boot when chosen, brings it back when a book closes, and
 -- offers menu entries and a gesture action to open it.
 
+-- CyberUI's modules load from compiled copies once made (see cyberui/bccache.lua).
+do
+    local root = debug.getinfo(1, "S").source:gsub("^@", ""):match("^(.*)/main%.lua$")
+    local ok, BcCache = pcall(require, "cyberui/bccache")
+    if root and ok then pcall(BcCache.install, root, require("datastorage"):getDataDir() .. "/cache/cyberui-bytecode") end
+end
+
 local Dispatcher = require("dispatcher")
 local WidgetContainer = require("ui/widget/container/widgetcontainer")
 local _ = require("cyberui/gettext")
 local T = require("ffi/util").template
 
 local START_WITH = "cyberui"
+
+-- Switch LuaJIT's compiler back on (see below).
+local function resumeJit()
+    if jit then jit.on() end
+end
+
+-- A start straight to CyberUI home draws its first screen with LuaJIT's
+-- compiler paused: it compiles each loop the first time it runs often, and at
+-- start that costs more than running the few loops one screen needs as they
+-- are. The compiler is back as soon as home is up, and after a second at the
+-- latest whatever happens.
+if jit and G_reader_settings and G_reader_settings:readSetting("start_with") == START_WITH then
+    jit.off()
+    require("ui/uimanager"):scheduleIn(1, resumeJit)
+end
 
 local CyberUI = WidgetContainer:extend({
     name = "CyberUI",
@@ -53,14 +75,32 @@ function CyberUI.isHome()
     return G_reader_settings:readSetting("start_with") == START_WITH
 end
 
+-- Will home cover the file browser being built now? At the first start when
+-- CyberUI is the start screen, and when a book closes back to home (the same
+-- choice onShow makes).
+local function homeWillCover()
+    if not require("cyberui/twin").mine() then return false end
+    if book_closed then
+        local App = _G.package.loaded["cyberui/app"]
+        return (App and App.isOpen()) or require("cyberui/settings").get("home_active", false) or CyberUI.isHome()
+    end
+    return not booted and CyberUI.isHome()
+end
+
 -- Hook into KOReader when the file browser or the reader starts.
 function CyberUI:init()
     registerStartWith()
+    if not self.ui.document then
+        local LazyFM = require("cyberui/lazyfm")
+        LazyFM.install()
+        LazyFM.arm(homeWillCover())
+    end
     require("cyberui/data/sysinfo").started = started
-    require("cyberui/sleep").install()
+    -- (the sleep screen's hook loads KOReader's sleep screen code: not while starting)
+    require("ui/uimanager"):scheduleIn(2, function() require("cyberui/sleep").install() end)
     self.ui.menu:registerToMainMenu(self)
     self:onDispatcherRegisterActions()
-    require("cyberui/skin/all").install()
+    require("cyberui/skin/all").install(self.ui.document ~= nil)
     if self.ui.document then
         self:styleReaderMenu()
     end
@@ -98,17 +138,23 @@ end
 function CyberUI:onShow()
     if self.ui.document then return end
     local App = require("cyberui/app")
+    local LazyFM = require("cyberui/lazyfm")
     local from_book = book_closed
     book_closed = false
     local first = not booted
     booted = true
+    LazyFM.arm(false)
     -- (with its twin installed too, only the one in charge comes back or starts)
-    if not require("cyberui/twin").mine() then return end
-    if from_book then
-        if App.isOpen() or App.isHome() or CyberUI.isHome() then App.raise() end
-    elseif first and CyberUI.isHome() then
-        App.open()
+    if require("cyberui/twin").mine() then
+        if from_book then
+            if App.isOpen() or App.isHome() or CyberUI.isHome() then App.raise() end
+        elseif first and CyberUI.isHome() then
+            App.open()
+        end
     end
+    if first then require("ui/uimanager"):tickAfterNext(resumeJit) end
+    -- the browser left without its list is on the screen after all
+    if not App.isOpen() then LazyFM.fill() end
 end
 
 -- The book is ready: hide CyberUI's window under it (without loading CyberUI when
@@ -136,8 +182,15 @@ function CyberUI:onPageUpdate(page)
     if type(page) == "number" and doc then require("cyberui/data/gigs").page(page, doc:getPageCount(), unsettled) end
 end
 
+-- A charger was plugged in or out: the status bar asks again.
+function CyberUI:onCharging()
+    require("cyberui/data/device").forgetCharging()
+end
+CyberUI.onNotCharging = CyberUI.onCharging
+
 -- The device sleeps: pay what has been read so the sleep cannot lose it.
 function CyberUI:onSuspend()
+    require("cyberui/sleep").install()
     require("cyberui/data/gigs").settle()
 end
 
@@ -151,7 +204,7 @@ end
 
 -- Close CyberUI on Exit too, or a window is left and KOReader never quits.
 function CyberUI:onExit()
-    require("cyberui/app").close()
+    require("cyberui/app").close(true)
 end
 
 -- Open CyberUI; from the reader, home shows at once and the book closes

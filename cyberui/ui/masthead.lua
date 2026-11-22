@@ -6,7 +6,7 @@
 local Avatar = require("cyberui/ui/avatar")
 local Banner = require("cyberui/data/banner")
 local Icon = require("cyberui/ui/icon")
-local IdCard = require("cyberui/ui/idcard")
+local IdTags = require("cyberui/ui/idtags")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
 local Panel = require("cyberui/ui/panel")
@@ -20,7 +20,7 @@ local function operatorLine(handle, rank)
     local th = Theme.get()
     return Layout.Row:new({ gap = th.space.m, valign = "center", children = {
         Label:new({ text = handle, kind = "mono_small" }),
-        IdCard.rankTag(rank, true),
+        IdTags.rankTag(rank, true),
     } })
 end
 
@@ -35,12 +35,12 @@ function Masthead.build(o)
     lines[#lines + 1] = quote and Label:new({ text = title, kind = "body", lines = 2 }) or Label:new({ text = title, kind = "title" })
     local lead, bars
     if o.operator then
-        lines[#lines + 1] = operatorLine(Profile.handle(), Profile.rank(Profile.stats().hours))
+        lines[#lines + 1] = operatorLine(Profile.handle(), Profile.rank(Profile.hours()))
         lead = Avatar:new({ seed = Profile.handle(), size = 56, on_tap = o.on_open, on_hold = o.on_photo })
-        bars = IdCard.codeBars(32, 84)
+        bars = IdTags.codeBars(32, 84)
     else
         lead = Icon:new({ name = "book", size = 28, color = "accent" })
-        bars = IdCard.codeBars(32, 96)
+        bars = IdTags.codeBars(32, 96)
     end
     return Panel:new({ shape = "chamfer", corners = "t", pad = { th.space.s, th.space.m, th.space.s, th.space.s },
         on_tap = o.on_open, on_hold = function() require("cyberui/screens/settings").pickBannerTitle() end,

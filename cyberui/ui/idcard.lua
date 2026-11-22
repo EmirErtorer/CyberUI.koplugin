@@ -4,14 +4,13 @@
 
 local Avatar = require("cyberui/ui/avatar")
 local Button = require("cyberui/ui/button")
-local Deco = require("cyberui/ui/deco")
 local Economy = require("cyberui/data/economy")
 local Flair = require("cyberui/ui/flair")
+local IdTags = require("cyberui/ui/idtags")
 local Format = require("cyberui/format")
 local Ledger = require("cyberui/data/ledger")
 local Label = require("cyberui/ui/label")
 local Layout = require("cyberui/ui/layout")
-local Paint = require("cyberui/gfx/paint")
 local Panel = require("cyberui/ui/panel")
 local Profile = require("cyberui/data/profile")
 local Progress = require("cyberui/ui/progress")
@@ -34,20 +33,9 @@ local function withMoney(tiles)
     return tiles
 end
 
--- The rank as a filled tag; `small` for a tag that sits in a line of text.
-function IdCard.rankTag(rank, small)
-    local th = Theme.get()
-    return Panel:new({ shape = "chamfer", corners = "l", cut = "cut_small", fill = "accent", line = false,
-        pad = { Theme.px(small and 1 or 3), small and th.space.s or th.space.m },
-        child = Label:new({ text = rank.name, kind = small and "micro" or "label", color = "on_accent" }) })
-end
-
--- A barcode that belongs to the ID code, `height` base pixels tall (and
--- `width` wide when given).
-function IdCard.codeBars(height, width)
-    return Deco.Barcode:new({ bars = Paint.barsFrom(Profile.rng(Profile.id())), height = Theme.px(height),
-        width = width and Theme.px(width) or nil })
-end
+-- The rank tag and the barcode (shared with the home masthead).
+IdCard.rankTag = IdTags.rankTag
+IdCard.codeBars = IdTags.codeBars
 
 -- "2025-03" from a time, or a dash.
 local function monthOf(t)
@@ -124,7 +112,7 @@ end
 function IdCard.sample(o)
     local th = Theme.get()
     local handle = Profile.handle()
-    local rank = Profile.rank(Profile.stats().hours)
+    local rank = Profile.rank(Profile.hours())
     local plain = o.styles or {}
     local function pick(cat) return plain[cat] or Shop.category(cat).styles[1] end
     return Panel:new({ shape = "header", title = _("OPERATOR // ID-CARD"), title_right = _("AUTH OK"),
