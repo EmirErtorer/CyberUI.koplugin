@@ -8,8 +8,13 @@ versions marked *Prerelease* are test builds.
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-23
+
+Speed everywhere: starts, book opens and closes, library pages and sorting, with the jack-in card up the moment you tap. Also the eddies on every book's dossier, and the fixes that were waiting as 1.4.1.
+
 ### Added
 
+- **Switching to SolarUI asks first**, so a stray tap never swaps the whole look.
 - **Every book's dossier shows its eddies**: a bar of its ten payouts and the finish, what it has paid out of its price, the next payout, what is still to earn, and how its pages are counting (tap it to see the rule), compact enough to leave the synopsis its room. The Gigs page's Active tab now lists every book that is paying, not only gigs, each with the same bar.
 - **Long press on the < and > of a list** goes to its first or last page.
 
@@ -24,17 +29,6 @@ versions marked *Prerelease* are test builds.
 - **KOReader crashed** when going home from a book while the top menu waited for a plugin's window (Reading style, for one), and the top menu could stop opening in books after changing such a plugin's settings.
 - **The page turn keys did nothing in styled lists**, such as Rakuyomi's chapters, history or the table of contents.
 - **A swipe down closes a styled list** again, as it does in KOReader.
-
-## [1.4.1] - 2026-11-18
-
-Fixes from your reports.
-
-### Added
-
-- **Switching to SolarUI asks first**, so a stray tap never swaps the whole look.
-
-### Fixed
-
 - **KOReader crashed when opening System, About** on newer KOReader versions, whose QR codes are made differently now.
 - **Progress under covers in the library** now fills to the exact share; it showed only empty or full.
 
