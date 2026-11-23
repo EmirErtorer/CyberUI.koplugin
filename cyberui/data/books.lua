@@ -159,6 +159,7 @@ local function poll()
     end
     polling = false
     local done = {}
+    if next(waiting) then Books.revision = Books.revision + 1 end
     for path in pairs(waiting) do
         info_cache[path] = nil
         done[#done + 1] = path
