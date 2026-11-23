@@ -15,13 +15,18 @@ end
 -- Style everything. Safe to call every time KOReader starts a reader. The
 -- skins load right away in a book (one patches the reader's highlight menu),
 -- and in the file browser just before the first widget is shown, so a start
--- to the home screen does not load them.
+-- to the home screen does not load them. The light panel's skin (which loads
+-- KOReader's light widgets) comes a moment after the start in the file browser.
 function Skin.install(now)
     local Core = require("cyberui/skin/core")
     if now then load() end
     Core.install(load)
-    require("cyberui/skin/frontlight").install()
-    if now then require("cyberui/skin/configdialog").install() end
+    if now then
+        require("cyberui/skin/frontlight").install()
+        require("cyberui/skin/configdialog").install()
+    else
+        require("ui/uimanager"):scheduleIn(2, function() require("cyberui/skin/frontlight").install() end)
+    end
 end
 
 return Skin

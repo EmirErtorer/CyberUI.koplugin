@@ -10,8 +10,9 @@
 -- English loads nothing; other languages load their file once, from a compiled
 -- copy kept in the settings folder when the .po has not changed.
 
-local Plural = require("cyberui/i18n/plural")
-local Po = require("cyberui/i18n/po")
+-- (the catalogue readers load only when a translation is used, not in English)
+local function Po() return require("cyberui/i18n/po") end
+local function Plural() return require("cyberui/i18n/plural") end
 
 local I18n = {}
 I18n.root = nil   -- the folder of the language folders (tests point it elsewhere)
@@ -114,9 +115,9 @@ local function load(lang)
     end
     local f = io.open(po, "r")
     if not f then return nil end
-    local parsed = Po.parse(f:read("*a"))
+    local parsed = Po().parse(f:read("*a"))
     f:close()
-    local data = { version = 1, stamp = st, rule = select(2, Po.pluralRule(parsed.header)), map = {} }
+    local data = { version = 1, stamp = st, rule = select(2, Po().pluralRule(parsed.header)), map = {} }
     addEntries(data.map, parsed.entries)
     if cache then
         pcall(function()
@@ -176,13 +177,13 @@ function I18n.use(code)
     local data = load(folder)
     if not data then return language end
     language, catalog = folder, data.map
-    plural_fn = Plural.compile(data.rule)
+    plural_fn = Plural().compile(data.rule)
     -- the reader's own edits
     local user = userFile(folder)
     if stamp(user) then
         local f = io.open(user, "r")
         if f then
-            addEntries(catalog, Po.parse(f:read("*a")).entries)
+            addEntries(catalog, Po().parse(f:read("*a")).entries)
             f:close()
         end
     end

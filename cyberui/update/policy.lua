@@ -11,9 +11,12 @@
 --   * With prereleases on, the newest prerelease is offered too, but only
 --     while it is newer than the newest stable release.
 
-local GitHub = require("cyberui/install/github")
-
 local Policy = {}
+
+-- GitHub's release reader (loaded when releases are read, not at start).
+local function gitHub()
+    return require("cyberui/install/github")
+end
 
 -- CyberUI as GitHub knows it.
 Policy.SELF = {
@@ -77,7 +80,7 @@ function Policy.offers(list, current, addon)
     local cur = Policy.parse(current)
     local stable, pre, listed_pre
     for _i, r in ipairs(type(list) == "table" and list or {}) do
-        local rel = GitHub.release(r, addon)
+        local rel = gitHub().release(r, addon)
         local v = rel and Policy.parse(rel.tag)
         if v then
             rel.v = v

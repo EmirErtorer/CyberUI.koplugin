@@ -37,9 +37,15 @@ local function try(fn, ...)
     return nil
 end
 
--- A running plugin's instance by its name, or nil.
+-- A running plugin's instance by its name, or nil: on the file browser, or
+-- on a book kept open under home (only ever parked once park is loaded).
 local function plugin(name)
-    local ui = require("cyberui/park").ui()
+    local fm = _G.package.loaded["apps/filemanager/filemanager"]
+    local ui = fm and fm.instance
+    if not ui then
+        local Park = _G.package.loaded["cyberui/park"]
+        ui = Park and Park.ui()
+    end
     return ui and ui[name]
 end
 

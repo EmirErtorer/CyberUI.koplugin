@@ -17,7 +17,6 @@ local BookList = require("ui/widget/booklist")
 local Library = require("cyberui/data/library")
 local Settings = require("cyberui/settings")
 local Ledger = require("cyberui/data/ledger")
-local Pace = require("cyberui/data/pace")
 local lfs = require("libs/libkoreader-lfs")
 
 local Gigs = {}
@@ -345,7 +344,7 @@ function Gigs.follow(path)
     local q = Gigs.quote(path) or plainQuote(path)
     if not q then cur = nil; return end
     local kept = (data().pace or {})[path]
-    cur = { path = path, quote = q, bits = loadBits(path), total = 0, pace = Pace.new(kept and kept.words) }
+    cur = { path = path, quote = q, bits = loadBits(path), total = 0, pace = require("cyberui/data/pace").new(kept and kept.words) }
 end
 
 -- Does the followed book still need measuring (see Gigs.measure)?
@@ -358,7 +357,7 @@ end
 -- book opens, never on a page turn. Returns the words (0 for a picture book).
 function Gigs.measure(doc)
     if not (cur and doc and doc.file == cur.path and cur.pace.words == nil) then return nil end
-    local words = Pace.measure(doc)
+    local words = require("cyberui/data/pace").measure(doc)
     if words == nil then return nil end
     cur.pace.words = words
     paceRecord(cur.path).words = words
@@ -380,8 +379,8 @@ end
 local function readIfStayed(shown, now, left)
     if not shown then return end
     local stayed = now - shown.t
-    local need = Pace.need(cur.pace, shown.total, shown.unsettled)
-    if left and Pace.note(cur.pace, stayed) and not shown.counted and stayed < need then
+    local need = require("cyberui/data/pace").need(cur.pace, shown.total, shown.unsettled)
+    if left and require("cyberui/data/pace").note(cur.pace, stayed) and not shown.counted and stayed < need then
         cur.quick = (cur.quick or 0) + 1
     end
     if not shown.counted and stayed >= need then
