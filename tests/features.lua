@@ -104,6 +104,32 @@ do
         "the history says when a book was opened, and nothing for one never opened")
     ReadHistory.hist = saved_hist
 
+    -- sort keys kept between sorts give the same order as keys read afresh,
+    -- and a change to a book is seen at the next sort
+    local Books = require("cyberui/data/books")
+    for _, order in ipairs(Library.SORTS) do Library.sort(all, order) end
+    local cached = {}
+    for _, order in ipairs({ "recent", "title", "recent", "author", "size" }) do
+        cached[#cached + 1] = { order, Library.sortNow(all, order) }
+    end
+    Library.reset()
+    local same = true
+    for _, c in ipairs(cached) do
+        local fresh = Library.sortNow(all, c[1])
+        for i = 1, #fresh do if fresh[i] ~= c[2][i] then same = false end end
+    end
+    Kit.ok(same, "sorting with kept keys gives the order of keys read afresh")
+    local by_title = Library.sortNow(all, "title")
+    local last = by_title[#by_title]
+    Books.forget(last)
+    Books.info(last).title = "\001 first of all"
+    local after = Library.sortNow(all, "title")
+    Kit.ok(after[1] == last, "a book whose title changed is sorted by its new title")
+    Books.forget(last)
+    local status_ok = true
+    for _, p in ipairs(all) do if Books.status(p) ~= Books.state(p).status then status_ok = false end end
+    Kit.ok(status_ok, "a book's status alone matches its full reading state")
+
     -- the screen in every grouping, picking books
     local Lib = require("cyberui/screens/library")
     local W, H = Kit.Screen:getWidth(), Kit.Screen:getHeight()
@@ -1355,6 +1381,42 @@ do
         end
     end
     Kit.ok(differ == 0, "text shortened in one pass matches measuring each prefix (" .. differ .. " differ)")
+
+    -- wrapped titles are kept, and match wrapping afresh
+    local samples, kept_lines = {}, {}
+    for t = 1, 60 do
+        local parts = {}
+        for k = 1, math.random(1, 12) do parts[k] = words[math.random(#words)] end
+        samples[t] = { table.concat(parts, " "), math.random(30, 260), math.random(1, 3) }
+        kept_lines[t] = table.concat(Text.wrap("label", samples[t][1], samples[t][2], samples[t][3]), "\n")
+    end
+    Text.reset()
+    local wrap_same = true
+    for t, sm in ipairs(samples) do
+        if table.concat(Text.wrap("label", sm[1], sm[2], sm[3]), "\n") ~= kept_lines[t] then wrap_same = false end
+        if table.concat(Text.wrap("label", sm[1], sm[2], sm[3]), "\n") ~= kept_lines[t] then wrap_same = false end
+    end
+    Kit.ok(wrap_same, "wrapped text asked again matches wrapping afresh")
+
+    -- shown forms and UTF-8 checks are kept, and stay right
+    local Utf8Safe = require("cyberui/utf8safe")
+    local broken = "Caf\195"
+    Kit.ok(Utf8Safe.clean(broken) == "Caf" and Utf8Safe.clean(broken) == "Caf", "a cut character is dropped, the second time too")
+    Kit.ok(Utf8Safe.clean("plain") == "plain" and Utf8Safe.clean(nil) == nil, "plain text and no text pass as they are")
+    local I18n = require("cyberui/gettext")
+    local caps_kind
+    for _, kind in ipairs({ "micro", "label", "title", "display", "mono_small", "body" }) do
+        if require("cyberui/theme").text(kind).caps then caps_kind = kind; break end
+    end
+    if caps_kind then
+        local was = I18n.language()
+        local en = Text.shown(caps_kind, "istanbul")
+        I18n.use("tr")
+        local tr = Text.shown(caps_kind, "istanbul")
+        I18n.use(was)
+        Kit.ok(en == "ISTANBUL" and tr == "\196\176STANBUL" and Text.shown(caps_kind, "istanbul") == en,
+            "capitals follow the language even for text shown before: " .. tostring(en) .. " / " .. tostring(tr))
+    end
 end
 
 -- a page turn paints only the grid, the page number and a pressed button, and
