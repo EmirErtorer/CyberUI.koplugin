@@ -191,6 +191,20 @@ do
     end
     Kit.ok(inked("ko:appbar.search.svg") > 20, "a stock icon draws")
     Kit.ok(inked("ko:no-such-icon.svg") == inked("tools"), "a stock icon that is gone draws the tools icon")
+    -- an icon drawn again in a later start comes from its kept mask, the same to the pixel
+    local function pixels(name)
+        local bb = Kit.canvas()
+        Icons.draw(bb, name, 0, 0, 30, require("ffi/blitbuffer").COLOR_BLACK)
+        local t = {}
+        for y = 0, 29 do for x = 0, 29 do t[#t + 1] = bb:getPixel(x, y):getColor8().a end end
+        bb:free()
+        return table.concat(t, ",")
+    end
+    local fresh = pixels("settings")
+    Icons.free()
+    local kept = pixels("settings")
+    local blank = select(2, kept:gsub("255", "")) == 900
+    Kit.ok(fresh == kept and not blank, "an icon read back from its kept mask draws the same")
     local Pick = require("cyberui/screens/iconpick")
     local picked
     local s = Pick:new({ current = "ko:appbar.search.svg", on_pick = function(n) picked = n end })
@@ -1530,6 +1544,29 @@ do
     package.loaded["cyberui/bctest"] = nil
     Kit.ok(require("cyberui/bctest").v == 33, "a broken copy falls back to the source")
     package.loaded["cyberui/bctest"] = nil
+
+    -- the start's modules are packed together, and the next start loads them from the pack
+    BcCache.packStart()
+    local pf = io.open(tmp .. "/cache/start.pack", "rb")
+    local packed = pf and pf:read("*a") or ""
+    if pf then pf:close() end
+    Kit.ok(packed:find("cyberui/bctest", 1, true) ~= nil, "the modules a start loaded are packed")
+    local t = lfs.attributes(src, "modification")
+    f = io.open(src, "w")
+    f:write("return { v = 44 }\n")   -- (same size and age: the stamp still matches)
+    f:close()
+    lfs.touch(src, t, t)
+    f = io.open(copy, "wb")
+    f:write("broken")
+    f:close()
+    local Next = dofile(REPO .. "/cyberui/bccache.lua")   -- the next start
+    Next.install(tmp .. "/root", tmp .. "/cache")
+    Kit.ok(require("cyberui/bctest").v == 33, "the next start loads the module from the pack")
+    package.loaded["cyberui/bctest"] = nil
+    write(55, 3000000)
+    Kit.ok(require("cyberui/bctest").v == 55, "a module changed since it was packed is read from its source")
+    package.loaded["cyberui/bctest"] = nil
+    table.remove(package.loaders, 2)
 end
 
 Kit.finish("features")

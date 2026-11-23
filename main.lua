@@ -16,6 +16,26 @@ local T = require("ffi/util").template
 
 local START_WITH = "cyberui"
 
+-- The start is over: CyberUI's modules it loaded are kept together for the
+-- next one (see cyberui/bccache.lua).
+local function packStart()
+    local BcCache = _G.package.loaded["cyberui/bccache"]
+    if BcCache then pcall(BcCache.packStart) end
+end
+
+-- (KOReader closing within seconds of its start packs it then)
+do
+    local UIManager = require("ui/uimanager")
+    if not UIManager._cyberui_packs_on_quit then
+        UIManager._cyberui_packs_on_quit = true
+        local quit = UIManager.quit
+        UIManager.quit = function(...)
+            packStart()
+            return quit(...)
+        end
+    end
+end
+
 -- Switch LuaJIT's compiler back on (see below).
 local function resumeJit()
     if jit then jit.on() end
@@ -152,7 +172,10 @@ function CyberUI:onShow()
             App.open()
         end
     end
-    if first then require("ui/uimanager"):tickAfterNext(resumeJit) end
+    if first then
+        require("ui/uimanager"):tickAfterNext(resumeJit)
+        require("ui/uimanager"):scheduleIn(3, packStart)
+    end
     -- the browser left without its list is on the screen after all
     if not App.isOpen() then LazyFM.fill() end
 end
@@ -160,6 +183,7 @@ end
 -- The book is ready: hide CyberUI's window under it (without loading CyberUI when
 -- it is unused), and if the book is a gig taken, start following what is read.
 function CyberUI:onReaderReady()
+    require("ui/uimanager"):scheduleIn(3, packStart)   -- (a start straight into a book)
     local App = _G.package.loaded["cyberui/app"]
     if App then App.bookOpened() end
     local Gigs = require("cyberui/data/gigs")
