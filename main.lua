@@ -202,6 +202,17 @@ function CyberUI:onCloseDocument()
     require("cyberui/app").bookClosed(doc and doc.file)
 end
 
+-- A book's details or cover were changed in KOReader (its book information
+-- window): what CyberUI keeps of it is read again.
+function CyberUI:onInvalidateMetadataCache(file)
+    if not file then return end
+    local App = _G.package.loaded["cyberui/app"]
+    if App then
+        require("cyberui/data/books").forget(file)
+        require("cyberui/data/covers").forget(file)
+    end
+end
+
 -- Close CyberUI on Exit too, or a window is left and KOReader never quits.
 function CyberUI:onExit()
     require("cyberui/app").close(true)

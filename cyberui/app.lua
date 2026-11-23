@@ -570,7 +570,8 @@ function App.bookClosed(path)
     if path then
         require("cyberui/data/shards").refresh(path)
         Books.forget(path)
-        Covers.forget(path)
+        -- (a cover found stays: KOReader says when one changes, see main.lua)
+        Covers.forget(path, true)
     end
     Stats.invalidate()
     if host and host.invisible then revealIfLeft() end
