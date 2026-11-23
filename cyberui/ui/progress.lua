@@ -40,7 +40,7 @@ function Progress:naturalHeight()
 end
 
 -- Cells filled up to the value, outlined after it.
-local function segments(self, bb, x, y, c)
+local function segments(self, bb, x, y, c, _w, v)
     local th = Theme.get()
     local n = self.segments
     local gap = th.size.segment_gap
@@ -50,11 +50,11 @@ local function segments(self, bb, x, y, c)
     -- a single cell fills as far as the value (whole cells would show only empty or full)
     if n == 1 then
         Paint.frame(bb, x, y, self.w, self.h, hair, c)
-        local fw = math.floor(self.w * self.v + 0.5)
+        local fw = math.floor(self.w * v + 0.5)
         if fw > 0 then Paint.fill(bb, x, y, fw, self.h, c) end
         return
     end
-    local filled = math.floor(self.v * n + 0.5)
+    local filled = math.floor(v * n + 0.5)
     -- the last cell takes the rounding left over so the bar ends flush
     local cx = x
     for i = 1, n do
@@ -178,8 +178,8 @@ local DRAW = { segments = segments, ascii = ascii, heartbeat = heartbeat, scanli
 
 -- Draw in the bar's style.
 function Progress:draw(bb, x, y)
-    self.v = math.max(0, math.min(1, self.value or 0))
-    DRAW[self:style().id](self, bb, x, y, Theme.color(self.color), self.w, self.v, self.h)
+    local v = math.max(0, math.min(1, self.value or 0))
+    DRAW[self:style().id](self, bb, x, y, Theme.color(self.color), self.w, v, self.h)
 end
 
 -- Let the reader pick the style of a book's progress.
