@@ -16,11 +16,13 @@ local T = require("ffi/util").template
 
 local START_WITH = "cyberui"
 
--- The start is over: CyberUI's modules it loaded are kept together for the
--- next one (see cyberui/bccache.lua).
+-- The start is over: CyberUI's modules it loaded and the icons it drew are
+-- kept together for the next one (see cyberui/bccache.lua and cyberui/gfx/icons.lua).
 local function packStart()
     local BcCache = _G.package.loaded["cyberui/bccache"]
     if BcCache then pcall(BcCache.packStart) end
+    local Icons = _G.package.loaded["cyberui/gfx/icons"]
+    if Icons then pcall(Icons.packStart) end
 end
 
 -- (KOReader closing within seconds of its start packs it then)

@@ -205,6 +205,26 @@ do
     local kept = pixels("settings")
     local blank = select(2, kept:gsub("255", "")) == 900
     Kit.ok(fresh == kept and not blank, "an icon read back from its kept mask draws the same")
+    -- the start's masks are packed together, and the next start draws them from the pack
+    Icons.packStart()
+    local lfs = require("libs/libkoreader-lfs")
+    local idir = require("datastorage"):getDataDir() .. "/cache/cyberui-icons"
+    Kit.ok(lfs.attributes(idir .. "/start.pack", "mode") == "file", "the masks a start drew are packed")
+    for f in lfs.dir(idir) do
+        if f:match("%.mask$") then os.remove(idir .. "/" .. f) end
+    end
+    local NextIcons = dofile(REPO .. "/cyberui/gfx/icons.lua")   -- the next start
+    local nb = Kit.canvas()
+    NextIcons.draw(nb, "settings", 0, 0, 30, require("ffi/blitbuffer").COLOR_BLACK)
+    local t = {}
+    for y = 0, 29 do for x = 0, 29 do t[#t + 1] = nb:getPixel(x, y):getColor8().a end end
+    nb:free()
+    local rebuilt = false
+    for f in lfs.dir(idir) do
+        if f:match("settings.*%.mask$") then rebuilt = true end
+    end
+    Kit.ok(table.concat(t, ",") == fresh and not rebuilt, "the next start draws the icon from the pack, the same to the pixel")
+    NextIcons.free()
     local Pick = require("cyberui/screens/iconpick")
     local picked
     local s = Pick:new({ current = "ko:appbar.search.svg", on_pick = function(n) picked = n end })
