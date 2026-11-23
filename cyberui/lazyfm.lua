@@ -44,15 +44,45 @@ function LazyFM.waiting()
     return chooser ~= nil and chooser._cyberui_lazy == true
 end
 
+-- Was `action` (a scheduled task) made by CoverBrowser's code?
+local function fromCoverBrowser(action)
+    local info = type(action) == "function" and debug.getinfo(action, "S")
+    return info and info.source:find("coverbrowser", 1, true) ~= nil or false
+end
+
+-- Close a browser. One closing without ever having had its list (it opens
+-- a book from under home) had no covers on it, so the full garbage collection
+-- CoverBrowser schedules a moment later, to free them, has nothing to free:
+-- it is taken off the schedule. CoverBrowser's other work on closing (stopping
+-- its background extraction, closing its database) is done as usual.
+local function closeBrowser(FileChooser, self, ...)
+    local close = FileChooser.onCloseWidget
+    if not self._cyberui_lazy or not close then
+        if close then return close(self, ...) end
+        return
+    end
+    local UIManager = require("ui/uimanager")
+    local before = {}
+    for _i, task in ipairs(UIManager._task_queue or {}) do before[task.action] = true end
+    close(self, ...)
+    local added = {}
+    for _i, task in ipairs(UIManager._task_queue or {}) do
+        if not before[task.action] and fromCoverBrowser(task.action) then added[#added + 1] = task.action end
+    end
+    for _i, action in ipairs(added) do UIManager:unschedule(action) end
+end
+
 -- Patch KOReader's FileChooser once: the file browser's refreshPath waits
 -- while it is covered, and a paint of a browser still waiting fills it first.
 function LazyFM.install()
     if fill_now then return end
     local FileChooser = require("ui/widget/filechooser")
     fill_now = FileChooser.refreshPath
+    local function onClose(self, ...) return closeBrowser(FileChooser, self, ...) end
     FileChooser.refreshPath = function(self, ...)
         if self.name == "filemanager" and covered() then
             self._cyberui_lazy = true
+            self.onCloseWidget = onClose
             return
         end
         self._cyberui_lazy = nil

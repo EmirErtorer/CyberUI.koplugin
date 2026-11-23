@@ -5,6 +5,7 @@ local H = ...
 local LazyFM = require("cyberui/lazyfm")
 local UIManager = require("ui/uimanager")
 local book
+local gc_seen, gc_looked
 
 local function fm() return require("apps/filemanager/filemanager").instance end
 local function listed()
@@ -37,8 +38,20 @@ H.step(1.5, function()
     -- (with parking on, a closed book stays open under home and no browser is built)
     require("cyberui/settings").set("park_reader", false)
     H.app().openBook(book)
+    -- CoverBrowser's collection after a browser closes frees its covers: the
+    -- waiting browser had none, so none is scheduled (looked at once the
+    -- reader has replaced the browser, before the collection would run)
+    UIManager:tickAfterNext(function()
+        gc_seen = false
+        for _, task in ipairs(UIManager._task_queue) do
+            local info = type(task.action) == "function" and debug.getinfo(task.action, "S")
+            if info and info.source:find("covermenu", 1, true) then gc_seen = true end
+        end
+        gc_looked = fm() == nil
+    end)
 end)
 H.step(4, function()
+    H.check(gc_looked and gc_seen == false, "opening a book from home schedules no collection for the browser that never listed")
     H.check(inReader(), "a book opens from home")
     H.event("Home")
 end)
