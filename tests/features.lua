@@ -1569,4 +1569,55 @@ do
     table.remove(package.loaders, 2)
 end
 
+-- home asked for again: the same build paints nothing, a changed one does
+do
+    local Same = require("cyberui/same")
+    local Host = require("cyberui/host")
+    local Settings = require("cyberui/settings")
+    local Home = require("cyberui/screens/home")
+    local W, H = Kit.Screen:getWidth(), Kit.Screen:getHeight()
+    local home = Home:new({})
+    local function built()
+        local root = home:build({ w = W, h = H })
+        root:layout(W, H)
+        return root, Same.state()
+    end
+    local a, sa = built()
+    local bb = Kit.canvas()
+    a:paint(bb, 0, 0)
+    bb:free()
+    local b, sb = built()
+    Kit.ok(Same.trees(a, sa, b, sb), "home built again the same paints the same")
+    local function firstLabel(el)
+        if el.text and el.kind then return el end
+        for _, c in ipairs(el.children or {}) do
+            local f = firstLabel(c)
+            if f then return f end
+        end
+        return el.child and firstLabel(el.child)
+    end
+    local la, lb = firstLabel(a), firstLabel(b)
+    Kit.ok(la and lb and la ~= lb, "both builds have a label")
+    local keep = lb.text
+    lb.text = keep .. "!"
+    Kit.ok(not Same.trees(a, sa, b, sb), "a changed text does not")
+    lb.text = keep
+    lb.extra = true
+    Kit.ok(not Same.trees(a, sa, b, sb), "nor a value only the new build has")
+    lb.extra = nil
+    Settings.set("home_test_change", true)
+    local c, sc = built()
+    Kit.ok(not Same.trees(a, sa, c, sc), "nor a build after a setting changed")
+    Settings.set("home_test_change", nil)
+    Host.place(a, b)
+    Kit.ok(lb.x == la.x and lb.y == la.y and lb.x ~= nil, "the new tree takes the places the old one was painted at")
+    local Progress = require("cyberui/ui/progress")
+    local p = Progress:new({ value = 0.5 })
+    p:layout(100, nil)
+    local pb = Kit.canvas(200, 50)
+    p:paint(pb, 0, 0)
+    pb:free()
+    Kit.ok(rawget(p, "v") == nil, "painting a bar leaves nothing on it but its place")
+end
+
 Kit.finish("features")

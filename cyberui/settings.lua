@@ -6,6 +6,8 @@ local LuaSettings = require("luasettings")
 
 local Settings = {}
 
+Settings.revision = 0   -- counts changes (what was painted from them may be old)
+
 local store
 
 -- Open the settings file on first use.
@@ -25,6 +27,7 @@ end
 
 -- Save a setting in memory; flush() writes it to disk.
 function Settings.set(key, value)
+    Settings.revision = Settings.revision + 1
     open():saveSetting(key, value)
 end
 

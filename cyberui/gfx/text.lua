@@ -15,6 +15,8 @@ local Utf8Safe = require("cyberui/utf8safe")
 
 local Text = {}
 
+Text.revision = 0   -- counts resets (fonts or sizes changed)
+
 local ELLIPSIS = "…"
 local widths = setmetatable({}, { __mode = "k" })   -- face -> { str -> width }
 
@@ -381,6 +383,7 @@ end
 
 -- Forget measured widths (faces change with the theme).
 function Text.reset()
+    Text.revision = Text.revision + 1
     widths = setmetatable({}, { __mode = "k" })
     showns = setmetatable({}, { __mode = "k" })
     wraps = setmetatable({}, { __mode = "k" })

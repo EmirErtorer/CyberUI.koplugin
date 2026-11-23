@@ -11,6 +11,7 @@ local Host = require("cyberui/host")
 local Library = require("cyberui/data/library")
 local Perf = require("cyberui/perf")
 local Settings = require("cyberui/settings")
+local Same = require("cyberui/same")
 local Stats = require("cyberui/data/stats")
 local Theme = require("cyberui/theme")
 local StatusBar = require("cyberui/ui/statusbar")
@@ -76,6 +77,7 @@ local function build()
     Perf.measure("build", function()
         host:setRoot(s:build({ w = Screen:getWidth(), h = Screen:getHeight() }))
     end)
+    host.built_state = Same.state()
 end
 
 -- Refresh kind for a new screen: a full flash every few screens clears
@@ -342,7 +344,22 @@ function App.close(quitting)
 end
 
 -- Go to a section of the tab bar (its screen sits right above home).
+-- Home asked for while home alone is shown: built again, but painted again
+-- only when it would look different (an e-ink refresh for nothing otherwise).
+local function homeAgain()
+    local old, old_state = host.root, host.built_state
+    local same = old ~= nil and old.x ~= nil and onTop() and not host.overlay and not host.toast
+    build()
+    if same and Same.trees(old, old_state, host.root, host.built_state) then
+        Host.place(old, host.root)
+        return
+    end
+    host:markRepainted()
+    dirty(viewRefresh())
+end
+
 function App.go(id, params)
+    if id == "home" and host and #stack == 1 and stack[1].id == "home" then return homeAgain() end
     if id == "home" then stack = { stack[1].id == "home" and stack[1] or make("home") }
     else stack = { stack[1].id == "home" and stack[1] or make("home"), make(id, params) } end
     App.render()

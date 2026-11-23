@@ -24,7 +24,7 @@ function Kit.boot(repo)
     os.remove(ctmp)
     local store = LuaSettings:open(ctmp)
     Settings.get = function(k, d) local v = store:readSetting(k); if v == nil then return d end; return v end
-    Settings.set = function(k, v) store:saveSetting(k, v) end
+    Settings.set = function(k, v) Settings.revision = Settings.revision + 1; store:saveSetting(k, v) end
     Settings.flush = function() end
     Kit.checks, Kit.failures = 0, 0
     return Kit

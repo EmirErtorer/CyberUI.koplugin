@@ -112,6 +112,21 @@ function Host.carry(old, new, pressed, parts)
     return parts
 end
 
+-- Give `new`, a tree built the same as `old` (see Same), the places old was
+-- painted at, so it answers touches as if painted itself.
+function Host.place(old, new, depth)
+    depth = depth or 0
+    if depth > 40 then return end
+    new.x, new.y = old.x, old.y
+    for k, v in pairs(new) do
+        local o = old[k]
+        if type(v) == "table" and type(o) == "table" and k ~= "x" and k ~= "y"
+                and (getmetatable(v) == nil or type(getmetatable(v).paint) == "function") then
+            Host.place(o, v, depth + 1)
+        end
+    end
+end
+
 -- Paint background, screen, overlay and toast (timed), unless invisible.
 function Host:paintTo(bb, x, y)
     if self.invisible then return end

@@ -8,6 +8,8 @@ local Settings = require("cyberui/settings")
 
 local Covers = {}
 
+Covers.revision = 0   -- counts covers forgotten (one may look different now)
+
 local MAX = 36
 local cache = {}   -- key -> { bb, used }
 local count = 0
@@ -69,6 +71,7 @@ end
 -- Forget the covers of one book, or all of them; `missing_only`: only where
 -- none was found (one may have been extracted since).
 function Covers.forget(path, missing_only)
+    Covers.revision = Covers.revision + 1
     for k, e in pairs(cache) do
         if (not path or k:sub(1, #path + 1) == path .. "|") and not (missing_only and e.bb) then
             if e.bb then e.bb:free() end
