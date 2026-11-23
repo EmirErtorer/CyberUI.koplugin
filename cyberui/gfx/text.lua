@@ -105,15 +105,31 @@ local function specOf(kind)
     return Theme.text(kind)
 end
 
+-- Shown forms already worked out: face spec -> { language, n, map = str -> shown }.
+local showns = setmetatable({}, { __mode = "k" })
+local SHOWN_PER_SPEC = 512
+
 -- The string as it is shown for this kind of text (capitals when the style asks).
 function Text.shown(kind, s)
-    s = Utf8Safe.clean(tostring(s or ""))   -- (a string cut inside a character would crash the case and composing calls)
-    if specOf(kind).caps then
-        local lang = I18n.language()
-        s = (lang == "tr" or lang == "el") and Case.upper(s, lang) or Utf8Proc.uppercase_dumb(s)
+    s = tostring(s or "")
+    local spec = specOf(kind)
+    local lang = I18n.language()
+    local memo = showns[spec]
+    if not memo or memo.language ~= lang or memo.n >= SHOWN_PER_SPEC then
+        memo = { language = lang, n = 0, map = {} }
+        showns[spec] = memo
+    end
+    local out = memo.map[s]
+    if out then return out end
+    out = Utf8Safe.clean(s)   -- (a string cut inside a character would crash the case and composing calls)
+    if spec.caps then
+        out = (lang == "tr" or lang == "el") and Case.upper(out, lang) or Utf8Proc.uppercase_dumb(out)
     end
     -- composed form, so accents are part of their letter and not drawn apart
-    return Utf8Proc.normalize_NFC(s)
+    out = Utf8Proc.normalize_NFC(out)
+    memo.map[s] = out
+    memo.n = memo.n + 1
+    return out
 end
 
 -- Width in pixels of an already shown string.
@@ -286,11 +302,12 @@ function Text.height(kind)
     return specOf(kind).height
 end
 
--- Split `s` into at most `max_lines` lines that fit `max_w`; the last line
--- gets an ellipsis when text is left over.
-function Text.wrap(kind, s, max_w, max_lines)
-    local spec = specOf(kind)
-    s = Text.shown(kind, s)
+-- Wrapped lines already worked out: face spec -> { n, map = "max_w|max_lines|str" -> lines }.
+-- Only short texts in a few lines (titles on cards and labels) are kept.
+local wraps = setmetatable({}, { __mode = "k" })
+local WRAPS_PER_SPEC, WRAP_KEEP_LEN = 256, 512
+
+local function wrapNow(spec, s, max_w, max_lines)
     local lines, line = {}, ""
     -- words, with each line break kept as a word of its own
     local words = {}
@@ -323,9 +340,33 @@ function Text.wrap(kind, s, max_w, max_lines)
     return lines
 end
 
+-- Split `s` into at most `max_lines` lines that fit `max_w`; the last line
+-- gets an ellipsis when text is left over. (The list given back may be one
+-- kept for the next ask: read it, do not change it.)
+function Text.wrap(kind, s, max_w, max_lines)
+    local spec = specOf(kind)
+    s = Text.shown(kind, s)
+    if not max_lines or max_lines > 8 or #s > WRAP_KEEP_LEN then return wrapNow(spec, s, max_w, max_lines) end
+    local memo = wraps[spec]
+    if not memo or memo.n >= WRAPS_PER_SPEC then
+        memo = { n = 0, map = {} }
+        wraps[spec] = memo
+    end
+    local key = max_w .. "|" .. max_lines .. "|" .. s
+    local lines = memo.map[key]
+    if not lines then
+        lines = wrapNow(spec, s, max_w, max_lines)
+        memo.map[key] = lines
+        memo.n = memo.n + 1
+    end
+    return lines
+end
+
 -- Forget measured widths (faces change with the theme).
 function Text.reset()
     widths = setmetatable({}, { __mode = "k" })
+    showns = setmetatable({}, { __mode = "k" })
+    wraps = setmetatable({}, { __mode = "k" })
 end
 
 Theme.onChange(Text.reset)

@@ -17,9 +17,12 @@ local function width(s, i)
     return n
 end
 
--- `s` without any byte that is not part of a whole character.
-function Utf8Safe.clean(s)
-    if type(s) ~= "string" then return s end
+-- Short strings already checked (labels are painted again and again): string -> clean form.
+local checked, checked_n = {}, 0
+local CHECKED_MAX, CHECKED_LEN = 1024, 256
+
+-- `s` without any byte that is not part of a whole character (worked out).
+local function clean(s)
     -- (plain text, the common case, needs no walk)
     if not s:find("[\128-\255]") then return s end
     local out, i = {}, 1
@@ -33,6 +36,20 @@ function Utf8Safe.clean(s)
         end
     end
     return table.concat(out)
+end
+
+-- `s` without any byte that is not part of a whole character.
+function Utf8Safe.clean(s)
+    if type(s) ~= "string" then return s end
+    local known = checked[s]
+    if known then return known end
+    local out = clean(s)
+    if #s <= CHECKED_LEN then
+        if checked_n >= CHECKED_MAX then checked, checked_n = {}, 0 end
+        checked[s] = out
+        checked_n = checked_n + 1
+    end
+    return out
 end
 
 -- At most `max` bytes of `s`, ending on a whole character, with `tail` after it when it was cut.
