@@ -359,12 +359,23 @@ function Library:build()
     else
         books = Data.sort(books, Settings.get("library_sort", "recent"), Settings.get("library_desc", false))
     end
-    local shown, counts = Data.filter(books, self.filter)
-    local items = {}
-    if self.filter == "all" then
-        for _i, f in ipairs(folders) do items[#items + 1] = { folder = f } end
+    -- the items stay as they were while the same lists are shown the same
+    -- way (a page turn): a sorted list is a new one once anything in it changed
+    local kept = self.kept_items
+    local items, counts
+    local same_folders = kept and (kept.folders == folders or (#kept.folders == 0 and #folders == 0))
+    if same_folders and kept.books == books and kept.filter == self.filter then
+        items, counts = kept.items, kept.counts
+    else
+        local shown
+        shown, counts = Data.filter(books, self.filter)
+        items = {}
+        if self.filter == "all" then
+            for _i, f in ipairs(folders) do items[#items + 1] = { folder = f } end
+        end
+        for _i, p in ipairs(shown) do items[#items + 1] = { path = p } end
+        self.kept_items = { books = books, folders = folders, filter = self.filter, items = items, counts = counts }
     end
-    for _i, p in ipairs(shown) do items[#items + 1] = { path = p } end
     self.items = items
 
     local pick = self.params.pick

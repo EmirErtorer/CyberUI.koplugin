@@ -147,6 +147,24 @@ do
         end)
         Kit.ok(ok, "library grouped by " .. kind .. " builds: " .. tostring(err))
     end
+    Settings.set("library_group", "all")
+
+    -- a page turn keeps the items; a book's status changing shows at once
+    local Actions = require("cyberui/actions")
+    local s = Lib:new({})
+    s:build({ w = W, h = H })
+    local items = s.items
+    s.page = 2
+    s:build({ w = W, h = H })
+    Kit.ok(s.items == items, "turning a page keeps the list of items")
+    local p = all[1]
+    local was = Books.state(p).status
+    local done = s.kept_items.counts.done
+    Actions.writeStatus(p, was == "complete" and "reading" or "complete")
+    s:build({ w = W, h = H })
+    Kit.ok(s.items ~= items and s.kept_items.counts.done == done + (was == "complete" and -1 or 1),
+        "a book marked finished is counted at the next build")
+    Actions.writeStatus(p, was)
     Settings.set("library_group", nil)
 end
 
