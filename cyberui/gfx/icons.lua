@@ -6,6 +6,7 @@
 -- of KOReader's stock set.
 
 local Blitbuffer = require("ffi/blitbuffer")
+local ffi = require("ffi")
 local DataStorage = require("datastorage")
 local RenderImage = require("ui/renderimage")
 local Color = require("cyberui/theme/color")
@@ -81,12 +82,69 @@ local function build(name, size)
     return mask
 end
 
+-- Masks are also kept on disk, so a start draws its icons without loading
+-- the SVG renderer: one file per icon file and size, starting with a line
+-- naming the icon file's size and age, the size drawn at and the mask's
+-- width and height, then the mask's bytes.
+local disk_dir   -- the folder of the kept masks (made on first use)
+
+-- The kept mask's file and the line it must start with, or nil.
+local function diskEntry(name, size)
+    local file = fileOf(name)
+    local attr = lfs.attributes(file)
+    if not attr or attr.mode ~= "file" then return nil end
+    if not disk_dir then
+        disk_dir = DataStorage:getDataDir() .. "/cache/cyberui-icons"
+        if lfs.attributes(disk_dir, "mode") ~= "directory" then lfs.mkdir(disk_dir) end
+    end
+    local id = file:gsub("[^%w%.%-]", "_")
+    if #id > 180 then id = id:sub(-180) end
+    return disk_dir .. "/" .. id .. "-" .. size .. ".mask", attr.size .. ":" .. attr.modification .. ":" .. size
+end
+
+-- A kept mask that still matches its icon file, or nil.
+local function readKept(path, stamp)
+    local f = io.open(path, "rb")
+    if not f then return nil end
+    local line = f:read("*l")
+    local kept_stamp, w, h = (line or ""):match("^(%S+) (%d+) (%d+)$")
+    w, h = tonumber(w), tonumber(h)
+    local m
+    if kept_stamp == stamp and w and h then
+        local bytes = f:read(w * h)
+        if bytes and #bytes == w * h then
+            m = Blitbuffer.new(w, h, Blitbuffer.TYPE_BB8)
+            local dst = ffi.cast("uint8_t*", m.data)
+            for y = 0, h - 1 do ffi.copy(dst + y * m.stride, bytes:sub(y * w + 1, (y + 1) * w), w) end
+        end
+    end
+    f:close()
+    return m
+end
+
+-- Keep a mask on disk (nothing happens when it cannot be written).
+local function writeKept(path, stamp, m)
+    local f = io.open(path, "wb")
+    if not f then return end
+    local w, h = m:getWidth(), m:getHeight()
+    local src = ffi.cast("uint8_t*", m.data)
+    local rows = {}
+    for y = 0, h - 1 do rows[y + 1] = ffi.string(src + y * m.stride, w) end
+    f:write(stamp, " ", w, " ", h, "\n", table.concat(rows))
+    f:close()
+end
+
 -- The cached mask of an icon file at a size.
 local function mask(name, size)
     local key = name .. "|" .. size
     local m = masks[key]
     if m == nil then
-        m = build(name, size)
+        local path, stamp = diskEntry(name, size)
+        m = path and readKept(path, stamp)
+        if not m then
+            m = build(name, size)
+            if m and path then writeKept(path, stamp, m) end
+        end
         masks[key] = m
     end
     return m
