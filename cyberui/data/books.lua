@@ -108,6 +108,13 @@ function Books.info(path)
     return info_cache[path]
 end
 
+-- Only the status of `Books.state` (no table made: filters ask it of every book).
+function Books.status(path)
+    local bi = BookList.getBookInfo(path)
+    if not bi.been_opened or bi.status == "new" then return "new" end
+    return bi.status or "reading"
+end
+
 -- Reading state: { status, percent, pages, opened, annotated }. Status is
 -- "new", "reading", "complete" or "abandoned". "new" is a book never opened or
 -- one the reader marked unread (KOReader sets reading again when it is opened).

@@ -39,9 +39,9 @@ end
 
 local opened, opened_stamp   -- file -> time it was last opened, for the history as of opened_stamp
 
--- When `path` was last opened (seconds), or nil. (A lookup in a map made
--- once per change of the history: sorting a big folder by it asks for every book.)
-function History.lastOpened(path)
+-- When each book in the history was last opened: file -> seconds. (Made
+-- once per change of the history: sorting a big folder asks for every book.)
+function History.openedMap()
     local stamp = History.stamp()
     if opened_stamp ~= stamp then
         opened, opened_stamp = {}, stamp
@@ -49,7 +49,12 @@ function History.lastOpened(path)
             if item.file and not opened[item.file] then opened[item.file] = item.time end
         end
     end
-    return opened[path]
+    return opened
+end
+
+-- When `path` was last opened (seconds), or nil.
+function History.lastOpened(path)
+    return History.openedMap()[path]
 end
 
 return History

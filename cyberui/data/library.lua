@@ -13,6 +13,7 @@ local Library = {}
 local listings = {}   -- dir -> { mtime, folders, books }
 local index           -- { books = {paths}, built = time } for the whole library
 local last_sort       -- the last sort asked for and its answer (turning a page asks again)
+local generation = 0  -- counts resets of the library (what a cached sort key was read from)
 
 local MAX_DEPTH = 8
 -- A phone's whole storage can hold tens of thousands of folders: the walk stops
@@ -133,12 +134,14 @@ end
 function Library.reset()
     listings = {}
     last_sort = nil
+    generation = generation + 1
     if index then index.stale = true end
 end
 
 -- Sort keys for each sort order.
+-- (`opened` is the history's file -> last opened map, read once per sort.)
 local SORTS = {
-    recent = function(p) return -(History.lastOpened(p) or 0), -(lfs.attributes(p, "modification") or 0) end,
+    recent = function(p, opened) return -(opened[p] or 0), -(lfs.attributes(p, "modification") or 0) end,
     title = function(p) return Books.info(p).title:lower(), 0 end,
     author = function(p) return (Books.info(p).author or "~"):lower(), 0 end,
     added = function(p) return -(lfs.attributes(p, "modification") or 0), 0 end,
@@ -163,21 +166,47 @@ function Library.sort(books, order, reverse)
     return out
 end
 
+-- Sort keys already read, for the last two orders sorted by: order ->
+-- { stamp, a = path -> first key, b = path -> second key }. A key stays while
+-- nothing it is read from changes: the books' info, the history and the
+-- library on disk.
+local keys, keys_order = {}, {}
+
+-- The cached keys for `order` as of `stamp` (keeping two orders at most).
+local function keysFor(order, stamp)
+    -- this order to the front, the third most recent one dropped
+    for i = #keys_order, 1, -1 do
+        if keys_order[i] == order then table.remove(keys_order, i) end
+    end
+    table.insert(keys_order, 1, order)
+    for i = #keys_order, 3, -1 do keys[keys_order[i]] = nil; keys_order[i] = nil end
+    local kc = keys[order]
+    if kc and kc.stamp == stamp then return kc end
+    kc = { stamp = stamp, a = {}, b = {} }
+    keys[order] = kc
+    return kc
+end
+
 -- Sort without looking at the last answer.
 function Library.sortNow(books, order, reverse)
-    local key = SORTS[order] or SORTS.recent
-    local keyed = {}
-    for i, p in ipairs(books) do
-        local a, b = key(p)
-        keyed[i] = { p = p, a = a, b = b }
-    end
-    table.sort(keyed, function(x, y)
-        if x.a ~= y.a then return (x.a < y.a) ~= (reverse == true) end
-        if x.b ~= y.b then return (x.b < y.b) ~= (reverse == true) end
-        return x.p < y.p
-    end)
+    if not SORTS[order] then order = "recent" end
+    local key = SORTS[order]
+    local opened = History.openedMap()
+    local kc = keysFor(order, generation .. "/" .. Books.revision .. "/" .. History.stamp())
+    local ka, kb = kc.a, kc.b
     local out = {}
-    for i, k in ipairs(keyed) do out[i] = k.p end
+    for i, p in ipairs(books) do
+        if ka[p] == nil then ka[p], kb[p] = key(p, opened) end
+        out[i] = p
+    end
+    local desc = reverse == true
+    table.sort(out, function(x, y)
+        local ax, ay = ka[x], ka[y]
+        if ax ~= ay then return (ax < ay) ~= desc end
+        local bx, by = kb[x], kb[y]
+        if bx ~= by then return (bx < by) ~= desc end
+        return x < y
+    end)
     return out
 end
 
@@ -196,7 +225,7 @@ function Library.filter(books, filter)
     local keep = FILTERS[filter]
     local out = {}
     for _i, p in ipairs(books) do
-        local status = Books.state(p).status
+        local status = Books.status(p)
         if status == "reading" then counts.reading = counts.reading + 1
         elseif status == "new" then counts.unread = counts.unread + 1
         elseif status == "complete" then counts.done = counts.done + 1 end
