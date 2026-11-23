@@ -31,6 +31,7 @@ local function compared(t)
 end
 
 local budget
+local done   -- new table -> the old one it was found equal to (shared subtrees once)
 
 -- Do a and b hold the same values (nested tables compared too)?
 local function equal(a, b, depth)
@@ -44,7 +45,11 @@ local function equal(a, b, depth)
             local o = rawget(a, k)
             local tv = type(v)
             if tv == "table" and compared(v) then
-                if type(o) ~= "table" or not (rawequal(o, v) or equal(o, v, depth + 1)) then return false end
+                if type(o) ~= "table" then return false end
+                if not (rawequal(o, v) or done[v] == o) then
+                    if not equal(o, v, depth + 1) then return false end
+                    done[v] = o
+                end
             elseif tv == "function" and behaviour(k) then
                 if type(o) ~= "function" then return false end
             elseif not rawequal(o, v) then
@@ -68,8 +73,10 @@ end
 -- Does tree b (built at state sb) paint the same as tree a (built at sa)?
 function Same.trees(a, sa, b, sb)
     if not (a and b and sa and sa == sb) then return false end
-    budget = BUDGET
-    return equal(a, b, 0)
+    budget, done = BUDGET, {}
+    local same = equal(a, b, 0)
+    done = nil
+    return same
 end
 
 return Same
