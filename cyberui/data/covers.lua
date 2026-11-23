@@ -3,6 +3,7 @@
 -- without decoding or scaling again.
 
 local RenderImage = require("ui/renderimage")
+local Books = require("cyberui/data/books")
 local Settings = require("cyberui/settings")
 
 local Covers = {}
@@ -44,6 +45,9 @@ function Covers.get(path, w, h)
     tick = tick + 1
     local e = cache[key]
     if e then e.used = tick; return e.bb end
+    -- a book CoverBrowser already looked through and found no cover in needs no look in its cache
+    local info = Books.known(path)
+    if info and info.no_cover then return nil end
     local m = bim()
     local bi = m and m:getBookInfo(path, true)
     local bb

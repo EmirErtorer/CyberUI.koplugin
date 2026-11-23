@@ -97,6 +97,7 @@ function Books.info(path)
             pages = bi.pages,
             description = bi.description,
             language = bi.language,
+            no_cover = bi.cover_fetched == "Y" and not bi.has_cover,   -- looked for, and none found
             original = original(bi),
             known = true,
         }
@@ -105,6 +106,12 @@ function Books.info(path)
         if not bi and m then Books.queue(path) end
     end
     info_cache[path] = withCustom(info, path)
+    return info_cache[path]
+end
+
+-- What is already known of a book (Books.info's answer if it was asked
+-- before), without looking anything up; nil when nothing is.
+function Books.known(path)
     return info_cache[path]
 end
 
