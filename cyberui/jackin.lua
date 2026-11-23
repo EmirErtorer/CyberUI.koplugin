@@ -23,16 +23,13 @@ function JackIn.card(path)
 end
 
 -- Run show() (the call that opens the book) with KOReader's own "Opening file"
--- message kept off the screen, so the card stays alone; `instead` (optional)
--- runs where the message would have been shown, just before KOReader paints
--- it. Anything else shown on the way (a question about restoring the book's
--- notes) is let through.
-function JackIn.silenced(path, show, instead)
+-- message kept off the screen, so the card stays alone. Anything else shown on
+-- the way (a question about restoring the book's notes) is let through.
+function JackIn.silenced(path, show)
     local abbreviated = filemanagerutil.abbreviate(path)
     local original = UIManager.show
     local function quiet(self, widget, ...)
         if widget and widget.timeout == 0 and type(widget.text) == "string" and widget.text:find(abbreviated, 1, true) then
-            if instead then instead() end
             return
         end
         return original(self, widget, ...)

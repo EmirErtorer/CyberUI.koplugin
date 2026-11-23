@@ -534,12 +534,10 @@ function App.openBook(path, after_open)
     end
     Park.noteOpen()
     if host and JackIn.wanted(path) then
-        -- the card goes up where KOReader shows its "Opening file" message, and
-        -- KOReader's own repaint of that moment paints it
-        local card = JackIn.card(path)
-        JackIn.silenced(path, function() ReaderUI:showReader(path, nil, nil, nil, after_open) end,
-            function() App.flash(card, true) end)
-        host.overlay, host.only_overlay = nil, nil
+        -- the card goes on the screen first, before KOReader looks the book up
+        -- (that takes a while on a device), and stays until the book paints over it
+        App.flash(JackIn.card(path))
+        JackIn.silenced(path, function() ReaderUI:showReader(path, nil, nil, nil, after_open) end)
         -- the reader opens on the next turn of the loop, and the card stays up
         -- until it does; if it did not (an error, or a question asked first),
         -- the screen under the card is drawn again
@@ -553,9 +551,7 @@ end
 
 -- Paint a card over the current screen at once, then forget it without
 -- painting: the card stays up until whatever opens next paints over it.
--- `painted_by_caller`: the caller is about to repaint, which paints it, and
--- forgets it after.
-function App.flash(card, painted_by_caller)
+function App.flash(card)
     -- home on top and drawn as it stands: only the card is painted over it
     local quick = onTop() and not UIManager._dirty[host] and host.laid_w == Screen:getWidth() and host.laid_h == Screen:getHeight()
     host.overlay = card
@@ -563,7 +559,6 @@ function App.flash(card, painted_by_caller)
     host.only_overlay = quick
     host:markRepainted()
     dirty("ui", host:overlayBox())
-    if painted_by_caller then return end
     UIManager:forceRePaint()
     host.only_overlay = nil
     host.overlay = nil
