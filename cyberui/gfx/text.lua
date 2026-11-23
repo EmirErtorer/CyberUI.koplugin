@@ -61,6 +61,23 @@ local function codepoints(s)
 end
 Text.codepoints = codepoints
 
+-- The code points of a string measured or drawn lately (a line is measured
+-- to fit, then drawn): kept for short strings, so the same line is decoded
+-- once. The list given back is shared: read it, do not change it.
+local decoded, decoded_n = {}, 0
+local DECODED_MAX, DECODED_LEN = 512, 160
+local function cpsOf(s)
+    local cps = decoded[s]
+    if cps then return cps end
+    cps = codepoints(s)
+    if #s <= DECODED_LEN then
+        if decoded_n >= DECODED_MAX then decoded, decoded_n = {}, 0 end
+        decoded[s] = cps
+        decoded_n = decoded_n + 1
+    end
+    return cps
+end
+
 -- Does the string hold Hebrew or Arabic letters? Those need joining and right
 -- to left order, which KOReader's shaping does and the glyph by glyph path
 -- below does not.
@@ -146,7 +163,7 @@ local function measure(spec, s)
     end
     w = 0
     local prev = 0
-    local cps = codepoints(s)
+    local cps = cpsOf(s)
     for i, cp in ipairs(cps) do
         local glyph = glyphOf(face, cp)
         if prev ~= 0 then w = w + face.ftsize:getKerning(prev, cp) end
@@ -167,7 +184,7 @@ local fits = setmetatable({}, { __mode = "k" })   -- face spec -> { "max_w|str" 
 local FITS_PER_SPEC = 2048
 
 local function fitNow(spec, s, max_w)
-    local cps = codepoints(s)
+    local cps = cpsOf(s)
     local function prefix(n)
         local chars = {}
         for i = 1, n do chars[i] = cps[i] end
@@ -181,7 +198,7 @@ local function fitNow(spec, s, max_w)
         width_of = function(n) return measure(spec, prefix(n) .. ELLIPSIS) end
     else
         local face, track = spec.face, spec.tracking
-        local e = codepoints(ELLIPSIS)[1]
+        local e = cpsOf(ELLIPSIS)[1]
         local e_ax = glyphOf(face, e).ax
         local sums, w, prev = {}, 0, 0
         local function withEllipsis()
@@ -282,7 +299,7 @@ function Text.draw(bb, x, y, kind, s, color)
     local rgb = Color.isRGB(color)
     local pen = 0
     local prev = 0
-    for _i, cp in ipairs(codepoints(s)) do
+    for _i, cp in ipairs(cpsOf(s)) do
         local glyph = glyphOf(face, cp)
         if prev ~= 0 then pen = pen + face.ftsize:getKerning(prev, cp) end
         local gbb = glyph.bb
